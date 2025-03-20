@@ -8,7 +8,6 @@ router.route("/")
 .post(categoriesController.createCategories);
 
 router.route("/:id")
-.get(categoriesController.getCategories)
 .put(categoriesController.updateCategories)
 .delete(categoriesController.deleteCategories);
 

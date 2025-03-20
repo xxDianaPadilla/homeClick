@@ -59,7 +59,17 @@ const propertiesSchema = new Schema({
     },
     sellerId: {
         type: Schema.Types.ObjectId,
-        ref: "",
+        ref: "Administrator",
+        require: true
+    },
+    categoryId: {
+        type: Schema.Types.ObjectId,
+        ref: "Category",
         require: true
     }
-})
+}, {
+    timestamps: true,
+    strict: false
+});
+
+export default model("Property", propertiesSchema);

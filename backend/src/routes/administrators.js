@@ -8,7 +8,6 @@ router.route("/")
 .post(administratorsController.createAdministrators);
 
 router.route("/:id")
-.get(administratorsController.getAdministrators)
 .put(administratorsController.updateAdministrators)
 .delete(administratorsController.deleteAdministrators);
 
