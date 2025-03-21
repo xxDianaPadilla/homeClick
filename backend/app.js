@@ -6,6 +6,7 @@ import customersRoutes from "./src/routes/customers.js";
 import invoicesRoutes from "./src/routes/invoices.js";
 import notificationsRoutes from "./src/routes/notifications.js"
 import purchasesRoutes from "./src/routes/purchases.js";
+import reviewsRoutes from "./src/routes/reviews.js";
 
 const app = express();
 
@@ -18,5 +19,6 @@ app.use("/api/customers", customersRoutes);
 app.use("/api/invoices", invoicesRoutes);
 app.use("/api/notifications", notificationsRoutes);
 app.use("/api/purchases", purchasesRoutes);
+app.use("/api/reviews", reviewsRoutes);
 
 export default app;
