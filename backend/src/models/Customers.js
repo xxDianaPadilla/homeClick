@@ -73,7 +73,7 @@ const customerSchema = new Schema(
 
         budget:
         {
-            type: Number,
+            type: String,
             required: true
         }
     },

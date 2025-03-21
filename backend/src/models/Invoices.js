@@ -20,18 +20,21 @@ const invoiceSchema = new Schema(
         purchaseId:
         {
             type: Schema.Types.ObjectId,
+            ref: "Purchases",
             required: true
         },
 
         customerId:
         {
             type: Schema.Types.ObjectId,
+            ref: "Customer",
             required: true
         },
 
         sellerId:
         {
             type: Schema.Types.ObjectId,
+            ref: "Administrator",
             required: true
         }
     },
