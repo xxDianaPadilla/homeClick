@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+*{
+    font-family: 'Raleway', sans-serif;
+}
+
+.navbar{
+    width: 100%;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.navbar-logo img{
+    height: 35px;
+}
+
+.navbar-options{
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 10px;
+}
+
+.navbar-options li a{
+    color: #000000;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    transition: color 0.3s ease;
+    margin-left: 38px;
+}
+
+.navbar-options li a:hover{
+    color: #E9631A;
+}
+
+.navbar-icons{
+    display: flex;
+    align-items: center;
+    gap: 50px;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+    background-color: #f2f2f2;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-left: -10px;
+  }
+  
+  .search-container input[type="text"] {
+    flex: 1;
+    padding: 10px 15px;
+    border: none;
+    background: transparent;
+    font-size: 16px;
+    outline: none;
+  }
+  
+  .search-container button {
+    background-color: transparent;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 18px;
+    border-left: 1px solid #ddd;
+    transition: background-color 0.3s ease;
+  }
+  
+  .search-container button:hover {
+    background-color: #e0e0e0;
+  }
+
+.icon-button{
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+}
+
+.navbar-menu{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.navbar-menu::-webkit-scrollbar{
+    display: none;
+}
+
+.espacio {
+    border: none;               
+    height: 1px;               
+    background-color: #d9d9d9;  
+    width: 100%;                
+    margin: 20px auto;          
+    border-radius: 2px;         
+  }
+
+@media (max-width: 768px){
+    .navbar-options{
+        gap: 15px;
+    }
+
+    .navbar-container{
+        flex-wrap: wrap;
+    }
+
+    .navbar-menu{
+        order: 3;
+        width: 100%;
+        margin-top: 10px;
+    }
+}
