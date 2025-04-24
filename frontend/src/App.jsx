@@ -4,13 +4,14 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import {BrowserRouter as Router, Routes, Route} from "react-router";
 import LandingPage from './pages/LandingPage'
+import PrimerUso from './pages/PrimerUso';
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
-      <LandingPage/>
+      <PrimerUso/>
     </>
   )
 }
