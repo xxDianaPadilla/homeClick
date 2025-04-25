@@ -6,6 +6,7 @@ import {BrowserRouter as Router, Routes, Route} from "react-router";
 import LandingPage from './pages/LandingPage'
 import PrimerUso from './pages/PrimerUso';
 import PropertyCategories from './pages/PropertyCategories';
+import InicioSesion from './pages/InicioSesion'
 
 function App() {
   const [count, setCount] = useState(0)

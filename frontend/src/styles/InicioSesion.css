@@ -1,0 +1,237 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400&display=swap');
+
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.landing-container {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f3f4f6;
+}
+
+.background-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.form-container {
+  position: relative;
+  background-color: rgba(129, 73, 22, 0.7); /* Mismo color y opacidad que PrimerUso */
+  border-radius: 1.5rem;
+  padding: 2.5rem;
+  width: 1030px; /* Ancho exacto */
+  height: 450px; /* Alto exacto */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 60px; /* Ajustar padding superior para el título */
+}
+
+.form-title {
+  color: white;
+  font-weight: bolder;
+  font-size: 50px; /* Ajustar el tamaño de la fuente para que quepa en el ancho */
+  text-align: center;
+  margin-bottom: 30px; /* Ajustar el margen inferior */
+  width: 373px; /* Ancho exacto */
+  height: 58px; /* Alto exacto */
+  line-height: 58px; /* Asegurar que el texto esté centrado verticalmente */
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 500px; /* Ancho exacto de los inputs y el botón */
+  margin: 0 auto;
+}
+
+.text-input {
+  width: 100%;
+  height: 58px; /* Alto exacto de los inputs */
+  border: none;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 0 15px;
+  box-sizing: border-box;
+  border-radius: 0.25rem;
+  font-style: italic;
+  font-size: 17px;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 400;
+}
+
+.text-input::placeholder {
+  color: white;
+  opacity: 1;
+  font-size: 17px;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 400;
+}
+
+.text-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 1px white;
+}
+
+.password-container {
+  position: relative;
+}
+
+.password-toggle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0.75rem;
+  display: flex;
+  align-items: center;
+  color: white;
+  cursor: pointer;
+}
+
+.eye-icon {
+  height: 1.25rem;
+  width: 1.25rem;
+}
+
+.remember-forgot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.remember-me {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.remember-me input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+}
+
+.forgot-password {
+  color: white;
+  text-decoration: none;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+}
+
+.submit-button {
+  width: 500px; /* Ancho exacto del botón */
+  height: 40px; /* Alto exacto del botón */
+  background-color: white;
+  color: black;
+  font-weight: bolder;
+  font-style: normal;
+  padding: 0;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-size: 20px;
+  font-family: 'Raleway', sans-serif;
+  line-height: 40px; /* Centrar el texto verticalmente en el botón */
+}
+
+.submit-button:hover {
+  background-color: #f9fafb;
+}
+
+.no-account {
+  color: white;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.register-link {
+  color: white;
+  text-decoration: none;
+}
+
+.register-link:hover {
+  text-decoration: underline;
+}
+
+/* Media queries para pantallas más pequeñas */
+@media (max-width: 768px) {
+  .form-container {
+    width: 90%; /* Ajustar para pantallas más pequeñas */
+    height: auto; /* Ajustar altura automáticamente */
+    padding: 20px;
+    padding-top: 30px;
+  }
+
+  .form-title {
+    font-size: 36px; /* Reducir tamaño de fuente */
+    width: auto; /* Ajustar ancho automáticamente */
+    height: auto; /* Ajustar altura automáticamente */
+    line-height: normal; /* Remover centrado vertical específico */
+    margin-bottom: 20px;
+  }
+
+  .login-form {
+    width: 90%; /* Ajustar ancho */
+    gap: 15px;
+  }
+
+  .text-input {
+    height: 50px; /* Ajustar altura */
+    font-size: 16px;
+  }
+
+  .text-input::placeholder {
+    font-size: 16px;
+  }
+
+  .submit-button {
+    width: 100%; /* Ocupar todo el ancho */
+    height: 40px;
+    font-size: 18px;
+    line-height: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .form-title {
+    font-size: 30px; /* Reducir aún más */
+    margin-bottom: 15px;
+  }
+
+  .text-input {
+    height: 45px;
+    font-size: 15px;
+  }
+
+  .text-input::placeholder {
+    font-size: 15px;
+  }
+
+  .submit-button {
+    font-size: 16px;
+    height: 40px;
+  }
+
+  .remember-forgot {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+}
