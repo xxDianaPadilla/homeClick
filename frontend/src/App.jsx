@@ -9,13 +9,14 @@ import PropertyCategories from './pages/PropertyCategories';
 import InicioSesion from './pages/InicioSesion'
 import RecuperarContraseña from './pages/RecuperarContrasena';
 import UserInfoCard from './components/UserInfoCard';
+import EnvioCorreo from './pages/EnvioCorreo';
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
-      <RecuperarContraseña/>
+      <EnvioCorreo/>
     </>
   )
 }
