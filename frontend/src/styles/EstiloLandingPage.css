@@ -1,5 +1,255 @@
+@import url('https://fonts.googleapis.com/css2?family=Trocchi&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+
 .landing-page{
     min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
+
+.container{
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.background-image{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(90%);
+    z-index: 0;
+}
+
+.content{
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 1rem;
+    font-family: "Trocchi", serif;
+}
+
+h1{
+    font-weight: 400;
+    font-size: 2rem;
+    line-height: 1.2;
+    margin: 0;
+}
+
+@media (min-width: 640px){
+    h1{
+        font-size: 2.5rem;
+    }
+}
+
+@media (min-width: 768px){
+    h1{
+        font-size: 3rem;
+    }
+}
+
+.subtitle{
+    display: block;
+    margin-top: 0.5rem;
+    font-weight: 400;
+    font-size: 2.5rem;
+    font-family: "Trocchi", serif;
+}
+
+@media (min-width: 640px){
+    .subtitle{
+        font-size: 3rem;
+    }
+}
+
+@media (min-width: 768px){
+    .subtitle{
+        font-size: 3.75rem;
+    }
+}
+
+.btn{
+    margin-top: 1.5rem;
+    background-color: #E9631A;
+    color: #ffffff;
+    font-style: italic;
+    font-weight: 600;
+    font-size: 0.875rem;
+    font-family: 'Raleway', sans-serif;
+    padding: 0.5rem 2rem;
+    border-radius: 9999px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover{
+    background-color: #cc5f0a;
+}
+
+.footer-text{
+    position: absolute;
+    bottom: 0.25rem;
+    font-size: 0.75rem;
+    font-family: "Trocchi", serif;
+    max-width: 400px;
+    color: #000000;
+    line-height: 1.2;
+    margin-left: 10px;
+}
+
+.container2{
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 40px 16px 64px 16px;
+}
+
+.objetivos{
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    text-align: center;
+    font-family: "Trocchi", serif;
+}
+
+@media (min-width: 768px){
+    .objetivos{
+        flex-direction: row;
+        text-align: left;
+        gap: 0;
+        justify-content: space-between;
+    }
+}
+
+.objetivo{
+    flex: 1 1 0;
+    max-width: 33.3333%;
+    margin-right: 2rem;
+    margin-left: 2rem;
+}
+
+.objetivo h2{
+    font-weight: 600;
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+.objetivo p{
+    font-size: 14px;
+    line-height: 1.4;
+    margin: 0;
+    color: #7D7470;
+}
+
+.descubre-title{
+    font-weight: 600;
+    font-size: 28px;
+    text-align: center;
+    margin: 64px 0 40px 0;
+    font-family: "Trocchi", serif;
+}
+
+.descubre-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  @media (min-width: 640px) {
+    .descubre-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .descubre-item {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .descubre-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .descubre-caption{
+    background-color: #A9C2E0;
+    font-family: 'Raleway', sans-serif;
+    font-size: 12px;
+    font-style: italic;
+    text-align: center;
+    padding: 4px 0;
+    margin-top: 4px;
+    font-weight: bold;
+  }
+
+  footer{
+    padding: 24px 24px 24px 24px;
+    background-color: #F1EFEA;
+    width: 1450px;
+  }
+
+  .footer-top{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+
+  .footer-column{
+    min-width: 140px;
+    margin-bottom: 24px;
+  }
+
+  .footer-column p{
+    margin: 4px 0;
+    font-family: "Manrope", sans-serif;
+    color: #000000;
+  }
+
+  .footer-column:nth-child(3){
+    margin-left: -300px;
+  }
+
+  .footer-column:nth-child(2){
+    margin-left: -300px;
+  }
+
+  .footer-column p.title{
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 600;
+    font-style: italic;
+    margin-bottom: 8px;
+    color: #2B2B2B;
+  }
+
+  .social-icons{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: -80px;
+    min-width: 140px;
+  }
+
+  .footer-bottom{
+    font-size: 11px;
+    font-family: "Manrope", sans-serif;
+    color: #717171;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+  }
