@@ -7,13 +7,14 @@ import LandingPage from './pages/LandingPage'
 import PrimerUso from './pages/PrimerUso';
 import PropertyCategories from './pages/PropertyCategories';
 import InicioSesion from './pages/InicioSesion'
+import UserInfoCard from './components/UserInfoCard';
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
-      <PropertyCategories/>
+      <RecuperarContraseña/>
     </>
   )
 }
