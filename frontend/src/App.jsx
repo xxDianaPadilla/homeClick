@@ -8,6 +8,7 @@ import PrimerUso from './pages/PrimerUso';
 import PropertyCategories from './pages/PropertyCategories';
 import InicioSesion from './pages/InicioSesion'
 import RecuperarContraseña from './pages/RecuperarContrasena';
+import UserInfoCard from './components/UserInfoCard';
 
 function App() {
   const [count, setCount] = useState(0)
