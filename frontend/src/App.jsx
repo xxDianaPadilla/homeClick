@@ -11,11 +11,7 @@ function App() {
 
   return (
     <>
-<<<<<<< HEAD
       
-=======
-      <PrimerUso/>
->>>>>>> Monterrosa
     </>
   )
 }
