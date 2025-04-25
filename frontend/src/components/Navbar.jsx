@@ -41,7 +41,7 @@ const Navbar = () => {
 
             <div className="navbar-menu">
                 <ul className="navbar-options">
-                    <li><a href="/casa-de-campo">Casa de campo</a></li>
+                    <li><a className="active" href="/casa-de-campo">Casa de campo</a></li>
                     <li><a href="/apartamento">Apartamentos</a></li>
                     <li><a href="/casa-de-playa">Casa de playa</a></li>
                     <li><a href="/mansion">Mansión</a></li>

@@ -44,6 +44,10 @@
     color: #E9631A;
 }
 
+.navbar-options li a.active{
+    color: #E9631A;
+}
+
 .navbar-icons{
     display: flex;
     align-items: center;

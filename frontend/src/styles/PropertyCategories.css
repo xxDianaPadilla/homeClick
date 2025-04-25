@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+.properties-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Raleway', sans-serif;
+  }
+  
+  .properties-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 20px;
+  }
+  
+  /* Media query para pantallas medianas y grandes */
+  @media (min-width: 768px) {
+    .properties-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  .property-card {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+  
+  .property-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .image-container {
+    position: relative;
+    height: 200px;
+  }
+  
+  .image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .stock-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: white;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+  }
+  
+  .property-footer {
+    background-color: #A9C2E0; 
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .property-footer p {
+    margin: 0;
+    color: #333;
+    font-weight: 600;
+    font-style: italic;
+  }

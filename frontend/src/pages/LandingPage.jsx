@@ -1,14 +1,11 @@
 import React from "react";
 import Navbar from '../components/Navbar';
+import Footer from "../components/Footer";
 import '../styles/EstiloLandingPage.css';
 import bgImage from "../assets/xd1.png";
 import house1 from "../assets/image5.png";
 import house2 from "../assets/image6.png";
 import house3 from "../assets/image7.png";
-import tikTok from "../assets/image20.png";
-import faceBook from "../assets/image18.png";
-import whatsApp from "../assets/image16.png";
-import instagram from "../assets/image15.png";
 
 const LandingPage = () => {
     return(
@@ -63,38 +60,7 @@ const LandingPage = () => {
                     </div>
                 </div>
             </section>
-            <footer>
-                <div className="footer-top">
-                    <div className="footer-column">
-                        <p className="title">HomeClick</p>
-                        <p>Acerca de nosotros</p>
-                        <p>HomeClick Business</p>
-                    </div>
-                    <div className="footer-column">
-                        <p className="title">Soporte técnico</p>
-                        <p>Facebook Messenger</p>
-                        <p>WhatsApp Messenger</p>
-                        <p>Contáctanos</p>
-                    </div>
-                    <div className="footer-column">
-                        <p className="title">Términos legales</p>
-                        <p>Centro de seguridad</p>
-                        <p>Políticas de privacidad</p>
-                        <p>Condiciones del servicio</p>
-                    </div>
-                    <div className="social-icons" aria-label="Redes sociales">
-                        <a href="#" aria-label="TikTok"><img src={tikTok} alt="" /></a>
-                        <a href="#" aria-label="Facebook"><img src={faceBook} alt="" /></a>
-                        <a href="#" aria-label="WhatsApp"><img src={whatsApp} alt="" /></a>
-                        <a href="#" aria-label="Instagram"><img src={instagram} alt="" /></a>
-                    </div>
-                </div>
-                <div className="footer-bottom">
-                    <span>© 2023 HomeClick. Todos los derechos reservados</span>
-                    <span>Políticas de Privacidad</span>
-                    <span>Términos y condiciones</span>
-                </div>
-            </footer>
+            <Footer/> 
         </div>
     );
 };
