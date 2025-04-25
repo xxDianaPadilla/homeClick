@@ -1,9 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 
-*{
-    font-family: 'Raleway', sans-serif;
-}
-
 .navbar{
     width: 100%;
     background-color: #ffffff;
@@ -32,6 +28,7 @@
     padding: 0;
     margin: 0;
     gap: 10px;
+    font-family: 'Raleway', sans-serif;
 }
 
 .navbar-options li a{
@@ -62,6 +59,7 @@
     border-radius: 8px;
     overflow: hidden;
     margin-left: -10px;
+    font-family: 'Raleway', sans-serif;
   }
   
   .search-container input[type="text"] {
