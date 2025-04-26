@@ -10,13 +10,14 @@ import InicioSesion from './pages/InicioSesion'
 import RecuperarContraseña from './pages/RecuperarContrasena';
 import UserInfoCard from './components/UserInfoCard';
 import EnvioCorreo from './pages/EnvioCorreo';
+import PropertyView from './pages/PropertyView';
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
-      <LandingPage/>
+      <PropertyView/>
     </>
   )
 }
