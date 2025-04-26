@@ -8,11 +8,13 @@ import house7 from "../assets/image7.png";
 import house8 from "../assets/image5.png";
 import saveIcon from '../assets/image23.png';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import ContactForm from "../components/ContactForm";
 
 const PropertyView = () => {
     const [mainImage, setMainImage] = useState(house1);
     const [detailsExpanded, setDetailsExpanded] = useState(false);
     const [dimensionsExpanded, setDimensionsExpanded] = useState(false);
+    const [showContactForm, setShowContactForm] = useState(false);
     
     const thumbnails = [house1, house6, house7, house8];
     
@@ -52,6 +54,10 @@ const PropertyView = () => {
     };
     
     const center = [13.6929, -89.2182]; 
+
+    const toggleContactForm = () => {
+        setShowContactForm(!showContactForm);
+    };
     
     return (
         <>
@@ -95,7 +101,7 @@ const PropertyView = () => {
                             <p className="property-description">{propertyData.description}</p>
                             
                             <div className="action-buttons">
-                                <button className="btn-contact">Contactar al dueño</button>
+                                <button className="btn-contact" onClick={toggleContactForm}>Contactar al dueño</button>
                                 <button className="btn-save">Agregar al carrito</button>
                             </div>
                         </div>
@@ -169,6 +175,8 @@ const PropertyView = () => {
                     </div>
                 </div>
             </div>
+
+            {showContactForm && <ContactForm onClose={toggleContactForm}/>}
             
             <Footer />
         </>

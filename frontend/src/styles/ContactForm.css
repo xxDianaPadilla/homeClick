@@ -1,0 +1,130 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+.contact-form-overlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.contact-form-container{
+    background-color: #ffffff;
+    border-radius: 15px;
+    width: 100%;
+    max-width: 500px;
+    padding: 25px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Raleway', sans-serif;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.contact-form-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.contact-form-header h2{
+    font-size: 24px;
+    margin: 0;
+    font-weight: bold;
+}
+
+.close-button{
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.close-button img{
+    width: 16px;
+    height: 16px;
+}
+
+.contact-subtitle{
+    color: #666;
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 15px;
+}
+
+.form-group{
+    margin-bottom: 15px;
+}
+
+.form-group input,
+.form-group textarea{
+    width: 95%;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    background-color: #f0f0f0;
+    font-size: 16px;
+    font-family: 'Raleway', sans-serif;
+    font-weight: bold;
+    font-style: italic;
+}
+
+
+.form-group input::placeholder,
+.form-group textarea::placeholder{
+    color: #717171;
+}
+
+.form-group textarea{
+    resize: vertical;
+    min-height: 100px;
+}
+
+.form-actions{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.send-button{
+    background-color: #E9631A;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 30px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-family: 'Raleway', sans-serif;
+    font-style: italic;
+}
+
+.send-button:hover{
+    background-color: #d35400;
+}
+
+@media (max-width: 570px){
+    .contact-form-container{
+        width: 90%;
+        padding: 15px;
+    }
+
+    .contact-form-header h2{
+        font-size: 20px;
+    }
+
+    .form-group input,
+    .form-group textarea{
+        padding: 12px;
+    }
+
+    .send-button{
+        padding: 10px 20px;
+    }
+}
