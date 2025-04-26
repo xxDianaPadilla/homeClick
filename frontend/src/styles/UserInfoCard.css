@@ -1,1 +1,199 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+.user-info-overlay{
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.user-info-card {
+    background-color: #ffffff;
+    width: 300px;
+    max-height: 80vh; 
+    padding: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); 
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    font-family: 'Raleway', sans-serif;
+    font-style: italic;
+    border-radius: 10px;
+    position: relative; 
+    margin: auto; 
+}
+
+.card-header{
+    display: flex;
+    justify-content: flex-start;
+}
+
+.close-button{
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.close-button img{
+    width: 20px;
+    height: 20px;
+}
+
+.profile-section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.profile-image-container{
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.profile-image{
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.profile-image img{
+    width: 100%;
+    height: auto;
+}
+
+.camera-icon{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: #ffffff;
+    border-radius: 50%;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25px;
+    height: 25px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.camera-icon img{
+    width: 15px;
+    height: 15px;
+}
+
+.profile-name{
+    font-size: 16px;
+    font-weight: bold;
+    margin: 5px 0;
+    text-align: center;
+}
+
+.info-section{
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 15px;
+}
+
+.info-section h4{
+    color: #333;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.info-field{
+    margin-bottom: 10px;
+}
+
+.info-field label{
+    display: block;
+    font-size: 12px;
+    color: #000;
+    margin-bottom: 5px;
+}
+
+.info-field input{
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #043B64;
+    font-style: italic;
+    font-weight: 400;
+}
+
+.budget-field{
+    display: flex;
+    gap: 20px;
+}
+
+.budget-input{
+    flex: 1;
+}
+
+.budget-input label{
+    display: block;
+    font-size: 12px;
+    color: #000;
+    margin-bottom: 5px;
+}
+
+.budget-input input{
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #043B64;
+    font-style: italic;
+    font-weight: 400;
+}
+
+.button-section{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.update-profile-btn{
+    background-color: #A9C2E0;
+    color: #000;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 12px;
+    cursor: pointer;
+    flex: 1;
+    margin-right: 5px;
+    font-family: 'Raleway', sans-serif;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.close-session-btn{
+    background-color: #E2696B;
+    color: #000;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 12px;
+    cursor: pointer;
+    flex: 1;
+    margin-left: 5px;
+    font-family: 'Raleway', sans-serif;
+    font-weight: bold;
+    font-style: italic;
+}

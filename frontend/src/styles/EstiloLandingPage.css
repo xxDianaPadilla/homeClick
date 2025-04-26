@@ -197,8 +197,7 @@ h1 {
 }
 
 footer {
-  /* width: 1465px; */  /* Comenta esta línea */
-  width: 100%;          /* Añade esta línea */
+  width: 100%;         
   padding: 24px;
   background-color: #F1EFEA;
   box-sizing: border-box;
@@ -219,11 +218,7 @@ footer {
   margin: 4px 0;
   font-family: "Manrope", sans-serif;
   color: #000000;
-}
-
-.footer-column:nth-child(3),
-.footer-column:nth-child(2) {
-    margin-left: 0; /* Elimina márgenes negativos */
+  margin-right: -10px;
 }
 
 .footer-column p.title {
@@ -232,13 +227,14 @@ footer {
   font-style: italic;
   margin-bottom: 8px;
   color: #2B2B2B;
+  margin-right: 160px;
 }
 
 .social-icons {
   display: flex;
   align-items: center;
   gap: 16px;
-  margin-top: 0; /* Elimina margen negativo */
+  margin-top: 0; 
   min-width: 140px;
 }
 
