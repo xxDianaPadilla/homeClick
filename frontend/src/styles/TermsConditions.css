@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Trocchi&display=swap');
+
+.terms-container{
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 20px;
+    font-family: 'Trocchi', serif;
+    color: #333;
+    background-color: #ffffff;
+}
+
+.terms-content{
+    padding: 20px;
+}
+
+.terms-title{
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.terms-date{
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.terms-intro{
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+.terms-section{
+    margin-bottom: 25px;
+}
+
+.terms-section h2{
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.terms-section ul{
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.terms-section ul li{
+    position: relative;
+    padding-left: 15px;
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+.terms-container ul li::before{
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: #000;
+}
+
+.terms-container ul li strong{
+    font-weight: bold;
+}
+
+@media (max-width: 768px){
+    .terms-container{
+        padding: 10px;
+        margin: 20px auto
+    }
+
+    .terms-title{
+        font-size: 24px;
+    }
+
+    .terms-section h2{
+        font-size: 16px;
+    }
+}

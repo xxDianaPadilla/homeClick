@@ -14,13 +14,14 @@ import SavedProperties from './pages/SavedProperties';
 import ShoppingCart from './pages/shoppingCart';
 import AboutUs from './pages/AboutUs';
 import PrivacyPolicies from './pages/PrivacyPolicies';
+import TermsConditions from './pages/TermsConditions';
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
-      <PrivacyPolicies/>
+      <TermsConditions/>
     </>
   )
 }
