@@ -11,13 +11,14 @@ import RecuperarContraseña from './pages/RecuperarContrasena';
 import EnvioCorreo from './pages/EnvioCorreo';
 import PropertyView from './pages/PropertyView';
 import SavedProperties from './pages/SavedProperties';
+import ShoppingCart from './pages/shoppingCart';
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
-      <SavedProperties/>
+      <ShoppingCart/>
     </>
   )
 }
