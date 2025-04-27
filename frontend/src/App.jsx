@@ -12,13 +12,14 @@ import EnvioCorreo from './pages/EnvioCorreo';
 import PropertyView from './pages/PropertyView';
 import SavedProperties from './pages/SavedProperties';
 import ShoppingCart from './pages/shoppingCart';
+import AboutUs from './pages/AboutUs';
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
-      <ShoppingCart/>
+      <AboutUs/>
     </>
   )
 }
