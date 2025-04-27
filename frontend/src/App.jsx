@@ -10,13 +10,14 @@ import InicioSesion from './pages/InicioSesion'
 import RecuperarContraseña from './pages/RecuperarContrasena';
 import EnvioCorreo from './pages/EnvioCorreo';
 import PropertyView from './pages/PropertyView';
+import SavedProperties from './pages/SavedProperties';
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
-      <PropertyView/>
+      <SavedProperties/>
     </>
   )
 }
