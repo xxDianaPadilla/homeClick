@@ -1,0 +1,47 @@
+/* TermYcon.css */
+.terms-container {
+    width: 760px;
+    height: 542px;
+    padding: 40px;
+    font-family: sans-serif;
+    line-height: 1.6;
+    border: 1px solid #ccc; /* Opcional: para visualizar el tamaño en desarrollo */
+    box-sizing: border-box; /* Asegura que el padding no aumente el tamaño total */
+  }
+  
+  .terms-title {
+    font-size: 2em;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  
+  .terms-date {
+    color: #777;
+    font-size: 0.9em;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .terms-greeting {
+    margin-bottom: 20px;
+  }
+  
+  .terms-subtitle {
+    font-size: 1.3em;
+    margin-top: 25px;
+    margin-bottom: 10px;
+  }
+  
+  .terms-list {
+    list-style-type: disc;
+    padding-left: 20px;
+    margin-bottom: 15px;
+  }
+  
+  .terms-list li {
+    margin-bottom: 5px;
+  }
+  
+  .terms-list strong {
+    font-weight: bold;
+  }

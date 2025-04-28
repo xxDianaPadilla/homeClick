@@ -1,16 +1,17 @@
 .lock-icon-container {
-  width: 150px; /* Reducir el tamaño del círculo */
-  height: 150px; /* Reducir el tamaño del círculo */
-  border-radius: 50%;
-  border: 2px solid white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 15px; /* Ajustar margen inferior */
-  margin-top: -70px;
-}
-
-.lock-image {
-  max-width: 60%;
-  max-height: 60%;
-}
+   width: 150px; /* Reducir el tamaño del círculo */
+   height: 150px; /* Reducir el tamaño del círculo */
+   border-radius: 50%;
+   border: 2px solid white;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   margin-bottom: 15px; /* Ajustar margen inferior */
+   margin-top: -70px;
+   margin-bottom: -200px;
+ }
+ 
+ .lock-image {
+   max-width: 60%;
+   max-height: 60%;
+ }

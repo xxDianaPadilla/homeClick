@@ -1,0 +1,16 @@
+.lock-icon-container {
+    width: 140px; /* Ajustar tamaño del círculo */
+    height: 160px; /* Ajustar tamaño del círculo */
+    border-radius: 50%;
+    border: 2px solid white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px; /* Reducir margen inferior */
+    margin-top: -30px; /* Ajustar margen superior para subirlo menos */
+  }
+  
+  .lock-image {
+    max-width: 75%; /* Ajustar tamaño de la imagen dentro del círculo */
+    max-height: 75%; /* Ajustar tamaño de la imagen dentro del círculo */
+  }

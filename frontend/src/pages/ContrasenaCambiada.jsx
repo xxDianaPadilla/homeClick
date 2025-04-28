@@ -1,8 +1,8 @@
 import React from 'react';
-import "../styles/EnvioCorreo.css";
+import "../styles/ContrasenaCambiada.css";
 import bgImgHouse from "../assets/imgLoginFondo.png"; // Reutilizamos la imagen de fondo
 
-function EmailEnviado() {
+function ContrasenaCambiada() {
   return (
     <div className="landing-container">
       <img
@@ -10,10 +10,12 @@ function EmailEnviado() {
         alt="Row of Victorian houses with warm sunlight and clear sky"
         className="background-image"
       />
-      <div className="email-sent-container">
-        <h1 className="title">Correo electrónico enviado</h1>
+      <div className="password-changed-container">
+        <h1 className="title">Contraseña cambiada correctamente</h1>
         <p className="description">
-          Su codigo de verificación ha sido enviado a su correo electrónico. Por favor, revise su bandeja de entrada y siga las instrucciones para continuar.
+          Vuelva a iniciar sesión<br/>
+          para poder verificar que las
+          nuevas credenciales funcionen.
         </p>
         <button className="accept-button">Aceptar</button>
       </div>
@@ -21,4 +23,4 @@ function EmailEnviado() {
   );
 }
 
-export default EmailEnviado;
+export default ContrasenaCambiada;

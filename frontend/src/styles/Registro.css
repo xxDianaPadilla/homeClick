@@ -1,0 +1,231 @@
+/* Registro.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400&display=swap');
+
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.landing-container {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f3f4f6;
+  font-family: 'Raleway', sans-serif;
+  font-style: italic;
+}
+
+.background-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.overlay {
+  background-color: rgba(129, 73, 22, 0.7); /* Color café con opacidad 0.7 */
+  max-width: 900px;
+  width: 90%; /* Ajustar el ancho para que no sea demasiado grande en pantallas más pequeñas */
+  height: 50vh; /* Altura del 50% del viewport height */
+  min-height: 550px; /* Altura mínima para evitar que sea muy pequeño */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 30px;
+  padding: 40px 50px 50px;
+}
+
+h1 {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+  font-style: italic;
+  font-size: 32px;
+  text-align: center;
+  margin: 0 0 30px 0;
+}
+
+.registro-form {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(4, 60px); /* Establecemos una altura mínima para cada fila */
+  column-gap: 30px;
+  row-gap: 20px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select {
+  width: 100%;
+  padding: 8px 10px;
+  font-style: italic;
+  font-weight: 700;
+  font-size: 14px;
+  color: white;
+  background: transparent;
+  border: 1px solid white;
+  outline: none;
+  transition: box-shadow 0.3s ease; /* Añadimos una transición suave para el efecto */
+}
+
+input::placeholder {
+  font-style: italic;
+  font-weight: 700;
+  color: white;
+}
+
+input:focus,
+select:focus {
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.5); /* Sombreado blanco semitransparente al enfocar */
+}
+
+.input-password-wrapper {
+  position: relative;
+}
+
+.input-password-wrapper input {
+  padding-right: 30px;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.password-requirements {
+  font-size: 12px;
+  font-style: normal;
+  line-height: 1.3;
+  margin: 0;
+  padding-left: 18px;
+  color: white;
+}
+
+.password-requirements li {
+  margin-bottom: 3px;
+}
+
+.fecha-nacimiento-label {
+  font-weight: 700;
+  font-style: italic;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.fecha-nacimiento-container {
+  display: flex;
+  gap: 10px;
+}
+
+select {
+  background: transparent;
+  border: 1px solid white;
+  color: white;
+  font-style: italic;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 5px 8px;
+  transition: box-shadow 0.3s ease; /* Añadimos transición también para el select */
+}
+
+.checkbox-container {
+  grid-column: 1 / 3;
+  display: flex;
+  align-items: center;
+  font-style: italic;
+  font-weight: 700;
+  font-size: 14px;
+  color: #5bc0de;
+}
+
+.checkbox-container input[type="checkbox"] {
+  margin-right: 8px;
+  width: 16px;
+  height: 16px;
+}
+
+.terms-label-link {
+  cursor: pointer;
+  text-decoration: underline; /* Subrayar para indicar que es clickable */
+}
+
+button {
+  grid-column: 1 / 4;
+  width: 500px;
+  background: white;
+  color: black;
+  font-style: italic;
+  font-weight: 700;
+  font-size: 16px;
+  border: none;
+  padding: 10px 0;
+  cursor: pointer;
+  justify-self: center; /* Centra el botón horizontalmente dentro de su celda del grid */
+}
+
+.login-text {
+  grid-column: 1 / 4;
+  margin-top: 15px;
+  font-size: 13px;
+  font-style: normal;
+  text-align: center;
+  color: white;
+}
+
+.login-text a {
+  color: #5bc0de;
+  font-style: italic;
+  text-decoration: none;
+}
+
+.login-text a:hover {
+  text-decoration: underline;
+}
+
+/* Estilos para la ventana emergente */
+.terms-popup {
+  position: fixed; /* Se mantiene en la ventana */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro semitransparente */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Asegura que esté por encima de otros elementos */
+}
+
+.terms-popup-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  position: relative; /* Para posicionar el botón de cierre */
+  /* Puedes ajustar el ancho y alto máximo según el contenido de TermYcon */
+  max-width: 80%;
+  max-height: 80%;
+  overflow-y: auto; /* Añade scroll si el contenido es muy largo */
+}
+
+.close-popup {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+}

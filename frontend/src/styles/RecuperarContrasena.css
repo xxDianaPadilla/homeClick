@@ -58,7 +58,8 @@ body {
   cursor: pointer;
   padding: 5px 0 0 0; /* Ajustar padding */
   margin-top: -20px;
-  margin-left: -5px;
+  margin-bottom: 20px;
+  margin-left: -250px;
 }
 
 .back-icon {
