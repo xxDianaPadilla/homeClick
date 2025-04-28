@@ -1,10 +1,18 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import "../styles/PrimerUso.css";
 import bgImgHouse from "../assets/imgLoginFondo.png"
 
 function PrimerUso() {
   const [showPassword1, setShowPassword1] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
+  const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    navigate('/inicio-sesion');
+  };
 
   return (
     <div className="landing-container">
@@ -13,9 +21,9 @@ function PrimerUso() {
         alt="Row of Victorian houses with warm sunlight and clear sky" 
         className="background-image" 
       />
-      <div className="form-container">
-        <h1 className="form-title">Primer uso</h1>
-        <form className="signup-form">
+      <div className="form-container2">
+        <h1 className="form-title3">Primer uso</h1>
+        <form className="signup-form" onSubmit={handleSubmit}>
           <input 
             type="email" 
             placeholder="Correo electrónico" 

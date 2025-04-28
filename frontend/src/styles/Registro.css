@@ -1,4 +1,3 @@
-/* Registro.css */
 @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400&display=swap');
 
@@ -6,6 +5,19 @@ body {
   font-family: 'Inter', sans-serif;
   margin: 0;
   padding: 0;
+}
+
+.form-title2 {
+  color: white;
+  font-weight: bolder;
+  font-size: 40px; 
+  text-align: center;
+  margin-left: 240px;
+  margin-bottom: 30px; 
+  width: 373px; 
+  height: 58px; 
+  line-height: 58px; 
+  margin-top: 30px;
 }
 
 .landing-container {
@@ -17,7 +29,6 @@ body {
   justify-content: center;
   background-color: #f3f4f6;
   font-family: 'Raleway', sans-serif;
-  font-style: italic;
 }
 
 .background-image {
@@ -26,14 +37,15 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  filter: brightness(0.7) sepia(0.2);
 }
 
 .overlay {
-  background-color: rgba(129, 73, 22, 0.7); /* Color café con opacidad 0.7 */
+  background-color: rgba(129, 73, 22, 0.7);
   max-width: 900px;
-  width: 90%; /* Ajustar el ancho para que no sea demasiado grande en pantallas más pequeñas */
-  height: 50vh; /* Altura del 50% del viewport height */
-  min-height: 550px; /* Altura mínima para evitar que sea muy pequeño */
+  width: 90%;
+  height: auto;
+  min-height: 550px;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -45,45 +57,44 @@ body {
 h1 {
   font-family: 'Roboto', sans-serif;
   font-weight: 700;
-  font-style: italic;
   font-size: 32px;
   text-align: center;
   margin: 0 0 30px 0;
+  color: white;
 }
 
 .registro-form {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(4, 60px); /* Establecemos una altura mínima para cada fila */
+  grid-template-rows: repeat(4, auto);
   column-gap: 30px;
   row-gap: 20px;
 }
 
-input[type="text"],
-input[type="email"],
-input[type="password"],
+input[type="text"], 
+input[type="email"], 
+input[type="password"], 
 select {
   width: 100%;
   padding: 8px 10px;
-  font-style: italic;
-  font-weight: 700;
   font-size: 14px;
   color: white;
   background: transparent;
   border: 1px solid white;
   outline: none;
-  transition: box-shadow 0.3s ease; /* Añadimos una transición suave para el efecto */
+  transition: box-shadow 0.3s ease;
+  box-sizing: border-box;
 }
 
 input::placeholder {
-  font-style: italic;
-  font-weight: 700;
   color: white;
+  font-family: 'Raleway', sans-serif;
+  font-style: italic;
+  font-weight: 600;
 }
 
-input:focus,
-select:focus {
-  box-shadow: 0 0 5px rgba(255, 255, 255, 0.5); /* Sombreado blanco semitransparente al enfocar */
+input:focus, select:focus {
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
 }
 
 .input-password-wrapper {
@@ -104,22 +115,28 @@ select:focus {
   font-size: 16px;
 }
 
+.eye-icon {
+  width: 20px;
+  height: 20px;
+  stroke: white;
+}
+
 .password-requirements {
+  color: white;
   font-size: 12px;
-  font-style: normal;
   line-height: 1.3;
-  margin: 0;
-  padding-left: 18px;
+}
+
+.password-requirements ul {
+  padding-left: 0;
+  margin-bottom: 0;
+}
+
+.fecha-container {
   color: white;
 }
 
-.password-requirements li {
-  margin-bottom: 3px;
-}
-
 .fecha-nacimiento-label {
-  font-weight: 700;
-  font-style: italic;
   font-size: 14px;
   margin-bottom: 5px;
 }
@@ -129,25 +146,35 @@ select:focus {
   gap: 10px;
 }
 
+.fecha-nacimiento-container select {
+  flex: 1;
+}
+
 select {
   background: transparent;
   border: 1px solid white;
   color: white;
-  font-style: italic;
-  font-weight: 700;
   font-size: 14px;
   padding: 5px 8px;
-  transition: box-shadow 0.3s ease; /* Añadimos transición también para el select */
+  transition: box-shadow 0.3s ease;
+}
+
+select option {
+  background-color: #814916;
+  color: white;
 }
 
 .checkbox-container {
-  grid-column: 1 / 3;
+  grid-column: 1 / 4;
   display: flex;
   align-items: center;
-  font-style: italic;
-  font-weight: 700;
   font-size: 14px;
   color: #5bc0de;
+  text-decoration: underline;
+}
+
+.terms-label{
+  cursor: pointer;
 }
 
 .checkbox-container input[type="checkbox"] {
@@ -156,37 +183,40 @@ select {
   height: 16px;
 }
 
-.terms-label-link {
-  cursor: pointer;
-  text-decoration: underline; /* Subrayar para indicar que es clickable */
-}
-
-button {
+.submit-button2 {
   grid-column: 1 / 4;
-  width: 500px;
-  background: white;
+  width: 80%;
+  max-width: 500px;
+  width: 500px; 
+  max-width: 100%; 
+  height: 45px; 
+  background-color: white;
   color: black;
-  font-style: italic;
-  font-weight: 700;
-  font-size: 16px;
+  font-weight: bolder; 
+  font-style: normal; 
+  padding: 0; 
   border: none;
-  padding: 10px 0;
+  border-radius: 0.25rem;
   cursor: pointer;
-  justify-self: center; /* Centra el botón horizontalmente dentro de su celda del grid */
+  font-size: 18px; 
+  font-family: 'Raleway', sans-serif;
+  margin-top: 20px;
+  font-weight: 600;
+  font-style: italic;
+  justify-self: center;
+  margin-top: 10px;
 }
 
 .login-text {
   grid-column: 1 / 4;
-  margin-top: 15px;
-  font-size: 13px;
-  font-style: normal;
+  margin-top: -5px;
+  font-size: 15px;
   text-align: center;
   color: white;
 }
 
 .login-text a {
   color: #5bc0de;
-  font-style: italic;
   text-decoration: none;
 }
 
@@ -194,38 +224,99 @@ button {
   text-decoration: underline;
 }
 
-/* Estilos para la ventana emergente */
-.terms-popup {
-  position: fixed; /* Se mantiene en la ventana */
+.modal-overlay {
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro semitransparente */
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; /* Asegura que esté por encima de otros elementos */
+  z-index: 1000;
 }
 
-.terms-popup-content {
+.modal-content {
   background-color: white;
-  padding: 20px;
+  padding: 25px;
   border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  position: relative; /* Para posicionar el botón de cierre */
-  /* Puedes ajustar el ancho y alto máximo según el contenido de TermYcon */
-  max-width: 80%;
-  max-height: 80%;
-  overflow-y: auto; /* Añade scroll si el contenido es muy largo */
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.close-popup {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 20px;
-  font-weight: bold;
+.modal-content h2 {
+  margin-top: 0;
+  font-size: 22px;
   color: #333;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+.terms-content {
+  max-height: 50vh;
+  overflow-y: auto;
+  margin-bottom: 15px;
+  padding-right: 10px;
+}
+
+.terms-date {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.terms-welcome {
+  margin-bottom: 15px;
+}
+
+.terms-section {
+  margin-bottom: 15px;
+}
+
+.terms-section h3 {
+  font-size: 16px;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.terms-section ul {
+  list-style-type: disc;
+  padding-left: 20px;
+  margin: 0;
+}
+
+.terms-section li {
+  margin-bottom: 5px;
+}
+
+.contact {
+  margin-top: 15px;
+}
+
+.accept-button {
+  background-color: #a67c52;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
   cursor: pointer;
+  font-size: 16px;
+  display: block;
+  margin: 15px auto 0;
+  width: fit-content;
+}
+
+.accept-button:hover {
+  background-color: #8e6a46;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
 }

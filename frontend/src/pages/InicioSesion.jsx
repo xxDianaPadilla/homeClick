@@ -1,9 +1,15 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import "../styles/InicioSesion.css";
-import bgImgHouse from "../assets/imgLoginFondo.png"; // Asegúrate de que la ruta a la imagen sea correcta
+import bgImgHouse from "../assets/imgLoginFondo.png"; 
 
 function InicioSesion() {
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+
+  const handleRegisterClick = () => {
+    navigate('/registro');
+  };
 
   return (
     <div className="landing-container">
@@ -12,7 +18,7 @@ function InicioSesion() {
         alt="Row of Victorian houses with warm sunlight and clear sky"
         className="background-image"
       />
-      <div className="form-container">
+      <div className="form-container2">
         <h1 className="form-title">Inicio de sesión</h1>
         <form className="login-form">
           <input
@@ -48,7 +54,7 @@ function InicioSesion() {
             Iniciar sesión
           </button>
           <div className="no-account">
-            ¿No tienes una cuenta? <a href="#" className="register-link">Regístrate</a>
+            ¿No tienes una cuenta? <a href="" className="register-link" onClick={handleRegisterClick}>Regístrate</a>
           </div>
         </form>
       </div>

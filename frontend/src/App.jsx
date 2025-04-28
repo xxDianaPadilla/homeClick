@@ -1,8 +1,6 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
-import {BrowserRouter as Router, Routes, Route} from "react-router";
+import { BrowserRouter as Router, Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
 import LandingPage from './pages/LandingPage'
 import PrimerUso from './pages/PrimerUso';
 import PropertyCategories from './pages/PropertyCategories';
@@ -18,15 +16,19 @@ import TermsConditions from './pages/TermsConditions';
 import CambiarContrasena from './pages/CambiarContrasena'
 import ContrasenaCambiada from './pages/ContrasenaCambiada';
 import Registro from './pages/Registro';
-import TermYcon from './pages/TermYcon';
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <>
-      <TermsConditions/>
-    </>
+    <Router>
+      <Routes>
+        <Route path='/' element={<Navigate to="primer-uso"/>}/>
+        <Route path='/primer-uso' element={<PrimerUso/>}/>
+        <Route path='/inicio-sesion' element={<InicioSesion/>}/> 
+        <Route path='/registro' element={<Registro/>}/>
+      </Routes>
+    </Router>
   )
 }
 

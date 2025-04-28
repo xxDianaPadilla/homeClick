@@ -25,41 +25,43 @@ body {
   object-fit: cover;
 }
 
-.form-container {
+.form-container2 {
   position: relative;
-  background-color: rgba(129, 73, 22, 0.7); /* Mismo color y opacidad que PrimerUso */
+  background-color: rgba(129, 73, 22, 0.7); 
   border-radius: 1.5rem;
   padding: 2.5rem;
-  width: 1030px; /* Ancho exacto */
-  height: 450px; /* Alto exacto */
+  width: 1030px; 
+  height: 500px; 
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 60px; /* Ajustar padding superior para el título */
+  padding-top: 60px; 
 }
 
 .form-title {
   color: white;
   font-weight: bolder;
-  font-size: 50px; /* Ajustar el tamaño de la fuente para que quepa en el ancho */
+  font-size: 40px; 
   text-align: center;
-  margin-bottom: 30px; /* Ajustar el margen inferior */
-  width: 373px; /* Ancho exacto */
-  height: 58px; /* Alto exacto */
-  line-height: 58px; /* Asegurar que el texto esté centrado verticalmente */
+  margin-bottom: 30px; 
+  width: 373px; 
+  height: 58px; 
+  line-height: 58px; 
+  margin-top: 30px;
 }
 
 .login-form {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  width: 500px; /* Ancho exacto de los inputs y el botón */
+  width: 500px; 
   margin: 0 auto;
+  margin-top: 20px;
 }
 
 .text-input {
   width: 100%;
-  height: 58px; /* Alto exacto de los inputs */
+  height: 58px; 
   border: none;
   background-color: rgba(255, 255, 255, 0.2);
   color: white;
@@ -78,6 +80,8 @@ body {
   font-size: 17px;
   font-family: 'Raleway', sans-serif;
   font-weight: 400;
+  font-style: italic;
+  font-weight: 600;
 }
 
 .text-input:focus {
@@ -112,6 +116,9 @@ body {
   color: white;
   font-size: 14px;
   margin-bottom: 15px;
+  font-family: 'Raleway', sans-serif;
+  font-style: italic;
+  font-weight: 600;
 }
 
 .remember-me {
@@ -135,8 +142,8 @@ body {
 }
 
 .submit-button {
-  width: 500px; /* Ancho exacto del botón */
-  height: 40px; /* Alto exacto del botón */
+  width: 500px; 
+  height: 40px; 
   background-color: white;
   color: black;
   font-weight: bolder;
@@ -147,7 +154,8 @@ body {
   cursor: pointer;
   font-size: 20px;
   font-family: 'Raleway', sans-serif;
-  line-height: 40px; /* Centrar el texto verticalmente en el botón */
+  line-height: 40px; 
+  font-style: italic;
 }
 
 .submit-button:hover {
@@ -158,42 +166,45 @@ body {
   color: white;
   font-size: 14px;
   text-align: center;
-  margin-top: 20px;
+  margin-top: -10px;
+  font-family: 'Raleway', sans-serif;
+  font-style: italic;
+  font-weight: 600;
 }
 
 .register-link {
   color: white;
   text-decoration: none;
+  color: #6FDFE7;
 }
 
 .register-link:hover {
   text-decoration: underline;
 }
 
-/* Media queries para pantallas más pequeñas */
 @media (max-width: 768px) {
   .form-container {
-    width: 90%; /* Ajustar para pantallas más pequeñas */
-    height: auto; /* Ajustar altura automáticamente */
+    width: 90%; 
+    height: auto; 
     padding: 20px;
     padding-top: 30px;
   }
 
   .form-title {
-    font-size: 36px; /* Reducir tamaño de fuente */
-    width: auto; /* Ajustar ancho automáticamente */
-    height: auto; /* Ajustar altura automáticamente */
-    line-height: normal; /* Remover centrado vertical específico */
+    font-size: 36px; 
+    width: auto; 
+    height: auto; 
+    line-height: normal; 
     margin-bottom: 20px;
   }
 
   .login-form {
-    width: 90%; /* Ajustar ancho */
+    width: 90%; 
     gap: 15px;
   }
 
   .text-input {
-    height: 50px; /* Ajustar altura */
+    height: 50px; 
     font-size: 16px;
   }
 
@@ -202,7 +213,7 @@ body {
   }
 
   .submit-button {
-    width: 100%; /* Ocupar todo el ancho */
+    width: 100%; 
     height: 40px;
     font-size: 18px;
     line-height: 40px;
@@ -211,7 +222,7 @@ body {
 
 @media (max-width: 480px) {
   .form-title {
-    font-size: 30px; /* Reducir aún más */
+    font-size: 30px; 
     margin-bottom: 15px;
   }
 
