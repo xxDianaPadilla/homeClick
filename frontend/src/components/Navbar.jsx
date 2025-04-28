@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../styles/EstiloNav.css";
 import homeClickLogo from '../assets/naranja.png';
@@ -9,11 +9,33 @@ import profileIcon from '../assets/image3.png';
 import UserInfoCard from "./UserInfoCard";
 
 const Navbar = () => {
-
     const [isProfileOpen, setIsProfileOpen] = useState(false);
+    const [menuOpen, setMenuOpen] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
+
+    // Aqui practicamente se detectan cambios en el tamaño de la pantalla xdd
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 768);
+            if (window.innerWidth > 768) {
+                setMenuOpen(false);
+            }
+        };
+
+        window.addEventListener('resize', handleResize);
+        handleResize(); //Se verifica el tamaño inicial w
+        
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
     const toggleProfile = () => {
         setIsProfileOpen(!isProfileOpen);
+    };
+
+    const toggleMenu = () => {
+        setMenuOpen(!menuOpen);
     };
 
     return (
@@ -44,11 +66,17 @@ const Navbar = () => {
                             <img src={profileIcon} alt="" />
                         </button>
                     </div>
+                    
+                    <button className={`hamburger-menu ${menuOpen ? 'active' : ''}`} onClick={toggleMenu}>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
                 </div>
 
                 <hr className="espacio" />
 
-                <div className="navbar-menu">
+                <div className={`navbar-menu ${menuOpen ? 'active' : ''}`}>
                     <ul className="navbar-options">
                         <li><a className="active" href="/casa-de-campo">Casa de campo</a></li>
                         <li><a href="/apartamento">Apartamentos</a></li>
@@ -65,6 +93,10 @@ const Navbar = () => {
             </nav>
 
             <UserInfoCard isOpen={isProfileOpen} onClose={() => setIsProfileOpen(false)} />
+            
+            {menuOpen && isMobile && (
+                <div className="overlay" onClick={toggleMenu}></div>
+            )}
         </>
     );
 };
