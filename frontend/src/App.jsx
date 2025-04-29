@@ -9,7 +9,7 @@ import RecuperarContraseña from './pages/RecuperarContrasena';
 import EnvioCorreo from './pages/EnvioCorreo';
 import PropertyView from './pages/PropertyView';
 import SavedProperties from './pages/SavedProperties';
-import ShoppingCart from './pages/shoppingCart';
+import ShoppingCart from './pages/ShoppingCart';
 import AboutUs from './pages/AboutUs';
 import PrivacyPolicies from './pages/PrivacyPolicies';
 import TermsConditions from './pages/TermsConditions';
@@ -32,6 +32,11 @@ function App() {
         <Route path='/landingPage' element={<LandingPage/>}/>
         <Route path='/propertyCategories' element={<PropertyCategories/>}/>
         <Route path='/propertyView' element={<PropertyView/>}/>
+        <Route path='/shoppingCart' element={<ShoppingCart/>}/>
+        <Route path='/savedProperties' element={<SavedProperties/>}/>
+        <Route path='/aboutUs' element={<AboutUs/>}/>
+        <Route path='/privacyPolicies' element={<PrivacyPolicies/>}/>
+        <Route path='/termsConditions' element={<TermsConditions/>}/>
       </Routes>
     </Router>
   )

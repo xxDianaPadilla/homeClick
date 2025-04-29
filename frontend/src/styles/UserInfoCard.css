@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 
-.user-info-overlay{
+.user-info-overlay8{
     position: fixed;
     top: 0;
     right: 0;
@@ -13,7 +13,7 @@
     z-index: 1000;
 }
 
-.user-info-card {
+.user-info-card8 {
     background-color: #ffffff;
     width: 300px;
     max-height: 80vh; 
@@ -30,36 +30,36 @@
     margin: auto; 
 }
 
-.card-header{
+.card-header8{
     display: flex;
     justify-content: flex-start;
 }
 
-.close-button{
+.close-button8{
     background: none;
     border: none;
     cursor: pointer;
     padding: 0;
 }
 
-.close-button img{
+.close-button8 img{
     width: 20px;
     height: 20px;
 }
 
-.profile-section{
+.profile-section8{
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-bottom: 10px;
 }
 
-.profile-image-container{
+.profile-image-container8{
     position: relative;
     margin-bottom: 10px;
 }
 
-.profile-image{
+.profile-image8{
     width: 80px;
     height: 80px;
     border-radius: 50%;
@@ -70,12 +70,12 @@
     overflow: hidden;
 }
 
-.profile-image img{
+.profile-image8 img{
     width: 100%;
     height: auto;
 }
 
-.camera-icon{
+.camera-icon8{
     position: absolute;
     bottom: 0;
     right: 0;
@@ -90,41 +90,41 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.camera-icon img{
+.camera-icon8 img{
     width: 15px;
     height: 15px;
 }
 
-.profile-name{
+.profile-name8{
     font-size: 16px;
     font-weight: bold;
     margin: 5px 0;
     text-align: center;
 }
 
-.info-section{
+.info-section8{
     border-bottom: 1px solid #e0e0e0;
     padding-bottom: 15px;
 }
 
-.info-section h4{
+.info-section8 h4{
     color: #333;
     font-size: 14px;
     margin-bottom: 10px;
 }
 
-.info-field{
+.info-field8{
     margin-bottom: 10px;
 }
 
-.info-field label{
+.info-field8 label{
     display: block;
     font-size: 12px;
     color: #000;
     margin-bottom: 5px;
 }
 
-.info-field input{
+.info-field8 input{
     width: 100%;
     padding: 8px;
     border: 1px solid #ddd;
@@ -135,23 +135,23 @@
     font-weight: 400;
 }
 
-.budget-field{
+.budget-field8{
     display: flex;
     gap: 20px;
 }
 
-.budget-input{
+.budget-input8{
     flex: 1;
 }
 
-.budget-input label{
+.budget-input8 label{
     display: block;
     font-size: 12px;
     color: #000;
     margin-bottom: 5px;
 }
 
-.budget-input input{
+.budget-input8 input{
     width: 100%;
     padding: 8px;
     border: 1px solid #ddd;
@@ -162,13 +162,13 @@
     font-weight: 400;
 }
 
-.button-section{
+.button-section8{
     display: flex;
     justify-content: space-between;
     margin-top: 10px;
 }
 
-.update-profile-btn{
+.update-profile-btn8{
     background-color: #A9C2E0;
     color: #000;
     border: none;
@@ -183,7 +183,7 @@
     font-style: italic;
 }
 
-.close-session-btn{
+.close-session-btn8{
     background-color: #E2696B;
     color: #000;
     border: none;

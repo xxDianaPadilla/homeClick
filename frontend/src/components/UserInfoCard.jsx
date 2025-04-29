@@ -3,82 +3,88 @@ import '../styles/UserInfoCard.css';
 import closeIcon from '../assets/image10.png';
 import profileIcon from '../assets/image9.png';
 import cameraIcon from '../assets/image11.png';
-
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const UserInfoCard = ({isOpen, onClose}) =>{
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    const handleLoginClick = () => {
+        navigate('/inicio-sesion');
+      };
 
     if(!isOpen) return null;
 
     return(
-        <div className="user-info-overlay">
-            <div className="user-info-card">
-                <div className="card-header">
-                    <button className="close-button" onClick={onClose}>
+        <div className="user-info-overlay8">
+            <div className="user-info-card8">
+                <div className="card-header8">
+                    <button className="close-button8" onClick={onClose}>
                         <img src={closeIcon} alt="Cerrar" />
                     </button>
                 </div>
 
-                <div className="profile-section">
-                    <div className="profile-image-container">
-                        <div className="profile-image">
+                <div className="profile-section8">
+                    <div className="profile-image-container8">
+                        <div className="profile-image8">
                             <img src={profileIcon} alt="Perfil" />
                         </div>
-                        <div className="camera-icon">
+                        <div className="camera-icon8">
                             <img src={cameraIcon} alt="Cambiar foto" />
                         </div>
                     </div>
-                    <h3 className="profile-name">Juan Pablo Rodriguez López</h3>
+                    <h3 className="profile-name8">Juan Pablo Rodriguez López</h3>
                 </div>
 
-                <div className="info-section">
+                <div className="info-section8">
                     <h4>Información básica</h4>
 
-                    <div className="info-field">
+                    <div className="info-field8">
                         <label>Fecha de nacimiento</label>
-                        <input type="text" defaultValue="1999-07-14"/>
+                        <input  defaultValue="1999-07-14"/>
                     </div>
-                    <div className="info-field">
+                    <div className="info-field8">
                         <label>Dirección</label>
-                        <input type="text" defaultValue="Calle #21 San Salvador" />
+                        <input  defaultValue="Calle #21 San Salvador" />
                     </div>
-                    <div className="info-field">
+                    <div className="info-field8">
                         <label>DUI</label>
-                        <input type="text" defaultValue="12345678-9"/>
+                        <input  defaultValue="12345678-9"/>
                     </div>
                 </div>
 
-                <div className="info-section">
+                <div className="info-section8">
                     <h4>Información de contacto</h4>
 
-                    <div className="info-field">
+                    <div className="info-field8">
                         <label>Correo electrónico</label>
-                        <input type="email" defaultValue="jp@example.com"/>
+                        <input defaultValue="jp@example.com"/>
                     </div>
 
-                    <div className="info-field">
+                    <div className="info-field8">
                         <label>Teléfono</label>
-                        <input type="tel" defaultValue="1234-5678"/>
+                        <input  defaultValue="1234-5678"/>
                     </div>
                 </div>
 
-                <div className="info-section">
+                <div className="info-section8">
                     <h4>Presupuestos</h4>
 
-                    <div className="budget-field">
-                        <div className="budget-input">
+                    <div className="budget-field8">
+                        <div className="budget-input8">
                             <label>Min.</label>
-                            <input type="text" />
+                            <input />
                         </div>
-                        <div className="budget-input">
+                        <div className="budget-input8">
                             <label>Max.</label>
-                            <input type="text" />
+                            <input/>
                         </div>
                     </div>
                 </div>
 
-                <div className="button-section">
-                    <button className="update-profile-btn">Actualizar perfil</button>
-                    <button className="close-session-btn">Cerrar sesión</button>
+                <div className="button-section8">
+                    <button className="update-profile-btn8">Actualizar perfil</button>
+                    <button className="close-session-btn8" onClick={handleLoginClick}>Cerrar sesión</button>
                 </div>
             </div>
         </div>

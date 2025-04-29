@@ -7,15 +7,21 @@ import house6 from "../assets/image6.png";
 import house7 from "../assets/image7.png";
 import house8 from "../assets/image5.png";
 import saveIcon from '../assets/image23.png';
+import savedIcon from '../assets/image41.png';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import ContactForm from "../components/ContactForm";
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const PropertyView = () => {
-    const [mainImage, setMainImage] = useState(house1);
+    const [mainImage, setMainImage] = useState(house8);
     const [detailsExpanded, setDetailsExpanded] = useState(false);
     const [dimensionsExpanded, setDimensionsExpanded] = useState(false);
     const [showContactForm, setShowContactForm] = useState(false);
+    const [isSaved, setIsSaved] = useState(false);
+
+    const toggleSaved = () =>{
+        setIsSaved(!isSaved);
+    }
 
     const location = useLocation();
     const navigate = useNavigate();
@@ -32,7 +38,7 @@ const PropertyView = () => {
         }
     }, [propertyId, fromCategory]);
     
-    const thumbnails = [house1, house6, house7, house8];
+    const thumbnails = [house1, house6, house7, house1];
     
     const propertyData = {
         title: "Casa en Colonia Escalón",
@@ -75,15 +81,9 @@ const PropertyView = () => {
         setShowContactForm(!showContactForm);
     };
 
-    const handleSimilarPropertyClick = (propertyId) =>{
-        navigate('/propertyView', {
-            state: {
-                fromCategory,
-                propertyId
-            },
-            replace: true
-        });
-    };
+    const handleShoppingCartClick = () => {
+        navigate('/shoppingCart');
+      };
     
     return (
         <>
@@ -116,8 +116,8 @@ const PropertyView = () => {
                         <div className="property-info3">
                             <div className="property-title-section3">
                                 <h1>{propertyData.title}</h1>
-                                <div className="bookmark3">
-                                    <img src={saveIcon} alt="Guardar" />
+                                <div className="bookmark3" onClick={toggleSaved}>
+                                    <img src={isSaved ? savedIcon : saveIcon} alt={isSaved ? "Guardado" : "Guardar"} />
                                 </div>
                             </div>
                             
@@ -128,7 +128,7 @@ const PropertyView = () => {
                             
                             <div className="action-buttons3">
                                 <button className="btn-contact3" onClick={toggleContactForm}>Contactar al dueño</button>
-                                <button className="btn-save3">Agregar al carrito</button>
+                                <button className="btn-save3" onClick={handleShoppingCartClick}>Agregar al carrito</button>
                             </div>
                         </div>
                     </div>

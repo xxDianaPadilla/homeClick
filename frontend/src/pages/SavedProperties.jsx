@@ -10,9 +10,17 @@ import bedIcon from "../assets/image39.png";
 import personIcon from "../assets/image37.png";
 import toiletIcon from "../assets/image40.png";
 import trashcanIcon from "../assets/image36.png";
+import { useNavigate, useLocation } from 'react-router-dom';
 import "../styles/SavedProperties.css";
 
 const SavedProperties = () => {
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const handlePropertyViewClick = () => {
+        navigate('/propertyView');
+      };
+
     const savedHouses = [
         {
             id: 1,
@@ -59,7 +67,7 @@ const SavedProperties = () => {
 
                 <div className="property-list">
                     {savedHouses.map((house) => (
-                        <div key={house.id} className="property-card">
+                        <div key={house.id} className="property-card" onClick={handlePropertyViewClick}>
                             <div className="property-image-container">
                                 <img src={house.image} alt={house.title} className="property-image" />
                                 <div className="image-counter">

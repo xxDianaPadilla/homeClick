@@ -4,7 +4,9 @@ import "../styles/EstiloNav.css";
 import homeClickLogo from '../assets/naranja.png';
 import searchIcon from '../assets/image1.png';
 import saveIcon from '../assets/image23.png';
+import savedIcon from '../assets/image41.png';
 import cartIcon from '../assets/image24.png';
+import selectedCartIcon from '../assets/image42.png';
 import profileIcon from '../assets/image3.png';
 import UserInfoCard from "./UserInfoCard";
 
@@ -13,6 +15,18 @@ const Navbar = () => {
     const [menuOpen, setMenuOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
     const location = useLocation();
+    const navigate = useNavigate();
+
+    const isShoppingCartPage = location.pathname === '/shoppingCart';
+    const isSavedProperties = location.pathname === '/savedProperties';
+
+    const handleCartClick = () => {
+        navigate('/shoppingCart');
+    };
+
+    const handleSavedPropertiesClick = () =>{
+        navigate('/savedProperties')
+    };
 
     useEffect(() => {
         const handleResize = () => {
@@ -68,11 +82,11 @@ const Navbar = () => {
                     </div>
 
                     <div className="navbar-icons">
-                        <button className="icon-button bookmark-button">
-                            <img src={saveIcon} alt="" />
+                        <button className="icon-button bookmark-button" onClick={handleSavedPropertiesClick}>
+                            <img src={isSavedProperties ? savedIcon : saveIcon} alt="" />
                         </button>
-                        <button className="icon-button cart-button">
-                            <img src={cartIcon} alt="" />
+                        <button className="icon-button cart-button" onClick={handleCartClick}>
+                            <img src={isShoppingCartPage ? selectedCartIcon : cartIcon} alt="" />
                         </button>
                         <button className="icon-button profile-button" onClick={toggleProfile}>
                             <img src={profileIcon} alt="" />

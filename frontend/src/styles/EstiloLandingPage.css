@@ -224,6 +224,11 @@ footer {
   font-family: "Manrope", sans-serif;
   color: #000000;
   margin-right: -10px;
+  cursor: pointer;
+}
+
+.footer-column p:hover{
+  color: #cc5f0a;
 }
 
 .footer-column p.title2 {

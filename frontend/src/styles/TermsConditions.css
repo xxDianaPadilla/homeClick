@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Trocchi&display=swap');
 
-.terms-container{
+.terms-container2{
     max-width: 1000px;
     margin: 40px auto;
     padding: 20px;
@@ -9,15 +9,17 @@
     background-color: #ffffff;
 }
 
-.terms-content{
+.terms-content2{
     padding: 20px;
 }
 
-.terms-title{
+.terms-title2{
     font-size: 28px;
     font-weight: bold;
     text-align: center;
     margin-bottom: 5px;
+    color: #000;
+    font-family: 'Trocchi', serif;
 }
 
 .terms-date{
@@ -31,36 +33,36 @@
     line-height: 1.5;
 }
 
-.terms-section{
+.terms-section2{
     margin-bottom: 25px;
 }
 
-.terms-section h2{
+.terms-section2 h2{
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 10px;
 }
 
-.terms-section ul{
+.terms-section2 ul{
     list-style-type: none;
     padding-left: 0;
 }
 
-.terms-section ul li{
+.terms-section2 ul li{
     position: relative;
     padding-left: 15px;
     margin-bottom: 10px;
     line-height: 1.5;
 }
 
-.terms-container ul li::before{
+.terms-container2 ul li::before{
     content: '•';
     position: absolute;
     left: 0;
     color: #000;
 }
 
-.terms-container ul li strong{
+.terms-container2 ul li strong{
     font-weight: bold;
 }
 

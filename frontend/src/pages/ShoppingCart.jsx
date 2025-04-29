@@ -25,41 +25,45 @@ const ShoppingCart = () => {
     return (
         <>
             <Navbar />
-            <div className="shopping-cart-container">
-                <h1 className="shopping-cart-title">Carrito de compras</h1>
+            <div className="shopping-cart-container5">
+                <h1 className="shopping-cart-title5">Carrito de compras</h1>
 
-                <div className="shopping-cart-content">
-                    <div className="cart-summary">
-                        <h2 className="section-title">Resumen de su orden</h2>
+                <div className="shopping-cart-content5">
+                    <div className="cart-summary5">
+                        <h2 className="section-title5">Resumen de su orden</h2>
 
-                        <div className="cart-item">
-                            <div className="item-image">
+                        <div className="cart-item5">
+                            <div className="item-image5">
                                 <img src={house1} alt="Casa en colonia Escalón" />
                             </div>
-                            <div className="item-details">
-                                <div className="item-header">
+                            <div className="image-counter2">
+                                <img src={pictureIcon} alt="Pictures" className="meta-icon" />
+                                <span>5</span>
+                            </div>
+                            <div className="item-details5">
+                                <div className="item-header5">
                                     <h3>Casa en colonia Escalón</h3>
-                                    <span className="item-price">$550,000</span>
+                                    <span className="item-price5">$550,000</span>
                                 </div>
-                                <p className="item-description">
+                                <p className="item-description5">
                                     Moderna casa en exclusiva Colonia Escalón con amplia sala, comedor, cocina, 3 dormitorios con closet y 3 baños completos.
                                     Además cuenta con área de servicio completa y parqueo con portón eléctrico. Excelente ubicación cerca de centros comerciales,
                                     restaurantes y demás servicios.
                                 </p>
-                                <div className="item-features">
-                                    <div className="feature">
+                                <div className="item-features5">
+                                    <div className="feature5">
                                         <img src={areaIcon} alt="Área" />
                                         <span>267 metros cuadrados</span>
                                     </div>
-                                    <div className="feature">
+                                    <div className="feature5">
                                         <img src={bedIcon} alt="Dormitorios" />
                                         <span>3</span>
                                     </div>
-                                    <div className="feature">
+                                    <div className="feature5">
                                         <img src={toiletIcon} alt="Baños" />
                                         <span>3</span>
                                     </div>
-                                    <div className="feature">
+                                    <div className="feature5">
                                         <img src={personIcon} alt="Contactar agente" />
                                         <span>1</span>
                                     </div>
@@ -67,33 +71,37 @@ const ShoppingCart = () => {
                             </div>
                         </div>
 
-                        <div className="cart-item">
-                            <div className="item-image">
+                        <div className="cart-item5">
+                            <div className="item-image5">
                                 <img src={house2} alt="Casa en la zona rosa" />
                             </div>
-                            <div className="item-details">
-                                <div className="item-header">
+                            <div className="image-counter3">
+                                <img src={pictureIcon} alt="Pictures" className="meta-icon" />
+                                <span>4</span>
+                            </div>
+                            <div className="item-details5">
+                                <div className="item-header5">
                                     <h3>Casa en la zona rosa</h3>
-                                    <span className="item-price">$350,000</span>
+                                    <span className="item-price5">$350,000</span>
                                 </div>
-                                <p className="item-description">
+                                <p className="item-description5">
                                     Acogedora casa en la popular zona rosa, con fácil acceso a restaurantes y vida nocturna. La propiedad cuenta con sala, comedor,
                                     cocina, 2 dormitorios y 2 baños. Ideal para inversión o para quienes gustan vivir cerca de amenidades y transporte público.
                                 </p>
-                                <div className="item-features">
-                                    <div className="feature">
+                                <div className="item-features5">
+                                    <div className="feature5">
                                         <img src={areaIcon} alt="Área" />
                                         <span>156 metros cuadrados</span>
                                     </div>
-                                    <div className="feature">
+                                    <div className="feature5">
                                         <img src={bedIcon} alt="Dormitorios" />
                                         <span>2</span>
                                     </div>
-                                    <div className="feature">
+                                    <div className="feature5">
                                         <img src={toiletIcon} alt="Baños" />
                                         <span>2</span>
                                     </div>
-                                    <div className="feature">
+                                    <div className="feature5">
                                         <img src={trashcanIcon} alt="Eliminar" />
                                         <span>1</span>
                                     </div>
@@ -102,19 +110,19 @@ const ShoppingCart = () => {
                         </div>
                     </div>
 
-                    <div className="cart-total">
+                    <div className="cart-total5">
                         <h2 className="section-title">Factura total</h2>
 
-                        <div className="product-list">
-                            <div className="product-header">
+                        <div className="product-list5">
+                            <div className="product-header5">
                                 <span>Productos:</span>
                                 <span>Precios:</span>
                             </div>
-                            <div className="product-item">
+                            <div className="product-item5">
                                 <span>1. Casa en colonia Escalón</span>
                                 <span>$550,000</span>
                             </div>
-                            <div className="product-item">
+                            <div className="product-item5">
                                 <span>2. Casa en zona rosa</span>
                                 <span>$350,000</span>
                             </div>
@@ -179,17 +187,17 @@ const ShoppingCart = () => {
 
                             <div className="credit-card-form">
                                 <div className="form-group">
-                                    <input type="text" placeholder="Titulas de la tarjeta" className="form-control"/>
+                                    <input placeholder="Titulas de la tarjeta" className="form-control" />
                                 </div>
                                 <div className="form-group">
-                                    <input type="text" placeholder="Número de tarjeta" className="form-control"/>
+                                    <input placeholder="Número de tarjeta" className="form-control" />
                                 </div>
                                 <div className="form-row">
                                     <div className="form-group half">
-                                        <input type="text" placeholder="Fecha de vencimiento (mm/yy)" className="form-control"/>
+                                        <input placeholder="Fecha de vencimiento (mm/yy)" className="form-control" />
                                     </div>
                                     <div className="form-group half">
-                                        <input type="text" placeholder="Código de seguridad CVV" className="form-control"/>
+                                        <input placeholder="Código de seguridad CVV" className="form-control" />
                                     </div>
                                 </div>
                                 <button className="btn-confirm">

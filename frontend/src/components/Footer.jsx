@@ -4,15 +4,35 @@ import tikTok from "../assets/image20.png";
 import faceBook from "../assets/image18.png";
 import whatsApp from "../assets/image16.png";
 import instagram from "../assets/image15.png";
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const Footer = () =>{
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    const handleAboutUsClick = () => {
+        navigate('/aboutUs');
+    };
+
+    const handlePrivacyPoliciesClick = () => {
+        navigate('/privacyPolicies');
+    };
+
+    const handleTermsConditionsClick = () => {
+        navigate('/termsConditions');
+    };
+
+    const handleLandingPageClick = () => {
+        navigate('/landingPage');
+      };
+
     return(
         <footer>
                 <div className="footer-top">
                     <div className="footer-column">
                         <p className="title2">HomeClick</p>
-                        <p>Acerca de nosotros</p>
-                        <p>HomeClick Business</p>
+                        <p onClick={handleAboutUsClick}>Acerca de nosotros</p>
+                        <p onClick={handleLandingPageClick}>HomeClick Business</p>
                     </div>
                     <div className="footer-column">
                         <p className="title2">Soporte técnico</p>
@@ -22,9 +42,9 @@ const Footer = () =>{
                     </div>
                     <div className="footer-column">
                         <p className="title2">Términos legales</p>
-                        <p>Centro de seguridad</p>
-                        <p>Políticas de privacidad</p>
-                        <p>Condiciones del servicio</p>
+                        <p onClick={handlePrivacyPoliciesClick}>Centro de seguridad</p>
+                        <p onClick={handlePrivacyPoliciesClick}>Políticas de privacidad</p>
+                        <p onClick={handleTermsConditionsClick}>Términos y condiciones</p>
                     </div>
                     <div className="social-icons" aria-label="Redes sociales">
                         <a href="#" aria-label="TikTok"><img src={tikTok} alt="" /></a>
