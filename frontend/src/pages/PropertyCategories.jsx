@@ -5,15 +5,28 @@ import "../styles/PropertyCategories.css";
 import house1 from "../assets/image5.png";
 import house2 from "../assets/image6.png";
 import house3 from "../assets/image7.png";
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const PropertyCategories = () => {
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const handlePropertyViewClick = (propertyId) => {
+        navigate('/propertyView', {
+            state: {
+                fromCategory: location.pathname,
+                propertyId: propertyId
+            }
+        });
+      };
+
     return(
         <>
             <Navbar/>
             
-            <div className="properties-container">
-                <div className="properties-grid">
-                    <div className="property-card">
+            <div className="properties-container2">
+                <div className="properties-grid2">
+                    <div className="property-card2" onClick={() => handlePropertyViewClick('1')}>
                         <div className="image-container">
                             <img src={house1} alt="Casa en Colonia Escalón" />
                         </div>
@@ -22,7 +35,7 @@ const PropertyCategories = () => {
                         </div>
                     </div>
                     
-                    <div className="property-card">
+                    <div className="property-card2">
                         <div className="image-container">
                             <img src={house2} alt="Casa en la zona Rosa" />
                         </div>
@@ -31,7 +44,7 @@ const PropertyCategories = () => {
                         </div>
                     </div>
                     
-                    <div className="property-card">
+                    <div className="property-card2">
                         <div className="image-container">
                             <img src={house3} alt="Casa en santa tecla" />
                         </div>
@@ -40,7 +53,7 @@ const PropertyCategories = () => {
                         </div>
                     </div>
                     
-                    <div className="property-card">
+                    <div className="property-card2">
                         <div className="image-container">
                             <img src={house1} alt="Casa en Colonia Escalón" />
                         </div>
@@ -49,7 +62,7 @@ const PropertyCategories = () => {
                         </div>
                     </div>
                     
-                    <div className="property-card">
+                    <div className="property-card2">
                         <div className="image-container">
                             <img src={house2} alt="Casa en la zona Rosa" />
                         </div>
@@ -58,7 +71,7 @@ const PropertyCategories = () => {
                         </div>
                     </div>
                     
-                    <div className="property-card">
+                    <div className="property-card2">
                         <div className="image-container">
                             <img src={house3} alt="Casa en santa tecla" />
                         </div>
@@ -67,7 +80,7 @@ const PropertyCategories = () => {
                         </div>
                     </div>
                     
-                    <div className="property-card">
+                    <div className="property-card2">
                         <div className="image-container">
                             <img src={house1} alt="Casa en Colonia Escalón" />
                         </div>
@@ -76,7 +89,7 @@ const PropertyCategories = () => {
                         </div>
                     </div>
                     
-                    <div className="property-card">
+                    <div className="property-card2">
                         <div className="image-container">
                             <img src={house2} alt="Casa en la zona Rosa" />
                         </div>
@@ -85,7 +98,7 @@ const PropertyCategories = () => {
                         </div>
                     </div>
                     
-                    <div className="property-card">
+                    <div className="property-card2">
                         <div className="image-container">
                             <img src={house3} alt="Casa en santa tecla" />
                         </div>

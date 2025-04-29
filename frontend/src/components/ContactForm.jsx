@@ -37,19 +37,19 @@ const ContactForm = ({onClose}) => {
                 <p className="contact-subtitle">Emviar mensaje al vendedor</p>
 
                 <form onSubmit={handleSubmit}>
-                    <div className="form-group">
-                        <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Dirección de correo electrónico" required/>
+                    <div className="form-group4">
+                        <input className="inputs" type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Dirección de correo electrónico" required/>
                     </div>
 
-                    <div className="form-group">
-                        <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Nombre" required/>
+                    <div className="form-group4">
+                        <input className="inputs" type="text"  value={formData.name} onChange={handleChange} placeholder="Nombre" required/>
                     </div>
 
-                    <div className="form-group">
-                        <input type="tel" name="phone" value={formData.phone} onChange={handleChange} placeholder="Número de teléfono" required/>
+                    <div className="form-group4">
+                        <input className="inputs" type="tel" name="phone" value={formData.phone} onChange={handleChange} placeholder="Número de teléfono" required/>
                     </div>
 
-                    <div className="form-group">
+                    <div className="form-group4">
                         <textarea name="message" value={formData.message} onChange={handleChange} placeholder="Mensaje..." rows="4"></textarea>
                     </div>
 

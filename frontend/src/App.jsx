@@ -27,6 +27,10 @@ function App() {
         <Route path='/primer-uso' element={<PrimerUso/>}/>
         <Route path='/inicio-sesion' element={<InicioSesion/>}/> 
         <Route path='/registro' element={<Registro/>}/>
+        <Route path='/recuperarContrasena' element={<RecuperarContraseña/>}/>
+        <Route path='/landingPage' element={<LandingPage/>}/>
+        <Route path='/propertyCategories' element={<PropertyCategories/>}/>
+        <Route path='/propertyView' element={<PropertyView/>}/>
       </Routes>
     </Router>
   )

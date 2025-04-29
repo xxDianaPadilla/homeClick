@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from '../components/Navbar';
 import Footer from "../components/Footer";
 import "../styles/PropertyView.css";
@@ -9,12 +9,28 @@ import house8 from "../assets/image5.png";
 import saveIcon from '../assets/image23.png';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import ContactForm from "../components/ContactForm";
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const PropertyView = () => {
     const [mainImage, setMainImage] = useState(house1);
     const [detailsExpanded, setDetailsExpanded] = useState(false);
     const [dimensionsExpanded, setDimensionsExpanded] = useState(false);
     const [showContactForm, setShowContactForm] = useState(false);
+
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    const {fromCategory, propertyId} = location.state || {fromCategory: '/propertyCategories', propertyId: '1'};
+
+    useEffect(() =>{
+        console.log(`Cargando propiedad ID: ${propertyId} desde la categoría: ${fromCategory}`);
+
+        if (propertyId === '2' || propertyId === '5' || propertyId === '8') {
+            setMainImage(house6);
+        } else if (propertyId === '3' || propertyId === '6' || propertyId === '9') {
+            setMainImage(house7);
+        }
+    }, [propertyId, fromCategory]);
     
     const thumbnails = [house1, house6, house7, house8];
     
@@ -58,13 +74,23 @@ const PropertyView = () => {
     const toggleContactForm = () => {
         setShowContactForm(!showContactForm);
     };
+
+    const handleSimilarPropertyClick = (propertyId) =>{
+        navigate('/propertyView', {
+            state: {
+                fromCategory,
+                propertyId
+            },
+            replace: true
+        });
+    };
     
     return (
         <>
             <Navbar />
             
-            <div className="property-container">
-                <div className="property-header">
+            <div className="property-container3">
+                <div className="property-header3">
                     <div className="thumbnail-column">
                         {thumbnails.map((thumb, index) => (
                             <div 
@@ -87,35 +113,35 @@ const PropertyView = () => {
                             <div className="image-date">Fecha Publicación: 15 de Febrero de 2024</div>
                         </div>
                         
-                        <div className="property-info">
-                            <div className="property-title-section">
+                        <div className="property-info3">
+                            <div className="property-title-section3">
                                 <h1>{propertyData.title}</h1>
-                                <div className="bookmark">
+                                <div className="bookmark3">
                                     <img src={saveIcon} alt="Guardar" />
                                 </div>
                             </div>
                             
-                            <div className="property-location">{propertyData.location}</div>
-                            <div className="property-price">{propertyData.price}</div>
+                            <div className="property-location3">{propertyData.location}</div>
+                            <div className="property-price3">{propertyData.price}</div>
                             
-                            <p className="property-description">{propertyData.description}</p>
+                            <p className="property-description3">{propertyData.description}</p>
                             
-                            <div className="action-buttons">
-                                <button className="btn-contact" onClick={toggleContactForm}>Contactar al dueño</button>
-                                <button className="btn-save">Agregar al carrito</button>
+                            <div className="action-buttons3">
+                                <button className="btn-contact3" onClick={toggleContactForm}>Contactar al dueño</button>
+                                <button className="btn-save3">Agregar al carrito</button>
                             </div>
                         </div>
                     </div>
                 </div>
                 
-                <div className="property-details-section">
-                    <div className="details-header" onClick={toggleDetails}>
+                <div className="property-details-section3">
+                    <div className="details-header3" onClick={toggleDetails}>
                         <h2>Detalles</h2>
                         <button className="expand-btn">{detailsExpanded ? '-' : '+'}</button>
                     </div>
                     
                     {detailsExpanded && (
-                        <div className="details-content">
+                        <div className="details-content3">
                             <ul>
                                 {propertyData.details.map((detail, index) => (
                                     <li key={index}>{detail}</li>
@@ -125,14 +151,14 @@ const PropertyView = () => {
                     )}
                 </div>
                 
-                <div className="property-dimensions-section">
-                    <div className="dimensions-header" onClick={toggleDimensions}>
+                <div className="property-dimensions-section3">
+                    <div className="dimensions-header3" onClick={toggleDimensions}>
                         <h2>Dimensiones</h2>
                         <button className="expand-btn">{dimensionsExpanded ? '-' : '+'}</button>
                     </div>
                     
                     {dimensionsExpanded && (
-                        <div className="dimensions-content">
+                        <div className="dimensions-content3">
                             <ul>
                                 {propertyData.dimensions.map((dimension, index) => (
                                     <li key={index}>{dimension}</li>
@@ -142,7 +168,7 @@ const PropertyView = () => {
                     )}
                 </div>
                 
-                <div className="property-location-section">
+                <div className="property-location-section3">
                     <h2>Ubicación satelital</h2>
                     <div className="map-container">
                         <MapContainer 
@@ -182,5 +208,13 @@ const PropertyView = () => {
         </>
     );
 };
+
+function getCategoryName(categoryPath){
+    const categoryNames = {
+        '/propertyCategories': 'Casas de Campo',
+    };
+
+    return categoryNames[categoryPath] || 'Categoría';
+}
 
 export default PropertyView;

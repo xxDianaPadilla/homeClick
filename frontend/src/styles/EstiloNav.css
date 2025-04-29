@@ -74,6 +74,10 @@
     font-size: 16px;
     outline: none;
 }
+
+.search-container input::placeholder{
+    color: #ccc;
+}
   
 .search-container button {
     background-color: transparent;

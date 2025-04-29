@@ -11,6 +11,14 @@ function InicioSesion() {
     navigate('/registro');
   };
 
+  const handleRecuperarContrasenaClick = () => {
+    navigate('/recuperarContrasena');
+  };
+
+  const handleLandingPageClick = () => {
+    navigate('/landingPage');
+  };
+
   return (
     <div className="landing-container">
       <img
@@ -48,9 +56,9 @@ function InicioSesion() {
               <input type="checkbox" />
               Mantener sesión iniciada
             </label>
-            <a href="#" className="forgot-password">¿Olvidaste tu contraseña?</a>
+            <a href="" className="forgot-password" onClick={handleRecuperarContrasenaClick}>¿Olvidaste tu contraseña?</a>
           </div>
-          <button className="submit-button" type="submit">
+          <button className="submit-button" type="submit" onClick={handleLandingPageClick}>
             Iniciar sesión
           </button>
           <div className="no-account">

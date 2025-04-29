@@ -2,9 +2,16 @@ import React from 'react';
 import "../styles/RecuperarContrasena.css";
 import bgImgHouse from "../assets/imgLoginFondo.png";
 import ArrowLeftIcon from "../assets/arrowRight.png";
-import LockIcon from "../components/LockIcon.jsx"; // Importa el componente LockIcon
+import LockImg from "../assets/LockIcon.png";
+import { useNavigate } from 'react-router-dom';
 
 function RecuperarContraseña() {
+  const navigate = useNavigate();
+
+  const handleLoginClick = () => {
+    navigate('/inicio-sesion');
+  };
+
   return (
     <div className="landing-container">
       <img
@@ -12,14 +19,18 @@ function RecuperarContraseña() {
         alt="Row of Victorian houses with warm sunlight and clear sky"
         className="background-image"
       />
-      <div className="form-container">
+      <div className="form-container2">
         <div className="header">
-          <button className="back-button">
+          <button className="back-button" onClick={handleLoginClick}>
             <img src={ArrowLeftIcon} alt="Volver" className="back-icon" />
           </button>
         </div>
-        <LockIcon /> {/* Renderiza el componente LockIcon aquí */}
-        <h1 className="form-title">¿Tienes problemas para iniciar sesión?</h1>
+        
+        <div className="lock-icon-container2">
+            <img src={LockImg} alt="Icono de seguridad" className="lock-icon" />
+          </div>
+
+        <h1 className="form-title4">¿Tienes problemas para iniciar sesión?</h1>
         <p className="form-description">
           Ingresa tu correo electrónico y te enviaremos un enlace{"\n"}
           para que recuperes el acceso a tu cuenta
@@ -36,7 +47,7 @@ function RecuperarContraseña() {
         </form>
         <div className="or-separator"><hr /> &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; <strong>O</strong> &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; <hr /></div> {/* Agrega la "O" con las líneas */}
         <div className="create-account">
-          <a href="#" className="create-account-link">
+          <a href="/registro" className="create-account-link">
             <strong>Crear cuenta nueva</strong>
           </a>
         </div>

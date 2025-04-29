@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 
-.properties-container {
+.properties-container2 {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
@@ -8,27 +8,27 @@
     font-family: 'Raleway', sans-serif;
   }
   
-  .properties-grid {
+  .properties-grid2 {
     display: grid;
     grid-template-columns: repeat(1, 1fr);
     gap: 20px;
   }
   
-  /* Media query para pantallas medianas y grandes */
   @media (min-width: 768px) {
-    .properties-grid {
+    .properties-grid2 {
       grid-template-columns: repeat(3, 1fr);
     }
   }
   
-  .property-card {
+  .property-card2 {
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
+    cursor: pointer;
   }
   
-  .property-card:hover {
+  .property-card2:hover {
     transform: translateY(-5px);
   }
   

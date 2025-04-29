@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate, useLocation } from 'react-router-dom';
 import "../styles/EstiloNav.css";
 import homeClickLogo from '../assets/naranja.png';
 import searchIcon from '../assets/image1.png';
@@ -12,8 +12,8 @@ const Navbar = () => {
     const [isProfileOpen, setIsProfileOpen] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
+    const location = useLocation();
 
-    // Aqui practicamente se detectan cambios en el tamaño de la pantalla xdd
     useEffect(() => {
         const handleResize = () => {
             setIsMobile(window.innerWidth <= 768);
@@ -23,7 +23,7 @@ const Navbar = () => {
         };
 
         window.addEventListener('resize', handleResize);
-        handleResize(); //Se verifica el tamaño inicial w
+        handleResize(); 
         
         return () => {
             window.removeEventListener('resize', handleResize);
@@ -36,6 +36,18 @@ const Navbar = () => {
 
     const toggleMenu = () => {
         setMenuOpen(!menuOpen);
+    };
+
+    const isActive = (path) =>{
+        if(location.pathname === path){
+            return "active";
+        }
+
+        if (location.pathname === '/propertyView' && location.state && location.state.fromCategory === path) {
+            return "active";
+        }
+
+        return "";
     };
 
     return (
@@ -78,7 +90,7 @@ const Navbar = () => {
 
                 <div className={`navbar-menu ${menuOpen ? 'active' : ''}`}>
                     <ul className="navbar-options">
-                        <li><a className="active" href="/casa-de-campo">Casa de campo</a></li>
+                        <li><a href="/propertyCategories" className={isActive("/propertyCategories")}>Casa de campo</a></li>
                         <li><a href="/apartamento">Apartamentos</a></li>
                         <li><a href="/casa-de-playa">Casa de playa</a></li>
                         <li><a href="/mansion">Mansión</a></li>

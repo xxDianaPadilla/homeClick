@@ -57,12 +57,12 @@
     font-size: 15px;
 }
 
-.form-group{
+.form-group4{
     margin-bottom: 15px;
 }
 
-.form-group input,
-.form-group textarea{
+.form-group4 .inputs,
+.form-group4 textarea{
     width: 95%;
     padding: 15px;
     border: none;
@@ -74,13 +74,17 @@
     font-style: italic;
 }
 
+.form-group4 .inputs[type="email"],
+.form-group4 .inputs[type="text"]{
+    width: 100%;
+}
 
-.form-group input::placeholder,
-.form-group textarea::placeholder{
+.form-group4 input::placeholder,
+.form-group4 textarea::placeholder{
     color: #717171;
 }
 
-.form-group textarea{
+.form-group4 textarea{
     resize: vertical;
     min-height: 100px;
 }

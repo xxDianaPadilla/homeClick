@@ -10,18 +10,18 @@ const Footer = () =>{
         <footer>
                 <div className="footer-top">
                     <div className="footer-column">
-                        <p className="title">HomeClick</p>
+                        <p className="title2">HomeClick</p>
                         <p>Acerca de nosotros</p>
                         <p>HomeClick Business</p>
                     </div>
                     <div className="footer-column">
-                        <p className="title">Soporte técnico</p>
+                        <p className="title2">Soporte técnico</p>
                         <p>Facebook Messenger</p>
                         <p>WhatsApp Messenger</p>
                         <p>Contáctanos</p>
                     </div>
                     <div className="footer-column">
-                        <p className="title">Términos legales</p>
+                        <p className="title2">Términos legales</p>
                         <p>Centro de seguridad</p>
                         <p>Políticas de privacidad</p>
                         <p>Condiciones del servicio</p>

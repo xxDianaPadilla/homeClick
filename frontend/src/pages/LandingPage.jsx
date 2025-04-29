@@ -13,7 +13,7 @@ const LandingPage = () => {
             <Navbar/>
             <div className="container">
                 <img src={bgImage} alt="" className="background-image"/>
-                <div className="content">
+                <div className="content2">
                     <h1>La Casa de Tus Sueños
                     <span className="subtitle">A Un Solo Click</span>
                     </h1>

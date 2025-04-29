@@ -29,18 +29,18 @@ body {
 
 .form-container {
   position: relative;
-  background-color: rgba(129, 73, 22, 0.7); /* Mismo color y opacidad */
+  background-color: rgba(129, 73, 22, 0.7); 
   border-radius: 1.5rem;
   padding: 2.5rem;
-  width: 950px; /* Ancho base */
+  width: 950px; 
   max-width: 90%;
-  height: auto; /* Ajustar altura al contenido */
+  height: auto; 
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 47px; /* Establecer el padding superior para el candado */
-  padding-bottom: 30px; /* Ajustar padding inferior */
-  gap: 15px; /* Reducir un poco el espacio entre elementos */
+  padding-top: 47px; 
+  padding-bottom: 30px; 
+  gap: 15px; 
 }
 
 .header {
@@ -48,18 +48,35 @@ body {
   justify-content: flex-start;
   width: 100%;
   max-width: 500px;
-  margin-bottom: 10px; /* Reducir el margen inferior del header */
+  margin-bottom: 10px; 
   align-self: flex-start;
+}
+
+.lock-icon-container2 {
+  border-radius: 50%;
+  width: 150px; 
+  height: 160px; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  margin-top: -70px;
+  border: 2px solid white;
+}
+
+.lock-icon {
+  width: 55%;
+  height: 55%;
 }
 
 .back-button {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 5px 0 0 0; /* Ajustar padding */
+  padding: 5px 0 0 0; 
   margin-top: -20px;
   margin-bottom: 20px;
-  margin-left: -250px;
+  margin-left: -10px;
 }
 
 .back-icon {
@@ -67,12 +84,12 @@ body {
   height: 50px;
 }
 
-.form-title {
+.form-title4 {
   color: white;
   font-weight: bolder;
   font-size: 30px;
   text-align: center;
-  margin-bottom: 5px; /* Reducir margen */
+  margin-bottom: 5px;
   width: 80%;
 }
 
@@ -81,9 +98,9 @@ body {
   font-size: 16px;
   text-align: center;
   line-height: 1.3;
-  margin-bottom: 20px; /* Ajustar margen */
+  margin-bottom: 20px; 
   padding: 0 40px;
-  white-space: pre-line; /* Permite saltos de línea */
+  white-space: pre-line; 
 }
 
 .reset-form {
@@ -129,7 +146,7 @@ body {
   border-radius: 0.25rem;
   cursor: pointer;
   line-height: 35px;
-  margin-bottom: 20px; /* Añadir margen inferior para el "O" */
+  margin-bottom: 20px; 
 }
 
 .submit-button:hover {
@@ -144,7 +161,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px; /* Añadir margen inferior para "Crear cuenta nueva" */
+  margin-bottom: 20px; 
 }
 
 .or-separator::before,
@@ -157,7 +174,7 @@ body {
 }
 
 .create-account {
-  margin-top: 0; /* Devolver el margen superior a 0 */
+  margin-top: 0; 
 }
 
 .create-account-link {
@@ -180,10 +197,9 @@ hr{
   width: 400px;
 }
 
-/* Media queries para pantallas más pequeñas */
 @media (max-width: 768px) {
   .form-container {
-    padding-top: 47px; /* Mantener el padding superior */
+    padding-top: 47px; 
     padding-bottom: 30px;
     gap: 12px;
   }
@@ -247,7 +263,7 @@ hr{
 
 @media (max-width: 480px) {
   .form-container {
-    padding-top: 47px; /* Mantener el padding superior */
+    padding-top: 47px; 
     padding-bottom: 25px;
     gap: 10px;
   }
