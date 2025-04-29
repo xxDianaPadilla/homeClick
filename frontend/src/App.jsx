@@ -16,6 +16,7 @@ import TermsConditions from './pages/TermsConditions';
 import CambiarContrasena from './pages/CambiarContrasena'
 import ContrasenaCambiada from './pages/ContrasenaCambiada';
 import Registro from './pages/Registro';
+import CodigoVerificacion from './pages/CodigoVerificacion';
 
 function App() {
   const [count, setCount] = useState(0)

@@ -1,0 +1,127 @@
+/* CodigoVerificacion.css */
+.verification-container-1 {
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .background-image-2 {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1; /* Asegura que la imagen esté detrás del contenido */
+  }
+  
+  .verification-overlay-3 {
+    background-color: rgba(129, 73, 22, 0.7); /* Mismo color café con opacidad */
+    border-radius: 30px;
+    padding: 100px;
+    color: white;
+    text-align: center;
+    width: 90%;
+    max-width: 500px; /* Vamos a usar un ancho máximo más ajustado */
+  }
+  
+  .heading-4 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    font-style: italic;
+    font-size: 32px;
+    margin-bottom: 20px;
+  }
+  
+  .verification-text-5 {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 30px;
+  }
+  
+  .verification-form-6 {
+    display: flex;
+    flex-direction: column;
+    gap: 30px; /* Aumentamos el espacio entre elementos del formulario */
+    align-items: center; /* Centrar el grupo de entrada y el botón */
+  }
+  
+  .code-input-group-7 {
+    display: flex;
+    gap: 15px; /* Aumentamos el espacio entre los cuadros de entrada */
+    justify-content: center; /* Centrar los cuadros de entrada */
+  }
+  
+  .code-input-8,
+  .code-input-9,
+  .code-input-10,
+  .code-input-12,
+  .code-input-13,
+  .code-input-14 {
+    width: 50px; /* Aumentamos un poco el ancho de los cuadros */
+    height: 50px; /* Aumentamos un poco la altura de los cuadros */
+    border: 1px solid white;
+    border-radius: 5px;
+    background-color: transparent;
+    color: white;
+    font-size: 20px; /* Aumentamos el tamaño de la fuente dentro de los cuadros */
+    font-style: italic;
+    text-align: center;
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
+  
+  .code-input-8::-webkit-outer-spin-button,
+  .code-input-8::-webkit-inner-spin-button,
+  .code-input-9::-webkit-outer-spin-button,
+  .code-input-9::-webkit-inner-spin-button,
+  .code-input-10::-webkit-outer-spin-button,
+  .code-input-10::-webkit-inner-spin-button,
+  .code-input-12::-webkit-outer-spin-button,
+  .code-input-12::-webkit-inner-spin-button,
+  .code-input-13::-webkit-outer-spin-button,
+  .code-input-13::-webkit-inner-spin-button,
+  .code-input-14::-webkit-outer-spin-button,
+  .code-input-14::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  
+  .code-separator-11 {
+    font-size: 20px; /* Ajustamos el tamaño del separador */
+    color: white;
+  }
+  
+  .verification-button-15 {
+    background-color: white;
+    color: black;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 12px 30px; /* Aumentamos el padding horizontal del botón */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: auto; /* El botón se ajustará al contenido */
+  }
+  
+  .verification-button-15:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .resend-text-16 {
+    font-size: 14px;
+    margin-top: 30px; /* Aumentamos el espacio antes del texto de reenviar */
+  }
+  
+  .resend-link-17 {
+    color: #5bc0de;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .resend-link-17:hover {
+    text-decoration: underline;
+  }
