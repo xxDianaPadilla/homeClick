@@ -18,8 +18,16 @@ import visaElectronIcon from "../assets/image53.png";
 import ilustrativePurposesIcon from "../assets/image55.png";
 import creditCardImage from "../assets/image56.png";
 import creditCardIcon from "../assets/image57.png";
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const ShoppingCart = () => {
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const handlePropertyViewClick = () => {
+        navigate('/propertyView');
+      };
+    
     const [paymentMethod, setPaymentMethod] = useState("tarjeta");
 
     return (
@@ -32,7 +40,7 @@ const ShoppingCart = () => {
                     <div className="cart-summary5">
                         <h2 className="section-title5">Resumen de su orden</h2>
 
-                        <div className="cart-item5">
+                        <div className="cart-item5" onClick={handlePropertyViewClick}>
                             <div className="item-image5">
                                 <img src={house1} alt="Casa en colonia Escalón" />
                             </div>

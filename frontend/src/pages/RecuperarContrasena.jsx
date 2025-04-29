@@ -12,6 +12,10 @@ function RecuperarContraseña() {
     navigate('/inicio-sesion');
   };
 
+  const handlePasswordCodeClick = () =>{
+    navigate('/passwordCode');
+  };
+
   return (
     <div className="landing-container">
       <img
@@ -32,7 +36,7 @@ function RecuperarContraseña() {
 
         <h1 className="form-title4">¿Tienes problemas para iniciar sesión?</h1>
         <p className="form-description">
-          Ingresa tu correo electrónico y te enviaremos un enlace{"\n"}
+          Ingresa tu correo electrónico y te enviaremos un código{"\n"}
           para que recuperes el acceso a tu cuenta
         </p>
         <form className="reset-form">
@@ -41,7 +45,7 @@ function RecuperarContraseña() {
             placeholder="Correo electrónico"
             className="text-input"
           />
-          <button className="submit-button" type="submit">
+          <button className="submit-button" type="submit" onClick={handlePasswordCodeClick}>
             Enviar enlace de inicio de sesión
           </button>
         </form>

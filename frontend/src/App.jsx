@@ -6,7 +6,6 @@ import PrimerUso from './pages/PrimerUso';
 import PropertyCategories from './pages/PropertyCategories';
 import InicioSesion from './pages/InicioSesion'
 import RecuperarContraseña from './pages/RecuperarContrasena';
-import EnvioCorreo from './pages/EnvioCorreo';
 import PropertyView from './pages/PropertyView';
 import SavedProperties from './pages/SavedProperties';
 import ShoppingCart from './pages/ShoppingCart';
@@ -37,6 +36,9 @@ function App() {
         <Route path='/aboutUs' element={<AboutUs/>}/>
         <Route path='/privacyPolicies' element={<PrivacyPolicies/>}/>
         <Route path='/termsConditions' element={<TermsConditions/>}/>
+        <Route path='/passwordCode' element={<CodigoVerificacion/>}/>
+        <Route path='/changePassword' element={<CambiarContrasena/>}/>
+        <Route path='/changedPassword' element={<ContrasenaCambiada/>}/>
       </Routes>
     </Router>
   )

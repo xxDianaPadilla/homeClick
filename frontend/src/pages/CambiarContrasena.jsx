@@ -1,9 +1,16 @@
 import React from 'react';
 import "../styles/CambiarContrasena.css";
-import bgImgHouse from "../assets/imgLoginFondo.png"; // Asegúrate de que la ruta a la imagen sea correcta
-import LockIcon from "../components/LockIconCC.jsx"; // Importa el componente LockIcon
+import bgImgHouse from "../assets/imgLoginFondo.png"; 
+import LockIcon from "../components/LockIconCC.jsx"; 
+import { useNavigate } from 'react-router-dom';
 
 function CambiarContrasena() {
+  const navigate = useNavigate();
+
+  const handleChangedPasswordClick = () => {
+    navigate('/changedPassword');
+  };
+
   return (
     <div className="landing-container">
       <img
@@ -11,8 +18,8 @@ function CambiarContrasena() {
         alt="Row of Victorian houses with warm sunlight and clear sky"
         className="background-image"
       />
-      <div className="form-container">
-        <LockIcon /> {/* Renderiza el componente LockIcon aquí */}
+      <div className="form-container2">
+        <LockIcon /> 
         <h1 className="form-title">Cambiar Contraseña</h1>
         <p className="form-description">
         La contraseña debe tener al menos 6 caracteres e inlcuir
@@ -30,7 +37,7 @@ function CambiarContrasena() {
             placeholder="Repetir contraseña nueva"
             className="text-input"
           />
-          <button className="submit-button" type="submit">
+          <button className="submit-button" type="submit" onClick={handleChangedPasswordClick}>
             Cambiar contraseña
           </button>
         </form>

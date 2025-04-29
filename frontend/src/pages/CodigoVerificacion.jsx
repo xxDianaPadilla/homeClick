@@ -1,9 +1,15 @@
-// CodigoVerificacion.jsx
 import React, { useRef, useEffect } from 'react';
 import "../styles/CodigoVerificacion.css";
 import bgImgHouseF from "../assets/imgLoginFondo.png";
+import { useNavigate } from 'react-router-dom';
 
 function CodigoVerificacion() {
+  const navigate = useNavigate();
+
+  const handleChangePasswordClick = () =>{
+    navigate('/changePassword');
+  };
+
   const inputRefs = [useRef(null), useRef(null), useRef(null), useRef(null), useRef(null), useRef(null)];
 
   const handleInputChangeA = (index, event) => {
@@ -96,7 +102,7 @@ function CodigoVerificacion() {
               onKeyDown={(e) => handleKeyDownB(5, e)}
             />
           </div>
-          <button type="submit" className="verification-button-15">
+          <button type="submit" className="verification-button-15" onClick={handleChangePasswordClick}>
             Verificar Código
           </button>
           <p className="resend-text-16">

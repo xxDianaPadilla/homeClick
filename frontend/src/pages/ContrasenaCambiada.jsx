@@ -1,8 +1,15 @@
 import React from 'react';
 import "../styles/ContrasenaCambiada.css";
-import bgImgHouse from "../assets/imgLoginFondo.png"; // Reutilizamos la imagen de fondo
+import bgImgHouse from "../assets/imgLoginFondo.png"; 
+import { useNavigate } from 'react-router-dom';
 
 function ContrasenaCambiada() {
+  const navigate = useNavigate();
+
+  const handleLoginClick = () => {
+    navigate('/inicio-sesion');
+  };
+  
   return (
     <div className="landing-container">
       <img
@@ -17,7 +24,7 @@ function ContrasenaCambiada() {
           para poder verificar que las
           nuevas credenciales funcionen.
         </p>
-        <button className="accept-button">Aceptar</button>
+        <button className="accept-button" onClick={handleLoginClick}>Aceptar</button>
       </div>
     </div>
   );

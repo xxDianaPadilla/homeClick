@@ -1,4 +1,5 @@
-/* CodigoVerificacion.css */
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400&display=swap');
+
 .verification-container-1 {
     position: relative;
     min-height: 100vh;
@@ -6,6 +7,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    font-family: 'Raleway', sans-serif;
+    font-style: italic;
   }
   
   .background-image-2 {
@@ -14,17 +17,17 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    z-index: -1; /* Asegura que la imagen esté detrás del contenido */
+    z-index: -1; 
   }
   
   .verification-overlay-3 {
-    background-color: rgba(129, 73, 22, 0.7); /* Mismo color café con opacidad */
+    background-color: rgba(129, 73, 22, 0.7); 
     border-radius: 30px;
     padding: 100px;
     color: white;
     text-align: center;
     width: 90%;
-    max-width: 500px; /* Vamos a usar un ancho máximo más ajustado */
+    max-width: 500px; 
   }
   
   .heading-4 {
@@ -44,14 +47,14 @@
   .verification-form-6 {
     display: flex;
     flex-direction: column;
-    gap: 30px; /* Aumentamos el espacio entre elementos del formulario */
-    align-items: center; /* Centrar el grupo de entrada y el botón */
+    gap: 30px; 
+    align-items: center; 
   }
   
   .code-input-group-7 {
     display: flex;
-    gap: 15px; /* Aumentamos el espacio entre los cuadros de entrada */
-    justify-content: center; /* Centrar los cuadros de entrada */
+    gap: 15px; 
+    justify-content: center;
   }
   
   .code-input-8,
@@ -60,13 +63,13 @@
   .code-input-12,
   .code-input-13,
   .code-input-14 {
-    width: 50px; /* Aumentamos un poco el ancho de los cuadros */
-    height: 50px; /* Aumentamos un poco la altura de los cuadros */
+    width: 50px; 
+    height: 50px; 
     border: 1px solid white;
     border-radius: 5px;
     background-color: transparent;
     color: white;
-    font-size: 20px; /* Aumentamos el tamaño de la fuente dentro de los cuadros */
+    font-size: 20px; 
     font-style: italic;
     text-align: center;
     -moz-appearance: textfield;
@@ -90,7 +93,7 @@
   }
   
   .code-separator-11 {
-    font-size: 20px; /* Ajustamos el tamaño del separador */
+    font-size: 20px; 
     color: white;
   }
   
@@ -99,12 +102,14 @@
     color: black;
     font-weight: bold;
     font-size: 16px;
-    padding: 12px 30px; /* Aumentamos el padding horizontal del botón */
+    padding: 12px 30px; 
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    width: auto; /* El botón se ajustará al contenido */
+    width: auto; 
+    font-family: 'Raleway', sans-serif;
+    font-style: italic;
   }
   
   .verification-button-15:hover {
@@ -113,13 +118,13 @@
   
   .resend-text-16 {
     font-size: 14px;
-    margin-top: 30px; /* Aumentamos el espacio antes del texto de reenviar */
+    margin-top: 30px; 
   }
   
   .resend-link-17 {
     color: #5bc0de;
     text-decoration: none;
-    font-weight: bold;
+    font-weight: 600;
   }
   
   .resend-link-17:hover {
