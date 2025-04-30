@@ -1,199 +1,335 @@
+/* Importa la fuente 'Raleway' de Google Fonts con diferentes pesos y estilos (itálica y normal) */
 @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 
+/* Overlay que oscurece el fondo cuando se muestra la información del usuario */
 .user-info-overlay8{
+    /* Fija la posición para cubrir toda la ventana */
     position: fixed;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
+    /* Color de fondo negro con 70% de opacidad */
     background-color: rgba(0, 0, 0, 0.7);
+    /* Utiliza flexbox para centrar el contenido del overlay */
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center;    /* Centra verticalmente */
+    /* Asegura que el overlay esté por encima de otros elementos */
     z-index: 1000;
 }
 
+/* Contenedor principal de la tarjeta de información del usuario */
 .user-info-card8 {
+    /* Color de fondo blanco para la tarjeta */
     background-color: #ffffff;
+    /* Ancho fijo de la tarjeta */
     width: 300px;
-    max-height: 80vh; 
+    /* Altura máxima de la tarjeta, permitiendo scroll si el contenido es mayor */
+    max-height: 80vh;
+    /* Espacio de relleno dentro de la tarjeta */
     padding: 20px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); 
+    /* Sombra suave alrededor de la tarjeta */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    /* Permite el scroll vertical si el contenido excede la altura máxima */
     overflow-y: auto;
+    /* Utiliza flexbox para organizar los elementos internos verticalmente */
     display: flex;
     flex-direction: column;
+    /* Espacio entre los elementos internos */
     gap: 15px;
+    /* Aplica la fuente 'Raleway' */
     font-family: 'Raleway', sans-serif;
+    /* Establece el estilo de la fuente en itálica */
     font-style: italic;
+    /* Bordes redondeados para la tarjeta */
     border-radius: 10px;
-    position: relative; 
-    margin: auto; 
+    /* Posición relativa para posibles elementos absolutos dentro */
+    position: relative;
+    /* Centra la tarjeta en el overlay */
+    margin: auto;
 }
 
+/* Contenedor para el encabezado de la tarjeta (botón de cierre) */
 .card-header8{
+    /* Utiliza flexbox y alinea el contenido al inicio (izquierda) */
     display: flex;
     justify-content: flex-start;
 }
 
+/* Estilos para el botón de cierre */
 .close-button8{
+    /* Elimina el fondo predeterminado del botón */
     background: none;
+    /* Elimina el borde predeterminado del botón */
     border: none;
+    /* Cambia el cursor a una mano para indicar interactividad */
     cursor: pointer;
+    /* Elimina el padding predeterminado del botón */
     padding: 0;
 }
 
+/* Estilos para la imagen dentro del botón de cierre */
 .close-button8 img{
+    /* Establece el ancho de la imagen */
     width: 20px;
+    /* Establece la altura de la imagen */
     height: 20px;
 }
 
+/* Sección para la información del perfil (imagen y nombre) */
 .profile-section8{
+    /* Utiliza flexbox para organizar los elementos verticalmente */
     display: flex;
     flex-direction: column;
+    /* Centra los elementos horizontalmente */
     align-items: center;
+    /* Añade un margen inferior */
     margin-bottom: 10px;
 }
 
+/* Contenedor para la imagen de perfil (para posicionar el icono de la cámara) */
 .profile-image-container8{
+    /* Establece la posición como relativa para el icono de la cámara */
     position: relative;
+    /* Añade un margen inferior */
     margin-bottom: 10px;
 }
 
+/* Contenedor para la imagen de perfil en sí */
 .profile-image8{
+    /* Ancho fijo para la imagen */
     width: 80px;
+    /* Alto fijo para la imagen (crea un cuadrado) */
     height: 80px;
+    /* Forma circular para la imagen */
     border-radius: 50%;
+    /* Color de fondo de respaldo si no hay imagen */
     background-color: #f0f0f0;
+    /* Utiliza flexbox para centrar cualquier contenido dentro */
     display: flex;
     justify-content: center;
     align-items: center;
+    /* Oculta cualquier parte de la imagen que se desborde del círculo */
     overflow: hidden;
 }
 
+/* Estilos para la etiqueta img dentro del contenedor de la imagen de perfil */
 .profile-image8 img{
+    /* Asegura que la imagen ocupe todo el ancho del contenedor */
     width: 100%;
+    /* Ajusta la altura automáticamente para mantener la proporción */
     height: auto;
 }
 
+/* Icono de la cámara para editar la imagen de perfil */
 .camera-icon8{
+    /* Posición absoluta en la esquina inferior derecha del contenedor de la imagen */
     position: absolute;
     bottom: 0;
     right: 0;
+    /* Color de fondo blanco para el icono */
     background-color: #ffffff;
+    /* Forma circular para el icono */
     border-radius: 50%;
+    /* Espacio de relleno dentro del icono */
     padding: 5px;
+    /* Utiliza flexbox para centrar la imagen del icono */
     display: flex;
     justify-content: center;
     align-items: center;
+    /* Ancho fijo para el icono */
     width: 25px;
+    /* Alto fijo para el icono */
     height: 25px;
+    /* Sombra suave alrededor del icono */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
+/* Estilos para la imagen dentro del icono de la cámara */
 .camera-icon8 img{
+    /* Ancho de la imagen del icono */
     width: 15px;
+    /* Alto de la imagen del icono */
     height: 15px;
 }
 
+/* Nombre del perfil del usuario */
 .profile-name8{
+    /* Tamaño de la fuente */
     font-size: 16px;
+    /* Texto en negrita */
     font-weight: bold;
+    /* Margen superior e inferior */
     margin: 5px 0;
+    /* Centra el texto horizontalmente */
     text-align: center;
 }
 
+/* Sección para mostrar la información del usuario */
 .info-section8{
+    /* Borde inferior para separar secciones */
     border-bottom: 1px solid #e0e0e0;
+    /* Espacio de relleno inferior */
     padding-bottom: 15px;
 }
 
+/* Título de las secciones de información */
 .info-section8 h4{
+    /* Color del texto */
     color: #333;
+    /* Tamaño de la fuente */
     font-size: 14px;
+    /* Margen inferior */
     margin-bottom: 10px;
 }
 
+/* Contenedor para cada campo de información (etiqueta e input) */
 .info-field8{
+    /* Margen inferior */
     margin-bottom: 10px;
 }
 
+/* Etiqueta para los campos de información */
 .info-field8 label{
+    /* Hace que la etiqueta ocupe todo el ancho disponible */
     display: block;
+    /* Tamaño de la fuente */
     font-size: 12px;
+    /* Color del texto */
     color: #000;
+    /* Margen inferior */
     margin-bottom: 5px;
 }
 
+/* Campo de entrada de texto para la información */
 .info-field8 input{
+    /* Ocupa todo el ancho disponible */
     width: 100%;
+    /* Espacio de relleno dentro del input */
     padding: 8px;
+    /* Borde alrededor del input */
     border: 1px solid #ddd;
+    /* Bordes redondeados */
     border-radius: 4px;
+    /* Tamaño de la fuente del texto dentro */
     font-size: 14px;
+    /* Color del texto dentro */
     color: #043B64;
+    /* Estilo de la fuente en itálica */
     font-style: italic;
+    /* Grosor de la fuente */
     font-weight: 400;
 }
 
+/* Contenedor para los campos de presupuesto (alineados horizontalmente) */
 .budget-field8{
+    /* Utiliza flexbox para alinear los elementos en fila */
     display: flex;
+    /* Espacio entre los elementos */
     gap: 20px;
 }
 
+/* Estilos para cada input de presupuesto */
 .budget-input8{
+    /* Permite que los inputs crezcan para llenar el espacio disponible */
     flex: 1;
 }
 
+/* Etiqueta para los campos de presupuesto */
 .budget-input8 label{
+    /* Hace que la etiqueta ocupe todo el ancho disponible */
     display: block;
+    /* Tamaño de la fuente */
     font-size: 12px;
+    /* Color del texto */
     color: #000;
+    /* Margen inferior */
     margin-bottom: 5px;
 }
 
+/* Campo de entrada de texto para el presupuesto */
 .budget-input8 input{
+    /* Ocupa todo el ancho disponible */
     width: 100%;
+    /* Espacio de relleno dentro del input */
     padding: 8px;
+    /* Borde alrededor del input */
     border: 1px solid #ddd;
+    /* Bordes redondeados */
     border-radius: 4px;
+    /* Tamaño de la fuente del texto dentro */
     font-size: 14px;
+    /* Color del texto dentro */
     color: #043B64;
+    /* Estilo de la fuente en itálica */
     font-style: italic;
+    /* Grosor de la fuente */
     font-weight: 400;
 }
 
+/* Sección para los botones de acción */
 .button-section8{
+    /* Utiliza flexbox para distribuir los botones */
     display: flex;
+    /* Espacio entre los botones */
     justify-content: space-between;
+    /* Margen superior */
     margin-top: 10px;
 }
 
+/* Estilos para el botón de actualizar perfil */
 .update-profile-btn8{
+    /* Color de fondo */
     background-color: #A9C2E0;
+    /* Color del texto */
     color: #000;
+    /* Elimina el borde */
     border: none;
+    /* Bordes redondeados */
     border-radius: 4px;
+    /* Espacio de relleno dentro del botón */
     padding: 8px 12px;
+    /* Tamaño de la fuente */
     font-size: 12px;
+    /* Cambia el cursor a una mano */
     cursor: pointer;
+    /* Permite que el botón crezca para ocupar espacio */
     flex: 1;
+    /* Margen derecho para separarlo del otro botón */
     margin-right: 5px;
+    /* Aplica la fuente 'Raleway' */
     font-family: 'Raleway', sans-serif;
+    /* Texto en negrita */
     font-weight: bold;
+    /* Estilo de la fuente en itálica */
     font-style: italic;
 }
 
+/* Estilos para el botón de cerrar sesión */
 .close-session-btn8{
+    /* Color de fondo */
     background-color: #E2696B;
+    /* Color del texto */
     color: #000;
+    /* Elimina el borde */
     border: none;
+    /* Bordes redondeados */
     border-radius: 4px;
+    /* Espacio de relleno dentro del botón */
     padding: 8px 12px;
+    /* Tamaño de la fuente */
     font-size: 12px;
+    /* Cambia el cursor a una mano */
     cursor: pointer;
+    /* Permite que el botón crezca para ocupar espacio */
     flex: 1;
+    /* Margen izquierdo para separarlo del otro botón */
     margin-left: 5px;
+    /* Aplica la fuente 'Raleway' */
     font-family: 'Raleway', sans-serif;
+    /* Texto en negrita */
     font-weight: bold;
+    /* Estilo de la fuente en itálica */
     font-style: italic;
 }

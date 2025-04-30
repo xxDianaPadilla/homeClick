@@ -1,62 +1,206 @@
+/* Importa la fuente 'Trocchi' de Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Trocchi&display=swap');
 
+/* Estilos para el contenedor principal de la página de política de privacidad */
 .privacy-container{
+    /* Establece un ancho máximo para el contenedor, centrándolo en pantallas grandes */
     max-width: 800px;
+    /* Añade márgenes superior e inferior de 40px y centra horizontalmente el contenedor */
     margin: 40px auto;
+    /* Añade un espacio de relleno horizontal de 20px dentro del contenedor */
     padding: 0 20px;
+    /* Aplica la fuente 'Trocchi' con un estilo serif al texto dentro del contenedor */
     font-family: 'Trocchi', serif;
+    /* Establece una altura de línea para mejorar la legibilidad del texto */
     line-height: 1.6;
+    /* Establece el color del texto principal a un gris oscuro */
     color: #333;
 }
 
+/* Estilos para el encabezado principal (elemento h1) */
 .privacy-container h1{
+    /* Centra el texto del encabezado horizontalmente */
     text-align: center;
+    /* Establece el tamaño de la fuente del encabezado */
     font-size: 28px;
+    /* Añade un margen inferior de 5px para separarlo del siguiente elemento */
     margin-bottom: 5px;
+    /* Asegura que el texto del encabezado sea negrita */
     font-weight: bold;
+    /* Establece el color del texto del encabezado a negro */
     color: #000;
+    /* Aplica la fuente 'Trocchi' con estilo serif al texto del encabezado */
     font-family: 'Trocchi', serif;
 }
 
+/* Estilos para la fecha de la política de privacidad */
 .date{
+    /* Centra el texto de la fecha horizontalmente */
     text-align: center;
-    font-family: 14px;
+    /* Establece un tamaño de fuente más pequeño para la fecha */
+    font-size: 14px;
+    /* Añade un margen inferior de 30px para separarlo de la introducción */
     margin-bottom: 30px;
+    /* Establece el color del texto de la fecha a un gris más claro */
     color: #666;
 }
 
+/* Estilos para la sección de introducción */
 .intro{
+    /* Añade un margen inferior de 25px para separarla de la siguiente sección */
     margin-bottom: 25px;
 }
 
+/* Estilos generales para las secciones principales de la política */
 .section{
+    /* Añade un margen inferior de 25px para separar cada sección */
     margin-bottom: 25px;
 }
 
+/* Estilos para los encabezados de sección (elemento h2) */
 h2{
+    /* Establece el tamaño de la fuente para los encabezados de sección */
     font-size: 18px;
+    /* Asegura que el texto de los encabezados de sección sea negrita */
     font-weight: bold;
+    /* Añade un margen inferior de 10px para separarlos del contenido de la sección */
     margin-bottom: 10px;
 }
 
+/* Estilos para los párrafos de texto */
 p{
+    /* Añade un margen inferior de 15px para separar los párrafos */
     margin-bottom: 15px;
 }
 
+/* Estilos para las listas desordenadas (elemento ul) */
 ul{
+    /* Añade un margen izquierdo para indentar la lista */
     margin-left: 20px;
+    /* Añade un margen inferior de 15px para separar la lista de otros elementos */
     margin-bottom: 15px;
 }
 
+/* Estilos para los elementos de lista dentro de las secciones */
 .section li{
+    /* Establece el estilo del marcador de la lista como un disco */
     list-style: disc;
+    /* Añade un margen inferior de 8px entre los elementos de la lista */
     margin-bottom: 8px;
+    /* Establece la posición como relativa para poder posicionar el marcador personalizado */
     position: relative;
+    /* Añade un espacio de relleno a la izquierda para el marcador personalizado */
     padding-left: 5px;
 }
 
+/* Estilo para el marcador de lista personalizado usando un pseudo-elemento */
 .section li::before{
+    /* Define el contenido del marcador como un punto */
     content: '•';
+    /* Establece la posición como absoluta para poder moverlo */
     position: absolute;
+    /* Coloca el marcador a la izquierda del texto */
     left: -15px;
+}
+
+/* --- MEDIA QUERY PARA TABLETS Y MÓVILES GRANDES (ancho máximo de 768px) --- */
+@media (max-width: 768px) {
+    /* Reduce el relleno horizontal y los márgenes superior e inferior del contenedor en pantallas más pequeñas */
+    .privacy-container {
+        padding: 0 15px;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+
+    /* Reduce el tamaño de la fuente y el margen inferior del encabezado principal */
+    .privacy-container h1 {
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+
+    /* Reduce el tamaño de la fuente y el margen inferior de la fecha */
+    .date {
+        font-size: 12px;
+        margin-bottom: 20px;
+    }
+
+    /* Reduce el tamaño de la fuente y el margen inferior de los encabezados de sección */
+    h2 {
+        font-size: 16px;
+        margin-bottom: 8px;
+    }
+
+    /* Reduce el tamaño de la fuente y el margen inferior de los párrafos */
+    p {
+        font-size: 14px;
+        margin-bottom: 12px;
+    }
+
+    /* Reduce el margen izquierdo y el margen inferior de las listas */
+    ul {
+        margin-left: 15px;
+        margin-bottom: 12px;
+    }
+
+    /* Reduce el margen inferior y el relleno izquierdo de los elementos de la lista */
+    .section li {
+        margin-bottom: 6px;
+        padding-left: 3px;
+    }
+
+    /* Ajusta la posición del marcador personalizado en los elementos de la lista */
+    .section li::before {
+        left: -12px;
+    }
+}
+
+/* --- MEDIA QUERY PARA MÓVILES PEQUEÑOS (ancho máximo de 480px) --- */
+@media (max-width: 480px) {
+    /* Reduce aún más el relleno horizontal y los márgenes superior e inferior del contenedor en pantallas muy pequeñas */
+    .privacy-container {
+        padding: 0 10px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    /* Reduce aún más el tamaño de la fuente y el margen inferior del encabezado principal */
+    .privacy-container h1 {
+        font-size: 20px;
+        margin-bottom: 8px;
+    }
+
+    /* Reduce aún más el tamaño de la fuente y el margen inferior de la fecha */
+    .date {
+        font-size: 10px;
+        margin-bottom: 15px;
+    }
+
+    /* Reduce aún más el tamaño de la fuente y el margen inferior de los encabezados de sección */
+    h2 {
+        font-size: 14px;
+        margin-bottom: 6px;
+    }
+
+    /* Reduce aún más el tamaño de la fuente y el margen inferior de los párrafos */
+    p {
+        font-size: 12px;
+        margin-bottom: 10px;
+    }
+
+    /* Reduce aún más el margen izquierdo y el margen inferior de las listas */
+    ul {
+        margin-left: 10px;
+        margin-bottom: 10px;
+    }
+
+    /* Reduce aún más el margen inferior y el relleno izquierdo de los elementos de la lista */
+    .section li {
+        margin-bottom: 4px;
+        padding-left: 2px;
+    }
+
+    /* Ajusta aún más la posición del marcador personalizado en los elementos de la lista */
+    .section li::before {
+        left: -10px;
+    }
 }

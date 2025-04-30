@@ -1,260 +1,433 @@
+/* Importa la fuente Trocchi desde Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Trocchi&display=swap');
+/* Importa la fuente Raleway con varios pesos e itálicas desde Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+/* Importa la fuente IBM Plex Sans con varios pesos e itálicas desde Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+/* Importa la fuente Manrope con varios pesos desde Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
 
+/* Estilos base para la página de destino */
 .landing-page {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+  min-height: 100vh; /* Asegura que la página ocupe al menos toda la altura de la ventana */
+  display: flex; /* Utiliza Flexbox para organizar los elementos verticalmente */
+  flex-direction: column; /* Apila los elementos uno encima del otro */
 }
 
+/* Contenedor principal con fondo de imagen */
 .container {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  overflow: hidden;
-  color: #000;
+  position: relative; /* Posicionamiento relativo para contener elementos absolutos */
+  width: 100%; /* Ocupa todo el ancho del contenedor padre */
+  height: 100vh; /* Ocupa toda la altura de la ventana */
+  overflow: hidden; /* Oculta cualquier contenido que se desborde */
+  color: #000; /* Color de texto predeterminado */
 }
 
+/* Imagen de fondo */
 .background-image {
-  position: absolute;
+  position: absolute; /* Posicionamiento absoluto para cubrir todo el contenedor */
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: brightness(90%);
-  z-index: 0;
+  width: 100%; /* Ocupa todo el ancho del contenedor padre */
+  height: 100%; /* Ocupa toda la altura del contenedor padre */
+  object-fit: cover; /* Ajusta el tamaño de la imagen para cubrir el contenedor manteniendo su relación de aspecto */
+  filter: brightness(90%); /* Aplica un ligero oscurecimiento a la imagen */
+  z-index: 0; /* Asegura que la imagen esté detrás del contenido */
 }
 
+/* Contenido superpuesto centrado */
 .content2 {
-  position: relative;
-  z-index: 1;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 0 1rem;
-  font-family: "Trocchi", serif;
-  color: #000;
+  position: relative; /* Posicionamiento relativo para estar encima de la imagen de fondo */
+  z-index: 1; /* Asegura que el contenido esté delante de la imagen de fondo */
+  height: 100%; /* Ocupa toda la altura del contenedor padre */
+  display: flex; /* Utiliza Flexbox para centrar el contenido */
+  flex-direction: column; /* Organiza los elementos internos verticalmente */
+  justify-content: center; /* Centra verticalmente el contenido */
+  align-items: center; /* Centra horizontalmente el contenido */
+  text-align: center; /* Centra el texto dentro del contenedor */
+  padding: 0 1rem; /* Añade un pequeño relleno horizontal */
+  font-family: "Trocchi", serif; /* Aplica la fuente Trocchi */
+  color: #000; /* Color del texto */
+  background-color: rgba(255, 255, 255, 0.7); /* Fondo blanco semitransparente para mejorar la legibilidad */
 }
 
+/* Título principal */
 .content2 h1 {
-  font-weight: 400;
-  font-size: 2rem;
-  line-height: 1.2;
-  margin: 0;
-  color: #000000;
-  font-family: "Trocchi", serif;
+  font-weight: 400; /* Peso de la fuente */
+  font-size: 2rem; /* Tamaño de la fuente inicial */
+  line-height: 1.2; /* Espaciado entre líneas */
+  margin: 0; /* Elimina el margen predeterminado */
+  color: #000000; /* Color del texto */
+  font-family: "Trocchi", serif; /* Aplica la fuente Trocchi */
 }
 
+/* Media query para pantallas más grandes (ancho mínimo de 640px - tablets pequeñas en horizontal) */
 @media (min-width: 640px) {
-  h1 {
-    font-size: 2.5rem;
+  .content2 h1 {
+    font-size: 2.5rem; /* Aumenta el tamaño de la fuente */
   }
 }
 
+/* Media query para pantallas aún más grandes (ancho mínimo de 768px - tablets en vertical y más grandes) */
 @media (min-width: 768px) {
-  h1 {
-    font-size: 3rem;
+  .content2 h1 {
+    font-size: 3rem; /* Aumenta aún más el tamaño de la fuente */
   }
 }
 
+/* Subtítulo */
 .subtitle {
-  display: block;
-  margin-top: 0.5rem;
-  font-weight: 400;
-  font-size: 2.5rem;
-  font-family: "Trocchi", serif;
-  color: #000000;
+  display: block; /* Asegura que el span se comporte como un bloque */
+  margin-top: 0.5rem; /* Añade un pequeño margen superior */
+  font-weight: 400; /* Peso de la fuente */
+  font-size: 2.5rem; /* Tamaño de la fuente inicial */
+  font-family: "Trocchi", serif; /* Aplica la fuente Trocchi */
+  color: #000000; /* Color del texto */
 }
 
+/* Media query para pantallas más grandes (ancho mínimo de 640px) */
 @media (min-width: 640px) {
   .subtitle {
-    font-size: 3rem;
+    font-size: 3rem; /* Aumenta el tamaño de la fuente */
   }
 }
 
+/* Media query para pantallas aún más grandes (ancho mínimo de 768px) */
 @media (min-width: 768px) {
   .subtitle {
-    font-size: 3.75rem;
+    font-size: 3.75rem; /* Aumenta aún más el tamaño de la fuente */
   }
 }
 
+/* Botón de acción */
 .btn {
-  margin-top: 1.5rem;
-  background-color: #E9631A;
-  color: #ffffff;
-  font-style: italic;
-  font-weight: 600;
-  font-size: 0.875rem;
-  font-family: 'Raleway', sans-serif;
-  padding: 0.5rem 2rem;
-  border-radius: 9999px;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  margin-top: 1.5rem; /* Añade un margen superior */
+  background-color: #E9631A; /* Color de fondo naranja */
+  color: #ffffff; /* Color del texto blanco */
+  font-style: italic; /* Texto en cursiva */
+  font-weight: 600; /* Peso de la fuente seminegrita */
+  font-size: 0.875rem; /* Tamaño de la fuente inicial */
+  font-family: 'Raleway', sans-serif; /* Aplica la fuente Raleway */
+  padding: 0.5rem 2rem; /* Relleno vertical y horizontal */
+  border-radius: 9999px; /* Bordes muy redondeados para un efecto de píldora */
+  border: none; /* Elimina el borde */
+  cursor: pointer; /* Cambia el cursor al pasar por encima */
+  transition: background-color 0.3s ease; /* Transición suave para el color de fondo */
 }
 
+/* Estilo del botón al pasar el ratón */
 .btn:hover {
-  background-color: #cc5f0a;
+  background-color: #cc5f0a; /* Oscurece ligeramente el color de fondo */
 }
 
+/* Texto del pie de página en la sección principal */
 .footer-text {
-  position: absolute;
-  bottom: 0.25rem;
-  font-size: 0.75rem;
-  font-family: "Trocchi", serif;
-  max-width: 400px;
-  color: #000000;
-  line-height: 1.2;
-  margin-left: 10px;
+  position: absolute; /* Posicionamiento absoluto respecto al contenedor */
+  bottom: 0.25rem; /* Pega el texto a la parte inferior */
+  font-size: 0.75rem; /* Tamaño de la fuente inicial */
+  font-family: "Trocchi", serif; /* Aplica la fuente Trocchi */
+  max-width: 400px; /* Ancho máximo para evitar que el texto ocupe demasiado espacio */
+  color: #000000; /* Color del texto */
+  line-height: 1.2; /* Espaciado entre líneas */
+  margin-left: 10px; /* Pequeño margen izquierdo */
+  background-color: rgba(255, 255, 255, 0.7); /* Fondo blanco semitransparente */
+  padding: 8px; /* Pequeño relleno */
+  border-radius: 4px; /* Bordes ligeramente redondeados */
 }
 
+/* Contenedor para la sección de objetivos y descubrimiento */
 .container2 {
-  max-width: 1120px;
-  margin: 0 auto;
-  padding: 40px 16px 64px 16px;
+  max-width: 1120px; /* Ancho máximo del contenido */
+  margin: 0 auto; /* Centra el contenedor horizontalmente */
+  padding: 40px 16px 64px 16px; /* Relleno superior, lateral e inferior */
 }
 
+/* Sección de objetivos */
 .objetivos {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-  text-align: center;
-  font-family: "Trocchi", serif;
+  display: flex; /* Utiliza Flexbox para organizar los objetivos */
+  flex-direction: column; /* Apila los objetivos verticalmente en pantallas pequeñas */
+  gap: 32px; /* Espacio entre los objetivos */
+  text-align: center; /* Centra el texto dentro de cada objetivo en pantallas pequeñas */
+  font-family: "Trocchi", serif; /* Aplica la fuente Trocchi */
 }
 
+/* Media query para pantallas más grandes (ancho mínimo de 768px) */
 @media (min-width: 768px) {
   .objetivos {
-    flex-direction: row;
-    text-align: left;
-    gap: 0;
-    justify-content: space-between;
+    flex-direction: row; /* Organiza los objetivos en fila en pantallas más grandes */
+    text-align: left; /* Alinea el texto a la izquierda */
+    gap: 0; /* Elimina el espacio entre los elementos cuando están en fila */
+    justify-content: space-between; /* Distribuye el espacio entre los objetivos */
   }
 }
 
+/* Estilo individual de cada objetivo */
 .objetivo {
-  flex: 1 1 0;
-  max-width: 33.3333%;
-  margin-right: 2rem;
-  margin-left: 2rem;
+  flex: 1 1 0; /* Permite que los elementos crezcan o se encojan y establece un ancho base de 0 */
+  max-width: 33.3333%; /* Establece un ancho máximo para cada objetivo cuando están en fila */
+  margin-right: 2rem; /* Añade margen derecho para separar los objetivos */
+  margin-left: 2rem; /* Añade margen izquierdo para separar los objetivos */
 }
 
+/* Elimina el margen izquierdo del primer elemento y el margen derecho del último elemento en pantallas grandes */
+@media (min-width: 768px) {
+  .objetivos .objetivo:first-child {
+    margin-left: 0;
+  }
+
+  .objetivos .objetivo:last-child {
+    margin-right: 0;
+  }
+}
+
+/* Título del objetivo */
 .objetivo h2 {
-  font-weight: 600;
-  font-size: 18px;
-  margin-bottom: 8px;
+  font-weight: 600; /* Peso de la fuente seminegrita */
+  font-size: 18px; /* Tamaño de la fuente */
+  margin-bottom: 8px; /* Añade un margen inferior */
 }
 
+/* Párrafo del objetivo */
 .objetivo p {
-  font-size: 14px;
-  line-height: 1.4;
-  margin: 0;
-  color: #7D7470;
+  font-size: 14px; /* Tamaño de la fuente */
+  line-height: 1.4; /* Espaciado entre líneas */
+  margin: 0; /* Elimina el margen predeterminado */
+  color: #7D7470; /* Color del texto grisáceo */
 }
 
+/* Título de la sección "Descubre" */
 .descubre-title {
-  font-weight: 600;
-  font-size: 28px;
-  text-align: center;
-  margin: 64px 0 40px 0;
-  font-family: "Trocchi", serif;
+  font-weight: 600; /* Peso de la fuente seminegrita */
+  font-size: 28px; /* Tamaño de la fuente */
+  text-align: center; /* Centra el texto */
+  margin: 64px 0 40px 0; /* Margen superior, inferior */
+  font-family: "Trocchi", serif; /* Aplica la fuente Trocchi */
 }
 
+/* Grid de elementos "Descubre" */
 .descubre-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
+  display: grid; /* Utiliza Grid Layout */
+  grid-template-columns: repeat(2, 1fr); /* Crea 2 columnas de igual ancho en pantallas pequeñas */
+  gap: 24px; /* Espacio entre las celdas del grid */
 }
 
+/* Media query para pantallas más grandes (ancho mínimo de 640px) */
 @media (min-width: 640px) {
   .descubre-grid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, 1fr); /* Crea 4 columnas en pantallas medianas */
   }
 }
 
+/* Estilo individual de cada elemento "Descubre" */
 .descubre-item {
-  display: flex;
-  flex-direction: column;
+  display: flex; /* Utiliza Flexbox para organizar el contenido interno */
+  flex-direction: column; /* Apila los elementos verticalmente */
 }
 
+/* Imagen del elemento "Descubre" */
 .descubre-item img {
-  width: 100%;
-  height: auto;
-  display: block;
+  width: 100%; /* Ocupa todo el ancho del contenedor */
+  height: auto; /* Mantiene la proporción de aspecto */
+  display: block; /* Elimina el espacio adicional debajo de la imagen */
 }
 
+/* Texto de la leyenda de la imagen "Descubre" */
 .descubre-caption {
-  background-color: #A9C2E0;
-  font-family: 'Raleway', sans-serif;
-  font-size: 12px;
-  font-style: italic;
-  text-align: center;
-  padding: 4px 0;
-  margin-top: 4px;
-  font-weight: bold;
+  background-color: #A9C2E0; /* Color de fondo azul claro */
+  font-family: 'Raleway', sans-serif; /* Aplica la fuente Raleway */
+  font-size: 12px; /* Tamaño de la fuente */
+  font-style: italic; /* Texto en cursiva */
+  text-align: center; /* Centra el texto */
+  padding: 4px 0; /* Relleno vertical */
+  margin-top: 4px; /* Pequeño margen superior */
+  font-weight: bold; /* Peso de la fuente negrita */
 }
 
+/* Estilos para el pie de página */
 footer {
-  width: 100%;         
+  width: 100%;
   padding: 24px;
-  background-color: #F1EFEA;
-  box-sizing: border-box;
+  background-color: #F1EFEA; /* Color de fondo beige claro */
+  box-sizing: border-box; /* Asegura que el padding se incluya en el ancho total */
 }
 
+/* Contenedor superior del pie de página (columnas) */
 .footer-top {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 24px;
+  display: grid; /* Utiliza Grid Layout */
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Crea columnas que se ajustan automáticamente con un ancho mínimo de 200px */
+  gap: 24px; /* Espacio entre las columnas */
 }
 
+/* Estilo individual de cada columna del pie de página */
 .footer-column {
-  min-width: 140px;
-  margin-bottom: 24px;
+  min-width: 140px; /* Ancho mínimo de la columna */
+  margin-bottom: 24px; /* Margen inferior para separar las columnas verticalmente en pantallas pequeñas */
 }
 
+/* Enlaces/texto dentro de cada columna del pie de página */
 .footer-column p {
-  margin: 4px 0;
-  font-family: "Manrope", sans-serif;
-  color: #000000;
-  margin-right: -10px;
-  cursor: pointer;
+  margin: 4px 0; /* Margen superior e inferior */
+  font-family: "Manrope", sans-serif; /* Aplica la fuente Manrope */
+  color: #000000; /* Color del texto */
+  margin-right: -10px; /* Ajuste visual del margen derecho */
+  cursor: pointer; /* Cambia el cursor al pasar por encima */
 }
 
-.footer-column p:hover{
-  color: #cc5f0a;
+/* Estilo al pasar el ratón sobre los enlaces del pie de página */
+.footer-column p:hover {
+  color: #cc5f0a; /* Cambia el color del texto a naranja al pasar el ratón */
 }
 
+/* Título de la columna del pie de página */
 .footer-column p.title2 {
-  font-family: 'IBM Plex Sans', sans-serif;
-  font-weight: 600;
-  font-style: italic;
-  margin-bottom: 8px;
-  color: #2B2B2B;
-  margin-right: 160px;
-  font-size: 20px;
+  font-family: 'IBM Plex Sans', sans-serif; /* Aplica la fuente IBM Plex Sans */
+  font-weight: 600; /* Peso de la fuente seminegrita */
+  font-style: italic; /* Texto en cursiva */
+  margin-bottom: 8px; /* Margen inferior */
+  color: #2B2B2B; /* Color del texto gris oscuro */
+  margin-right: 160px; /* Ajuste visual del margen derecho */
+  font-size: 20px; /* Tamaño de la fuente */
 }
 
+/* Contenedor de los iconos sociales */
 .social-icons {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-top: 0; 
-  min-width: 140px;
+  display: flex; /* Utiliza Flexbox para alinear los iconos */
+  align-items: center; /* Alinea verticalmente los iconos */
+  gap: 16px; /* Espacio entre los iconos */
+  margin-top: 0;
+  min-width: 140px; /* Ancho mínimo del contenedor */
 }
 
+/* Sección inferior del pie de página (copyright, etc.) */
 .footer-bottom {
-  font-size: 11px;
-  font-family: "Manrope", sans-serif;
-  color: #717171;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 16px;
+  font-size: 11px; /* Tamaño de la fuente */
+  font-family: "Manrope", sans-serif; /* Aplica la fuente Manrope */
+  color: #717171; /* Color del texto gris claro */
+  display: flex; /* Utiliza Flexbox para organizar los elementos */
+  flex-wrap: wrap; /* Permite que los elementos pasen a la siguiente línea si no hay suficiente espacio */
+  justify-content: center; /* Centra los elementos horizontalmente */
+  gap: 16px; /* Espacio entre los elementos */
+}
+
+/* --- MEDIA QUERIES PARA RESPONSIVE --- */
+
+/* Para pantallas de teléfono (ancho máximo de 600px) */
+@media (max-width: 600px) {
+  .content2 h1 {
+    font-size: 1.75rem; /* Reduce el tamaño del título */
+  }
+
+  .subtitle {
+    font-size: 2rem; /* Reduce el tamaño del subtítulo */
+  }
+
+  .btn {
+    font-size: 0.75rem; /* Reduce el tamaño de la fuente del botón */
+    padding: 0.5rem 1.5rem; /* Reduce el relleno del botón */
+  }
+
+  .footer-text {
+    font-size: 0.65rem; /* Reduce el tamaño de la fuente del texto del pie de página */
+    margin-left: 5px; /* Reduce el margen izquierdo */
+    max-width: 90%; /* Permite que el texto ocupe más ancho en pantallas pequeñas */
+  }
+
+  .objetivos {
+    text-align: center; /* Centra el texto de los objetivos */
+    gap: 20px; /* Reduce el espacio entre los objetivos */
+  }
+
+  .objetivo {
+    margin-right: 0; /* Elimina el margen derecho */
+    margin-left: 0; /* Elimina el margen izquierdo */
+    max-width: 100%; /* Los objetivos ocupan todo el ancho */
+  }
+
+  .objetivo h2 {
+    font-size: 16px; /* Reduce el tamaño del título del objetivo */
+  }
+
+  .objetivo p {
+    font-size: 13px; /* Reduce el tamaño del párrafo del objetivo */
+  }
+
+  .descubre-title {
+    font-size: 24px; /* Reduce el tamaño del título "Descubre" */
+    margin: 40px 0 30px 0; /* Reduce el margen superior e inferior */
+  }
+
+  .descubre-grid {
+    grid-template-columns: 1fr; /* Una sola columna para los elementos "Descubre" */
+    gap: 16px; /* Reduce el espacio entre los elementos */
+  }
+
+  .descubre-caption {
+    font-size: 11px; /* Reduce el tamaño de la fuente de la leyenda */
+  }
+
+  .footer-top {
+    grid-template-columns: 1fr; /* Una sola columna para las columnas del pie de página */
+    gap: 16px; /* Reduce el espacio entre las columnas */
+  }
+
+  .footer-column p.title2 {
+    font-size: 18px; /* Reduce el tamaño del título de la columna del pie de página */
+    margin-right: 0; /* Elimina el margen derecho */
+  }
+
+  .social-icons {
+    justify-content: center; /* Centra los iconos sociales */
+  }
+
+  .footer-bottom {
+    font-size: 10px; /* Reduce el tamaño de la fuente de la sección inferior del pie de página */
+    justify-content: center; /* Centra los elementos */
+    gap: 8px; /* Reduce el espacio entre los elementos */
+  }
+}
+
+/* Para pantallas de tablet (ancho mínimo de 601px y máximo de 768px) */
+@media (min-width: 601px) and (max-width: 768px) {
+  .content2 h1 {
+    font-size: 2.25rem; /* Reduce ligeramente el tamaño del título */
+  }
+
+  .subtitle {
+    font-size: 2.75rem; /* Reduce ligeramente el tamaño del subtítulo */
+  }
+
+  .descubre-grid {
+    grid-template-columns: repeat(2, 1fr); /* Dos columnas para los elementos "Descubre" */
+  }
+
+  .objetivos {
+    flex-direction: row; /* Disposición en fila para los objetivos */
+    justify-content: space-around; /* Distribuye el espacio alrededor de los objetivos */
+    gap: 20px; /* Reduce el espacio entre los objetivos */
+  }
+
+  .objetivo {
+    max-width: 45%; /* Ancho máximo para los objetivos en disposición horizontal */
+    margin-right: 0; /* Elimina el margen derecho */
+    margin-left: 0; /* Elimina el margen izquierdo */
+  }
+}
+
+/* Para pantallas más pequeñas que el ancho típico de un teléfono (ej: 375px) */
+@media (max-width: 375px) {
+  .content2 {
+    background-color: rgba(255, 255, 255, 1); /* Fondo blanco sólido en pantallas muy pequeñas */
+  }
+
+  .footer-text {
+    background-color: rgba(255, 255, 255, 1); /* Fondo blanco sólido en pantallas muy pequeñas */
+  }
+
+  .container {
+    overflow-y: auto; /* Permite el desplazamiento vertical si el contenido excede la pantalla */
+    overflow-x: hidden; /* Oculta el desplazamiento horizontal */
+    height: auto; /* La altura se ajusta al contenido */
+  }
 }

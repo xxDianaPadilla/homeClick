@@ -1,192 +1,314 @@
+/* Importa la fuente Inter desde Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+/* Importa la fuente Raleway con peso 400 desde Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400&display=swap');
 
+/* Estilos para el body */
 body {
+  /* Establece la fuente principal del cuerpo */
   font-family: 'Inter', sans-serif;
+  /* Elimina los márgenes predeterminados del cuerpo */
   margin: 0;
+  /* Elimina el relleno predeterminado del cuerpo */
   padding: 0;
 }
 
+/* Contenedor principal de la página de destino */
 .landing-container {
+  /* Posicionamiento relativo para contener elementos absolutos */
   position: relative;
+  /* Asegura que el contenedor ocupe al menos toda la altura de la ventana */
   min-height: 100vh;
+  /* Ocupa todo el ancho disponible */
   width: 100%;
+  /* Utiliza Flexbox para centrar el contenido */
   display: flex;
+  /* Centra los elementos verticalmente */
   align-items: center;
+  /* Centra los elementos horizontalmente */
   justify-content: center;
+  /* Establece el color de fondo */
   background-color: #f3f4f6;
 }
 
+/* Imagen de fondo */
 .background-image {
+  /* Posicionamiento absoluto para cubrir todo el contenedor */
   position: absolute;
+  /* Establece todas las propiedades de inserción en 0 para cubrir todo el contenedor */
   inset: 0;
+  /* Ocupa todo el ancho */
   width: 100%;
+  /* Ocupa toda la altura */
   height: 100%;
+  /* Ajusta el tamaño de la imagen para cubrir el contenedor manteniendo su relación de aspecto */
   object-fit: cover;
 }
 
+/* Contenedor del formulario */
 .form-container {
+  /* Posicionamiento relativo para el candado */
   position: relative;
+  /* Color de fondo semitransparente */
   background-color: rgba(129, 73, 22, 0.7); /* Mismo color y opacidad */
+  /* Bordes redondeados */
   border-radius: 1.5rem;
+  /* Relleno interno */
   padding: 2.5rem;
+  /* Ancho del formulario */
   width: 950px; /* Ancho similar al diseño */
+  /* Altura del formulario */
   height: 600px; /* Altura del diseño original */
+  /* Utiliza Flexbox para organizar el contenido */
   display: flex;
+  /* Organiza los elementos en columna */
   flex-direction: column;
+  /* Centra los elementos horizontalmente */
   align-items: center;
-  padding-top: 60px; /* Ajustar padding superior para el candado */
-  gap: 15px; /* Ajustar espacio entre elementos */
+  /* Ajustar padding superior para el candado */
+  padding-top: 60px;
+  /* Ajustar espacio entre elementos */
+  gap: 15px;
 }
 
+/* Título del formulario */
 .form-title {
+  /* Color del texto blanco */
   color: white;
+  /* Texto en negrita */
   font-weight: bolder;
+  /* Tamaño de la fuente */
   font-size: 32px; /* Reducir un poco el tamaño del título */
+  /* Centra el texto */
   text-align: center;
+  /* Margen inferior */
   margin-bottom: 5px; /* Reducir el margen inferior del título */
 }
 
+/* Descripción del formulario */
 .form-description {
+  /* Color del texto blanco */
   color: white;
+  /* Tamaño de la fuente */
   font-size: 15px; /* Reducir un poco el tamaño de la descripción */
+  /* Centra el texto */
   text-align: center;
+  /* Altura de la línea para legibilidad */
   line-height: 1.3;
+  /* Margen inferior */
   margin-bottom: 20px; /* Reducir el margen inferior de la descripción */
-  padding: 0 220px; /* Aumentar el padding lateral para reducir aún más el ancho del texto */
+  /* Aumentar el padding lateral para reducir aún más el ancho del texto */
+  padding: 0 220px;
 }
 
+/* Contenedor del formulario de cambio de contraseña */
 .change-password-form {
+  /* Utiliza Flexbox para organizar los elementos */
   display: flex;
+  /* Organiza los elementos en columna */
   flex-direction: column;
+  /* Espacio entre los elementos */
   gap: 20px;
-  width: 500px; /* Ancho de los inputs y el botón */
+  /* Ancho de los inputs y el botón */
+  width: 500px;
+  /* Centra el formulario horizontalmente */
   margin: 0 auto;
 }
 
+/* Campos de entrada de texto */
 .text-input {
+  /* Ocupa todo el ancho del contenedor padre */
   width: 100%;
-  height: 58px; /* Alto de los inputs */
+  /* Altura de los inputs */
+  height: 58px;
+  /* Elimina el borde */
   border: none;
+  /* Color de fondo semitransparente */
   background-color: rgba(255, 255, 255, 0.2);
+  /* Color del texto blanco */
   color: white;
+  /* Relleno interno */
   padding: 0 15px;
+  /* Asegura que el padding y el borde se incluyan en el ancho y alto */
   box-sizing: border-box;
+  /* Bordes redondeados */
   border-radius: 0.25rem;
+  /* Estilo de fuente itálica */
   font-style: italic;
+  /* Tamaño de la fuente */
   font-size: 17px;
+  /* Familia de fuentes */
   font-family: 'Raleway', sans-serif;
+  /* Peso de la fuente */
   font-weight: 400;
 }
 
+/* Estilos para el placeholder de los inputs */
 .text-input::placeholder {
+  /* Color del placeholder blanco */
   color: white;
+  /* Asegura que el placeholder sea visible */
   opacity: 1;
+  /* Tamaño de la fuente del placeholder */
   font-size: 17px;
+  /* Familia de fuentes del placeholder */
   font-family: 'Raleway', sans-serif;
+  /* Peso de la fuente del placeholder */
   font-weight: 400;
 }
 
+/* Estilos al enfocar el input */
 .text-input:focus {
+  /* Elimina el outline predeterminado */
   outline: none;
+  /* Añade un borde blanco como indicador de foco */
   box-shadow: 0 0 0 1px white;
 }
 
+/* Botón de envío */
 .submit-button {
-  width: 500px; /* Ancho del botón */
-  height: 40px; /* Alto del botón */
+  /* Ancho del botón */
+  width: 500px;
+  /* Alto del botón */
+  height: 40px;
+  /* Color de fondo blanco */
   background-color: white;
+  /* Color del texto negro */
   color: black;
+  /* Texto en negrita */
   font-weight: bolder;
+  /* Estilo de fuente normal */
   font-style: normal;
+  /* Elimina el padding interno */
   padding: 0;
+  /* Elimina el borde */
   border: none;
+  /* Bordes redondeados */
   border-radius: 0.25rem;
+  /* Cambia el cursor a una mano al pasar por encima */
   cursor: pointer;
+  /* Tamaño de la fuente */
   font-size: 20px;
+  /* Familia de fuentes */
   font-family: 'Raleway', sans-serif;
-  line-height: 40px; /* Centrar el texto verticalmente */
+  /* Centrar el texto verticalmente */
+  line-height: 40px;
 }
 
+/* Estilos del botón al pasar el ratón */
 .submit-button:hover {
+  /* Cambia el color de fondo a un gris claro */
   background-color: #f9fafb;
 }
 
-/* Media queries para pantallas más pequeñas */
+/* Media queries para pantallas más pequeñas (hasta 768px de ancho) */
 @media (max-width: 768px) {
   .form-container {
+    /* Ajusta el ancho del formulario */
     width: 90%;
-    height: auto; /* Ajustar altura automáticamente */
+    /* Ajusta la altura automáticamente */
+    height: auto;
+    /* Reduce el relleno general */
     padding: 30px;
+    /* Ajusta el padding superior */
     padding-top: 40px;
+    /* Ajusta el espacio entre elementos */
     gap: 20px;
   }
 
   .form-title {
+    /* Mantiene el tamaño del título */
     font-size: 32px;
   }
 
   .form-description {
+    /* Reduce el tamaño de la fuente de la descripción */
     font-size: 15px;
-    padding: 0 120px; /* Ajustar padding lateral */
+    /* Ajusta el padding lateral para reducir el ancho del texto */
+    padding: 0 120px;
+    /* Ajusta el margen inferior */
     margin-bottom: 25px;
   }
 
   .change-password-form {
+    /* Ajusta el ancho del formulario de cambio de contraseña */
     width: 90%;
+    /* Ajusta el espacio entre los inputs */
     gap: 15px;
   }
 
   .text-input {
+    /* Reduce la altura de los inputs */
     height: 50px;
+    /* Reduce el tamaño de la fuente */
     font-size: 16px;
   }
 
   .text-input::placeholder {
+    /* Mantiene el tamaño de la fuente del placeholder */
     font-size: 16px;
   }
 
   .submit-button {
+    /* Ocupa todo el ancho disponible */
     width: 100%;
+    /* Aumenta ligeramente la altura del botón */
     height: 45px;
+    /* Mantiene el tamaño de la fuente */
     font-size: 18px;
+    /* Ajusta la altura de la línea para centrar el texto */
     line-height: 45px;
   }
 }
 
+/* Media queries para pantallas aún más pequeñas (hasta 480px de ancho) */
 @media (max-width: 480px) {
   .form-container {
+    /* Reduce aún más el relleno */
     padding: 20px;
+    /* Ajusta el padding superior */
     padding-top: 35px;
+    /* Ajusta el espacio entre elementos */
     gap: 15px;
   }
 
   .form-title {
+    /* Reduce el tamaño de la fuente del título */
     font-size: 28px;
   }
 
   .form-description {
+    /* Reduce el tamaño de la fuente de la descripción */
     font-size: 14px;
-    padding: 0 80px; /* Ajustar padding lateral */
+    /* Ajusta el padding lateral */
+    padding: 0 80px;
+    /* Ajusta el margen inferior */
     margin-bottom: 20px;
   }
 
   .change-password-form {
+    /* Mantiene el espacio entre los inputs */
     gap: 15px;
   }
 
   .text-input {
+    /* Reduce la altura de los inputs */
     height: 45px;
+    /* Reduce el tamaño de la fuente */
     font-size: 15px;
   }
 
   .text-input::placeholder {
+    /* Mantiene el tamaño de la fuente del placeholder */
     font-size: 15px;
   }
 
   .submit-button {
+    /* Mantiene la altura del botón */
     height: 40px;
+    /* Reduce ligeramente el tamaño de la fuente */
     font-size: 16px;
+    /* Ajusta la altura de la línea para centrar el texto */
     line-height: 40px;
   }
 }

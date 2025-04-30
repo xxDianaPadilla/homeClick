@@ -1,17 +1,19 @@
+/* Contenedor del ícono de candado */
 .lock-icon-container {
-   width: 150px; 
-   height: 150px; 
-   border-radius: 50%;
-   border: 2px solid white;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   margin-bottom: 15px; 
-   margin-top: -70px;
-   margin-bottom: -200px;
+  width: 150px; /* Ancho del contenedor */
+  height: 150px; /* Alto del contenedor */
+  border-radius: 50%; /* Hace el contenedor circular */
+  border: 2px solid white; /* Borde blanco */
+  display: flex; /* Usa flexbox para centrar */
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; /* Centra verticalmente */
+  margin-bottom: 15px; /* Margen inferior */
+  margin-top: -70px; /* Margen superior negativo */
+  margin-bottom: -200px; /* Margen inferior negativo */
  }
  
+ /* Imagen del candado */
  .lock-image {
-   max-width: 60%;
-   max-height: 60%;
+  max-width: 60%; /* Ancho máximo de la imagen */
+  max-height: 60%; /* Alto máximo de la imagen */
  }

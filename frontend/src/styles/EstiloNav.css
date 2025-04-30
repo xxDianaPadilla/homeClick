@@ -1,262 +1,354 @@
+/* Importa la fuente Raleway desde Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 
-.navbar{
-    width: 100%;
-    background-color: #ffffff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+/* Estilos generales de la barra de navegación */
+.navbar {
+  width: 100%;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
-.navbar-container{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 20px;
-    max-width: 1200px;
-    margin: 0 auto;
+/* Contenedor interno de la barra de navegación */
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.navbar-logo img{
-    height: 35px;
+/* Estilos para el logo (imagen) */
+.navbar-logo img {
+  height: 35px;
 }
 
-.navbar-options{
-    display: flex;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    gap: 10px;
-    font-family: 'Raleway', sans-serif;
+/* Lista de opciones de navegación */
+.navbar-options {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: 10px;
+  font-family: 'Raleway', sans-serif;
 }
 
-.navbar-options li a{
-    color: #000000;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: bold;
-    transition: color 0.3s ease;
-    margin-left: 38px;
+/* Estilos para los enlaces de las opciones de navegación */
+.navbar-options li a {
+  color: #000000;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: bold;
+  transition: color 0.3s ease;
+  margin-left: 38px;
 }
 
-.navbar-options li a:hover{
-    color: #E9631A;
+/* Estilo al pasar el ratón sobre los enlaces de navegación */
+.navbar-options li a:hover {
+  color: #E9631A;
 }
 
-.navbar-options li a.active{
-    color: #E9631A;
+/* Estilo para el enlace activo */
+.navbar-options li a.active {
+  color: #E9631A;
 }
 
-.navbar-icons{
-    display: flex;
-    align-items: center;
-    gap: 50px;
+/* Contenedor de iconos - Ajustes para tamaños de pantalla */
+.navbar-icons {
+  display: flex;
+  align-items: center;
+  gap: 50px; /* Espacio inicial para pantallas grandes */
 }
 
+/* Botón de icono */
+.icon-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px; /* Tamaño inicial del botón para pantallas grandes */
+  height: 28px; /* Tamaño inicial del botón para pantallas grandes */
+  padding: 0;
+}
+
+/* Estilos para las imágenes dentro de los botones de icono */
+.icon-button img {
+  /* Tamaño inicial de los iconos para pantallas grandes */
+  max-width: 22px;
+  max-height: 22px;
+  width: auto;
+  height: auto;
+}
+
+/* Contenedor de búsqueda */
 .search-container {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    max-width: 600px;
-    background-color: #f2f2f2;
-    border-radius: 8px;
-    overflow: hidden;
-    margin-left: -10px;
-    font-family: 'Raleway', sans-serif;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+  background-color: #f2f2f2;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-left: -10px;
+  font-family: 'Raleway', sans-serif;
 }
-  
+
+/* Campo de texto de búsqueda */
 .search-container input[type="text"] {
-    flex: 1;
-    padding: 10px 15px;
-    border: none;
-    background: transparent;
-    font-size: 16px;
-    outline: none;
+  flex: 1;
+  padding: 10px 15px;
+  border: none;
+  background: transparent;
+  font-size: 16px;
+  outline: none;
 }
 
-.search-container input::placeholder{
-    color: #ccc;
+/* Placeholder del campo de búsqueda */
+.search-container input::placeholder {
+  color: #ccc;
 }
-  
+
+/* Botón de búsqueda */
 .search-container button {
-    background-color: transparent;
-    border: none;
-    padding: 10px 15px;
-    cursor: pointer;
-    font-size: 18px;
-    border-left: 1px solid #ddd;
-    transition: background-color 0.3s ease;
+  background-color: transparent;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 18px;
+  border-left: 1px solid #ddd;
+  transition: background-color 0.3s ease;
 }
-  
+
+/* Estilo del botón de búsqueda al pasar el ratón */
 .search-container button:hover {
-    background-color: #e0e0e0;
+  background-color: #e0e0e0;
 }
 
-.icon-button{
-    background: none;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 24px;
-    height: 24px;
-    padding: 0;
+/* Contenedor del menú de navegación (para pantallas pequeñas) */
+.navbar-menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  transition: all 0.3s ease;
 }
 
-.navbar-menu{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-    transition: all 0.3s ease;
+/* Oculta la barra de scroll en navegadores Webkit */
+.navbar-menu::-webkit-scrollbar {
+  display: none;
 }
 
-.navbar-menu::-webkit-scrollbar{
-    display: none;
-}
-
+/* Línea divisoria horizontal */
 .espacio {
-    border: none;               
-    height: 1px;               
-    background-color: #d9d9d9;  
-    width: 100%;                
-    margin: 20px auto;          
-    border-radius: 2px;         
+  border: none;
+  height: 1px;
+  background-color: #d9d9d9;
+  width: 100%;
+  margin: 20px auto;
+  border-radius: 2px;
 }
 
-/* Menú hamburguesa */
+/* Menú hamburguesa (oculto por defecto) */
 .hamburger-menu {
-    display: none;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 30px;
-    height: 24px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    z-index: 1001;
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 24px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1001;
 }
 
+/* Estilos para cada barra del menú hamburguesa */
 .hamburger-menu span {
-    width: 100%;
-    height: 3px;
-    background-color: #333;
-    border-radius: 4px;
-    transition: all 0.3s ease;
+  width: 100%;
+  height: 3px;
+  background-color: #333;
+  border-radius: 4px;
+  transition: all 0.3s ease;
 }
 
 /* Overlay para cuando el menú está abierto */
 .overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+/* --- MEDIA QUERIES PARA RESPONSIVE --- */
+
+/* Para pantallas de tablet (ancho máximo de 768px) */
+@media (max-width: 768px) {
+  .navbar-container {
+    flex-wrap: wrap;
+  }
+
+  /* Ajustes para el contenedor de iconos en tablet */
+  .navbar-icons {
+    gap: 25px; /* Reducir el espacio en tablet */
+  }
+
+  /* Ajustes para el botón de icono en tablet */
+  .icon-button {
+    width: 26px;
+    height: 26px;
+  }
+
+  /* Ajustes para las imágenes de los iconos en tablet */
+  .icon-button img {
+    max-width: 20px;
+    max-height: 20px;
+  }
+
+  .hamburger-menu {
+    display: flex;
+  }
+
+  .navbar-menu {
     position: fixed;
     top: 0;
-    left: 0;
+    right: -100%;
+    width: 70%;
+    max-width: 300px;
+    height: 100vh;
+    background-color: #fff;
+    padding: 80px 20px 20px;
+    flex-direction: column;
+    align-items: flex-start;
+    transition: right 0.3s ease;
+    z-index: 1000;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+  }
+
+  .navbar-menu.active {
+    right: 0;
+  }
+
+  .navbar-options {
+    flex-direction: column;
     width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 999;
+  }
+
+  .navbar-options li {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+
+  .navbar-options li a {
+    margin-left: 0;
+    display: block;
+    padding: 10px 0;
+    font-size: 16px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .search-container {
+    order: 3;
+    width: 100%;
+    margin: 15px 0 0;
+    max-width: none;
+  }
+
+  /* Animación para el menú hamburguesa cuando está activo */
+  .hamburger-menu.active span:nth-child(1) {
+    transform: translateY(10px) rotate(45deg);
+  }
+
+  .hamburger-menu.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger-menu.active span:nth-child(3) {
+    transform: translateY(-10px) rotate(-45deg);
+  }
 }
 
-@media (max-width: 768px){
-    .navbar-container {
-        flex-wrap: wrap;
-    }
-    
-    .navbar-icons {
-        gap: 20px;
-    }
-    
-    .hamburger-menu {
-        display: flex;
-    }
-    
-    .navbar-menu {
-        position: fixed;
-        top: 0;
-        right: -100%;
-        width: 70%;
-        max-width: 300px;
-        height: 100vh;
-        background-color: #fff;
-        padding: 80px 20px 20px;
-        flex-direction: column;
-        align-items: flex-start;
-        transition: right 0.3s ease;
-        z-index: 1000;
-        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-        overflow-y: auto;
-    }
-    
-    .navbar-menu.active {
-        right: 0;
-    }
-    
-    .navbar-options {
-        flex-direction: column;
-        width: 100%;
-    }
-    
-    .navbar-options li {
-        width: 100%;
-        margin-bottom: 15px;
-    }
-    
-    .navbar-options li a {
-        margin-left: 0;
-        display: block;
-        padding: 10px 0;
-        font-size: 16px;
-        border-bottom: 1px solid #eee;
-    }
-    
-    .search-container {
-        order: 3;
-        width: 100%;
-        margin: 15px 0 0;
-        max-width: none;
-    }
-    
-    /* Animación para el menú hamburguesa cuando está activo */
-    .hamburger-menu.active span:nth-child(1) {
-        transform: translateY(10px) rotate(45deg);
-    }
-    
-    .hamburger-menu.active span:nth-child(2) {
-        opacity: 0;
-    }
-    
-    .hamburger-menu.active span:nth-child(3) {
-        transform: translateY(-10px) rotate(-45deg);
-    }
-}
-
+/* Para pantallas de móviles (ancho máximo de 480px) */
 @media (max-width: 480px) {
-    .navbar-container {
-        padding: 12px 15px;
-    }
-    
-    .navbar-logo img {
-        height: 28px;
-    }
-    
-    .navbar-icons {
-        gap: 15px;
-    }
-    
-    .search-container input[type="text"] {
-        padding: 8px 12px;
-        font-size: 14px;
-    }
-    
-    .search-container button {
-        padding: 8px 12px;
-    }
-    
-    .navbar-menu {
-        width: 85%;
-    }
+  .navbar-container {
+    padding: 12px 15px;
+  }
+
+  .navbar-logo img {
+    height: 28px;
+  }
+
+  /* Ajustes para el contenedor de iconos en móvil */
+  .navbar-icons {
+    gap: 15px; /* Reducir aún más el espacio */
+  }
+
+  /* Ajustes para el botón de icono en móvil */
+  .icon-button {
+    width: 24px;
+    height: 24px;
+  }
+
+  /* Ajustes para las imágenes de los iconos en móvil */
+  .icon-button img {
+    max-width: 18px;
+    max-height: 18px;
+  }
+
+  .search-container input[type="text"] {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+
+  .search-container button {
+    padding: 8px 12px;
+  }
+
+  .navbar-menu {
+    width: 85%;
+  }
+}
+
+/* Para pantallas más grandes (ancho mínimo de 1201px) - Ajustes para iconos más grandes */
+@media (min-width: 1201px) {
+  .navbar-icons {
+    gap: 60px; /* Aumentar el espacio para pantallas grandes */
+  }
+
+  .icon-button {
+    width: 32px; /* Aumentar el tamaño del botón */
+    height: 32px; /* Aumentar el tamaño del botón */
+  }
+
+  .icon-button img {
+    max-width: 26px; /* Aumentar el tamaño del icono */
+    max-height: 26px; /* Aumentar el tamaño del icono */
+  }
+}
+
+/* Para pantallas medianas (ancho mínimo de 769px y máximo de 1200px) - Ajustes sutiles */
+@media (min-width: 769px) and (max-width: 1200px) {
+  .navbar-icons {
+    gap: 40px; /* Ajuste de espacio para pantallas medianas */
+  }
+
+  .icon-button {
+    width: 30px;
+    height: 30px;
+  }
+
+  .icon-button img {
+    max-width: 24px;
+    max-height: 24px;
+  }
 }

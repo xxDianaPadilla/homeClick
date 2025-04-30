@@ -1,68 +1,90 @@
-import React from "react";
-import Navbar from '../components/Navbar';
-import Footer from "../components/Footer";
-import '../styles/EstiloLandingPage.css';
-import bgImage from "../assets/xd1.png";
-import house1 from "../assets/image5.png";
-import house2 from "../assets/image6.png";
-import house3 from "../assets/image7.png";
+import React from "react"; // Importa la biblioteca React para la creación de componentes.
+import Navbar from '../components/Navbar'; // Importa el componente Navbar, que representa la barra de navegación.
+import Footer from "../components/Footer"; // Importa el componente Footer, que representa el pie de página.
+import '../styles/EstiloLandingPage.css'; // Importa los estilos CSS específicos para la página de inicio (landing page).
+import bgImage from "../assets/xd1.png"; // Importa la imagen de fondo principal para la sección superior.
+import house1 from "../assets/image5.png"; // Importa una imagen de una casa para la sección de descubrimiento.
+import house2 from "../assets/image6.png"; // Importa otra imagen de una casa para la sección de descubrimiento.
+import house3 from "../assets/image7.png"; // Importa una tercera imagen de una casa para la sección de descubrimiento.
 
+// Define el componente funcional LandingPage, que representa la página de inicio de la aplicación.
 const LandingPage = () => {
-    return(
-        <div className="landing-page">
-            <Navbar/>
-            <div className="container">
-                <img src={bgImage} alt="" className="background-image"/>
-                <div className="content2">
-                    <h1>La Casa de Tus Sueños
-                    <span className="subtitle">A Un Solo Click</span>
-                    </h1>
-                    <button className="btn" type="button">Leer más</button>
-                </div>
-                <p className="footer-text">
-                    HomeClick es un tienda en línea que ofrece una solución integral para el mercado inmobiliario, brindando acceso a una amplia variedad de casas en diferentes ubicaciones.
-                </p>
-            </div>
-            <section className="container2">
-                <div className="objetivos">
-                    <div className="objetivo">
-                        <h2>Objetivo Clase #1</h2>
-                        <p>Facilitar el acceso a la oferta inmobiliaria brindando a los usuarios una plataforma intuitiva y accesible que les permita explorar, comparar y adquirir viviendas en diferentes ubicaciones sin la necesidad de desplazarse físicamente, optimizando así su tiempo y recursos.</p>
-                    </div>
-                    <div className="objetivo">
-                        <h2>Objetivo Clase #2</h2>
-                        <p>Optimizar la gestión de ventas y usuarios proporcionando a los administradores herramientas eficientes para gestionar la venta de propiedades, supervisar transacciones y administrar perfiles de usuarios, asegurando un proceso transparente, seguro y organizado.</p>
-                    </div>
-                    <div className="objetivo">
-                        <h2>Objetivo clave #3</h2>
-                        <p>Mejorar la experiencia de compra de viviendas integrando funcionalidades innovadoras en el sitio web y la aplicación móvil para ofrecer a los compradores una experiencia fluida, segura y confiable, permitiéndoles interactuar con la plataforma a través de reseñas, notificaciones y un proceso de compra simplificado.</p>
-                    </div>
-                </div>
-            </section>
-            <section className="container2">
-                <h3 className="descubre-title">Descubre</h3>
-                <div className="descubre-grid">
-                    <div className="descubre-item">
-                        <img src={house1} alt="" />
-                        <p className="descubre-caption">Casa en Colonia Escalón</p>
-                    </div>
-                    <div className="descubre-item">
-                        <img src={house2} alt="" />
-                        <p className="descubre-caption">Casa en zona rosa</p>
-                    </div>
-                    <div className="descubre-item">
-                        <img src={house3} alt="" />
-                        <p className="descubre-caption">Casa en santa tecla</p>
-                    </div>
-                    <div className="descubre-item">
-                        <img src={house1} alt="" />
-                        <p className="descubre-caption">Casa en Colonia Escalón</p>
-                    </div>
-                </div>
-            </section>
-            <Footer/> 
+  // Renderiza la estructura de la página de inicio.
+  return(
+    <div className="landing-page">
+      {/* Renderiza el componente de la barra de navegación en la parte superior. */}
+      <Navbar/>
+      {/* Contenedor principal para la sección superior de la página de inicio. */}
+      <div className="container">
+        {/* Imagen de fondo para la sección principal. */}
+        <img src={bgImage} alt="" className="background-image"/>
+        {/* Contenido superpuesto en la imagen de fondo, incluyendo el título y el botón. */}
+        <div className="content2">
+          {/* Título principal de la página de inicio con un subtítulo estilizado. */}
+          <h1>La Casa de Tus Sueños
+            <span className="subtitle">A Un Solo Click</span>
+          </h1>
+          {/* Botón de "Leer más". */}
+          <button className="btn" type="button">Leer más</button>
         </div>
-    );
+        {/* Texto descriptivo que aparece en la parte inferior de la sección principal. */}
+        <p className="footer-text">
+          HomeClick es un tienda en línea que ofrece una solución integral para el mercado inmobiliario, brindando acceso a una amplia variedad de casas en diferentes ubicaciones.
+        </p>
+      </div>
+      {/* Sección que describe los objetivos de HomeClick. */}
+      <section className="container2">
+        {/* Contenedor para los diferentes objetivos. */}
+        <div className="objetivos">
+          {/* Primer objetivo de la plataforma. */}
+          <div className="objetivo">
+            <h2>Objetivo Clase #1</h2>
+            <p>Facilitar el acceso a la oferta inmobiliaria brindando a los usuarios una plataforma intuitiva y accesible que les permita explorar, comparar y adquirir viviendas en diferentes ubicaciones sin la necesidad de desplazarse físicamente, optimizando así su tiempo y recursos.</p>
+          </div>
+          {/* Segundo objetivo de la plataforma. */}
+          <div className="objetivo">
+            <h2>Objetivo Clase #2</h2>
+            <p>Optimizar la gestión de ventas y usuarios proporcionando a los administradores herramientas eficientes para gestionar la venta de propiedades, supervisar transacciones y administrar perfiles de usuarios, asegurando un proceso transparente, seguro y organizado.</p>
+          </div>
+          {/* Tercer objetivo de la plataforma. */}
+          <div className="objetivo">
+            <h2>Objetivo clave #3</h2>
+            <p>Mejorar la experiencia de compra de viviendas integrando funcionalidades innovadoras en el sitio web y la aplicación móvil para ofrecer a los compradores una experiencia fluida, segura y confiable, permitiéndoles interactuar con la plataforma a través de reseñas, notificaciones y un proceso de compra simplificado.</p>
+          </div>
+        </div>
+      </section>
+      {/* Sección que muestra una selección de casas para descubrir. */}
+      <section className="container2">
+        {/* Título de la sección de descubrimiento. */}
+        <h3 className="descubre-title">Descubre</h3>
+        {/* Contenedor para la cuadrícula de elementos de descubrimiento. */}
+        <div className="descubre-grid">
+          {/* Primer elemento de descubrimiento, mostrando una casa en Colonia Escalón. */}
+          <div className="descubre-item">
+            <img src={house1} alt="" />
+            <p className="descubre-caption">Casa en Colonia Escalón</p>
+          </div>
+          {/* Segundo elemento de descubrimiento, mostrando una casa en zona rosa. */}
+          <div className="descubre-item">
+            <img src={house2} alt="" />
+            <p className="descubre-caption">Casa en zona rosa</p>
+          </div>
+          {/* Tercer elemento de descubrimiento, mostrando una casa en Santa Tecla. */}
+          <div className="descubre-item">
+            <img src={house3} alt="" />
+            <p className="descubre-caption">Casa en santa tecla</p>
+          </div>
+          {/* Cuarto elemento de descubrimiento, mostrando otra casa en Colonia Escalón. */}
+          <div className="descubre-item">
+            <img src={house1} alt="" />
+            <p className="descubre-caption">Casa en Colonia Escalón</p>
+          </div>
+        </div>
+      </section>
+      {/* Renderiza el componente del pie de página en la parte inferior. */}
+      <Footer/>
+    </div>
+  );
 };
 
 export default LandingPage;

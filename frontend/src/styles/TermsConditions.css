@@ -1,82 +1,97 @@
-@import url('https://fonts.googleapis.com/css2?family=Trocchi&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Trocchi&display=swap'); /* Importa la fuente Trocchi desde Google Fonts */
 
-.terms-container2{
-    max-width: 1000px;
-    margin: 40px auto;
-    padding: 20px;
-    font-family: 'Trocchi', serif;
-    color: #333;
-    background-color: #ffffff;
+/* Estilos para el contenedor principal de los términos y condiciones */
+.terms-container2 {
+  max-width: 1000px; /* Establece un ancho máximo para el contenedor */
+  margin: 40px auto; /* Centra el contenedor horizontalmente y añade margen superior e inferior */
+  padding: 20px; /* Añade un relleno interno alrededor del contenido */
+  font-family: 'Trocchi', serif; /* Aplica la fuente Trocchi */
+  color: #333; /* Establece el color del texto principal */
+  background-color: #ffffff; /* Establece el color de fondo del contenedor como blanco */
 }
 
-.terms-content2{
-    padding: 20px;
+/* Estilos para el contenido interno de los términos y condiciones */
+.terms-content2 {
+  padding: 20px; /* Añade un relleno interno alrededor del contenido */
 }
 
-.terms-title2{
-    font-size: 28px;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 5px;
-    color: #000;
-    font-family: 'Trocchi', serif;
+/* Estilos para el título principal de los términos y condiciones */
+.terms-title2 {
+  font-size: 28px; /* Establece el tamaño de la fuente */
+  font-weight: bold; /* Establece el texto en negrita */
+  text-align: center; /* Centra el texto horizontalmente */
+  margin-bottom: 5px; /* Añade un pequeño margen inferior */
+  color: #000; /* Establece el color del texto como negro */
+  font-family: 'Trocchi', serif; /* Aplica la fuente Trocchi */
 }
 
-.terms-date{
-    font-size: 14px;
-    text-align: center;
-    margin-bottom: 30px;
+/* Estilos para la fecha de los términos y condiciones */
+.terms-date {
+  font-size: 14px; /* Establece el tamaño de la fuente */
+  text-align: center; /* Centra el texto horizontalmente */
+  margin-bottom: 30px; /* Añade un margen inferior más grande para separar del contenido */
 }
 
-.terms-intro{
-    margin-bottom: 25px;
-    line-height: 1.5;
+/* Estilos para la introducción de los términos y condiciones */
+.terms-intro {
+  margin-bottom: 25px; /* Añade un margen inferior */
+  line-height: 1.5; /* Establece la altura de la línea para mejorar la legibilidad */
 }
 
-.terms-section2{
-    margin-bottom: 25px;
+/* Estilos para cada sección de los términos y condiciones */
+.terms-section2 {
+  margin-bottom: 25px; /* Añade un margen inferior para separar las secciones */
 }
 
-.terms-section2 h2{
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 10px;
+/* Estilos para los títulos de las secciones de los términos y condiciones */
+.terms-section2 h2 {
+  font-size: 18px; /* Establece el tamaño de la fuente */
+  font-weight: bold; /* Establece el texto en negrita */
+  margin-bottom: 10px; /* Añade un margen inferior */
 }
 
-.terms-section2 ul{
-    list-style-type: none;
-    padding-left: 0;
+/* Estilos para las listas dentro de las secciones de los términos y condiciones */
+.terms-section2 ul {
+  list-style-type: none; /* Elimina los marcadores de lista predeterminados */
+  padding-left: 0; /* Elimina el relleno izquierdo predeterminado de la lista */
 }
 
-.terms-section2 ul li{
-    position: relative;
-    padding-left: 15px;
-    margin-bottom: 10px;
-    line-height: 1.5;
+/* Estilos para los elementos de la lista dentro de las secciones */
+.terms-section2 ul li {
+  position: relative; /* Permite posicionar pseudo-elementos relativos a este elemento */
+  padding-left: 15px; /* Añade un relleno izquierdo para dejar espacio para el marcador personalizado */
+  margin-bottom: 10px; /* Añade un margen inferior */
+  line-height: 1.5; /* Establece la altura de la línea */
 }
 
-.terms-container2 ul li::before{
-    content: '•';
-    position: absolute;
-    left: 0;
-    color: #000;
+/* Estilos para el marcador personalizado de los elementos de la lista */
+.terms-container2 ul li::before {
+  content: '•'; /* Establece el contenido del pseudo-elemento como un punto */
+  position: absolute; /* Posiciona el pseudo-elemento absolutamente dentro del elemento de lista */
+  left: 0; /* Coloca el punto en el lado izquierdo */
+  color: #000; /* Establece el color del punto como negro */
 }
 
-.terms-container2 ul li strong{
-    font-weight: bold;
+/* Estilos para el texto en negrita dentro de los elementos de la lista */
+.terms-container2 ul li strong {
+  font-weight: bold; /* Establece el texto en negrita */
 }
 
-@media (max-width: 768px){
-    .terms-container{
-        padding: 10px;
-        margin: 20px auto
-    }
+/* Media query para pantallas más pequeñas (ancho máximo de 768px - tablets y dispositivos móviles) */
+@media (max-width: 768px) {
+  /* Reduce el relleno y el margen del contenedor en pantallas más pequeñas */
+  .terms-container {
+    padding: 10px;
+    margin: 20px auto;
+  }
 
-    .terms-title{
-        font-size: 24px;
-    }
+  /* Reduce el tamaño de la fuente del título principal en pantallas más pequeñas */
+  .terms-title {
+    font-size: 24px;
+  }
 
-    .terms-section h2{
-        font-size: 16px;
-    }
+  /* Reduce el tamaño de la fuente de los títulos de las secciones en pantallas más pequeñas */
+  .terms-section h2 {
+    font-size: 16px;
+  }
 }

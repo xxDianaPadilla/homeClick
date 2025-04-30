@@ -1,52 +1,67 @@
-import React, { useState } from 'react';
-import "../styles/Registro.css";
-import bgImgHouse from "../assets/imgLoginFondo.png";
+import React, { useState } from 'react'; // Importa React y el hook useState para gestionar el estado local.
+import "../styles/Registro.css"; // Importa los estilos CSS específicos para la página de registro.
+import bgImgHouse from "../assets/imgLoginFondo.png"; // Importa la imagen de fondo para la página.
 
+// Define el componente funcional Registro, que permite a los usuarios crear una nueva cuenta.
 function Registro() {
+  // Estado para controlar la visibilidad de la contraseña (mostrar u ocultar).
   const [showPassword, setShowPassword] = useState(false);
+  // Estado para controlar la visibilidad del modal de términos y condiciones.
   const [showModal, setShowModal] = useState(false);
+  // Estado para almacenar la fecha de nacimiento seleccionada por el usuario.
   const [selectedDate, setSelectedDate] = useState({
     day: "",
     month: "",
     year: ""
   });
 
+  // Función para abrir el modal de términos y condiciones. Previene la acción por defecto del evento.
   const handleModalOpen = (e) => {
     e.preventDefault();
     setShowModal(true);
   };
-  
+
+  // Función para cerrar el modal de términos y condiciones y marcar la casilla de aceptación.
   const handleModalClose = () => {
     setShowModal(false);
     document.getElementById('terms').checked = true;
   };
 
+  // Renderiza la estructura de la página de registro.
   return (
     <div className="landing-container">
+      {/* Imagen de fondo de la página de registro. */}
       <img
         src={bgImgHouse}
         alt="Row of Victorian houses with warm sunlight"
         className="background-image"
       />
+      {/* Contenedor con un posible overlay para mejorar la legibilidad del texto sobre la imagen. */}
       <div className="overlay">
+        {/* Título principal del formulario de registro. */}
         <h1 className="form-title2">Registro</h1>
+        {/* Formulario de registro. */}
         <form className="registro-form">
+          {/* Campo de entrada para el nombre. */}
           <input
             type="text"
             placeholder="Nombres"
             className="text-input"
           />
+          {/* Campo de entrada para el teléfono. */}
           <input
             type="text"
             placeholder="Teléfono"
             className="text-input"
           />
+          {/* Contenedor para el campo de contraseña y el icono para mostrar/ocultar la contraseña. */}
           <div className="input-password-wrapper">
             <input
               type={showPassword ? "text" : "password"}
               placeholder="Contraseña"
               className="text-input"
             />
+            {/* Icono de ojo para mostrar/ocultar la contraseña. */}
             <span
               className="toggle-password"
               onClick={() => setShowPassword(!showPassword)}
@@ -57,17 +72,20 @@ function Registro() {
               </svg>
             </span>
           </div>
-          
+
+          {/* Campo de entrada para los apellidos. */}
           <input
             type="text"
             placeholder="Apellidos"
             className="text-input"
           />
+          {/* Campo de entrada para la dirección. */}
           <input
             type="text"
             placeholder="Dirección"
             className="text-input"
           />
+          {/* Lista de requisitos para la contraseña. */}
           <div className="password-requirements">
             <ul>
               <li>8 caracteres mínimo</li>
@@ -76,21 +94,25 @@ function Registro() {
               <li>Un caracter especial</li>
             </ul>
           </div>
-          
+
+          {/* Campo de entrada para el DUI (Documento Único de Identidad). */}
           <input
             type="text"
             placeholder="DUI"
             className="text-input"
           />
+          {/* Campo de entrada para el correo electrónico. */}
           <input
             type="email"
             placeholder="Correo electrónico"
             className="text-input"
           />
+          {/* Contenedor para la selección de la fecha de nacimiento. */}
           <div className="fecha-container">
             <div className="fecha-nacimiento-label">Fecha de nacimiento</div>
             <div className="fecha-nacimiento-container">
-              <select 
+              {/* Selector para el día de nacimiento. */}
+              <select
                 value={selectedDate.day}
                 onChange={(e) => setSelectedDate({...selectedDate, day: e.target.value})}
               >
@@ -99,7 +121,8 @@ function Registro() {
                   <option key={i+1} value={i+1}>{i+1}</option>
                 ))}
               </select>
-              <select 
+              {/* Selector para el mes de nacimiento. */}
+              <select
                 value={selectedDate.month}
                 onChange={(e) => setSelectedDate({...selectedDate, month: e.target.value})}
               >
@@ -108,7 +131,8 @@ function Registro() {
                   <option key={i} value={i+1}>{month}</option>
                 ))}
               </select>
-              <select 
+              {/* Selector para el año de nacimiento. */}
+              <select
                 value={selectedDate.year}
                 onChange={(e) => setSelectedDate({...selectedDate, year: e.target.value})}
               >
@@ -120,35 +144,39 @@ function Registro() {
               </select>
             </div>
           </div>
-          
+
+          {/* Casilla de verificación para aceptar los términos y condiciones. */}
           <div className="checkbox-container">
             <input type="checkbox" id="terms" />
             <label htmlFor="terms" className="terms-label" onClick={handleModalOpen}>
               Acepto los términos y condiciones
             </label>
           </div>
-          
+
+          {/* Botón para enviar el formulario de registro. */}
           <button className="submit-button2" type="submit">
             Regístrate
           </button>
-          
+
+          {/* Enlace para iniciar sesión si ya se tiene una cuenta. */}
           <div className="login-text">
             ¿Ya tienes una cuenta creada? <a href="/inicio-sesion">Inicia sesión</a>
           </div>
         </form>
       </div>
 
+      {/* Modal para mostrar los términos y condiciones, se muestra condicionalmente. */}
       {showModal && (
         <div className="modal-overlay">
           <div className="modal-content">
             <h2>Términos y condiciones - HomeClick</h2>
             <div className="terms-content">
               <p className="terms-date">Fecha de entrada en vigor: Febrero 25, 2025</p>
-              
+
               <div className="terms-welcome">
                 <p>Bienvenido a HomeClick. Al acceder y utilizar nuestra plataforma, aceptas estos Términos y Condiciones. Si no estás de acuerdo con los mismos, por favor, no utilices nuestros servicios.</p>
               </div>
-              
+
               <div className="terms-section">
                 <h3>Definiciones</h3>
                 <ul>
@@ -157,7 +185,7 @@ function Registro() {
                   <li><strong>Contenido:</strong> Textos, imágenes, información disponible para el usuario a través de la plataforma.</li>
                 </ul>
               </div>
-              
+
               <div className="terms-section">
                 <h3>Uso de la Plataforma</h3>
                 <ul>
@@ -166,7 +194,7 @@ function Registro() {
                   <li>Tenemos el derecho de suspender o eliminar cuentas que incumplan estas normas.</li>
                 </ul>
               </div>
-              
+
               <div className="terms-section">
                 <h3>Registro y Seguridad de la Cuenta</h3>
                 <ul>
@@ -175,7 +203,7 @@ function Registro() {
                   <li>HomeClick no será responsable de accesos no autorizados derivados de negligencia del usuario.</li>
                 </ul>
               </div>
-              
+
               <div className="terms-section">
                 <h3>Proceso de Compra</h3>
                 <ul>
@@ -183,7 +211,7 @@ function Registro() {
                   <li>HomeClick no es responsable de la exactitud de la información proporcionada por terceros ni de la conclusión final exitosa de las compras.</li>
                 </ul>
               </div>
-              
+
               <div className="terms-section">
                 <h3>Responsabilidades y Limitaciones</h3>
                 <ul>
@@ -191,7 +219,7 @@ function Registro() {
                   <li>No somos responsables de cualquier pérdida derivada del uso de la plataforma.</li>
                 </ul>
               </div>
-              
+
               <div className="terms-section">
                 <h3>Propiedad Intelectual</h3>
                 <ul>
@@ -199,28 +227,29 @@ function Registro() {
                   <li>Queda prohibida cualquier reproducción o distribución del material de HomeClick.</li>
                 </ul>
               </div>
-              
+
               <div className="terms-section">
                 <h3>Modificaciones de los Términos</h3>
                 <ul>
                   <li>HomeClick puede modificar estos términos en cualquier momento. Los cambios entrarán en vigor con la publicación y su uso continuado implica su aceptación de los mismos.</li>
                 </ul>
               </div>
-              
+
               <div className="terms-section">
                 <h3>Ley Aplicable y Jurisdicción</h3>
                 <ul>
                   <li>Estos términos se rigen por las leyes aplicables en El Salvador y cualquier disputa será resuelta en los tribunales correspondientes.</li>
                 </ul>
               </div>
-              
+
               <div className="terms-section contact">
                 <h3>Contacto</h3>
                 <p>Si tienes dudas sobre estos "Términos y Condiciones", contáctanos en:</p>
                 <p>homeclick@gmail.com</p>
               </div>
             </div>
-            
+
+            {/* Botón para aceptar los términos y condiciones y cerrar el modal. */}
             <button className="accept-button" onClick={handleModalClose}>
               Aceptar términos y condiciones
             </button>

@@ -1,326 +1,528 @@
+/* Importa la fuente Inter desde Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+/* Importa la fuente Raleway con peso 400 desde Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400&display=swap');
 
+/* Estilos para el body */
 body {
+  /* Establece la fuente principal del cuerpo */
   font-family: 'Inter', sans-serif;
+  /* Elimina los márgenes predeterminados del cuerpo */
   margin: 0;
+  /* Elimina el relleno predeterminado del cuerpo */
   padding: 0;
 }
 
+/* Estilos para el contenedor principal de la página de destino */
 .landing-container {
+  /* Establece la posición como relativa para permitir el posicionamiento absoluto de elementos hijos */
   position: relative;
+  /* Asegura que el contenedor ocupe al menos toda la altura de la ventana */
   min-height: 100vh;
+  /* Asegura que el contenedor ocupe todo el ancho disponible */
   width: 100%;
+  /* Utiliza Flexbox para alinear y justificar el contenido */
   display: flex;
+  /* Centra los elementos verticalmente */
   align-items: center;
+  /* Centra los elementos horizontalmente */
   justify-content: center;
+  /* Establece el color de fondo del contenedor */
   background-color: #f3f4f6;
+  /* Establece una fuente secundaria para este contenedor */
   font-family: 'Raleway', sans-serif;
+  /* Establece el estilo de la fuente en itálica */
   font-style: italic;
 }
 
+/* Estilos para la imagen de fondo */
 .background-image {
+  /* Establece la posición como absoluta para cubrir el contenedor principal */
   position: absolute;
+  /* Establece todas las propiedades de inserción en 0 para cubrir todo el contenedor */
   inset: 0;
+  /* Asegura que la imagen ocupe todo el ancho del contenedor */
   width: 100%;
+  /* Asegura que la imagen ocupe toda la altura del contenedor */
   height: 100%;
+  /* Ajusta el tamaño de la imagen para cubrir el contenedor manteniendo su relación de aspecto */
   object-fit: cover;
 }
 
+/* Estilos para el contenedor del formulario */
 .form-container {
+  /* Establece la posición como relativa para el posicionamiento de elementos hijos */
   position: relative;
-  background-color: rgba(129, 73, 22, 0.7); 
+  /* Establece el color de fondo con transparencia */
+  background-color: rgba(129, 73, 22, 0.7);
+  /* Aplica un radio a las esquinas del contenedor */
   border-radius: 1.5rem;
+  /* Añade un relleno alrededor del contenido del formulario */
   padding: 2.5rem;
-  width: 950px; 
+  /* Establece un ancho preferido para el formulario */
+  width: 950px;
+  /* Asegura que el formulario no exceda el 90% del ancho de su contenedor padre */
   max-width: 90%;
-  height: auto; 
+  /* Establece una altura automática para adaptarse al contenido */
+  height: auto;
+  /* Utiliza Flexbox para organizar los elementos internos */
   display: flex;
+  /* Organiza los elementos en una columna */
   flex-direction: column;
+  /* Centra los elementos horizontalmente */
   align-items: center;
-  padding-top: 47px; 
-  padding-bottom: 30px; 
-  gap: 15px; 
+  /* Añade un relleno en la parte superior */
+  padding-top: 47px;
+  /* Añade un relleno en la parte inferior */
+  padding-bottom: 30px;
+  /* Establece el espacio entre los elementos hijos */
+  gap: 15px;
 }
 
+/* Estilos para el contenedor del encabezado */
 .header {
+  /* Utiliza Flexbox para alinear los elementos */
   display: flex;
+  /* Alinea los elementos al inicio del contenedor */
   justify-content: flex-start;
+  /* Ocupa todo el ancho disponible */
   width: 100%;
+  /* Establece un ancho máximo */
   max-width: 500px;
-  margin-bottom: 10px; 
+  /* Añade un margen en la parte inferior */
+  margin-bottom: 10px;
+  /* Alinea el elemento al inicio de su contenedor padre (horizontalmente) */
   align-self: flex-start;
 }
 
+/* Estilos para el contenedor del icono de candado */
 .lock-icon-container2 {
+  /* Aplica un radio para hacerlo circular */
   border-radius: 50%;
-  width: 150px; 
-  height: 160px; 
+  /* Establece el ancho del contenedor */
+  width: 150px;
+  /* Establece la altura del contenedor */
+  height: 160px;
+  /* Utiliza Flexbox para centrar el contenido */
   display: flex;
+  /* Centra el contenido horizontalmente */
   justify-content: center;
+  /* Centra el contenido verticalmente */
   align-items: center;
+  /* Añade un margen en la parte inferior */
   margin-bottom: 20px;
+  /* Añade un margen en la parte superior */
   margin-top: -70px;
+  /* Añade un borde blanco */
   border: 2px solid white;
 }
 
+/* Estilos para el icono de candado */
 .lock-icon {
+  /* Establece el ancho relativo al contenedor padre */
   width: 55%;
+  /* Establece la altura relativa al contenedor padre */
   height: 55%;
 }
 
+/* Estilos para el botón de retroceso */
 .back-button {
+  /* Elimina el fondo predeterminado del botón */
   background: none;
+  /* Elimina el borde predeterminado del botón */
   border: none;
+  /* Cambia el cursor a una mano para indicar que es interactivo */
   cursor: pointer;
-  padding: 5px 0 0 0; 
+  /* Añade un pequeño relleno en la parte superior */
+  padding: 5px 0 0 0;
+  /* Añade un margen en la parte superior */
   margin-top: -20px;
+  /* Añade un margen en la parte inferior */
   margin-bottom: 20px;
+  /* Añade un margen a la izquierda */
   margin-left: -10px;
 }
 
+/* Estilos para el icono de retroceso */
 .back-icon {
+  /* Establece el ancho del icono */
   width: 50px;
+  /* Establece la altura del icono */
   height: 50px;
 }
 
+/* Estilos para el título del formulario (h2) */
 .form-title4 {
+  /* Establece el color del texto en blanco */
   color: white;
+  /* Establece el grosor de la fuente en negrita */
   font-weight: bolder;
+  /* Establece el tamaño de la fuente */
   font-size: 30px;
+  /* Centra el texto horizontalmente */
   text-align: center;
+  /* Añade un margen en la parte inferior */
   margin-bottom: 5px;
+  /* Establece el ancho del elemento */
   width: 80%;
 }
 
+/* Estilos para la descripción del formulario */
 .form-description {
+  /* Establece el color del texto en blanco */
   color: white;
+  /* Establece el tamaño de la fuente */
   font-size: 16px;
+  /* Centra el texto horizontalmente */
   text-align: center;
+  /* Establece la altura de la línea */
   line-height: 1.3;
-  margin-bottom: 20px; 
+  /* Añade un margen en la parte inferior */
+  margin-bottom: 20px;
+  /* Añade un relleno horizontal */
   padding: 0 40px;
-  white-space: pre-line; 
+  /* Permite saltos de línea */
+  white-space: pre-line;
 }
 
+/* Estilos para el formulario de restablecimiento */
 .reset-form {
+  /* Utiliza Flexbox para organizar los elementos internos */
   display: flex;
+  /* Organiza los elementos en una columna */
   flex-direction: column;
+  /* Establece el espacio entre los elementos */
   gap: 12px;
+  /* Establece un ancho preferido para el formulario */
   width: 500px;
+  /* Asegura que el formulario no exceda el 90% del ancho de su contenedor padre */
   max-width: 90%;
+  /* Centra el formulario horizontalmente */
   margin: 0 auto;
 }
 
+/* Estilos para los campos de texto (input) */
 .text-input {
+  /* Ocupa todo el ancho disponible de su contenedor padre */
   width: 100%;
+  /* Establece la altura del campo de texto */
   height: 50px;
+  /* Elimina el borde predeterminado */
   border: none;
+  /* Establece el color de fondo con transparencia */
   background-color: rgba(255, 255, 255, 0.2);
+  /* Establece el color del texto en blanco */
   color: white;
+  /* Añade un relleno interno */
   padding: 0 15px;
+  /* Asegura que el relleno y el borde se incluyan en el ancho y alto del elemento */
   box-sizing: border-box;
+  /* Aplica un radio a las esquinas */
   border-radius: 0.25rem;
+  /* Establece el tamaño de la fuente */
   font-size: 16px;
+  /* Establece la familia de fuentes */
   font-family: 'Raleway', sans-serif;
+  /* Establece el peso de la fuente */
   font-weight: 400;
 }
 
+/* Estilos para el placeholder de los campos de texto */
 .text-input::placeholder {
+  /* Establece el color del placeholder en blanco */
   color: white;
+  /* Asegura que el placeholder sea visible */
   opacity: 1;
+  /* Establece el tamaño de la fuente del placeholder */
   font-size: 16px;
+  /* Establece la familia de fuentes del placeholder */
   font-family: 'Raleway', sans-serif;
+  /* Establece el peso de la fuente del placeholder */
   font-weight: 400;
 }
 
+/* Estilos para el botón de enviar */
 .submit-button {
+  /* Ocupa todo el ancho disponible de su contenedor padre */
   width: 100%;
+  /* Establece la altura del botón */
   height: 35px;
+  /* Establece el color de fondo del botón */
   background-color: white;
+  /* Establece el color del texto del botón en negro */
   color: black;
+  /* Establece el grosor de la fuente en negrita */
   font-weight: bolder;
+  /* Establece el tamaño de la fuente */
   font-size: 18px;
+  /* Establece la familia de fuentes */
   font-family: 'Raleway', sans-serif;
+  /* Elimina el borde predeterminado */
   border: none;
+  /* Aplica un radio a las esquinas */
   border-radius: 0.25rem;
+  /* Cambia el cursor a una mano para indicar que es interactivo */
   cursor: pointer;
+  /* Establece la altura de la línea */
   line-height: 35px;
-  margin-bottom: 20px; 
+  /* Añade un margen en la parte inferior */
+  margin-bottom: 20px;
 }
 
+/* Estilos para el botón de enviar al pasar el ratón */
 .submit-button:hover {
+  /* Cambia el color de fondo al pasar el ratón */
   background-color: #f9fafb;
 }
 
+/* Estilos para el separador "O" */
 .or-separator {
+  /* Establece el color del texto en blanco */
   color: white;
+  /* Establece el tamaño de la fuente */
   font-size: 18px;
+  /* Establece el peso de la fuente en negrita */
   font-weight: bold;
+  /* Centra el texto horizontalmente */
   text-align: center;
+  /* Utiliza Flexbox para alinear los elementos */
   display: flex;
+  /* Centra los elementos verticalmente */
   align-items: center;
+  /* Centra los elementos horizontalmente */
   justify-content: center;
-  margin-bottom: 20px; 
+  /* Añade un margen en la parte inferior */
+  margin-bottom: 20px;
 }
 
+/* Estilos para las líneas antes y después del "O" */
 .or-separator::before,
 .or-separator::after {
+  /* Añade contenido vacío */
   content: '';
+  /* Permite que las líneas crezcan para ocupar el espacio disponible */
   flex-grow: 1;
+  /* Establece el color de fondo de las líneas */
   background-color: white;
+  /* Establece la altura de las líneas */
   height: 1px;
+  /* Añade un margen horizontal */
   margin: 0 10px;
 }
 
+/* Estilos para el contenedor del enlace de creación de cuenta */
 .create-account {
-  margin-top: 0; 
+  /* Elimina el margen superior predeterminado */
+  margin-top: 0;
 }
 
+/* Estilos para el enlace de creación de cuenta */
 .create-account-link {
+  /* Establece el color del texto en blanco */
   color: white;
+  /* Elimina la decoración de texto predeterminada (subrayado) */
   text-decoration: none;
+  /* Establece el tamaño de la fuente */
   font-size: 16px;
 }
 
+/* Estilos para la parte en negrita del enlace de creación de cuenta */
 .create-account-link strong {
+  /* Establece el peso de la fuente en negrita */
   font-weight: bold;
 }
 
+/* Estilos para el enlace de creación de cuenta al pasar el ratón */
 .create-account-link:hover {
+  /* Añade un subrayado al pasar el ratón */
   text-decoration: underline;
 }
 
-hr{
+/* Estilos para la línea horizontal */
+hr {
+  /* Establece el color del texto (afecta al borde en algunos navegadores) */
   color: white;
+  /* Establece el color de fondo de la línea */
   background-color: white;
+  /* Establece el ancho de la línea */
   width: 400px;
 }
 
+/* Media query para pantallas más pequeñas (hasta 768px de ancho) */
 @media (max-width: 768px) {
+  /* Ajusta el relleno del contenedor del formulario para pantallas más pequeñas */
   .form-container {
-    padding-top: 47px; 
-    padding-bottom: 30px;
-    gap: 12px;
-  }
-
-  .header {
-    margin-bottom: 10px;
-  }
-
-  .back-icon {
-    width: 25px;
-    height: 25px;
-  }
-
-  .form-title {
-    font-size: 28px;
-  }
-
-  .form-description {
-    font-size: 15px;
-    padding: 0 30px;
-    margin-bottom: 15px;
-  }
-
-  .reset-form {
+    padding-top: 25px;
+    padding-bottom: 20px;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
     gap: 10px;
   }
 
-  .text-input {
-    height: 45px;
-    font-size: 15px;
+  /* Oculta el botón de retroceso en pantallas pequeñas */
+  .back-button {
+    display: none;
   }
 
+  /* Reduce el tamaño del contenedor del icono de candado y lo centra */
+  .lock-icon-container2 {
+    width: 90px;
+    height: 100px;
+    margin-top: -40px;
+    margin-bottom: 15px;
+  }
+
+  .lock-icon {
+    width: 40%;
+    height: 40%;
+  }
+
+  /* Ajusta el tamaño del título del formulario y lo hace más adaptable */
+  .form-title4 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    width: 95%;
+  }
+
+  /* Ajusta el tamaño de la fuente y el relleno de la descripción, haciéndola más concisa */
+  .form-description {
+    font-size: 14px;
+    padding: 0 15px;
+    margin-bottom: 15px;
+    line-height: 1.25;
+  }
+
+  /* Ajusta el espacio y el ancho del formulario de restablecimiento */
+  .reset-form {
+    gap: 8px;
+    width: 95%;
+  }
+
+  /* Reduce la altura y el tamaño de la fuente de los campos de texto */
+  .text-input {
+    height: 38px;
+    font-size: 15px;
+    padding: 0 10px;
+  }
+
+  /* Ajusta el tamaño de la fuente del placeholder */
   .text-input::placeholder {
     font-size: 15px;
   }
 
+  /* Reduce la altura y el margen del botón de enviar */
   .submit-button {
-    height: 30px;
+    height: 32px;
     font-size: 16px;
     margin-bottom: 15px;
   }
 
+  /* Ajusta el tamaño de la fuente y el margen del separador "O" */
   .or-separator {
-    font-size: 14px;
+    font-size: 13px;
     margin-bottom: 15px;
   }
 
-  .or-separator::before,
-  .or-separator::after {
-    margin: 0 8px;
-  }
-
-  .create-account {
-    margin-top: 0;
-  }
-
-  .create-account-link {
-    font-size: 15px;
-  }
-}
-
-@media (max-width: 480px) {
-  .form-container {
-    padding-top: 47px; 
-    padding-bottom: 25px;
-    gap: 10px;
-  }
-
-  .header {
-    margin-bottom: 8px;
-  }
-
-  .back-icon {
-    width: 20px;
-    height: 20px;
-  }
-
-  .form-title {
-    font-size: 24px;
-  }
-
-  .form-description {
-    font-size: 14px;
-    padding: 0 20px;
-    margin-bottom: 10px;
-  }
-
-  .reset-form {
-    gap: 8px;
-  }
-
-  .text-input {
-    height: 40px;
-    font-size: 14px;
-  }
-
-  .text-input::placeholder {
-    font-size: 14px;
-  }
-
-  .submit-button {
-    height: 28px;
-    font-size: 15px;
-    margin-bottom: 10px;
-  }
-
-  .or-separator {
-    font-size: 12px;
-    margin-bottom: 10px;
-  }
-
+  /* Reduce el margen horizontal de las líneas del separador "O" */
   .or-separator::before,
   .or-separator::after {
     margin: 0 6px;
   }
 
-  .create-account {
-    margin-top: 0;
-  }
-
+  /* Ajusta el tamaño de la fuente del enlace de creación de cuenta */
   .create-account-link {
     font-size: 14px;
+  }
+
+  /* Reduce el ancho de la línea horizontal para pantallas más pequeñas */
+  hr {
+    width: 60%; /* Más estrecha en móviles */
+    margin-bottom: 15px; /* Añade margen inferior */
+  }
+}
+
+/* Media query para pantallas aún más pequeñas (hasta 480px de ancho) */
+@media (max-width: 480px) {
+  /* Reduce aún más el relleno del contenedor del formulario */
+  .form-container {
+    padding-top: 20px; /* Menos relleno superior */
+    padding-bottom: 15px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    gap: 8px;
+  }
+
+  /* Ajusta el contenedor del icono de candado para pantallas muy pequeñas */
+  .lock-icon-container2 {
+    width: 70px; /* Aún más pequeño */
+    height: 80px;
+    margin-top: -30px; /* Ajusta el margen superior */
+    margin-bottom: 10px;
+  }
+
+  .lock-icon {
+    width: 35%; /* Relativamente más pequeño */
+    height: 35%;
+  }
+
+  /* Ajusta el título del formulario para pantallas muy pequeñas */
+  .form-title4 {
+    font-size: 20px; /* Aún más pequeño */
+    margin-bottom: 8px;
+    width: 100%; /* Ocupa todo el ancho */
+  }
+
+  /* Ajusta la descripción del formulario para pantallas muy pequeñas */
+  .form-description {
+    font-size: 13px; /* Fuente más pequeña */
+    padding: 0 1rem; /* Usa rem para padding horizontal */
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+
+  /* Ajusta el formulario de restablecimiento para pantallas muy pequeñas */
+  .reset-form {
+    gap: 6px; /* Menos espacio entre inputs */
+    width: 100%;
+  }
+
+  /* Ajusta los campos de texto para pantallas muy pequeñas */
+  .text-input {
+    height: 32px; /* Más cortos */
+    font-size: 13px; /* Fuente más pequeña */
+    padding: 0 0.75rem; /* Relleno horizontal en rems */
+  }
+
+  .text-input::placeholder {
+    font-size: 13px; /* Tamaño del placeholder */
+  }
+
+  /* Ajusta el botón de enviar para pantallas muy pequeñas */
+  .submit-button {
+    height: 28px;
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+
+  /* Ajusta el separador "O" para pantallas muy pequeñas */
+  .or-separator {
+    font-size: 12px;
+    margin-bottom: 12px;
+  }
+
+  .or-separator::before,
+  .or-separator::after {
+    margin: 0 4px; /* Márgenes más pequeños para las líneas */
+  }
+
+  /* Ajusta el enlace de creación de cuenta para pantallas muy pequeñas */
+  .create-account-link {
+    font-size: 13px;
+  }
+
+  /* Ajusta la línea horizontal para pantallas muy pequeñas */
+  hr {
+    width: 50%; /* Aún más corta */
+    margin-bottom: 15px;
   }
 }

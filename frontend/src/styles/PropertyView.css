@@ -1,305 +1,400 @@
+/* Importa la fuente Trocchi desde Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Trocchi&display=swap');
+/* Importa la fuente Raleway desde Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 
+/* Contenedor principal de la propiedad - Asegurar centrado y evitar desbordamiento */
 .property-container3 {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    font-family: 'Trocchi', serif;
-  }
-  
-  .property-header3 {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 30px;
-  }
-  
-  .thumbnail-column {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 80px;
-  }
-  
-  .thumbnail-wrapper {
-    width: 80px;
-    height: 60px;
-    cursor: pointer;
-    border: 1px solid #eee;
-    border-radius: 4px;
-    overflow: hidden;
-  }
-  
-  .thumbnail {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: opacity 0.2s;
-  }
-  
-  .thumbnail:hover {
-    opacity: 0.8;
-  }
-  
-  .thumbnail.active {
-    border: 2px solid #90caf9;
-  }
-  
-  .main-content {
-    flex: 1;
-    display: flex;
-    gap: 20px;
-  }
-  
-  .main-image-container {
-    position: relative;
-    width: 60%;
-    min-width: 300px;
-  }
-  
-  .main-image {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-    object-fit: cover;
-  }
-  
-  .istock-watermark {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgba(255, 255, 255, 0.7);
-    padding: 5px 10px;
-    border-radius: 4px;
-    font-size: 14px;
-  }
-  
-  .image-date {
-    position: absolute;
-    bottom: 10px;
-    left: 10px;
-    font-size: 12px;
-    color: #ffffff;
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 5px;
-    border-radius: 4px;
-  }
-  
-  .property-info3 {
-    width: 40%;
-    background-color: #f9f9f9;
-    padding: 20px;
-    border-radius: 8px;
-  }
-  
-  .property-title-section3 {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .property-title-section3 h1 {
-    margin: 0;
-    font-size: 24px;
-    color: #333;
-    font-family: 'Trocchi', serif;
-    font-weight: 600;
-  }
-  
-  .bookmark3 img {
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-  }
-  
-  .property-location3 {
-    color: #666;
-    margin: 5px 0;
-  }
-  
-  .property-price3 {
-    font-size: 22px;
-    font-weight: bold;
-    color: #333;
-    margin: 10px 0;
-  }
-  
-  .property-description3 {
-    line-height: 1.6;
-    margin-bottom: 20px;
-    font-size: 14px;
-  }
-  
-  .action-buttons3 {
-    display: flex;
-    gap: 10px;
-  }
-  
-  .btn-contact3, .btn-save3 {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s;
-    font-weight: bold;
-    font-family: 'Raleway', sans-serif;
-    font-style: italic;
-  }
-  
-  .btn-contact3 {
-    background-color: #E79294;
-    color: #000;
-  }
-  
-  .btn-save3 {
-    background-color: #BFD1E6;
-    color: #000;
-  }
-  
-  .btn-contact3:hover {
-    background-color: #ef5350;
-  }
-  
-  .btn-save3:hover {
-    background-color: #64b5f6;
-  }
-  
-  .property-details-section3,
-  .property-dimensions-section3 {
-    margin-bottom: 20px;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .details-header3,
-  .dimensions-header3 {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 0;
-    cursor: pointer;
-  }
-  
-  .details-header3 h2,
-  .dimensions-header3 h2 {
-    margin: 0;
-    font-size: 20px;
-  }
-  
-  .expand-btn {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background-color: #f0f0f0;
-    border: 1px solid #ddd;
-    font-size: 18px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .details-content3,
-  .dimensions-content3 {
-    padding: 0 15px 15px;
-  }
-  
-  .details-content3 ul,
-  .dimensions-content3 ul {
-    list-style-type: disc;
-    padding-left: 20px;
-  }
-  
-  .details-content3 li,
-  .dimensions-content3 li {
-    margin-bottom: 8px;
-  }
-  
-  .property-location-section3 {
-    margin-bottom: 30px;
-  }
-  
-  .property-location-section3 h2 {
-    margin-bottom: 15px;
-  }
-  
-  .map-container {
-    position: relative;
-    z-index: 1;
-    border-radius: 8px;
-    overflow: hidden;
-    border: 1px solid #ddd;
-  }
-  
-  .similar-properties-section h2 {
-    margin-bottom: 15px;
-  }
-  
-  .similar-properties-gallery {
-    display: flex;
-    gap: 20px;
-    overflow-x: auto;
-    padding-bottom: 15px;
-  }
-  
-  .similar-property {
-    min-width: 200px;
-    cursor: pointer;
-    background-color: #A9C2E0;
-    border-radius: 8px;
-    overflow: hidden;
-    transition: transform 0.3s;
-  }
-  
-  .similar-property:hover {
-    transform: translateY(-5px);
-  }
-  
-  .similar-property img {
-    width: 100%;
-    height: 150px;
-    object-fit: cover;
-  }
-  
-  .similar-property p {
-    padding: 10px;
-    text-align: center;
-    margin: 0;
-    font-size: 14px;
-    font-family: 'Raleway', sans-serif;
-    font-weight: bold;
-    font-style: italic;
-  }
-  
-  @media (max-width: 992px) {
-    .main-content {
-      flex-direction: column;
-    }
-    
-    .main-image-container,
-    .property-info {
-      width: 100%;
-    }
-  }
-  
+  max-width: 1200px;
+  margin: 0 auto; /* Centra el contenedor horizontalmente en pantallas más grandes */
+  padding: 20px;
+  font-family: 'Trocchi', serif;
+  overflow-x: hidden; /* Evita el desplazamiento horizontal del contenedor */
+}
+
+/* Encabezado de la propiedad (miniaturas e imagen principal) */
+.property-header3 {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 30px;
+  /* Centrar elementos en pantallas pequeñas */
   @media (max-width: 768px) {
-    .property-header {
-      flex-direction: column;
-    }
-    
-    .thumbnail-column {
-      flex-direction: row;
-      width: 100%;
-      overflow-x: auto;
-      margin-bottom: 15px;
-    }
-    
-    .thumbnail-wrapper {
-      min-width: 80px;
-    }
-    
-    .action-buttons {
-      flex-direction: column;
-    }
+    flex-direction: column;
+    align-items: center; /* Centra las miniaturas y la imagen principal */
   }
+}
+
+/* Columna de miniaturas */
+.thumbnail-column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 80px;
+  /* Centrar horizontalmente las miniaturas en pantallas pequeñas */
+  @media (max-width: 768px) {
+    flex-direction: row;
+    width: 100%;
+    overflow-x: auto;
+    margin-bottom: 15px;
+    justify-content: center; /* Centra las miniaturas horizontalmente */
+  }
+}
+
+/* Contenedor individual de la miniatura */
+.thumbnail-wrapper {
+  width: 80px;
+  height: 60px;
+  cursor: pointer;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  overflow: hidden;
+  /* Centrar el contenedor de la miniatura en pantallas pequeñas */
+  @media (max-width: 768px) {
+    min-width: 80px;
+    margin: 0 5px; /* Añadir un pequeño margen entre las miniaturas */
+  }
+}
+
+/* Imagen de la miniatura */
+.thumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.2s;
+}
+
+/* Efecto al pasar el ratón sobre la miniatura */
+.thumbnail:hover {
+  opacity: 0.8;
+}
+
+/* Estilo de la miniatura activa */
+.thumbnail.active {
+  border: 2px solid #90caf9;
+}
+
+/* Contenido principal (imagen principal e información) */
+.main-content {
+  flex: 1;
+  display: flex;
+  gap: 20px;
+  /* Centrar elementos en pantallas pequeñas */
+  @media (max-width: 992px) {
+    flex-direction: column;
+    align-items: center; /* Centra la imagen principal y la información */
+  }
+}
+
+/* Contenedor de la imagen principal */
+.main-image-container {
+  position: relative;
+  width: 60%;
+  min-width: 300px;
+  border-radius: 8px; /* Añadido para que coincida con la captura */
+  overflow: hidden; /* Asegura que la imagen respete el border-radius */
+  /* Ancho completo en pantallas pequeñas */
+  @media (max-width: 992px) {
+    width: 100%;
+  }
+}
+
+/* Imagen principal */
+.main-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block; /* Evita espacios extra debajo de la imagen */
+}
+
+/* Marca de agua de iStock (opcional) */
+.istock-watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+/* Fecha de la imagen (opcional) */
+.image-date {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  font-size: 12px;
+  color: #ffffff;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 5px;
+  border-radius: 4px;
+}
+
+/* Sección de información de la propiedad */
+.property-info3 {
+  width: 40%;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-sizing: border-box; /* Asegura que el padding no aumente el ancho */
+  /* Ancho completo en pantallas pequeñas */
+  @media (max-width: 992px) {
+    width: 100%;
+    margin-top: 20px; /* Añadir espacio entre la imagen y la info */
+  }
+}
+
+/* Sección del título de la propiedad */
+.property-title-section3 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Título de la propiedad */
+.property-title-section3 h1 {
+  margin: 0;
+  font-size: 24px;
+  color: #333;
+  font-family: 'Trocchi', serif;
+  font-weight: 600;
+}
+
+/* Icono de marcador (guardar propiedad) */
+.bookmark3 img {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+/* Ubicación de la propiedad */
+.property-location3 {
+  color: #666;
+  margin: 5px 0;
+}
+
+/* Precio de la propiedad */
+.property-price3 {
+  font-size: 22px;
+  font-weight: bold;
+  color: #333;
+  margin: 10px 0;
+}
+
+/* Descripción de la propiedad */
+.property-description3 {
+  line-height: 1.6;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+/* Botones de acción (contacto, guardar) */
+.action-buttons3 {
+  display: flex;
+  gap: 10px;
+  /* Centrar botones en pantallas pequeñas */
+  @media (max-width: 480px) {
+    flex-direction: column;
+    align-items: stretch; /* Hacer que los botones ocupen todo el ancho */
+  }
+}
+
+/* Botón de contacto */
+.btn-contact3,
+.btn-save3 {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+  font-weight: bold;
+  font-family: 'Raleway', sans-serif;
+  font-style: italic;
+  box-sizing: border-box; /* Asegura que el padding no aumente el ancho */
+}
+
+/* Estilo específico del botón de contacto */
+.btn-contact3 {
+  background-color: #E79294;
+  color: #000;
+}
+
+/* Estilo específico del botón de guardar */
+.btn-save3 {
+  background-color: #BFD1E6;
+  color: #000;
+}
+
+/* Efecto al pasar el ratón sobre el botón de contacto */
+.btn-contact3:hover {
+  background-color: #ef5350;
+}
+
+/* Efecto al pasar el ratón sobre el botón de guardar */
+.btn-save3:hover {
+  background-color: #64b5f6;
+}
+
+/* Sección de detalles de la propiedad */
+.property-details-section3,
+.property-dimensions-section3 {
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Encabezado de la sección de detalles */
+.details-header3,
+.dimensions-header3 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 0;
+  cursor: pointer;
+}
+
+/* Título del encabezado de detalles */
+.details-header3 h2,
+.dimensions-header3 h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+/* Botón para expandir/contraer detalles */
+.expand-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Contenido de la sección de detalles */
+.details-content3,
+.dimensions-content3 {
+  padding: 0 15px 15px;
+}
+
+/* Lista dentro del contenido de detalles */
+.details-content3 ul,
+.dimensions-content3 ul {
+  list-style-type: disc;
+  padding-left: 20px;
+}
+
+/* Elementos de la lista dentro del contenido de detalles */
+.details-content3 li,
+.dimensions-content3 li {
+  margin-bottom: 8px;
+}
+
+/* Sección de ubicación de la propiedad */
+.property-location-section3 {
+  margin-bottom: 30px;
+}
+
+/* Título de la sección de ubicación */
+.property-location-section3 h2 {
+  margin-bottom: 15px;
+}
+
+/* Contenedor del mapa */
+.map-container {
+  position: relative;
+  z-index: 1;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #ddd;
+}
+
+/* Sección de propiedades similares */
+.similar-properties-section h2 {
+  margin-bottom: 15px;
+}
+
+/* Galería de propiedades similares */
+.similar-properties-gallery {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding-bottom: 15px;
+}
+
+/* Contenedor de una propiedad similar individual */
+.similar-property {
+  min-width: 200px;
+  cursor: pointer;
+  background-color: #A9C2E0;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s;
+}
+
+/* Efecto al pasar el ratón sobre una propiedad similar */
+.similar-property:hover {
+  transform: translateY(-5px);
+}
+
+/* Imagen de la propiedad similar */
+.similar-property img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+/* Texto de la propiedad similar */
+.similar-property p {
+  padding: 10px;
+  text-align: center;
+  margin: 0;
+  font-size: 14px;
+  font-family: 'Raleway', sans-serif;
+  font-weight: bold;
+  font-style: italic;
+}
+
+/* --- MEDIA QUERIES PARA RESPONSIVE --- */
+
+/* Para pantallas de hasta 992px de ancho (tablets grandes y algunos laptops) */
+@media (max-width: 992px) {
+  .main-content {
+    flex-direction: column;
+    align-items: center; /* Centra la imagen principal y la información */
+  }
+
+  .main-image-container,
+  .property-info3 {
+    width: 100%;
+  }
+}
+
+/* Para pantallas de hasta 768px de ancho (tablets y móviles grandes) */
+@media (max-width: 768px) {
+  .property-header3 {
+    flex-direction: column;
+    align-items: center; /* Centra las miniaturas y la imagen principal */
+  }
+
+  .thumbnail-column {
+    flex-direction: row;
+    width: 100%;
+    overflow-x: auto;
+    margin-bottom: 15px;
+    justify-content: center; /* Centra las miniaturas horizontalmente */
+  }
+
+  .thumbnail-wrapper {
+    min-width: 80px;
+    margin: 0 5px; /* Añadir un pequeño margen entre las miniaturas */
+  }
+
+  .action-buttons3 {
+    flex-direction: column; /* Apila los botones de acción */
+    align-items: stretch; /* Hacer que los botones ocupen todo el ancho */
+  }
+}

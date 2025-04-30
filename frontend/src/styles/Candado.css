@@ -1,16 +1,65 @@
+/* Estilos para el contenedor del icono de candado */
 .lock-icon-container {
-    width: 140px; /* Ajustar tamaño del círculo */
-    height: 160px; /* Ajustar tamaño del círculo */
-    border-radius: 50%;
-    border: 2px solid white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 10px; /* Reducir margen inferior */
-    margin-top: -30px; /* Ajustar margen superior para subirlo menos */
+  /* Ajustar tamaño del círculo para pantallas grandes */
+  width: 140px;
+  /* Ajustar tamaño del círculo para pantallas grandes */
+  height: 160px;
+  /* Hacerlo circular */
+  border-radius: 50%;
+  /* Borde blanco */
+  border: 2px solid white;
+  /* Centrar el contenido (la imagen del candado) */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Reducir margen inferior para pantallas grandes */
+  margin-bottom: 10px;
+  /* Ajustar margen superior para subirlo menos en pantallas grandes */
+  margin-top: -30px;
+}
+
+/* Estilos para la imagen del candado dentro del contenedor */
+.lock-image {
+  /* Ajustar tamaño de la imagen dentro del círculo */
+  max-width: 75%;
+  /* Ajustar tamaño de la imagen dentro del círculo */
+  max-height: 75%;
+}
+
+/* Media query para pantallas más pequeñas (hasta 768px de ancho) */
+@media (max-width: 768px) {
+  .lock-icon-container {
+    /* Reducir el tamaño del círculo para pantallas pequeñas */
+    width: 100px;
+    height: 115px;
+    /* Reducir el margen inferior para pantallas pequeñas */
+    margin-bottom: 8px;
+    /* Ajustar margen superior para subirlo menos en pantallas pequeñas */
+    margin-top: -20px;
   }
-  
+
   .lock-image {
-    max-width: 75%; /* Ajustar tamaño de la imagen dentro del círculo */
-    max-height: 75%; /* Ajustar tamaño de la imagen dentro del círculo */
+    /* Reducir ligeramente el tamaño de la imagen dentro del círculo para pantallas pequeñas */
+    max-width: 65%;
+    max-height: 65%;
   }
+}
+
+/* Media query para pantallas aún más pequeñas (hasta 480px de ancho) */
+@media (max-width: 480px) {
+  .lock-icon-container {
+    /* Reducir aún más el tamaño del círculo para pantallas muy pequeñas */
+    width: 80px;
+    height: 92px;
+    /* Reducir aún más el margen inferior para pantallas muy pequeñas */
+    margin-bottom: 6px;
+    /* Ajustar margen superior para subirlo menos en pantallas muy pequeñas */
+    margin-top: -15px;
+  }
+
+  .lock-image {
+    /* Reducir aún más el tamaño de la imagen dentro del círculo para pantallas muy pequeñas */
+    max-width: 60%;
+    max-height: 60%;
+  }
+}

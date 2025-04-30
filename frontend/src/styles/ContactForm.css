@@ -1,133 +1,213 @@
+/* Importa la fuente 'Raleway' de Google Fonts con diferentes pesos y estilos (itálica y normal) */
 @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 
+/* Estilos para el overlay (la capa oscura que cubre el fondo cuando el formulario aparece) */
 .contact-form-overlay{
+    /* Fija la posición del overlay para que cubra toda la ventana */
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
+    /* Establece un color de fondo negro con 50% de opacidad para crear el efecto de overlay */
     background-color: rgba(0, 0, 0, 0.5);
+    /* Utiliza flexbox para centrar el contenido del overlay horizontal y verticalmente */
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center;    /* Centra verticalmente */
+    /* Asegura que el overlay esté por encima de otros elementos de la página */
     z-index: 1000;
 }
 
+/* Estilos para el contenedor principal del formulario de contacto */
 .contact-form-container{
+    /* Establece el color de fondo del formulario a blanco */
     background-color: #ffffff;
+    /* Redondea las esquinas del formulario */
     border-radius: 15px;
+    /* Establece el ancho del formulario al 100% de su contenedor */
     width: 100%;
+    /* Define un ancho máximo para que el formulario no se extienda demasiado en pantallas grandes */
     max-width: 500px;
+    /* Añade un espacio de relleno alrededor del contenido del formulario */
     padding: 25px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Aplica la fuente 'Raleway' al texto dentro del contenedor */
     font-family: 'Raleway', sans-serif;
+    /* Establece el grosor de la fuente en negrita */
     font-weight: bold;
+    /* Establece el estilo de la fuente en itálica */
     font-style: italic;
+    /* Añade una ligera sombra para dar profundidad al contenedor */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* Estilos para la sección del encabezado del formulario (título y botón de cierre) */
 .contact-form-header{
+    /* Utiliza flexbox para alinear el título y el botón de cierre en la misma línea */
     display: flex;
+    /* Distribuye el espacio entre el título y el botón de cierre, empujándolos a los extremos */
     justify-content: space-between;
+    /* Alinea verticalmente el título y el botón de cierre al centro */
     align-items: center;
+    /* Añade un margen inferior para separar el encabezado del resto del contenido */
     margin-bottom: 10px;
 }
 
+/* Estilos para el título h2 dentro del encabezado del formulario */
 .contact-form-header h2{
+    /* Establece el tamaño de la fuente */
     font-size: 24px;
+    /* Elimina el margen predeterminado del encabezado */
     margin: 0;
+    /* Asegura que el texto del título sea negrita */
     font-weight: bold;
 }
 
+/* Estilos para el botón de cierre */
 .close-button{
+    /* Elimina el fondo predeterminado del botón */
     background: none;
+    /* Elimina el borde predeterminado del botón */
     border: none;
+    /* Cambia el cursor a una mano para indicar que es interactivo */
     cursor: pointer;
+    /* Añade un pequeño espacio de relleno alrededor del icono */
     padding: 5px;
 }
 
+/* Estilos para la imagen dentro del botón de cierre */
 .close-button img{
+    /* Establece el ancho de la imagen */
     width: 16px;
+    /* Establece la altura de la imagen */
     height: 16px;
 }
 
+/* Estilos para el subtítulo debajo del encabezado del formulario */
 .contact-subtitle{
+    /* Establece el color del texto del subtítulo a un gris oscuro */
     color: #666;
+    /* Elimina el margen superior predeterminado */
     margin-top: 0;
+    /* Añade un margen inferior para separar el subtítulo de los campos del formulario */
     margin-bottom: 20px;
+    /* Establece el tamaño de la fuente del subtítulo */
     font-size: 15px;
 }
 
+/* Estilos para los grupos de formulario (contenedor de etiquetas e inputs/textareas) */
 .form-group4{
+    /* Añade un margen inferior para separar los diferentes campos del formulario */
     margin-bottom: 15px;
 }
 
+/* Estilos para los campos de entrada de texto y el área de texto */
 .form-group4 .inputs,
 .form-group4 textarea{
+    /* Establece el ancho de los campos al 95% de su contenedor */
     width: 95%;
+    /* Añade un espacio de relleno dentro de los campos */
     padding: 15px;
+    /* Elimina el borde predeterminado de los campos */
     border: none;
+    /* Redondea las esquinas de los campos */
     border-radius: 8px;
+    /* Establece un color de fondo gris claro para los campos */
     background-color: #f0f0f0;
+    /* Establece el tamaño de la fuente del texto dentro de los campos */
     font-size: 16px;
+    /* Aplica la fuente 'Raleway' al texto dentro de los campos */
     font-family: 'Raleway', sans-serif;
+    /* Establece el grosor de la fuente en negrita */
     font-weight: bold;
+    /* Establece el estilo de la fuente en itálica */
     font-style: italic;
 }
 
+/* Estilos específicos para los campos de email y texto para asegurar que ocupen todo el ancho */
 .form-group4 .inputs[type="email"],
 .form-group4 .inputs[type="text"]{
+    /* Establece el ancho al 100% del contenedor del grupo de formulario */
     width: 100%;
 }
 
+/* Estilos para el texto de los marcadores de posición (placeholders) dentro de los inputs y textarea */
 .form-group4 input::placeholder,
 .form-group4 textarea::placeholder{
+    /* Establece el color del texto del marcador de posición a un gris más claro */
     color: #717171;
 }
 
+/* Estilos específicos para el área de texto */
 .form-group4 textarea{
+    /* Permite al usuario redimensionar el área de texto verticalmente */
     resize: vertical;
+    /* Establece una altura mínima para el área de texto */
     min-height: 100px;
 }
 
+/* Estilos para la sección de las acciones del formulario (botones) */
 .form-actions{
+    /* Utiliza flexbox para alinear los botones */
     display: flex;
+    /* Alinea los botones al final del contenedor */
     justify-content: flex-end;
+    /* Añade un margen superior para separar los botones de los campos del formulario */
     margin-top: 20px;
 }
 
+/* Estilos para el botón de enviar */
 .send-button{
+    /* Establece el color de fondo del botón a naranja */
     background-color: #E9631A;
+    /* Establece el color del texto del botón a blanco */
     color: #ffffff;
+    /* Elimina el borde predeterminado del botón */
     border: none;
+    /* Redondea las esquinas del botón */
     border-radius: 8px;
+    /* Añade un espacio de relleno dentro del botón */
     padding: 12px 30px;
+    /* Establece el tamaño de la fuente del texto del botón */
     font-size: 16px;
+    /* Asegura que el texto del botón sea negrita */
     font-weight: bold;
+    /* Cambia el cursor a una mano para indicar que es interactivo */
     cursor: pointer;
+    /* Añade una transición suave para el cambio de color en el hover */
     transition: background-color 0.3s;
+    /* Aplica la fuente 'Raleway' al texto del botón */
     font-family: 'Raleway', sans-serif;
+    /* Establece el estilo de la fuente en itálica */
     font-style: italic;
 }
 
+/* Estilos para el botón de enviar cuando el usuario pasa el ratón por encima */
 .send-button:hover{
+    /* Oscurece ligeramente el color de fondo al hacer hover */
     background-color: #d35400;
 }
 
+/* Media query para pantallas con un ancho máximo de 570px (para diseño responsive en dispositivos móviles) */
 @media (max-width: 570px){
+    /* Reduce el ancho y el padding del contenedor del formulario en pantallas pequeñas */
     .contact-form-container{
         width: 90%;
         padding: 15px;
     }
 
+    /* Reduce el tamaño de la fuente del título en pantallas pequeñas */
     .contact-form-header h2{
         font-size: 20px;
     }
 
+    /* Reduce el padding de los campos de entrada y el área de texto en pantallas pequeñas */
     .form-group input,
     .form-group textarea{
         padding: 12px;
     }
 
+    /* Reduce el padding del botón de enviar en pantallas pequeñas */
     .send-button{
         padding: 10px 20px;
     }

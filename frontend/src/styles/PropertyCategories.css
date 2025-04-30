@@ -1,67 +1,147 @@
+/* Importa la fuente 'Raleway' de Google Fonts con diferentes pesos y estilos (itálica y normal) */
 @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 
+/* Contenedor principal que envuelve la cuadrícula de propiedades */
 .properties-container2 {
+    /* Establece el ancho al 100% de su contenedor padre */
     width: 100%;
+    /* Define un ancho máximo para evitar que el contenido se extienda demasiado en pantallas grandes */
     max-width: 1200px;
+    /* Centra el contenedor horizontalmente en la página */
     margin: 0 auto;
+    /* Añade un espacio de relleno alrededor del contenido dentro del contenedor */
     padding: 20px;
+    /* Aplica la fuente 'Raleway' al texto dentro del contenedor */
     font-family: 'Raleway', sans-serif;
-  }
-  
-  .properties-grid2 {
+    /* Oculta cualquier contenido que se desborde horizontalmente */
+    overflow-x: hidden;
+    /* Incluye el padding y el borde en el cálculo del ancho y alto del elemento */
+    box-sizing: border-box;
+}
+
+/* Cuadrícula que organiza las tarjetas de propiedad */
+.properties-grid2 {
+    /* Define un diseño de cuadrícula flexible con columnas que se ajustan al ancho disponible */
     display: grid;
-    grid-template-columns: repeat(1, 1fr);
+    /* Crea columnas que tienen un ancho mínimo de 300px y se expanden para llenar el espacio disponible */
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    /* Establece un espacio de 20px entre las celdas de la cuadrícula (tanto filas como columnas) */
     gap: 20px;
-  }
-  
-  @media (min-width: 768px) {
-    .properties-grid2 {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-  
-  .property-card2 {
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-    cursor: pointer;
-  }
-  
-  .property-card2:hover {
-    transform: translateY(-5px);
-  }
-  
-  .image-container {
-    position: relative;
-    height: 200px;
-  }
-  
-  .image-container img {
+    /* Asegura que la cuadrícula ocupe todo el ancho de su contenedor */
     width: 100%;
+}
+
+/* Tarjeta individual que representa una propiedad */
+.property-card2 {
+    /* Redondea las esquinas de la tarjeta */
+    border-radius: 8px;
+    /* Oculta cualquier contenido que se desborde de los bordes redondeados */
+    overflow: hidden;
+    /* Añade una ligera sombra para dar un efecto de elevación */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    /* Añade una transición suave para la propiedad 'transform' durante 0.3 segundos con una función de aceleración */
+    transition: transform 0.3s ease;
+    /* Cambia el cursor a una mano para indicar que la tarjeta es interactiva */
+    cursor: pointer;
+    /* Asegura que la tarjeta ocupe todo el ancho disponible en su celda de la cuadrícula */
+    width: 100%;
+    /* Asegura que la tarjeta ocupe toda la altura disponible en su celda de la cuadrícula */
     height: 100%;
-    object-fit: cover;
-  }
-  
-  .stock-badge {
+    /* Utiliza flexbox para organizar el contenido de la tarjeta verticalmente */
+    display: flex;
+    /* Dispone los elementos internos en una columna */
+    flex-direction: column;
+}
+
+/* Estilo aplicado al pasar el ratón por encima de la tarjeta */
+.property-card2:hover {
+    /* Desplaza la tarjeta ligeramente hacia arriba al hacer hover */
+    transform: translateY(-5px);
+}
+
+/* Contenedor para la imagen de la propiedad */
+.image-container {
+    /* Establece la posición como relativa para poder posicionar elementos absolutos dentro */
+    position: relative;
+    /* Asegura que el contenedor de la imagen ocupe todo el ancho de la tarjeta */
+    width: 100%;
+    /* Establece un relleno superior basado en un porcentaje para mantener una relación de aspecto 4:3 */
+    padding-top: 75%; /* (altura / ancho) * 100 = (3 / 4) * 100 = 75 */
+    /* Oculta cualquier parte de la imagen que se desborde del contenedor */
+    overflow: hidden;
+}
+
+/* Estilos para la imagen dentro del contenedor de la imagen */
+.image-container img {
+    /* Posiciona la imagen en la esquina superior izquierda del contenedor */
     position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: white;
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-size: 12px;
-  }
-  
-  .property-footer {
-    background-color: #A9C2E0; 
-    padding: 10px;
+    top: 0;
+    left: 0;
+    /* Asegura que la imagen ocupe todo el ancho de su contenedor */
+    width: 100%;
+    /* Asegura que la imagen ocupe toda la altura de su contenedor */
+    height: 100%;
+    /* Escala la imagen para que cubra todo el contenedor sin distorsionarse, recortando si es necesario */
+    object-fit: cover;
+    /* Centra la posición del objeto (la imagen) dentro de su contenedor */
+    object-position: center;
+}
+
+/* Pie de la tarjeta con información de la propiedad */
+.property-footer {
+    /* Establece el color de fondo del pie de la tarjeta */
+    background-color: #A9C2E0;
+    /* Añade un espacio de relleno alrededor del texto en el pie */
+    padding: 12px;
+    /* Centra el texto horizontalmente dentro del pie */
     text-align: center;
-  }
-  
-  .property-footer p {
+    /* Asegura que el pie ocupe todo el ancho de la tarjeta */
+    width: 100%;
+    /* Evita que el pie se encoja si el contenido de la tarjeta es más grande */
+    flex-shrink: 0;
+}
+
+/* Estilos para el párrafo de texto dentro del pie de la tarjeta */
+.property-footer p {
+    /* Elimina el margen predeterminado del párrafo */
     margin: 0;
+    /* Establece el color del texto a un gris oscuro */
     color: #333;
+    /* Establece el grosor de la fuente en semibold */
     font-weight: 600;
+    /* Establece el estilo de la fuente en itálica */
     font-style: italic;
-  }
+    /* Establece el tamaño de la fuente en 1 rem (relativo al tamaño de la fuente raíz) */
+    font-size: 1rem;
+    /* Evita que el texto se desborde horizontalmente, forzándolo a una sola línea */
+    white-space: nowrap;
+    /* Oculta el texto que se desborda */
+    overflow: hidden;
+    /* Muestra puntos suspensivos (...) para indicar que hay texto oculto */
+    text-overflow: ellipsis;
+    /* Añade un pequeño relleno horizontal alrededor del texto */
+    padding: 0 5px;
+}
+
+/* Media Queries para diseño responsive */
+
+/* Para pantallas con un ancho máximo de 768px (tablets) */
+@media (max-width: 768px) {
+    /* Ajusta la cuadrícula para que las columnas tengan un ancho mínimo de 250px */
+    .properties-grid2 {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+}
+
+/* Para pantallas con un ancho máximo de 480px (móviles) */
+@media (max-width: 480px) {
+    /* Fuerza la cuadrícula a tener una sola columna */
+    .properties-grid2 {
+        grid-template-columns: 1fr;
+    }
+
+    /* Cambia la relación de aspecto del contenedor de la imagen a 1:1 para pantallas más pequeñas */
+    .image-container {
+        padding-top: 100%; /* (altura / ancho) * 100 = (1 / 1) * 100 = 100 */
+    }
+}
