@@ -1,562 +1,379 @@
-/* Importa la fuente Trocchi desde Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Trocchi&display=swap');
-/* Importa la fuente Raleway desde Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+ @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+ 
+ .shopping-cart-container{
+     max-width: 1200px;
+     margin: 0 auto;
+     padding: 20px;
+     font-family: 'Trocchi', serif;
+ }
+ 
+ .shopping-cart-title{
+     text-align: center;
+     font-size: 32px;
+     margin-bottom: 30px;
+     font-weight: bold;
+ }
+ 
+ .shopping-cart-content{
+     display: flex;
+     gap: 20px;
+     margin-bottom: 30px;
+ }
+ 
+ .section-title{
+     font-size: 18px;
+     font-weight: bold;
+     padding-bottom: 10px;
+     border-bottom: 1px solid #ddd;
+     margin-bottom: 15px;
+ }
+ 
+ .cart-summary{
+     flex: 1;
+     background-color: #f6f6f6;
+     border-radius: 5px;
+     padding: 15px;
+ }
+ 
+ .cart-item{
+     display: flex;
+     margin-bottom: 20px;
+     background-color: #ffffff;
+     border-radius: 5px;
+     overflow: hidden;
+     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+ }
+ 
+ .item-image{
+     width: 150px;
+     height: 150px;
+     overflow: hidden;
+ }
+ 
+ .item-image img{
+     width: 100%;
+     height: 100%;
+     object-fit: cover;
+ }
+ 
+ .item-details{
+     flex: 1;
+     padding: 10px 15px;
+ }
+ 
+ .item-header{
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     margin-bottom: 5px;
+ }
+ 
+ .item-header h3{
+     font-size: 16px;
+     margin: 0;
+     color: #333;
+ }
+ 
+ .item-price{
+     font-weight: bold;
+     color: #e67e22;
+ }
+ 
+ .item-description{
+     font-size: 12px;
+     color: #666;
+     margin-bottom: 10px;
+     line-height: 1.4;
+ }
+ 
+ .item-features{
+     display: flex;
+     gap: 15px;
+ }
+ 
+ .feature{
+     display: flex;
+     align-items: center;
+     font-size: 12px;
+     color: #666;
+ }
+ 
+ .feature img{
+     width: 16px;
+     height: 16px;
+     margin-right: 5px;
+ }
+ 
+ .cart-total{
+     width: 40%;
+     background-color: #f6f6f6;
+     border-radius: 5px;
+     padding: 15px;
+ }
+ 
+ .product-list{
+     margin-bottom: 20px;
+ }
+ 
+ .product-header{
+     display: flex;
+     justify-content: space-between;
+     font-weight: bold;
+     margin-bottom: 10px;
+ }
+ 
+ .product-item{
+     display: flex;
+     justify-content: space-between;
+     padding: 5px 0;
+     border-bottom: 1px solid #eee;
+ }
+ 
+ .client-data{
+     margin-bottom: 20px;
+ }
+ 
+ .client-data h3{
+     font-size: 16px;
+     margin-bottom: 10px;
+ }
+ 
+ .client-details{
+     display: flex;
+     justify-content: space-between;
+ }
+ 
+ .client-info{
+     font-size: 12px;
+     line-height: 1.4;
+ }
+ 
+ .cart-totals{
+     margin-bottom: 20px;
+ }
+ 
+ .subtotal, .total{
+     display: flex;
+     justify-content: space-between;
+     padding: 5px 0;
+ }
+ 
+ .total{
+     font-weight: bold;
+     font-size: 18px;
+     border-top: 1px solid #ddd;
+     padding-top: 10px;
+ }
+ 
+ .payment-methods h3{
+     font-size: 16px;
+     text-align: center;
+     margin-bottom: 10px;
+ }
+ 
+ .payment-buttons{
+     display: flex;
+     flex-direction: column;
+     gap: 10px;
+     margin-bottom: 15px;
+ }
+ 
+ .btn-pay{
+     padding: 10px;
+     border: none;
+     border-radius: 5px;
+     color: #ffffff;
+     font-weight: bold;
+     cursor: pointer;
+     text-align: center;
+ }
+ 
+ .tarjeta{
+     background-color: #E79294;
+     color: #000000;
+ }
+ 
+ .paypal{
+     background-color: #BFD1E6;
+     color: #000000;
+ }
+ 
+ .payment-icons{
+     display: flex;
+     justify-content: center;
+     gap: 10px;
+ }
+ 
+ .payment-icons img{
+     height: 24px;
+ }
+ 
+ .payment-details{
+     background-color: #f6f6f6;
+     border-radius: 5px;
+     padding: 20px;
+     margin-bottom: 30px;
+ }
+ 
+ .payment-form{
+     display: flex;
+     flex-direction: column;
+     gap: 20px;
+ }
+ 
+ .payment-disclaimer{
+     display: flex;
+     align-items: center;
+     gap: 10px;
+ }
+ 
+ .credit-card-section{
+     display: flex;
+     gap: 20px;
+ }
+ 
+ .credit-card-image{
+     width: 30%;
+ }
+ 
+ .credit-card-image img{
+     width: 100%;
+     border-radius: 10px;
+ }
+ 
+ .credit-card-form{
+     flex: 1;
+     display: flex;
+     flex-direction: column;
+     gap: 15px;
+ }
+ 
+ .form-group{
+     width: 100%;
+ }
+ 
+ .form-control{
+     width: 95%;
+     padding: 12px;
+     border: 1px solid #ddd;
+     border-radius: 5px;
+     background-color: #f0f0f0;
+     font-size: 14px;
+ }
+ 
+ .form-row{
+     display: flex;
+     gap: 15px;
+ }
+ 
+ .half{
+     width: 47.7%;
+ }
+ 
+ .btn-confirm{
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     gap: 10px;
+     background-color: #EBEBEB;
+     color: #000000;
+     border: none;
+     border-radius: 5px;
+     padding: 12px;
+     font-weight: bold;
+     cursor: pointer;
+     align-self: flex-end;
+     width: 60%;
+     font-family: 'Trocchi', serif;
+     font-style: italic;
+     margin-right: 10px;
+ }
+ 
+ .btn-confirm img{
+     width: 20px;
+     height: 20px;
+ }
 
-/* Contenedor principal del carrito de compras */
-.shopping-cart-container5 {
-  max-width: 1200px;
-  margin: 20px auto; /* Añadido margen superior e inferior para espaciado */
-  padding: 20px;
-  font-family: 'Trocchi', serif;
-}
+ .form-group input::placeholder{
+     color: gray;
+ }
 
-/* Título del carrito de compras */
-.shopping-cart-title5 {
-  text-align: center;
-  font-size: 32px;
-  margin-bottom: 30px;
-  font-weight: bold;
-}
-
-/* Contenido principal del carrito (resumen y total) */
-.shopping-cart-content5 {
-  display: flex;
-  gap: 20px;
-  margin-bottom: 30px;
-}
-
-/* Título de las secciones */
-.section-title5 {
-  font-size: 18px;
-  font-weight: bold;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #ddd;
-  margin-bottom: 15px;
-}
-
-/* Resumen del carrito (lista de items) */
-.cart-summary5 {
-  flex: 1;
-  background-color: #f6f6f6;
-  border-radius: 5px;
-  padding: 15px;
-}
-
-/* Item individual en el carrito */
-.cart-item5 {
-  display: flex;
-  margin-bottom: 20px;
-  background-color: #ffffff;
-  border-radius: 5px;
-  overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  position: relative; /* Establece un contexto para los contadores de imagen */
-}
-
-/* Contenedor de la imagen del item */
-.item-image5 {
-  width: 150px;
-  height: 150px;
-  overflow: hidden;
-  flex-shrink: 0; /* Evita que la imagen se encoja demasiado */
-}
-
-/* Imagen del item */
-.item-image5 img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* Detalles del item */
-.item-details5 {
-  flex: 1;
-  padding: 10px 15px;
-}
-
-/* Encabezado del item (título y precio) */
-.item-header5 {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 5px;
-}
-
-/* Título del item */
-.item-header5 h3 {
-  font-size: 16px;
-  margin: 0;
-  color: #333;
-  line-height: 1.2; /* Mejora la legibilidad en títulos largos */
-}
-
-/* Precio del item */
-.item-price5 {
-  font-weight: bold;
-  color: #e67e22;
-}
-
-/* Descripción del item */
-.item-description5 {
-  font-size: 12px;
-  color: #666;
-  margin-bottom: 10px;
-  line-height: 1.4;
-}
-
-/* Características del item */
-.item-features5 {
-  display: flex;
-  gap: 10px; /* Reduce el espacio entre características */
-  flex-wrap: wrap; /* Permite que las características pasen a la siguiente línea */
-}
-
-/* Característica individual del item */
-.feature5 {
-  display: flex;
-  align-items: center;
-  font-size: 12px;
-  color: #666;
-  margin-bottom: 5px; /* Añade un poco de margen inferior entre características */
-}
-
-/* Icono de la característica */
-.feature5 img {
-  width: 16px;
-  height: 16px;
-  margin-right: 5px;
-}
-
-/* Total del carrito */
-.cart-total5 {
-  width: 40%;
-  background-color: #f6f6f6;
-  border-radius: 5px;
-  padding: 15px;
-}
-
-/* Lista de productos en el total */
-.product-list5 {
-  margin-bottom: 20px;
-}
-
-/* Encabezado de la lista de productos */
-.product-header5 {
-  display: flex;
-  justify-content: space-between;
-  font-weight: bold;
-  margin-bottom: 10px;
-  font-size: 14px; /* Reduce el tamaño de la fuente para mejor ajuste */
-}
-
-/* Item individual del producto en el total */
-.product-item5 {
-  display: flex;
-  justify-content: space-between;
-  padding: 5px 0;
-  border-bottom: 1px solid #eee;
-  font-size: 14px; /* Reduce el tamaño de la fuente */
-}
-
-/* Datos del cliente */
-.client-data {
-  margin-bottom: 20px;
-}
-
-/* Título de los datos del cliente */
-.client-data h3 {
-  font-size: 16px;
-  margin-bottom: 10px;
-}
-
-/* Detalles del cliente (izquierda y derecha) */
-.client-details {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap; /* Permite que los bloques de información pasen a la siguiente línea */
-  gap: 10px; /* Espacio entre los bloques de información */
-}
-
-/* Información individual del cliente */
-.client-info {
-  font-size: 12px;
-  line-height: 1.4;
-  min-width: 45%; /* Asegura un ancho mínimo para cada bloque */
-}
-
-/* Totales del carrito (subtotal y total) */
-.cart-totals {
-  margin-bottom: 20px;
-}
-
-/* Subtotal */
-.subtotal,
-.total {
-  display: flex;
-  justify-content: space-between;
-  padding: 5px 0;
-  font-size: 14px; /* Reduce el tamaño de la fuente */
-}
-
-/* Total */
-.total {
-  font-weight: bold;
-  font-size: 18px;
-  border-top: 1px solid #ddd;
-  padding-top: 10px;
-}
-
-/* Métodos de pago */
-.payment-methods h3 {
-  font-size: 16px;
-  text-align: center;
-  margin-bottom: 10px;
-}
-
-/* Botones de pago */
-.payment-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 15px;
-}
-
-/* Botón de pagar */
-.btn-pay {
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  color: #ffffff;
-  font-weight: bold;
-  cursor: pointer;
-  text-align: center;
-  font-size: 14px; /* Reduce el tamaño de la fuente */
-}
-
-/* Botón de tarjeta */
-.tarjeta {
-  background-color: #E79294;
-  color: #000000;
-}
-
-/* Botón de PayPal */
-.paypal {
-  background-color: #BFD1E6;
-  color: #000000;
-}
-
-/* Iconos de métodos de pago */
-.payment-icons {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 15px; /* Añade margen inferior a los iconos */
-  flex-wrap: wrap; /* Permite que los iconos pasen a la siguiente línea */
-}
-
-/* Imagen del icono de pago */
-.payment-icons img {
-  height: 24px;
-}
-
-/* Detalles del pago (formulario) */
-.payment-details {
-  background-color: #f6f6f6;
-  border-radius: 5px;
-  padding: 20px;
-  margin-bottom: 30px;
-}
-
-/* Formulario de pago */
-.payment-form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px; /* Reduce el espacio entre elementos del formulario */
-}
-
-/* Aviso legal del pago */
-.payment-disclaimer {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 10px; /* Añade margen inferior al aviso */
-  font-size: 12px; /* Reduce el tamaño de la fuente */
-}
-
-/* Sección de tarjeta de crédito */
-.credit-card-section {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap; /* Permite que la imagen y el formulario se apilen */
-}
-
-/* Imagen de la tarjeta de crédito */
-.credit-card-image {
-  width: 40%; /* Ocupa un poco más de ancho en pantallas más grandes */
-  min-width: 200px; /* Ancho mínimo para evitar que se encoja demasiado */
-  margin-bottom: 15px; /* Espacio inferior si se apila con el formulario */
-}
-
-/* Imagen de la tarjeta de crédito */
-.credit-card-image img {
-  width: 100%;
-  border-radius: 10px;
-}
-
-/* Formulario de tarjeta de crédito */
-.credit-card-section .credit-card-form {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 10px; /* Reduce el espacio entre los campos del formulario */
-  min-width: 250px; /* Ancho mínimo para el formulario */
-}
-
-/* Grupo de formulario */
-.form-group {
-  width: 100%;
-}
-
-/* Control de formulario (input) */
-.form-control {
-  width: calc(100% - 24px); /* Ajusta el ancho considerando el padding */
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  background-color: #f0f0f0;
-  font-size: 14px;
-}
-
-/* Placeholder del input */
-.form-group input::placeholder {
-  color: gray;
-}
-
-/* Fila del formulario (para agrupar campos) */
-.credit-card-section .credit-card-form .form-row {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap; /* Permite que los campos pasen a la siguiente línea */
-}
-
-/* Ancho medio del campo */
-.half {
-  width: calc(50% - 5px); /* Ajusta el ancho considerando el gap */
-  min-width: 120px; /* Ancho mínimo para los campos */
-}
-
-/* Botón de confirmar */
-.btn-confirm {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  background-color: #EBEBEB;
-  color: #000000;
-  border: none;
-  border-radius: 5px;
-  padding: 12px;
-  font-weight: bold;
-  cursor: pointer;
-  align-self: flex-end;
-  width: 100%; /* Ocupa todo el ancho por defecto */
-  font-family: 'Trocchi', serif;
-  font-style: italic;
-  margin-right: 0; /* Elimina el margen derecho por defecto */
-  font-size: 14px; /* Reduce el tamaño de la fuente */
-}
-
-/* Icono del botón confirmar */
-.btn-confirm img {
+ .meta-icon{
   width: 20px;
   height: 20px;
 }
 
-/* Icono de metadato (reutilizado, aunque no parece usado aquí) */
-.meta-icon {
-  width: 20px;
-  height: 20px;
-}
-
-/* Contador de imágenes (posicionado absolutamente dentro de .cart-item5) */
-.image-counter2,
-.image-counter3 {
+.image-counter2{
   position: absolute;
-  top: 10px; /* Ajusta la posición vertical */
-  left: 10px; /* Ajusta la posición horizontal */
+  bottom: 270px;
+  left: 180px;
   background-color: #ffffff;
   padding: 4px 8px;
   border-radius: 4px;
   display: flex;
   align-items: center;
   gap: 4px;
-  font-size: 12px; /* Reduce el tamaño de la fuente */
+  font-size: 14px;
 }
 
-/* Ajusta la posición específica si es necesario */
-.image-counter3 {
-  top: auto; /* Elimina la regla 'bottom' anterior */
-  bottom: 10px; /* Nueva posición desde la parte inferior */
+.image-counter3{
+  position: absolute;
+  bottom: 100px;
+  left: 180px;
+  background-color: #ffffff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
 }
-
-/* --- MEDIA QUERIES PARA RESPONSIVE --- */
-
-/* Para pantallas de hasta 1200px (laptops pequeños) */
-@media (max-width: 1200px) {
-  .shopping-cart-container5 {
-    padding: 15px;
-    margin: 15px auto;
-  }
-
-  .shopping-cart-content5 {
-    gap: 15px;
-  }
-
-  .cart-total5 {
-    width: 45%; /* Aumenta un poco el ancho en pantallas más pequeñas */
-  }
-}
-
-/* Para pantallas de hasta 992px (tablets grandes) */
-@media (max-width: 992px) {
-  .shopping-cart-content5 {
-    flex-direction: column; /* Apila el resumen y el total */
-  }
-
-  .cart-total5 {
-    width: 100%; /* El total ocupa todo el ancho */
-  }
-}
-
-/* Para pantallas de hasta 768px (tablets y móviles grandes) */
-@media (max-width: 768px) {
-  .cart-item5 {
-    flex-direction: column; /* Apila la imagen y los detalles del item */
-  }
-
-  .item-image5 {
-    width: 100%;
-    height: auto; /* La altura se ajusta al contenido */
-    margin-bottom: 10px; /* Añade espacio entre la imagen y los detalles */
-  }
-
-  .client-details {
-    flex-direction: column; /* Apila los detalles del cliente */
-    gap: 10px;
-  }
-
-  .client-info {
-    min-width: 100%; /* Cada bloque de información ocupa todo el ancho */
-  }
-
-  .credit-card-section {
-    flex-direction: column; /* Apila la imagen y el formulario de la tarjeta */
-  }
-
-  .credit-card-image {
-    width: 100%;
-    max-width: 300px;
-    margin: 0 auto 15px; /* Centra la imagen y añade margen inferior */
-  }
-
-  .btn-confirm {
-    align-self: stretch; /* El botón de confirmar ocupa todo el ancho del contenedor */
-  }
-
-  .payment-buttons {
-    flex-direction: row; /* Muestra los botones de pago en fila */
-    justify-content: center;
-    gap: 10px;
-  }
-
-  .payment-details {
-    padding: 15px; /* Reduce el padding de los detalles de pago */
-  }
-
-  .cart-total5 { /* Asegura que el cuadro de factura total ocupe el 100% del ancho */
-    width: 100%;
-    padding: 10px; /* Reduce el padding interno para que quepa mejor el contenido */
-  }
-
-  .payment-disclaimer {
-    display: flex;
-    flex-direction: column; /* Apila la imagen y el texto */
-    align-items: center; /* Centra los elementos horizontalmente */
-    text-align: center; /* Centra el texto */
-    gap: 5px; /* Reduce el espacio entre la imagen y el texto */
-    padding: 5px; /* Añade un poco de padding interno */
-  }
-
-  .payment-disclaimer img {
-    max-width: 80%; /* Asegura que la imagen no sea demasiado ancha */
-    height: auto; /* Mantiene la proporción de la imagen */
-  }
-}
-
-/* Para pantallas de hasta 480px (móviles pequeños) */
-@media (max-width: 480px) {
-    .shopping-cart-title5 {
-      font-size: 28px;
-      margin-bottom: 20px;
-    }
-  
-    .item-header5 {
-      flex-direction: column; /* Apila el título y el precio del item */
-      align-items: flex-start;
-    }
-  
-    .item-price5 {
-      margin-top: 5px;
-    }
-  
-    .payment-buttons {
-      flex-direction: column; /* Apila los botones de pago en pantallas muy pequeñas */
-    }
-  
-    .payment-icons {
-      flex-direction: column; /* Apila los iconos de pago */
-      align-items: center;
-      gap: 5px;
-    }
-  
-    .product-header5,
-    .product-item5,
-    .subtotal,
-    .total {
-      font-size: 12px; /* Reduce aún más el tamaño de la fuente en móviles pequeños */
-    }
-  
-    .total {
-      font-size: 16px;
-    }
-  
-    .client-data h3 {
-      font-size: 14px; /* Reduce el tamaño del título de datos del cliente */
-    }
-  
-    .payment-details h2 {
-      font-size: 18px; /* Reduce el tamaño del título de detalles de pago */
-    }
-  
-    .credit-card-image {
-      max-width: 200px; /* Reduce el ancho máximo de la imagen de la tarjeta */
-    }
-  
-    .form-control::placeholder {
-      font-size: 12px; /* Reduce el tamaño del placeholder */
-    }
-  
-    .btn-confirm {
-      font-size: 12px; /* Reduce el tamaño de la fuente del botón confirmar */
-    }
-  
-    .payment-disclaimer {
-      font-size: 10px; /* Reduce aún más el tamaño del texto del disclaimer */
-    }
-  
-    .payment-disclaimer img {
-      max-width: 90%; /* Permite que la imagen ocupe un poco más en pantallas muy pequeñas */
-    }
-  }
+ 
+ @media (max-width: 992px){
+     .shopping-cart-content{
+         flex-direction: column;
+     }
+ 
+     .cart-total{
+         width: 100%;
+     }
+ 
+     .credit-card-section{
+         flex-direction: column;
+     }
+ 
+     .credit-card-image{
+         width: 100%;
+         max-width: 300px;
+         margin: 0 auto;
+     }
+ }
+ 
+ @media (max-width: 768px){
+     .cart-item{
+         flex-direction: column;
+     }
+ 
+     .item-image{
+         width: 100%;
+         height: 200px;
+     }
+ 
+     .client-details{
+         flex-direction: column;
+         gap: 15px;
+     }
+ 
+     .form-row{
+         flex-direction: column;
+     }
+ 
+     .half{
+         width: 100%;
+     }
+ 
+     .btn-confirm{
+         width: 100%;
+     }
+ }
