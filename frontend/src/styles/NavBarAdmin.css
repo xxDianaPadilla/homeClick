@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&amp;display=swap');
+
+body {
+font-family: "Roboto", serif;
+background-color: white;
+color: black;
+margin: 0;
+padding: 0;
+}
+
+.navbar-header {
+border-bottom: 1px solid #e2e8f0;
+}
+
+.navbar-top {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 1rem 2rem;
+}
+
+.navbar-logo {
+display: flex;
+align-items: center;
+}
+
+.logo-image {
+width: 15rem;
+height: 10rem;
+margin-right: 0.5rem;
+}
+
+.navbar-user {
+display: flex;
+align-items: center;
+}
+
+.user-icon {
+width: 4rem;
+height: 4rem;
+cursor: pointer;
+margin-right: 10rem;
+}
+
+.navbar-navigation {
+display: flex;
+justify-content: center;
+border-top: 1px solid #e2e8f0; /* Línea superior */
+border-bottom: 1px solid #e2e8f0; /* Línea inferior */
+padding: 0.5rem 0;
+}
+
+.nav-line {
+display: none; /* Ocultamos las líneas adicionales que habíamos añadido */
+}
+
+.nav-link {
+font-size: 0.875rem;
+font-weight: 600;
+font-style: italic;
+text-decoration: none;
+color: inherit;
+margin: 0 1.5rem;
+padding: 0.25rem 0; /* Añade un poco de padding vertical a los enlaces para separarlos de las líneas del border del nav */
+}
+
+.nav-link.active {
+color: #ea580c;
+}

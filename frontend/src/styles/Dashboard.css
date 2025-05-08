@@ -1,0 +1,230 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@700&family=Roboto&family=Trocchi&display=swap');
+
+body {
+  font-family: "Raleway", sans-serif; /* Establece Raleway como fuente principal */
+  font-style: italic; /* Establece el estilo de fuente en itálica */
+  font-weight: bold; /* Establece el grosor de la fuente en negrita */
+  background-color: white;
+  color: black;
+  margin: 0; /* Elimina el margen general del body */
+  padding: 0;
+}
+
+/* Main dashboard grid */
+.dashboard-main {
+  padding: 1.5rem 2rem; /* Mantiene un pequeño padding lateral */
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1.5rem;
+  max-width: 100%; /* Permite que ocupe todo el ancho disponible */
+  margin: 0 auto; /* Centra el contenido */
+}
+
+@media (min-width: 768px) {
+  .dashboard-main {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Card styles */
+.dashboard-card {
+  background-color: #ea580c; /* orange-600 */
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+}
+
+/* Greeting card styles */
+.greeting-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.greeting-text {
+  color: white;
+  max-width: 60%;
+}
+
+.greeting-hello {
+  font-style: italic;
+  font-weight: 700;
+  font-size: 1.125rem;
+  line-height: 1.25;
+  display: flex;
+  align-items: center;
+  margin: 0;
+}
+
+.sun-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-left: 0.25rem;
+}
+
+.greeting-date {
+  font-style: italic;
+  font-size: 0.875rem;
+  font-weight: bold; /* Mantiene el bold italic */
+  margin-top: 0.25rem;
+  margin-bottom: 0;
+}
+
+.greeting-time {
+  font-weight: bold; /* Mantiene el bold italic */
+  font-size: 1.875rem;
+  margin-top: 0.75rem;
+  margin-bottom: 0;
+}
+
+.config-icon {
+  width: 5rem;
+  height: 5rem;
+}
+
+/* Metrics card styles */
+.metrics-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.metric-value {
+  color: white;
+  font-weight: bold; /* Mantiene el bold italic */
+  font-size: 1.875rem;
+  font-style: italic; /* Mantiene el bold italic */
+}
+
+.metric-label {
+  color: white;
+  font-style: italic;
+  font-weight: bold; /* Mantiene el bold italic */
+  font-size: 1.25rem;
+}
+
+.metric-icon {
+  color: white;
+  font-size: 2.25rem;
+  width: 2.25rem;
+  height: 2.25rem;
+}
+
+/* Bottom content */
+.dashboard-bottom {
+  padding: 0 2rem 2rem; /* Mantiene un pequeño padding lateral e inferior */
+  max-width: 100%; /* Permite que ocupe todo el ancho disponible */
+  margin: 0 auto; /* Centra el contenido */
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .dashboard-bottom {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Dashboard boxes */
+.dashboard-box {
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+}
+
+.description-box {
+  max-width: 100%; /* Permite que ocupe todo el ancho disponible */
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .description-box {
+    max-width: 100%;
+  }
+}
+
+.box-title {
+  font-style: italic;
+  font-weight: bold; /* Mantiene el bold italic */
+  margin-bottom: 0.75rem;
+}
+
+.description-text {
+  font-family: "Trocchi", serif; /* Cambia la fuente a Trocchi */
+  font-style: normal; /* Establece el estilo de fuente a regular */
+  font-weight: normal; /* Establece el grosor de la fuente a regular */
+  text-align: justify;
+  line-height: 1.625;
+  margin-bottom: 1.5rem;
+}
+
+/* Orange buttons */
+.orange-button {
+  background-color: #ea580c;
+  color: white;
+  font-weight: bold; /* Mantiene el bold italic */
+  font-style: italic; /* Mantiene el bold italic */
+  border-radius: 0.5rem;
+  padding: 0.5rem 1.5rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.orange-button:hover {
+  background-color: #c2410c; /* orange-700 */
+}
+
+.centered-button {
+  display: block;
+  margin: 0 auto;
+  padding: 0.5rem 2rem;
+}
+
+/* Properties box */
+.properties-box {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.table-container {
+  overflow-x: auto;
+  width: 100%;
+}
+
+.properties-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.properties-table th {
+  text-align: left;
+  font-style: italic;
+  font-weight: bold; /* Mantiene el bold italic */
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.properties-table td {
+  font-style: italic;
+  font-weight: bold; /* Mantiene el bold italic */
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.properties-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Button container */
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
