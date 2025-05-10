@@ -84,7 +84,7 @@ function PrimerUso() {
             </span>
           </div>
           {/* Botón para crear la cuenta. Al hacer clic, se envía el formulario (y en este caso, se navega a '/inicio-sesion'). */}
-          <button className="submit-button" type="submit">
+          <button className="submit-button3">
             Crear cuenta
           </button>
         </form>

@@ -200,7 +200,7 @@ body {
 }
 
 /* Estilos para el botón de enviar */
-.submit-button {
+.submit-button3 {
   /* Establece un ancho preferido para el botón */
   width: 500px;
   /* Asegura que el botón no exceda el 100% del ancho de su contenedor padre */
@@ -212,7 +212,7 @@ body {
   /* Establece el color del texto del botón en negro */
   color: black;
   /* Establece el grosor de la fuente en negrita */
-  font-weight: bolder;
+  font-weight: bold;
   /* Establece el estilo de la fuente en normal */
   font-style: normal;
   /* Elimina el relleno interno predeterminado */

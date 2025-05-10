@@ -17,36 +17,41 @@ import ContrasenaCambiada from './pages/ContrasenaCambiada'; // Importa el compo
 import Registro from './pages/Registro'; // Importa el componente para la página de registro de usuario
 import CodigoVerificacion from './pages/CodigoVerificacion'; // Importa el componente para la página de código de verificación
 import NavBarAdmin from './components/NavBarAdmin';
-import Dashboard from "./pages/Dashboard"; 
+import Dashboard from "./pages/Dashboard";
+import PropertyAdmin from './pages/PropertyAdmin';
 
 function App() {
   // Define un estado local 'count' con valor inicial 0 y la función 'setCount' para actualizarlo
   const [count, setCount] = useState(0);
 
   return (
+
+    <>
+      <PropertyAdmin/>
+    </>
     // Configura el enrutamiento de la aplicación utilizando BrowserRouter
-    <Router>
-      {/* Define las diferentes rutas de la aplicación dentro de un componente Routes */}
-            <Routes>
-        <Route path='/' element={<Navigate to="primer-uso"/>}/>
-        <Route path='/primer-uso' element={<PrimerUso/>}/>
-        <Route path='/inicio-sesion' element={<Navigate to="/dashboard"/>}/> {/* Ruta modificada */}
-        <Route path='/registro' element={<Registro/>}/>
-        <Route path='/recuperarContrasena' element={<RecuperarContraseña/>}/>
-        <Route path='/navBarAdmin' element={<NavBarAdmin/>}/> {/* Nueva ruta para el componente admin */} 
-        <Route path='/dashboard' element={<Dashboard/>}/> {/* Ruta para el dashboard */}
-        <Route path='/propertyCategories' element={<PropertyCategories/>}/>
-        <Route path='/propertyView' element={<PropertyView/>}/>
-        <Route path='/shoppingCart' element={<ShoppingCart/>}/>
-        <Route path='/savedProperties' element={<SavedProperties/>}/>
-        <Route path='/aboutUs' element={<AboutUs/>}/>
-        <Route path='/privacyPolicies' element={<PrivacyPolicies/>}/>
-        <Route path='/termsConditions' element={<TermsConditions/>}/>
-        <Route path='/passwordCode' element={<CodigoVerificacion/>}/>
-        <Route path='/changePassword' element={<CambiarContrasena/>}/>
-        <Route path='/changedPassword' element={<ContrasenaCambiada/>}/>
-      </Routes>
-    </Router>
+    //<Router>
+    /*{/* Define las diferentes rutas de la aplicación dentro de un componente Routes}
+          /*<Routes>
+      <Route path='/' element={<Navigate to="primer-uso"/>}/>
+      <Route path='/primer-uso' element={<PrimerUso/>}/>
+      <Route path='/inicio-sesion' element={<Navigate to="/dashboard"/>}/> {/* Ruta modificada */
+    /*<Route path='/registro' element={<Registro/>}/>
+    <Route path='/recuperarContrasena' element={<RecuperarContraseña/>}/>
+    <Route path='/navBarAdmin' element={<NavBarAdmin/>}/> {/* Nueva ruta para el componente admin */
+    /*<Route path='/dashboard' element={<Dashboard/>}/> {/* Ruta para el dashboard */
+    /*<Route path='/propertyCategories' element={<PropertyCategories/>}/>
+    <Route path='/propertyView' element={<PropertyView/>}/>
+    <Route path='/shoppingCart' element={<ShoppingCart/>}/>
+    <Route path='/savedProperties' element={<SavedProperties/>}/>
+    <Route path='/aboutUs' element={<AboutUs/>}/>
+    <Route path='/privacyPolicies' element={<PrivacyPolicies/>}/>
+    <Route path='/termsConditions' element={<TermsConditions/>}/>
+    <Route path='/passwordCode' element={<CodigoVerificacion/>}/>
+    <Route path='/changePassword' element={<CambiarContrasena/>}/>
+    <Route path='/changedPassword' element={<ContrasenaCambiada/>}/>
+  </Routes>
+</Router>*/
   );
 }
 

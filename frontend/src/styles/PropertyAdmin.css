@@ -1,0 +1,29 @@
+.property-admin-container{
+    width: 100%;
+    min-height: 100vh;
+    background-color: #ffffff;
+}
+
+.property-content{
+    padding: 20px;
+}
+
+.houses-grid{
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 20px;
+    margin-top: 20px;
+    padding: 0 20px;
+}
+
+@media (min-width: 768px){
+    .houses-grid{
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 992px){
+    .houses-grid{
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
