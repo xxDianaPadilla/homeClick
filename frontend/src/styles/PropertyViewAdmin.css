@@ -1,0 +1,31 @@
+.btn-delete,
+.btn-edit {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+  font-weight: bold;
+  font-family: 'Raleway', sans-serif;
+  font-style: italic;
+  box-sizing: border-box; /* Asegura que el padding no aumente el ancho */
+}
+
+.btn-delete {
+    background-color: #E79294;
+    color: #000;
+  }
+  
+  .btn-edit {
+    background-color: #BFD1E6;
+    color: #000;
+  }
+  
+  .btn-detele:hover {
+    background-color: #ef5350;
+  }
+  
+  .btn-edit:hover {
+    background-color: #64b5f6;
+  }

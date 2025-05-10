@@ -19,6 +19,7 @@ import CodigoVerificacion from './pages/CodigoVerificacion'; // Importa el compo
 import NavBarAdmin from './components/NavBarAdmin';
 import Dashboard from "./pages/Dashboard";
 import PropertyAdmin from './pages/PropertyAdmin';
+import PropertyViewAdmin from './pages/PropertyViewAdmin';
 
 function App() {
   // Define un estado local 'count' con valor inicial 0 y la función 'setCount' para actualizarlo
@@ -27,7 +28,7 @@ function App() {
   return (
 
     <>
-      <PropertyAdmin/>
+      <PropertyViewAdmin/>
     </>
     // Configura el enrutamiento de la aplicación utilizando BrowserRouter
     //<Router>

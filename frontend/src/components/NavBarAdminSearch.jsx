@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../styles/NavBarAdminSearch.css";
 import LogoHomeclick from '../assets/LogoHomeclick.png';
 import perfil from '../assets/perfil.png';
-import filterIcon from '../assets/filterIcon.png';
+import plusIcon from '../assets/mas.png';
 import searchIcon from '../assets/image1.png';
 
 const NavBarAdminSearch = () =>{
@@ -29,8 +29,8 @@ const NavBarAdminSearch = () =>{
                         </button>
                     </div>
 
-                    <button className="filter-button">Filtrar
-                        <img src={filterIcon} alt="Filter" className="filter-icon"/>
+                    <button className="filter-button">Agregar propiedad
+                        <img src={plusIcon} alt="Filter" className="filter-icon"/>
                     </button>
                 </div>
 
