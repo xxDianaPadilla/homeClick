@@ -50,7 +50,7 @@ function CambiarContrasena() {
             className="text-input"
           />
           {/* Botón de envío del formulario para cambiar la contraseña. Al hacer clic, se ejecuta la función 'handleChangedPasswordClick'. */}
-          <button className="submit-button" type="submit" onClick={handleChangedPasswordClick}>
+          <button className="submit-button4" type="submit" onClick={handleChangedPasswordClick}>
             Cambiar contraseña
           </button>
         </form>

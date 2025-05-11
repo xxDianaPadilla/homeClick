@@ -36,10 +36,6 @@ import React, { useState } from "react";
                              <div className="item-image">
                                  <img src={house1} alt="Casa en colonia Escalón" />
                              </div>
-                             <div className="image-counter2">
-                                 <img src={pictureIcon} alt="Pictures" className="meta-icon" />
-                                 <span>5</span>
-                             </div>
                              <div className="item-details">
                                  <div className="item-header">
                                      <h3>Casa en colonia Escalón</h3>
@@ -74,10 +70,6 @@ import React, { useState } from "react";
                          <div className="cart-item">
                              <div className="item-image">
                                  <img src={house2} alt="Casa en la zona rosa" />
-                             </div>
-                             <div className="image-counter3">
-                                 <img src={pictureIcon} alt="Pictures" className="meta-icon" />
-                                 <span>5</span>
                              </div>
                              <div className="item-details">
                                  <div className="item-header">

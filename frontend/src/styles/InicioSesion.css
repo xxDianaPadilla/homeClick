@@ -250,7 +250,7 @@ body {
 }
 
 /* Estilos para el botón de enviar */
-.submit-button {
+.submit-button4 {
   /* Establece un ancho preferido para el botón */
   width: 500px;
   /* Establece la altura del botón */
@@ -260,7 +260,7 @@ body {
   /* Establece el color del texto del botón en negro */
   color: black;
   /* Establece el grosor de la fuente en negrita */
-  font-weight: bolder;
+  font-weight: bold;
   /* Establece el estilo de la fuente en normal */
   font-style: normal;
   /* Elimina el relleno interno predeterminado */
@@ -282,7 +282,7 @@ body {
 }
 
 /* Estilos para el botón de enviar al pasar el ratón */
-.submit-button:hover {
+.submit-button4:hover {
   /* Cambia el color de fondo al pasar el ratón */
   background-color: #f9fafb;
 }
@@ -370,7 +370,7 @@ body {
   }
 
   /* Ajusta el ancho y la altura del botón de enviar para pantallas más pequeñas */
-  .submit-button {
+  .submit-button4 {
     width: 100%;
     height: 35px;
     font-size: 18px;
@@ -421,7 +421,7 @@ body {
   }
 
   /* Ajusta el tamaño de la fuente del botón de enviar */
-  .submit-button {
+  .submit-button4 {
     font-size: 16px;
     height: 30px;
     line-height: 30px;

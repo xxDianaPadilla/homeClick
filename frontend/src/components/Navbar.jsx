@@ -109,7 +109,7 @@ const Navbar = () => {
         <div className="navbar-container">
           {/* Logo de la aplicación */}
           <div className="navbar-logo">
-            <a href="/">
+            <a href="/landingPage">
               <img src={homeClickLogo} alt="HomeClick Logo" />
             </a>
           </div>
