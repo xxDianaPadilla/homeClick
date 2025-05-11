@@ -6,9 +6,24 @@ import bgImage from "../assets/xd1.png"; // Importa la imagen de fondo principal
 import house1 from "../assets/image5.png"; // Importa una imagen de una casa para la sección de descubrimiento.
 import house2 from "../assets/image6.png"; // Importa otra imagen de una casa para la sección de descubrimiento.
 import house3 from "../assets/image7.png"; // Importa una tercera imagen de una casa para la sección de descubrimiento.
+import LandingPageCards from "../components/LandingPageCards";
 
 // Define el componente funcional LandingPage, que representa la página de inicio de la aplicación.
 const LandingPage = () => {
+
+  const cardData = [
+    {image: house1, caption: "Casa en Colonia Escalón"},
+    {image: house2, caption: "Casa en zona rosa"},
+    {image: house3, caption: "Casa en santa tecla"},
+    {image: house1, caption: "Casa en Colonia Escalón"},
+    {image: house2, caption: "Casa en zona rosa"},
+    {image: house3, caption: "Casa en santa tecla"},
+    {image: house1, caption: "Casa en Merliot"},
+    {image: house2, caption: "Casa en San Salvador"},
+    {image: house3, caption: "Casa en Antiguo Cuscatlán"},
+    {image: house1, caption: "Casa en Santa Elene"}
+  ];
+  
   // Renderiza la estructura de la página de inicio.
   return(
     <div className="landing-page">
@@ -57,29 +72,9 @@ const LandingPage = () => {
       <section className="container2">
         {/* Título de la sección de descubrimiento. */}
         <h3 className="descubre-title">Descubre</h3>
-        {/* Contenedor para la cuadrícula de elementos de descubrimiento. */}
-        <div className="descubre-grid">
-          {/* Primer elemento de descubrimiento, mostrando una casa en Colonia Escalón. */}
-          <div className="descubre-item">
-            <img src={house1} alt="" />
-            <p className="descubre-caption">Casa en Colonia Escalón</p>
-          </div>
-          {/* Segundo elemento de descubrimiento, mostrando una casa en zona rosa. */}
-          <div className="descubre-item">
-            <img src={house2} alt="" />
-            <p className="descubre-caption">Casa en zona rosa</p>
-          </div>
-          {/* Tercer elemento de descubrimiento, mostrando una casa en Santa Tecla. */}
-          <div className="descubre-item">
-            <img src={house3} alt="" />
-            <p className="descubre-caption">Casa en santa tecla</p>
-          </div>
-          {/* Cuarto elemento de descubrimiento, mostrando otra casa en Colonia Escalón. */}
-          <div className="descubre-item">
-            <img src={house1} alt="" />
-            <p className="descubre-caption">Casa en Colonia Escalón</p>
-          </div>
-        </div>
+        
+        <LandingPageCards cards={cardData}/>
+
       </section>
       {/* Renderiza el componente del pie de página en la parte inferior. */}
       <Footer/>

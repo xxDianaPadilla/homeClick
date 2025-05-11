@@ -63,6 +63,28 @@
   font-family: "Trocchi", serif; /* Aplica la fuente Trocchi */
 }
 
+@media (max-width: 768px){
+  .horizontal-carousel .descubre-item{
+    width: 250px;
+  }
+}
+
+@media (max-width: 480px){
+  .horizontal-carousel .descubre-item{
+    width: 200px;
+  }
+
+  .carousel-container{
+    padding: 0 30px;
+  }
+
+  .carousel-button{
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+  }
+}
+
 /* Media query para pantallas más grandes (ancho mínimo de 640px - tablets pequeñas en horizontal) */
 @media (min-width: 640px) {
   .content2 h1 {
@@ -142,6 +164,7 @@
   max-width: 1120px; /* Ancho máximo del contenido */
   margin: 0 auto; /* Centra el contenedor horizontalmente */
   padding: 40px 16px 64px 16px; /* Relleno superior, lateral e inferior */
+  margin-right: 230px;
 }
 
 /* Sección de objetivos */
@@ -221,9 +244,16 @@
 }
 
 /* Estilo individual de cada elemento "Descubre" */
-.descubre-item {
-  display: flex; /* Utiliza Flexbox para organizar el contenido interno */
-  flex-direction: column; /* Apila los elementos verticalmente */
+.horizontal-carousel .descubre-item {
+  transition: transform 0.3s ease;
+  cursor: pointer;
+  flex: 0 0 auto;
+  width: 300px;
+  margin-right: 0;
+}
+
+.horizontal-carousel .descubre-item:hover{
+  transform: translateY(-5px);
 }
 
 /* Imagen del elemento "Descubre" */
@@ -231,6 +261,8 @@
   width: 100%; /* Ocupa todo el ancho del contenedor */
   height: auto; /* Mantiene la proporción de aspecto */
   display: block; /* Elimina el espacio adicional debajo de la imagen */
+  object-fit: cover;
+  border-radius: 8px;
 }
 
 /* Texto de la leyenda de la imagen "Descubre" */
@@ -243,6 +275,65 @@
   padding: 4px 0; /* Relleno vertical */
   margin-top: 4px; /* Pequeño margen superior */
   font-weight: bold; /* Peso de la fuente negrita */
+}
+
+.carousel-container{
+  position: relative;
+  width: 100%;
+  padding: 0 40px;
+  margin: 20px 0;
+}
+
+.horizontal-carousel{
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f1f1f1;
+  padding: 20px 0;
+  gap: 20px;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.horizontal-carousel::-webkit-scrollbar{
+  display: none;
+}
+
+.carousel-button{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid #ddd;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.carousel-button:hover{
+  background-color: rgba(255, 255, 255, 1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.carousel-button.prev{
+  left: 0;
+}
+
+.carousel-button.next{
+  right: 0;
 }
 
 /* Estilos para el pie de página */
@@ -312,6 +403,8 @@ footer {
 }
 
 /* --- MEDIA QUERIES PARA RESPONSIVE --- */
+
+
 
 /* Para pantallas de teléfono (ancho máximo de 600px) */
 @media (max-width: 600px) {
