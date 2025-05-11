@@ -1,15 +1,9 @@
-import React, { useState } from "react";
+ import React, { useState } from "react";
  import Navbar from '../components/Navbar';
  import Footer from "../components/Footer";
  import "../styles/ShoppingCart.css";
  import house1 from "../assets/image5.png";
  import house2 from "../assets/image7.png";
- import pictureIcon from "../assets/image35.png";
- import areaIcon from "../assets/image38.png";
- import bedIcon from "../assets/image39.png";
- import personIcon from "../assets/image37.png";
- import toiletIcon from "../assets/image40.png";
- import trashcanIcon from "../assets/image36.png";
  import visaIcon from "../assets/image49.png";
  import masterCardIcon from "../assets/image50.png";
  import payPalIcon from "../assets/image51.png";
@@ -18,9 +12,39 @@ import React, { useState } from "react";
  import ilustrativePurposesIcon from "../assets/image55.png";
  import creditCardImage from "../assets/image56.png";
  import creditCardIcon from "../assets/image57.png";
+ import ShoppingCartCards from "../components/ShoppingCartCards";
  
  const ShoppingCart = () => {
      const [paymentMethod, setPaymentMethod] = useState("tarjeta");
+
+     const properties = [
+        {
+            id: 1,
+            image: house1,
+            title: "Casa en colonia Escalón",
+            price: "550,000",
+            description: "Moderna casa en exclusiva Colonia Escalón con amplia sala, comedor, cocina, 3 dormitorios con closet y 3 baños completos. Además cuenta con área de servicio completa y parqueo con portón eléctrico. Excelente ubicación cerca de centros comerciales, restaurantes y demás servicios.",
+            area: "267 metros cuadrados",
+            bedrooms: 3,
+            bathrooms: 3,
+            showContactAgent: true
+        },
+        {
+            id: 2,
+            image: house2,
+            title: "Casa en la zona rosa",
+            price: "350,000",
+            description: "Acogedora casa en la popular zona rosa, con fácil acceso a restaurantes y vida nocturna. La propiedad cuenta con sala, comedor, cocina, 2 dormitorios y 2 baños. Ideal para inversión o para quienes gustan vivir cerca de amenidades y transporte público.",
+            area: "156 metros cuadrados",
+            bedrooms: 2,
+            bathrooms: 2,
+            showContactAgent: false
+        }
+     ];
+
+     const handleRemoveItem = (id) => {
+        console.log(`Removing item with id: ${id}`);
+     };
  
      return (
          <>
@@ -32,74 +56,9 @@ import React, { useState } from "react";
                      <div className="cart-summary">
                          <h2 className="section-title">Resumen de su orden</h2>
  
-                         <div className="cart-item">
-                             <div className="item-image">
-                                 <img src={house1} alt="Casa en colonia Escalón" />
-                             </div>
-                             <div className="item-details">
-                                 <div className="item-header">
-                                     <h3>Casa en colonia Escalón</h3>
-                                     <span className="item-price">$550,000</span>
-                                 </div>
-                                 <p className="item-description">
-                                     Moderna casa en exclusiva Colonia Escalón con amplia sala, comedor, cocina, 3 dormitorios con closet y 3 baños completos.
-                                     Además cuenta con área de servicio completa y parqueo con portón eléctrico. Excelente ubicación cerca de centros comerciales,
-                                     restaurantes y demás servicios.
-                                 </p>
-                                 <div className="item-features">
-                                     <div className="feature">
-                                         <img src={areaIcon} alt="Área" />
-                                         <span>267 metros cuadrados</span>
-                                     </div>
-                                     <div className="feature">
-                                         <img src={bedIcon} alt="Dormitorios" />
-                                         <span>3</span>
-                                     </div>
-                                     <div className="feature">
-                                         <img src={toiletIcon} alt="Baños" />
-                                         <span>3</span>
-                                     </div>
-                                     <div className="feature">
-                                         <img src={personIcon} alt="Contactar agente" />
-                                         <span>1</span>
-                                     </div>
-                                 </div>
-                             </div>
-                         </div>
- 
-                         <div className="cart-item">
-                             <div className="item-image">
-                                 <img src={house2} alt="Casa en la zona rosa" />
-                             </div>
-                             <div className="item-details">
-                                 <div className="item-header">
-                                     <h3>Casa en la zona rosa</h3>
-                                     <span className="item-price">$350,000</span>
-                                 </div>
-                                 <p className="item-description">
-                                     Acogedora casa en la popular zona rosa, con fácil acceso a restaurantes y vida nocturna. La propiedad cuenta con sala, comedor,
-                                     cocina, 2 dormitorios y 2 baños. Ideal para inversión o para quienes gustan vivir cerca de amenidades y transporte público.
-                                 </p>
-                                 <div className="item-features">
-                                     <div className="feature">
-                                         <img src={areaIcon} alt="Área" />
-                                         <span>156 metros cuadrados</span>
-                                     </div>
-                                     <div className="feature">
-                                         <img src={bedIcon} alt="Dormitorios" />
-                                         <span>2</span>
-                                     </div>
-                                     <div className="feature">
-                                         <img src={toiletIcon} alt="Baños" />
-                                         <span>2</span>
-                                     </div>
-                                     <div className="feature">
-                                         <img src={trashcanIcon} alt="Eliminar" />
-                                         <span>1</span>
-                                     </div>
-                                 </div>
-                             </div>
-                         </div>
+                         {properties.map((property) => (
+                            <ShoppingCartCards key={property.id} image={property.image} title={property.title} price={property.price} description={property.description} area={property.area} bedrooms={property.bedrooms} bathrooms={property.bathrooms} showContactAgent={property.showContactAgent} onRemove={() => handleRemoveItem(property.id)}/>
+                         ))}
                      </div>
  
                      <div className="cart-total">
