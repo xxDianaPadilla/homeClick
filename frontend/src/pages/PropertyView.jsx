@@ -2,15 +2,18 @@ import React, { useEffect, useState } from "react"; // Importa React, useEffect 
 import Navbar from '../components/Navbar'; // Importa el componente Navbar para la barra de navegación.
 import Footer from "../components/Footer"; // Importa el componente Footer para el pie de página.
 import "../styles/PropertyView.css"; // Importa los estilos CSS específicos para la vista de propiedad.
-import house1 from "../assets/image27.png"; // Importa una imagen de casa.
+import house1 from "../assets/image5.png"; // Importa una imagen de casa.
 import house6 from "../assets/image6.png"; // Importa otra imagen de casa.
 import house7 from "../assets/image7.png"; // Importa una tercera imagen de casa.
 import house8 from "../assets/image5.png"; // Importa una cuarta imagen de casa (usada como imagen principal inicial).
+import house2 from "../assets/image6.png"; // Importa otra imagen de una casa para la sección de descubrimiento.
+import house3 from "../assets/image7.png"; 
 import saveIcon from '../assets/image23.png'; // Importa el icono de "guardar".
 import savedIcon from '../assets/image41.png'; // Importa el icono de "guardado".
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'; // Importa componentes de react-leaflet para la visualización de mapas.
 import ContactForm from "../components/ContactForm"; // Importa el componente ContactForm para el formulario de contacto.
 import { useLocation, useNavigate } from 'react-router-dom'; // Importa hooks para acceder a la ubicación actual y para la navegación.
+import LandingPageCards from "../components/LandingPageCards";
 
 // Define el componente funcional PropertyView, que muestra los detalles de una propiedad específica.
 const PropertyView = () => {
@@ -77,11 +80,18 @@ const PropertyView = () => {
   };
 
   // Array de propiedades similares para mostrar en la parte inferior.
-  const similarProperties = [
-    { id: 1, image: house6, title: "Casa en la zona Rosa" },
-    { id: 2, image: house7, title: "Casa en santa tecla" },
-    { id: 3, image: house1, title: "Casa en Colonia Escalón" }
-  ];
+  const cardData = [
+      {image: house1, caption: "Casa en Colonia Escalón"},
+      {image: house2, caption: "Casa en zona rosa"},
+      {image: house3, caption: "Casa en santa tecla"},
+      {image: house1, caption: "Casa en Colonia Escalón"},
+      {image: house2, caption: "Casa en zona rosa"},
+      {image: house3, caption: "Casa en santa tecla"},
+      {image: house1, caption: "Casa en Merliot"},
+      {image: house2, caption: "Casa en San Salvador"},
+      {image: house3, caption: "Casa en Antiguo Cuscatlán"},
+      {image: house1, caption: "Casa en Santa Elene"}
+    ];
 
   // Función para alternar la visibilidad de la sección de detalles.
   const toggleDetails = () => {
@@ -229,20 +239,15 @@ const PropertyView = () => {
             </MapContainer>
           </div>
         </div>
-
-        {/* Sección de propiedades similares. */}
-        <div className="similar-properties-section">
-          <h2>Casas similares</h2>
-          <div className="similar-properties-gallery">
-            {similarProperties.map(property => (
-              <div key={property.id} className="similar-property" onClick={() => setMainImage(property.image)}>
-                <img src={property.image} alt={property.title} />
-                <p>{property.title}</p>
-              </div>
-            ))}
-          </div>
-        </div>
       </div>
+
+      <section className="container2">
+        {/* Título de la sección de descubrimiento. */}
+        <h3 className="descubre-title2">Propiedades similares</h3>
+        
+        <LandingPageCards cards={cardData}/>
+
+      </section>
 
       {/* Renderiza el componente ContactForm condicionalmente si 'showContactForm' es true. */}
       {showContactForm && <ContactForm onClose={toggleContactForm}/>}
