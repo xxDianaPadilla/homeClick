@@ -26,7 +26,7 @@ function App() {
   const [count, setCount] = useState(0);
 
   return (
-    // Configura el enrutamiento de la aplicación utilizando BrowserRouter
+
     <Router>
       {/* Define las diferentes rutas de la aplicación dentro de un componente Routes */}
       <Routes>
@@ -46,7 +46,7 @@ function App() {
         {/* Define la ruta '/propertyCategories' y asocia el componente PropertyCategories */}
         <Route path='/propertyCategories' element={<PropertyCategories/>}/>
         {/* Define la ruta '/propertyView' y asocia el componente PropertyView */}
-        <Route path='/propertyView' element={<PropertyView/>}/>
+        <Route path='/propertyView' element={<PropertyViewAdmin/>}/>
         {/* Define la ruta '/shoppingCart' y asocia el componente ShoppingCart */}
         <Route path='/shoppingCart' element={<ShoppingCart/>}/>
         {/* Define la ruta '/savedProperties' y asocia el componente SavedProperties */}
@@ -65,6 +65,7 @@ function App() {
         <Route path='/changedPassword' element={<ContrasenaCambiada/>}/>
       </Routes>
     </Router>
+   
   );
 }
 
