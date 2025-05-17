@@ -1,6 +1,7 @@
 import React, {useRef, useEffect, useState} from "react";
 import '../styles/Usuarios.css';
 import searchIcon from '../assets/image1.png';
+import EditAdminCard from "../components/EditAdminCard";
 
 const UsuariosCards = () => {
 
@@ -12,6 +13,18 @@ const UsuariosCards = () => {
         {id: 5, nombre: "Rolando Perez, Juan Emilio", email: "juanemilio@gmail.com"},
         {id: 6, nombre: "Esposito Galdamez, Joana Alexandra", email: "joanaesposito@gmail.com"},
     ]);
+
+    const [showEditModal, setShowEditModal] = useState(false);
+    const [selectedUser, setSelectedUser] = useState(null);
+
+    const handleCardClick = (usuario) => {
+        setSelectedUser(usuario);
+        setShowEditModal(true);
+    };
+
+    const closeModal = () => {
+        setShowEditModal(false);
+    }
 
     return(
         <div className="administradores-section">
@@ -29,12 +42,14 @@ const UsuariosCards = () => {
 
             <div className="admin-list">
                 {usuarios.map((usuario) => (
-                    <div key={usuario.id} className="admin-card">
+                    <div key={usuario.id} className="admin-card" onClick={() => handleCardClick(usuario)}>
                         <span className="admin-nombre">{usuario.nombre}</span>
                         <span className="admin-email">{usuario.email}</span>
                     </div>
                 ))}
             </div>
+
+            <EditAdminCard isOpen={showEditModal} onClose={closeModal} userData={selectedUser}/>
         </div>
     );
 };

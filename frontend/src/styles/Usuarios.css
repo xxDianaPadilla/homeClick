@@ -95,6 +95,7 @@
     background-color: #F2F2F2;
     border-radius: 4px;
     width: 100%;
+    cursor: pointer;
 }
 
 .admin-nombre{

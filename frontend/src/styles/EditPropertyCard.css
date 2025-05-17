@@ -242,7 +242,6 @@
   margin-right: 10px;
 }
 
-/* Responsive adjustments */
 @media screen and (max-width: 992px) {
   .edit-property-modal {
     width: 98%;

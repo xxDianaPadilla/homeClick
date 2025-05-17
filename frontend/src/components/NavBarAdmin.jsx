@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import "../styles/NavBarAdmin.css";
 import LogoHomeclick from '../assets/LogoHomeclick.png';
 import perfil from '../assets/perfil.png';
+import UserInfoCard from "./UserInfoCard";
 
 const NavBarAdmin = () => {
   const location = useLocation();
   const [activeLink, setActiveLink] = useState('Inicio');
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
 
   useEffect(() => {
     const path = location.pathname;
@@ -19,6 +21,10 @@ const NavBarAdmin = () => {
     }
   }, [location.pathname]);
 
+  const toggleProfile = () => {
+    setIsProfileOpen(!isProfileOpen);
+  };
+
   return (
     <header className="navbar-header">
       <div className="navbar-top">
@@ -30,7 +36,7 @@ const NavBarAdmin = () => {
           />
         </div>
         <div className="navbar-user">
-          <img
+          <img onClick={toggleProfile}
             src={perfil}
             alt="Icono de perfil de usuario"
             className="user-icon"
@@ -59,6 +65,8 @@ const NavBarAdmin = () => {
         </Link>
         <div className="nav-line"></div>
       </nav>
+
+      <UserInfoCard isOpen={isProfileOpen} onClose={() => setIsProfileOpen(false)} />
     </header>
   );
 };
