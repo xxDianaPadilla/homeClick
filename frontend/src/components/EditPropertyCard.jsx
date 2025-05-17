@@ -1,118 +1,91 @@
 import React, { useState } from "react";
-import '../styles/EditPropertyCard.css'; // Importa los estilos CSS para este componente
-import closeIcon from '../assets/image10.png'; // Importa la imagen del icono de cerrar
+import '../styles/EditPropertyCard.css'; 
+import closeIcon from '../assets/image10.png'; 
+import pictureIcon from "../assets/image35.png"; 
+import uploadIcon from "../assets/subir.png";
+import saveIcon from "../assets/guardar.png";
 
-// Define el componente funcional PropertyPublicationForm, que recibe una prop 'onClose' para manejar el cierre del formulario
-const EditPropertyCard = ({ onClose }) => {
-  // Define estados locales para gestionar los valores de los campos del formulario
-  const [propertyImages, setPropertyImages] = useState([
-    { id: 1, name: 'Imagen casa 1' },
-    { id: 2, name: 'Imagen casa 1' },
-    { id: 3, name: 'Imagen casa 1' },
-    { id: 4, name: 'Imagen casa 1' },
-    { id: 5, name: 'Imagen casa 1' },
-    { id: 6, name: 'Imagen casa 1' }
+const EditPropertyCard = ({isOpen, onClose, property}) => {
+
+  const [images, setImages] = useState([
+    {id: 1, name: "Imagen casa 1"},
+    {id: 2, name: "Imagen casa 1"},
+    {id: 3, name: "Imagen casa 1"},
+    {id: 4, name: "Imagen casa 1"},
+    {id: 5, name: "Imagen casa 1"},
+    {id: 6, name: "Imagen casa 1"}
   ]);
-  
-  // Estado para los detalles de la propiedad
-  const [propertyDetails, setPropertyDetails] = useState({
-    rooms: '',
-    bathrooms: '',
-    parking: '',
-    patio: '',
-    levels: '',
-    constructionYear: '',
-    location: '',
-    neighborhood: '',
-    floorType: '',
-    lotSize: '',
-    height: '',
-    description: '',
-    price: ''
+
+  const [formData, setFormData] = useState({
+    bedrooms: "",
+    bathrooms: "",
+    parking: "",
+    patio: "",
+    floors: "",
+    constructionYear: "",
+    location: "",
+    address: "",
+    floorType: "",
+    lotSize: "",
+    height: "",
+    description: "",
+    price: ""
   });
 
-  // Prevenir el arrastre de elementos en el formulario
-  useEffect(() => {
-    const preventDrag = (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      return false;
-    };
-    
-    const formContainer = document.querySelector('.property-form-container');
-    if (formContainer) {
-      formContainer.addEventListener('dragstart', preventDrag);
-      
-      return () => {
-        formContainer.removeEventListener('dragstart', preventDrag);
-      };
-    }
-  }, []);
-
-  // Bloquear el scroll del body cuando el modal está abierto
-  useEffect(() => {
-    document.body.style.overflow = 'hidden';
-    
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
-  }, []);
-
-  // Manejador para cambios en los campos del formulario
-  const handleDetailsChange = (e) => {
-    const { name, value } = e.target;
-    setPropertyDetails(prevState => ({
-      ...prevState,
+  const handleChange = (e) => {
+    const {name, value} = e.target;
+    setFormData({
+      ...formData,
       [name]: value
-    }));
-  };
-
-  // Manejador para eliminar una imagen
-  const handleRemoveImage = (id) => {
-    setPropertyImages(prevImages => prevImages.filter(img => img.id !== id));
-  };
-
-  // Manejador para cargar una nueva imagen
-  const handleImageUpload = () => {
-    console.log('Cargar imagen');
-  };
-
-  // Manejador para guardar los cambios
-  const handleSaveChanges = () => {
-    console.log('Guardar cambios:', {
-      images: propertyImages,
-      details: propertyDetails
     });
+  };
+
+  const handleRemoveImage = (id) => {
+    setImages(images.filter(image => image.id !== id));
+  };
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if(file){
+      const newImage = {
+        id: Date.now(),
+        name: "Imagen casa 1",
+        file: file
+      };
+      setImages([...images, newImage]);
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    console.log("Form data:", formData);
+    console.log("Images:", images);
     onClose();
   };
 
-  // Prevenir que el clic en el overlay cierre el modal
-  const handleOverlayClick = (e) => {
-    if (e.target === e.currentTarget) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-  };
+  if(!isOpen) return null;
 
   return (
-    <div className="property-form-overlay" onClick={handleOverlayClick}>
-      <div className="property-form-container">
-        {/* Encabezado del formulario */}
-        <div className="property-form-header">
+    <div className="edit-property-modal-overlay">
+      <div className="edit-property-modal">
+        <div className="edit-property-header">
           <h2>Información de la publicación</h2>
-          <button className="close-button" onClick={onClose}>×</button>
+          <button className="close-button" onClick={onClose}>
+            <img src={closeIcon} alt="Cerrar" />
+          </button>
         </div>
-
-        {/* Contenido principal del formulario */}
-        <div className="property-form-content">
-          {/* Sección de imágenes */}
-          <div className="property-images-section">
+        
+        <div className="edit-property-content">
+          <div className="edit-property-left">
             <h3>Imágenes de la propiedad</h3>
-            <div className="images-list">
-              {propertyImages.map((image) => (
-                <div key={image.id} className="image-item">
-                  <div className="image-preview">
-                    <span>{image.name}</span>
+            <div className="property-images-list">
+              {images.map((image) => (
+                <div key={image.id} className="property-image-item">
+                  <div className="image-item-content">
+                    <img src={pictureIcon} alt="Icono de imagen" className="picture-icon" />
+                    <span className="image-name">{image.name}</span>
+                    <span className="image-path">{image.path}</span>
                   </div>
                   <button 
                     className="remove-image-button" 
@@ -123,196 +96,163 @@ const EditPropertyCard = ({ onClose }) => {
                 </div>
               ))}
             </div>
-            <button className="upload-image-button" onClick={handleImageUpload}>
-              <span className="icon">⬆</span> Cargar Imagen
-            </button>
+            <label className="upload-image-button">
+              <img src={uploadIcon} alt="Subir" />
+              <span>Cargar Imagen</span>
+              <input 
+                type="file" 
+                accept="image/*" 
+                onChange={handleImageUpload} 
+                style={{ display: 'none' }} 
+              />
+            </label>
           </div>
-
-          {/* Sección de detalles y dimensiones */}
-          <div className="property-details-section">
+          
+          <div className="edit-property-right">
             <h3>Detalles y dimensiones de la propiedad</h3>
-            
-            <div className="details-grid">
-              {/* Primera fila: habitaciones, baños, parqueo */}
-              <div className="form-group">
-                <input
-                  type="text"
-                  name="rooms"
-                  value={propertyDetails.rooms}
-                  onChange={handleDetailsChange}
-                  placeholder="Cant. habitaciones"
-                  className="form-input"
-                  style={{color: '#333'}}
-                />
+            <form onSubmit={handleSubmit}>
+              <div className="form-row">
+                <div className="form-group">
+                  <input 
+                    type="text" 
+                    name="bedrooms" 
+                    placeholder="Cant. habitaciones" 
+                    value={formData.bedrooms}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="form-group">
+                  <input 
+                    type="text" 
+                    name="bathrooms" 
+                    placeholder="Cant. baños" 
+                    value={formData.bathrooms}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="form-group">
+                  <input 
+                    type="text" 
+                    name="parking" 
+                    placeholder="Parqueo" 
+                    value={formData.parking}
+                    onChange={handleChange}
+                  />
+                </div>
               </div>
-
-              <div className="form-group">
-                <input
-                  type="text"
-                  name="bathrooms"
-                  value={propertyDetails.bathrooms}
-                  onChange={handleDetailsChange}
-                  placeholder="Cant. baños"
-                  className="form-input"
-                  style={{color: '#333'}}
-                />
+              
+              <div className="form-row">
+                <div className="form-group">
+                  <input 
+                    type="text" 
+                    name="patio" 
+                    placeholder="Patio" 
+                    value={formData.patio}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="form-group">
+                  <input 
+                    type="text" 
+                    name="floors" 
+                    placeholder="Cantidad de niveles" 
+                    value={formData.floors}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="form-group">
+                  <input 
+                    type="text" 
+                    name="constructionYear" 
+                    placeholder="Año de construcción" 
+                    value={formData.constructionYear}
+                    onChange={handleChange}
+                  />
+                </div>
               </div>
-
-              <div className="form-group">
-                <input
-                  type="text"
-                  name="parking"
-                  value={propertyDetails.parking}
-                  onChange={handleDetailsChange}
-                  placeholder="Parqueo"
-                  className="form-input"
-                  style={{color: '#333'}}
-                />
+              
+              <div className="form-row full-width">
+                <div className="form-group">
+                  <input 
+                    type="text" 
+                    name="location" 
+                    placeholder="Donde queda, ejemplo: Colonia Escalon" 
+                    value={formData.location}
+                    onChange={handleChange}
+                  />
+                </div>
               </div>
-
-              {/* Segunda fila: patio, niveles, año */}
-              <div className="form-group">
-                <input
-                  type="text"
-                  name="patio"
-                  value={propertyDetails.patio}
-                  onChange={handleDetailsChange}
-                  placeholder="Patio"
-                  className="form-input"
-                  style={{color: '#333'}}
-                />
+              
+              <div className="form-row full-width">
+                <div className="form-group">
+                  <input 
+                    type="text" 
+                    name="address" 
+                    placeholder="Ubicación" 
+                    value={formData.address}
+                    onChange={handleChange}
+                  />
+                </div>
               </div>
-
-              <div className="form-group">
-                <input
-                  type="text"
-                  name="levels"
-                  value={propertyDetails.levels}
-                  onChange={handleDetailsChange}
-                  placeholder="Cantidad de niveles"
-                  className="form-input"
-                  style={{color: '#333'}}
-                />
+              
+              <div className="form-row">
+                <div className="form-group">
+                  <input 
+                    type="text" 
+                    name="floorType" 
+                    placeholder="Tipo de piso" 
+                    value={formData.floorType}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="form-group">
+                  <input 
+                    type="text" 
+                    name="lotSize" 
+                    placeholder="Tamaño del lote" 
+                    value={formData.lotSize}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="form-group">
+                  <input 
+                    type="text" 
+                    name="height" 
+                    placeholder="Altura" 
+                    value={formData.height}
+                    onChange={handleChange}
+                  />
+                </div>
               </div>
-
-              <div className="form-group">
-                <input
-                  type="text"
-                  name="constructionYear"
-                  value={propertyDetails.constructionYear}
-                  onChange={handleDetailsChange}
-                  placeholder="Año de construcción"
-                  className="form-input"
-                  style={{color: '#333'}}
-                />
+              
+              <div className="form-row full-width">
+                <div className="form-group description-group">
+                  <textarea 
+                    name="description" 
+                    placeholder="Descripción" 
+                    value={formData.description}
+                    onChange={handleChange}
+                  ></textarea>
+                </div>
               </div>
-
-              {/* Tercera fila: colonia/barrio (ancho completo) */}
-              <div className="form-group full-width">
-                <input
-                  type="text"
-                  name="neighborhood"
-                  value={propertyDetails.neighborhood}
-                  onChange={handleDetailsChange}
-                  placeholder="Donde queda, ejemplo: Colonia Escalon"
-                  className="form-input"
-                  style={{color: '#333'}}
-                />
+              
+              <div className="form-actions">
+                <div className="form-group price-group">
+                  <input 
+                    type="text" 
+                    name="price" 
+                    placeholder="Precio" 
+                    value={formData.price}
+                    onChange={handleChange}
+                  />
+                </div>
+                <button type="submit" className="save-button">
+                  <img src={saveIcon} alt="Guardar" />
+                  <span>Guardar Cambios</span>
+                </button>
               </div>
-
-              {/* Cuarta fila: ubicación (ancho completo) */}
-              <div className="form-group full-width">
-                <input
-                  type="text"
-                  name="location"
-                  value={propertyDetails.location}
-                  onChange={handleDetailsChange}
-                  placeholder="Ubicación"
-                  className="form-input"
-                  style={{color: '#333'}}
-                />
-              </div>
-
-              {/* Quinta fila: tipo de piso, tamaño de lote, altura */}
-              <div className="form-group">
-                <input
-                  type="text"
-                  name="floorType"
-                  value={propertyDetails.floorType}
-                  onChange={handleDetailsChange}
-                  placeholder="Tipo de piso"
-                  className="form-input"
-                  style={{color: '#333'}}
-                />
-              </div>
-
-              <div className="form-group">
-                <input
-                  type="text"
-                  name="lotSize"
-                  value={propertyDetails.lotSize}
-                  onChange={handleDetailsChange}
-                  placeholder="Tamaño del lote"
-                  className="form-input"
-                  style={{color: '#333'}}
-                />
-              </div>
-
-              <div className="form-group">
-                <input
-                  type="text"
-                  name="height"
-                  value={propertyDetails.height}
-                  onChange={handleDetailsChange}
-                  placeholder="Altura"
-                  className="form-input"
-                  style={{color: '#333'}}
-                />
-              </div>
-
-              {/* Sexta fila: descripción (ancho completo) */}
-              <div className="form-group full-width">
-                <textarea
-                  name="description"
-                  value={propertyDetails.description}
-                  onChange={handleDetailsChange}
-                  placeholder="Descripción"
-                  rows="6"
-                  className="form-textarea"
-                  style={{color: '#333'}}
-                ></textarea>
-              </div>
-
-              {/* Séptima fila: precio */}
-              <div className="form-group">
-                <input
-                  type="text"
-                  name="price"
-                  value={propertyDetails.price}
-                  onChange={handleDetailsChange}
-                  placeholder="Precio"
-                  className="form-input"
-                  style={{color: '#333'}}
-                />
-              </div>
-            </div>
-
-            {/* Botón para guardar cambios */}
-            <div className="form-actions">
-              <button 
-                type="button" 
-                className="save-changes-button" 
-                onClick={handleSaveChanges}
-              >
-                <span className="icon">💾</span> Guardar cambios
-              </button>
-            </div>
+            </form>
           </div>
-        </div>
-        
-        {/* Pie de página del formulario */}
-        <div className="form-footer">
-          <span className="publication-date">Fecha Publicación: 26 de febrero de 2024</span>
         </div>
       </div>
     </div>

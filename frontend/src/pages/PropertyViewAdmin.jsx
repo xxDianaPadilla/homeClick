@@ -6,10 +6,13 @@ import house6 from "../assets/image6.png";
 import house7 from "../assets/image7.png";
 import house8 from "../assets/image5.png";
 import EditPropertyCard from "../components/EditPropertyCard";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 // Definición del componente principal PropertyViewAdmin
 const PropertyViewAdmin = () => {
+
+    const {id} = useParams();
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
     // Estado para controlar qué imagen se muestra como principal
     const [mainImage, setMainImage] = useState(house8);
@@ -19,13 +22,6 @@ const PropertyViewAdmin = () => {
 
     // Estado para controlar si la sección de dimensiones está expandida
     const [dimensionsExpanded, setDimensionsExpanded] = useState(false);
-
-    // Estado para controlar la visibilidad del componente de edición
-    const [showEditPropertyCard, setShowEditPropertyCard] = useState(false);
-
-    // Hooks de React Router para obtener la ubicación actual y permitir navegación
-    const location = useLocation();
-    const navigate = useNavigate();
 
     // Extracción de parámetros de la ubicación con valores predeterminados
     const { fromCategory, propertyId } = location.state || { fromCategory: '/propertyAdmin', propertyId: '1' };
@@ -48,6 +44,7 @@ const PropertyViewAdmin = () => {
 
     // Objeto con todos los datos de la propiedad
     const propertyData = {
+        id: id,
         title: "Casa en Colonia Escalón",
         price: "$150,000",
         location: "San Salvador, El Salvador",
@@ -90,9 +87,12 @@ const PropertyViewAdmin = () => {
     // Coordenadas para un posible mapa (no utilizado en el código renderizado)
     const center = [13.6929, -89.2182];
 
-    // Función para mostrar/ocultar el formulario de edición de propiedades
-    const toggleEditPropertyCard = () => {
-        setShowEditPropertyCard(!showEditPropertyCard);
+    const openEditModal = () => {
+        setIsEditModalOpen(true);
+    };
+
+    const closeEditModal = () => {
+        setIsEditModalOpen(false);
     };
 
     // Estructura JSX del componente
@@ -148,7 +148,7 @@ const PropertyViewAdmin = () => {
 
                             {/* Botones de acción para administradores */}
                             <div className="action-buttons3">
-                                <button className="btn-edit" onClick={toggleEditPropertyCard}>Editar publicación</button>
+                                <button className="btn-edit" onClick={openEditModal}>Editar publicación</button>
                                 <button className="btn-delete">Eliminar publicación</button>
                             </div>
                         </div>
@@ -198,8 +198,8 @@ const PropertyViewAdmin = () => {
                 </div>
             </div>
 
-            {/* Componente para editar la propiedad que se muestra condicionalmente */}
-            {showEditPropertyCard && <EditPropertyCard onClose={toggleEditPropertyCard} />}
+            <EditPropertyCard isOpen={isEditModalOpen} onClose={closeEditModal} property={propertyData}/>
+
         </>
     );
 };

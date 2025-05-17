@@ -2,9 +2,9 @@ import React from "react";
 import '../styles/HouseCardsAdmin.css';
 import infoIcon from '../assets/infoIcon.png';
 
-const HouseCardsAdmin = ({image, location}) =>{
+const HouseCardsAdmin = ({image, location, onClick}) =>{
     return(
-        <div className="house-card">
+        <div className="house-card" onClick={onClick}>
             <div className="house-image-container">
                 <img src={image} alt="location" className="house-image"/>
                 <div className="info-icon-container">
