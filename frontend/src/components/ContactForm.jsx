@@ -1,40 +1,22 @@
 import React, { useState } from "react";
 import '../styles/ContactForm.css'; // Importa los estilos CSS para este componente
 import closeIcon from '../assets/image10.png'; // Importa la imagen del icono de cerrar
+import useContactForm from './Customers/Hooks/useContactForm';
 
 // Define el componente funcional ContactForm, que recibe una prop 'onClose' para manejar el cierre del formulario
 const ContactForm = ({ onClose }) => {
-  // Define un estado local 'formData' para gestionar los valores de los campos del formulario
-  const [formData, setFormData] = useState({
+
+  const initialState = {
     email: '',
     name: '',
     phone: '',
     message: ''
-  });
-
-  // Función para actualizar el estado 'formData' cuando cambia el valor de un campo del formulario
-  const handleChange = (e) => {
-    // Obtiene el nombre y el valor del elemento que disparó el evento (el input o textarea)
-    const { name, value } = e.target;
-    // Actualiza el estado 'formData' utilizando la función de actualización de estado
-    setFormData(prevState => ({
-      // Mantiene los valores anteriores del estado
-      ...prevState,
-      // Actualiza el valor del campo específico cuyo nombre coincide con 'name'
-      [name]: value
-    }));
   };
 
-  // Función para manejar el envío del formulario
-  const handleSubmit = (e) => {
-    // Previene el comportamiento predeterminado del envío del formulario (recargar la página)
-    e.preventDefault();
-    // Simula el envío del formulario mostrando los datos en la consola
-    console.log('Formulario enviado:', formData);
-
-    // Llama a la función 'onClose' proporcionada como prop para cerrar el formulario
-    onClose();
-  };
+  const {formData, handleChange, handleSubmit} = useContactForm(
+    initialState,
+    () => onClose()
+  );
 
   // Renderiza el componente del formulario de contacto
   return (
