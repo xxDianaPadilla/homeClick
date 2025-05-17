@@ -1,16 +1,19 @@
 import React, { useState } from "react";
+import {Link, useNavigate} from 'react-router-dom';
 import "../styles/NavBarAdminSearch.css";
 import LogoHomeclick from '../assets/LogoHomeclick.png';
 import perfil from '../assets/perfil.png';
-import plusIcon from '../assets/mas.png';
+import filterIcon from '../assets/filterIcon.png';
 import searchIcon from '../assets/image1.png';
 
 const NavBarAdminSearch = () =>{
 
     const [activeLink, setActiveLink] = useState('Administrar propiedades');
+    const navigate = useNavigate();
 
-    const handleLinkClick = (link) => {
+    const handleLinkClick = (link, path) => {
         setActiveLink(link);
+        navigate(path);
     };
 
 
@@ -18,7 +21,7 @@ const NavBarAdminSearch = () =>{
         <header className="navbar-header">
             <div className="navbar-top">
                 <div className="navbar-logo">
-                    <img src={LogoHomeclick} alt="Logo de HomeClick" className="logo-image"/>
+                    <img src={LogoHomeclick} alt="Logo de HomeClick" className="logo-image" onClick={() => handleLinkClick('Inicio', 'dashboard')} style={{cursor: 'pointer'}}/>
                 </div>
 
                 <div className="search-container2">
@@ -29,8 +32,8 @@ const NavBarAdminSearch = () =>{
                         </button>
                     </div>
 
-                    <button className="filter-button">Agregar propiedad
-                        <img src={plusIcon} alt="Filter" className="filter-icon"/>
+                    <button className="filter-button">Filtrar
+                        <img src={filterIcon} alt="Filter" className="filter-icon"/>
                     </button>
                 </div>
 
@@ -41,8 +44,8 @@ const NavBarAdminSearch = () =>{
 
             <nav className="navbar-navigation">
                 <div className="nav-line"></div>
-                <a href="#" className={`nav-link ${activeLink === 'Inicio' ? 'active' : ''}`} onClick={() => handleLinkClick('Inicio')}>Inicio</a>
-                <a href="#" className={`nav-link ${activeLink === 'Administrar propiedades' ? 'active' : ''}`} onClick={() => handleLinkClick('Administrar propiedades')}>Administrar propiedades</a>
+                <a href="/dashboard" className={`nav-link ${activeLink === 'Inicio' ? 'active' : ''}`} onClick={() => handleLinkClick('Inicio', '/dashboard')}>Inicio</a>
+                <a href="/propertyAdmin" className={`nav-link ${activeLink === 'Administrar propiedades' ? 'active' : ''}`} onClick={() => handleLinkClick('Administrar propiedades', '/propertyAdmin')}>Administrar propiedades</a>
                 <a href="#" className={`nav-link ${activeLink === 'Perfil de Administradores' ? 'active' : ''}`} onClick={() => handleLinkClick('Perfil de Administradores')}>Perfil de Administradores</a>
                 <div className="nav-line"></div>
             </nav>

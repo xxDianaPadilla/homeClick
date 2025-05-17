@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
+import {Link, useNavigate} from 'react-router-dom';
 import "../styles/NavBarAdmin.css";
 import LogoHomeclick from '../assets/LogoHomeclick.png';
 import perfil from '../assets/perfil.png';
 
 const NavBarAdmin = () => {
   const [activeLink, setActiveLink] = useState('Inicio');
+  const navigate = useNavigate();
 
-  const handleLinkClick = (link) => {
+  const handleLinkClick = (link, path) => {
     setActiveLink(link);
+    navigate(path);
   };
 
   return (
@@ -17,7 +20,7 @@ const NavBarAdmin = () => {
           <img
             src={LogoHomeclick}
             alt="Logo de HomeClick"
-            className="logo-image"
+            className="logo-image" onClick={() => handleLinkClick('Inicio', 'dashboard')} style={{cursor: 'pointer'}}
           />
         </div>
         <div className="navbar-user">
@@ -31,16 +34,16 @@ const NavBarAdmin = () => {
       <nav className="navbar-navigation">
         <div className="nav-line"></div>
         <a
-          href="#"
+          href="/dashboard"
           className={`nav-link ${activeLink === 'Inicio' ? 'active' : ''}`}
-          onClick={() => handleLinkClick('Inicio')}
+          onClick={() => handleLinkClick('Inicio', '/dashboard')}
         >
           Inicio
         </a>
         <a
-          href="#"
+          href="/propertyAdmin"
           className={`nav-link ${activeLink === 'Administrar propiedades' ? 'active' : ''}`}
-          onClick={() => handleLinkClick('Administrar propiedades')}
+          onClick={() => handleLinkClick('Administrar propiedades', '/propertyAdmin')}
         >
           Administrar propiedades
         </a>
