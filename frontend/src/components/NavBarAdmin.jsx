@@ -1,17 +1,23 @@
-import React, { useState } from 'react';
-import {Link, useNavigate} from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import "../styles/NavBarAdmin.css";
 import LogoHomeclick from '../assets/LogoHomeclick.png';
 import perfil from '../assets/perfil.png';
 
 const NavBarAdmin = () => {
+  const location = useLocation();
   const [activeLink, setActiveLink] = useState('Inicio');
-  const navigate = useNavigate();
 
-  const handleLinkClick = (link, path) => {
-    setActiveLink(link);
-    navigate(path);
-  };
+  useEffect(() => {
+    const path = location.pathname;
+    if (path === '/dashboard') {
+      setActiveLink('Inicio');
+    } else if (path === '/propertyAdmin') {
+      setActiveLink('Administrar propiedades');
+    } else if (path === '/usuariosAdmin') {
+      setActiveLink('Perfil de Administradores');
+    }
+  }, [location.pathname]);
 
   return (
     <header className="navbar-header">
@@ -20,7 +26,7 @@ const NavBarAdmin = () => {
           <img
             src={LogoHomeclick}
             alt="Logo de HomeClick"
-            className="logo-image" onClick={() => handleLinkClick('Inicio', 'dashboard')} style={{cursor: 'pointer'}}
+            className="logo-image" style={{ cursor: 'pointer' }}
           />
         </div>
         <div className="navbar-user">
@@ -33,27 +39,24 @@ const NavBarAdmin = () => {
       </div>
       <nav className="navbar-navigation">
         <div className="nav-line"></div>
-        <a
-          href="/dashboard"
+        <Link
+          to="/dashboard"
           className={`nav-link ${activeLink === 'Inicio' ? 'active' : ''}`}
-          onClick={() => handleLinkClick('Inicio', '/dashboard')}
         >
           Inicio
-        </a>
-        <a
-          href="/propertyAdmin"
+        </Link>
+        <Link
+          to="/propertyAdmin"
           className={`nav-link ${activeLink === 'Administrar propiedades' ? 'active' : ''}`}
-          onClick={() => handleLinkClick('Administrar propiedades', '/propertyAdmin')}
         >
           Administrar propiedades
-        </a>
-        <a
-          href="#"
+        </Link>
+        <Link
+          to="/usuariosAdmin"
           className={`nav-link ${activeLink === 'Perfil de Administradores' ? 'active' : ''}`}
-          onClick={() => handleLinkClick('Perfil de Administradores')}
         >
           Perfil de Administradores
-        </a>
+        </Link>
         <div className="nav-line"></div>
       </nav>
     </header>
