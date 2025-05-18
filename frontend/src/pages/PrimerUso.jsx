@@ -2,13 +2,13 @@ import { useState } from 'react'; // Importa el hook useState para gestionar el 
 import { useNavigate } from 'react-router-dom'; // Importa el hook useNavigate para la navegación programática entre rutas.
 import "../styles/PrimerUso.css"; // Importa el archivo CSS que contiene los estilos específicos para la página de primer uso.
 import bgImgHouse from "../assets/imgLoginFondo.png" // Importa la imagen de fondo para la página.
+import { usePasswordToggle } from '../components/Customers/Hooks/usePasswordToggle';
 
 // Define el componente funcional PrimerUso, que representa la página que se muestra al usuario en su primer uso de la aplicación.
 function PrimerUso() {
-  // Estado local para controlar la visibilidad de la primera contraseña (mostrar u ocultar). Inicialmente se establece en 'false' (oculta).
-  const [showPassword1, setShowPassword1] = useState(false);
-  // Estado local para controlar la visibilidad de la segunda contraseña (mostrar u ocultar). Inicialmente se establece en 'false' (oculta).
-  const [showPassword2, setShowPassword2] = useState(false);
+  
+  const {showPassword, togglePasswordVisibility } = usePasswordToggle();
+
   // Utiliza el hook useNavigate para obtener la función 'navigate', que permite redirigir al usuario a otras rutas.
   const navigate = useNavigate();
 
@@ -45,7 +45,7 @@ function PrimerUso() {
           <div className="password-container">
             {/* Campo de entrada para la primera contraseña. El tipo se cambia dinámicamente con 'showPassword1'. */}
             <input
-              type={showPassword1 ? "text" : "password"}
+              type={showPassword ? "text" : "password"}
               placeholder="Contraseña"
               className="text-input"
             />
@@ -53,7 +53,7 @@ function PrimerUso() {
             <span
               className="password-toggle"
               aria-label="Mostrar contraseña"
-              onClick={() => setShowPassword1(!showPassword1)}
+              onClick={togglePasswordVisibility}
             >
               {/* Icono de ojo SVG para mostrar/ocultar la contraseña. */}
               <svg className="eye-icon" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -66,7 +66,7 @@ function PrimerUso() {
           <div className="password-container">
             {/* Campo de entrada para la segunda contraseña. El tipo se cambia dinámicamente con 'showPassword2'. */}
             <input
-              type={showPassword2 ? "text" : "password"}
+              type={showPassword ? "text" : "password"}
               placeholder="Contraseña"
               className="text-input"
             />
@@ -74,7 +74,7 @@ function PrimerUso() {
             <span
               className="password-toggle"
               aria-label="Mostrar contraseña"
-              onClick={() => setShowPassword2(!showPassword2)}
+              onClick={togglePasswordVisibility}
             >
               {/* Icono de ojo SVG para mostrar/ocultar la contraseña. */}
               <svg className="eye-icon" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

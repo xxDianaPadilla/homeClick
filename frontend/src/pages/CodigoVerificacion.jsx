@@ -2,9 +2,13 @@ import React, { useRef, useEffect } from 'react'; // Importa React, useRef para 
 import "../styles/CodigoVerificacion.css"; // Importa los estilos CSS específicos para la página de verificación de código.
 import bgImgHouseF from "../assets/imgLoginFondo.png"; // Importa la imagen de fondo para la página.
 import { useNavigate } from 'react-router-dom'; // Importa el hook useNavigate para la navegación programática.
+import useVerificationInputs from '../components/Customers/Hooks/useVerificationInputs';
 
 // Define el componente funcional CodigoVerificacion, que representa la página para que el usuario ingrese un código de verificación enviado por correo electrónico.
 function CodigoVerificacion() {
+
+  const {inputRefs, handleInputChangeA, handleKeyDownB} = useVerificationInputs(6);
+
   // Utiliza el hook useNavigate para obtener la función 'navigate', que permite redirigir al usuario a otras rutas.
   const navigate = useNavigate();
 
@@ -12,35 +16,6 @@ function CodigoVerificacion() {
   const handleChangePasswordClick = () =>{
     navigate('/changePassword');
   };
-
-  // Crea un array de referencias (refs) para cada uno de los campos de entrada del código de verificación. Esto permite manipular directamente los elementos del DOM.
-  const inputRefs = [useRef(null), useRef(null), useRef(null), useRef(null), useRef(null), useRef(null)];
-
-  // Función que se ejecuta cuando cambia el valor de un campo de entrada del código.
-  const handleInputChangeA = (index, event) => {
-    // Obtiene el valor del campo de entrada actual.
-    const { value } = event.target;
-    // Si el valor tiene un solo carácter y no es el último campo de entrada, enfoca el siguiente campo.
-    if (value.length === 1 && index < inputRefs.length - 1) {
-      inputRefs[index + 1].current.focus();
-    }
-  };
-
-  // Función que se ejecuta al presionar una tecla en un campo de entrada del código.
-  const handleKeyDownB = (index, event) => {
-    // Si la tecla presionada es 'Backspace', el campo actual está vacío y no es el primer campo, enfoca el campo anterior.
-    if (event.key === 'Backspace' && event.target.value === '' && index > 0) {
-      inputRefs[index - 1].current.focus();
-    }
-  };
-
-  // Hook useEffect que se ejecuta solo una vez después del primer renderizado del componente.
-  useEffect(() => {
-    // Si existe el primer campo de entrada (la referencia no es null), establece el foco en él.
-    if (inputRefs[0].current) {
-      inputRefs[0].current.focus();
-    }
-  }, []); // El array de dependencias vacío asegura que este efecto se ejecute solo una vez.
 
   // Renderiza la estructura de la página de verificación de código.
   return (

@@ -2,29 +2,11 @@ import React, {useRef, useEffect, useState} from "react";
 import '../styles/Usuarios.css';
 import searchIcon from '../assets/image1.png';
 import EditAdminCard from "../components/EditAdminCard";
+import useUsuarios from "./Administrators/Hooks/useUsuariosCards";
 
 const UsuariosCards = () => {
 
-    const [usuarios, setUsuarios] = useState([
-        {id: 1, nombre: "Rolando Perez, Juan Emilio", email: "juanemilio@gmail.com"},
-        {id: 2, nombre: "Esposito Galdamez, Joana Alexandra", email: "joanaesposito@gmail.com"},
-        {id: 3, nombre: "Rolando Perez, Juan Emilio", email: "juanemilio@gmail.com"},
-        {id: 4, nombre: "Esposito Galdamez, Joana Alexandra", email: "joanaesposito@gmail.com"},
-        {id: 5, nombre: "Rolando Perez, Juan Emilio", email: "juanemilio@gmail.com"},
-        {id: 6, nombre: "Esposito Galdamez, Joana Alexandra", email: "joanaesposito@gmail.com"},
-    ]);
-
-    const [showEditModal, setShowEditModal] = useState(false);
-    const [selectedUser, setSelectedUser] = useState(null);
-
-    const handleCardClick = (usuario) => {
-        setSelectedUser(usuario);
-        setShowEditModal(true);
-    };
-
-    const closeModal = () => {
-        setShowEditModal(false);
-    }
+    const {usuarios, showEditModal, selectedUser, handleCardClick, closeModal} = useUsuarios();
 
     return(
         <div className="administradores-section">

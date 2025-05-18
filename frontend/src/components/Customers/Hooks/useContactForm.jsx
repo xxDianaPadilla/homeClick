@@ -1,6 +1,8 @@
 import { useState } from "react";
 
 const useContactForm = (initialState = {}, onSubmitCallback) => {
+
+    const [showContactForm, setShowContactForm] = useState(false);
     const [formData, setFormData] = useState(initialState);
 
     // Función para actualizar el estado 'formData' cuando cambia el valor de un campo del formulario
@@ -23,16 +25,22 @@ const useContactForm = (initialState = {}, onSubmitCallback) => {
         // Simula el envío del formulario mostrando los datos en la consola
         console.log('Formulario enviado:', formData);
 
-        if(onSubmitCallback){
+        if (onSubmitCallback) {
             onSubmitCallback(formData);
         }
+    };
+
+    const toggleContactForm = () => {
+        setShowContactForm(!showContactForm);
     };
 
     return {
         formData,
         setFormData,
         handleChange,
-        handleSubmit
+        handleSubmit,
+        showContactForm,
+        toggleContactForm
     };
 };
 

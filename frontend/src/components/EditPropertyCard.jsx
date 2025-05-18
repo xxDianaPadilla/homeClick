@@ -4,66 +4,25 @@ import closeIcon from '../assets/image10.png';
 import pictureIcon from "../assets/image35.png"; 
 import uploadIcon from "../assets/subir.png";
 import saveIcon from "../assets/guardar.png";
+import {usePropertyForm} from '../components/Properties/Hooks/usePropertyForm';
+import {usePropertyImages} from '../components/Properties/Hooks/usePropertyImages';
+import {usePropertySubmit} from '../components/Properties/Hooks/usePropertySubmit';
 
 const EditPropertyCard = ({isOpen, onClose, property}) => {
 
-  const [images, setImages] = useState([
+  const initialImages = [
     {id: 1, name: "Imagen casa 1"},
     {id: 2, name: "Imagen casa 1"},
     {id: 3, name: "Imagen casa 1"},
     {id: 4, name: "Imagen casa 1"},
     {id: 5, name: "Imagen casa 1"},
     {id: 6, name: "Imagen casa 1"}
-  ]);
+  ];
 
-  const [formData, setFormData] = useState({
-    bedrooms: "",
-    bathrooms: "",
-    parking: "",
-    patio: "",
-    floors: "",
-    constructionYear: "",
-    location: "",
-    address: "",
-    floorType: "",
-    lotSize: "",
-    height: "",
-    description: "",
-    price: ""
-  });
-
-  const handleChange = (e) => {
-    const {name, value} = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
-  };
-
-  const handleRemoveImage = (id) => {
-    setImages(images.filter(image => image.id !== id));
-  };
-
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if(file){
-      const newImage = {
-        id: Date.now(),
-        name: "Imagen casa 1",
-        file: file
-      };
-      setImages([...images, newImage]);
-    }
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    console.log("Form data:", formData);
-    console.log("Images:", images);
-    onClose();
-  };
-
+  const {formData, handleChange} = usePropertyForm(property);
+  const {images, handleRemoveImage, handleImageUpload} = usePropertyImages(initialImages);
+  const {handleSubmit} = usePropertySubmit(formData, images, onClose);
+  
   if(!isOpen) return null;
 
   return (

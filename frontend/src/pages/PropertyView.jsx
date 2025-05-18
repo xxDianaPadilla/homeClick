@@ -14,24 +14,13 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'; // Impor
 import ContactForm from "../components/ContactForm"; // Importa el componente ContactForm para el formulario de contacto.
 import { useLocation, useNavigate } from 'react-router-dom'; // Importa hooks para acceder a la ubicación actual y para la navegación.
 import LandingPageCards from "../components/LandingPageCards";
+import {usePropertyData} from '../components/Properties/Hooks/usePropertyData';
+import {useExpandableSections} from '../components/Properties/Hooks/useExpandableSections';
+import {useSavedProperties} from '../components/Properties/Hooks/useSavedProperties';
+import useContactForm from '../components/Customers/Hooks/useContactForm';
 
 // Define el componente funcional PropertyView, que muestra los detalles de una propiedad específica.
 const PropertyView = () => {
-  // Estado para la imagen principal mostrada. Inicialmente establecida en house8.
-  const [mainImage, setMainImage] = useState(house8);
-  // Estado para controlar la expansión de la sección de detalles.
-  const [detailsExpanded, setDetailsExpanded] = useState(false);
-  // Estado para controlar la expansión de la sección de dimensiones.
-  const [dimensionsExpanded, setDimensionsExpanded] = useState(false);
-  // Estado para controlar la visibilidad del formulario de contacto.
-  const [showContactForm, setShowContactForm] = useState(false);
-  // Estado para controlar si la propiedad está guardada en la lista de deseos del usuario.
-  const [isSaved, setIsSaved] = useState(false);
-
-  // Función para cambiar el estado de guardado de la propiedad.
-  const toggleSaved = () =>{
-    setIsSaved(!isSaved);
-  }
 
   // Hook para acceder al objeto de ubicación actual, que contiene el estado pasado durante la navegación.
   const location = useLocation();
@@ -42,42 +31,10 @@ const PropertyView = () => {
   // Si no se pasa estado durante la navegación, se establecen valores por defecto.
   const {fromCategory, propertyId} = location.state || {fromCategory: '/propertyCategories', propertyId: '1'};
 
-  // Hook useEffect que se ejecuta cuando cambia 'propertyId' o 'fromCategory'.
-  useEffect(() =>{
-    console.log(`Cargando propiedad ID: ${propertyId} desde la categoría: ${fromCategory}`);
-
-    // Simula la carga de diferentes imágenes principales basadas en el ID de la propiedad.
-    if (propertyId === '2' || propertyId === '5' || propertyId === '8') {
-      setMainImage(house6);
-    } else if (propertyId === '3' || propertyId === '6' || propertyId === '9') {
-      setMainImage(house7);
-    }
-  }, [propertyId, fromCategory]);
-
-  // Array de imágenes en miniatura para la galería de la propiedad.
-  const thumbnails = [house1, house6, house7, house1];
-
-  // Objeto con los datos de la propiedad mostrada.
-  const propertyData = {
-    title: "Casa en Colonia Escalón",
-    price: "$150,000",
-    location: "San Salvador, El Salvador",
-    description: "Hermosa y lugar de lujo donde se une espectacularmente zona residencial. Disfruta una viviesta privada y accesible, con amplios espacios iluminados, comodidad y seguridad. Ideal para familias que buscan calidad de vida, cerca de centros comerciales, colegios y zonas recreativas. Acaba y detalles modernos, ofrecen un equilibrio perfecto entre estilo, funcionalidad y confort.",
-    details: [
-      "Habitaciones: 3",
-      "Baños: 4",
-      "Parqueo: Sí",
-      "Patio: Sí",
-      "Ubicación: Urbanización Alpes de la Escalón, San Salvador centro",
-      "Número: 42",
-      "Tipo de piso: Cemento pulido",
-      "Año de construcción: 2021"
-    ],
-    dimensions: [
-      "Tamaño del lote: 150 metros cuadrados",
-      "Altura: 3.2 metros"
-    ]
-  };
+  const {mainImage, setMainImage, thumbnails, propertyData} = usePropertyData(propertyId);
+  const {detailsExpanded, dimensionsExpanded, toggleDetails, toggleDimensions} = useExpandableSections();
+  const {isSaved, toggleSaved} = useSavedProperties();
+  const {showContactForm, toggleContactForm} = useContactForm();
 
   // Array de propiedades similares para mostrar en la parte inferior.
   const cardData = [
@@ -93,23 +50,8 @@ const PropertyView = () => {
       {image: house1, caption: "Casa en Santa Elene"}
     ];
 
-  // Función para alternar la visibilidad de la sección de detalles.
-  const toggleDetails = () => {
-    setDetailsExpanded(!detailsExpanded);
-  };
-
-  // Función para alternar la visibilidad de la sección de dimensiones.
-  const toggleDimensions = () => {
-    setDimensionsExpanded(!dimensionsExpanded);
-  };
-
   // Coordenadas de latitud y longitud para centrar el mapa.
   const center = [13.6929, -89.2182];
-
-  // Función para alternar la visibilidad del formulario de contacto.
-  const toggleContactForm = () => {
-    setShowContactForm(!showContactForm);
-  };
 
   // Función para navegar al carrito de compras.
   const handleShoppingCartClick = () => {

@@ -2,11 +2,13 @@ import { useState } from 'react'; // Importa el hook useState para gestionar el 
 import { useNavigate } from 'react-router-dom'; // Importa el hook useNavigate para la navegación programática entre rutas.
 import "../styles/InicioSesion.css"; // Importa el archivo CSS que contiene los estilos específicos para la página de inicio de sesión.
 import bgImgHouse from "../assets/imgLoginFondo.png"; // Importa la imagen de fondo para la página de inicio de sesión.
+import { usePasswordToggle } from '../components/Customers/Hooks/usePasswordToggle';
 
 // Define el componente funcional InicioSesion, que representa la página de inicio de sesión de la aplicación.
 function InicioSesion() {
-  // Estado local para controlar la visibilidad de la contraseña (mostrar u ocultar). Inicialmente se establece en 'false' (oculta).
-  const [showPassword, setShowPassword] = useState(false);
+
+  const {showPassword, togglePasswordVisibility } = usePasswordToggle();
+
   // Utiliza el hook useNavigate para obtener la función 'navigate', que permite redirigir al usuario a otras rutas.
   const navigate = useNavigate();
 
@@ -62,7 +64,7 @@ function InicioSesion() {
             <span
               className="password-toggle"
               aria-label="Mostrar contraseña"
-              onClick={() => setShowPassword(!showPassword)}
+              onClick={() => togglePasswordVisibility}
             >
               {/* Icono de un ojo SVG para indicar la acción de mostrar/ocultar la contraseña. */}
               <svg className="eye-icon" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
