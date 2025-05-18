@@ -3,9 +3,6 @@ import Navbar from '../components/Navbar'; // Importa el componente Navbar para 
 import Footer from "../components/Footer"; // Importa el componente Footer para el pie de página.
 import "../styles/PropertyView.css"; // Importa los estilos CSS específicos para la vista de propiedad.
 import house1 from "../assets/image5.png"; // Importa una imagen de casa.
-import house6 from "../assets/image6.png"; // Importa otra imagen de casa.
-import house7 from "../assets/image7.png"; // Importa una tercera imagen de casa.
-import house8 from "../assets/image5.png"; // Importa una cuarta imagen de casa (usada como imagen principal inicial).
 import house2 from "../assets/image6.png"; // Importa otra imagen de una casa para la sección de descubrimiento.
 import house3 from "../assets/image7.png"; 
 import saveIcon from '../assets/image23.png'; // Importa el icono de "guardar".

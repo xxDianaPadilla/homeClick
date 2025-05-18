@@ -1,31 +1,16 @@
 import React, { useState } from 'react'; // Importa React y el hook useState para gestionar el estado local.
 import "../styles/Registro.css"; // Importa los estilos CSS específicos para la página de registro.
 import bgImgHouse from "../assets/imgLoginFondo.png"; // Importa la imagen de fondo para la página.
+import { usePasswordToggle } from '../components/Customers/Hooks/usePasswordToggle';
+import useBirthDate from '../components/Customers/Hooks/useBirthDate';
+import useTermsModal from '../components/Customers/Hooks/useTermsModal';
 
 // Define el componente funcional Registro, que permite a los usuarios crear una nueva cuenta.
 function Registro() {
   // Estado para controlar la visibilidad de la contraseña (mostrar u ocultar).
-  const [showPassword, setShowPassword] = useState(false);
-  // Estado para controlar la visibilidad del modal de términos y condiciones.
-  const [showModal, setShowModal] = useState(false);
-  // Estado para almacenar la fecha de nacimiento seleccionada por el usuario.
-  const [selectedDate, setSelectedDate] = useState({
-    day: "",
-    month: "",
-    year: ""
-  });
-
-  // Función para abrir el modal de términos y condiciones. Previene la acción por defecto del evento.
-  const handleModalOpen = (e) => {
-    e.preventDefault();
-    setShowModal(true);
-  };
-
-  // Función para cerrar el modal de términos y condiciones y marcar la casilla de aceptación.
-  const handleModalClose = () => {
-    setShowModal(false);
-    document.getElementById('terms').checked = true;
-  };
+  const {showPassword, togglePasswordVisibility } = usePasswordToggle();
+  const {showModal, handleModalOpen, handleModalClose} = useTermsModal();
+  const {selectedDate} = useBirthDate();
 
   // Renderiza la estructura de la página de registro.
   return (
@@ -64,7 +49,7 @@ function Registro() {
             {/* Icono de ojo para mostrar/ocultar la contraseña. */}
             <span
               className="toggle-password"
-              onClick={() => setShowPassword(!showPassword)}
+              onClick={togglePasswordVisibility}
             >
               <svg className="eye-icon" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" strokeLinecap="round" strokeLinejoin="round"></path>

@@ -15,7 +15,6 @@
  import ShoppingCartCards from "../components/ShoppingCartCards";
  
  const ShoppingCart = () => {
-     const [paymentMethod, setPaymentMethod] = useState("tarjeta");
 
      const properties = [
         {

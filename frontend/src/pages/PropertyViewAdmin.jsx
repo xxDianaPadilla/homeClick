@@ -4,68 +4,19 @@ import "../styles/PropertyViewAdmin.css";
 import house1 from "../assets/image27.png";
 import house6 from "../assets/image6.png";
 import house7 from "../assets/image7.png";
-import house8 from "../assets/image5.png";
 import EditPropertyCard from "../components/EditPropertyCard";
-import { useParams } from "react-router-dom";
+import { usePropertyData } from '../components/Properties/Hooks/usePropertyData';
+import { useExpandableSections } from '../components/Properties/Hooks/useExpandableSections';
+import useEditProperty from "../components/Properties/Hooks/useEditProperty";
 
 // Definición del componente principal PropertyViewAdmin
 const PropertyViewAdmin = () => {
 
-    const {id} = useParams();
-    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-
-    // Estado para controlar qué imagen se muestra como principal
-    const [mainImage, setMainImage] = useState(house8);
-
-    // Estado para controlar si la sección de detalles está expandida
-    const [detailsExpanded, setDetailsExpanded] = useState(false);
-
-    // Estado para controlar si la sección de dimensiones está expandida
-    const [dimensionsExpanded, setDimensionsExpanded] = useState(false);
-
-    // Extracción de parámetros de la ubicación con valores predeterminados
     const { fromCategory, propertyId } = location.state || { fromCategory: '/propertyAdmin', propertyId: '1' };
 
-    // Efecto que se ejecuta cuando cambian propertyId o fromCategory
-    useEffect(() => {
-        // Mensaje de depuración en consola
-        console.log(`Cargando propiedad ID: ${propertyId} desde la categoría: ${fromCategory}`);
-
-        // Cambia la imagen principal según el ID de la propiedad
-        if (propertyId === '2' || propertyId === '5' || propertyId === '8') {
-            setMainImage(house6);
-        } else if (propertyId === '3' || propertyId === '6' || propertyId === '9') {
-            setMainImage(house7);
-        }
-    }, [propertyId, fromCategory]); // Dependencias del efecto
-
-    // Array de imágenes en miniatura para la galería
-    const thumbnails = [house1, house6, house7, house1];
-
-    // Objeto con todos los datos de la propiedad
-    const propertyData = {
-        id: id,
-        title: "Casa en Colonia Escalón",
-        price: "$150,000",
-        location: "San Salvador, El Salvador",
-        description: "Hermosa y lugar de lujo donde se une espectacularmente zona residencial. Disfruta una viviesta privada y accesible, con amplios espacios iluminados, comodidad y seguridad. Ideal para familias que buscan calidad de vida, cerca de centros comerciales, colegios y zonas recreativas. Acaba y detalles modernos, ofrecen un equilibrio perfecto entre estilo, funcionalidad y confort.",
-        // Array con detalles de la propiedad
-        details: [
-            "Habitaciones: 3",
-            "Baños: 4",
-            "Parqueo: Sí",
-            "Patio: Sí",
-            "Ubicación: Urbanización Alpes de la Escalón, San Salvador centro",
-            "Número: 42",
-            "Tipo de piso: Cemento pulido",
-            "Año de construcción: 2021"
-        ],
-        // Array con dimensiones de la propiedad
-        dimensions: [
-            "Tamaño del lote: 150 metros cuadrados",
-            "Altura: 3.2 metros"
-        ]
-    };
+    const { mainImage, setMainImage, thumbnails, propertyData } = usePropertyData(propertyId);
+    const { detailsExpanded, dimensionsExpanded, toggleDetails, toggleDimensions } = useExpandableSections();
+    const {isEditModalOpen, openEditModal, closeEditModal} = useEditProperty();
 
     // Array de propiedades similares para recomendaciones
     const similarProperties = [
@@ -74,26 +25,7 @@ const PropertyViewAdmin = () => {
         { id: 3, image: house1, title: "Casa en Colonia Escalón" }
     ];
 
-    // Función para alternar la visibilidad de la sección de detalles
-    const toggleDetails = () => {
-        setDetailsExpanded(!detailsExpanded);
-    };
-
-    // Función para alternar la visibilidad de la sección de dimensiones
-    const toggleDimensions = () => {
-        setDimensionsExpanded(!dimensionsExpanded);
-    };
-
-    // Coordenadas para un posible mapa (no utilizado en el código renderizado)
     const center = [13.6929, -89.2182];
-
-    const openEditModal = () => {
-        setIsEditModalOpen(true);
-    };
-
-    const closeEditModal = () => {
-        setIsEditModalOpen(false);
-    };
 
     // Estructura JSX del componente
     return (
@@ -198,7 +130,7 @@ const PropertyViewAdmin = () => {
                 </div>
             </div>
 
-            <EditPropertyCard isOpen={isEditModalOpen} onClose={closeEditModal} property={propertyData}/>
+            <EditPropertyCard isOpen={isEditModalOpen} onClose={closeEditModal} property={propertyData} />
 
         </>
     );
