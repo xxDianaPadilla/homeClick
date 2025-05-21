@@ -84,7 +84,7 @@ function InicioSesion() {
             <a href="" className="forgot-password" onClick={handleRecuperarContrasenaClick}>¿Olvidaste tu contraseña?</a>
           </div>
           {/* Botón para iniciar sesión. Al hacer clic, se ejecuta 'handleLandingPageClick'. */}
-          <button className="submit-button4" type="submit" onClick={handleLandingPageClick}>
+          <button className="submit-button4" type="submit" onClick={handleDashboard}>
             Iniciar sesión
           </button>
           {/* Sección para usuarios que no tienen una cuenta, con un enlace a la página de registro. Al hacer clic, se ejecuta 'handleRegisterClick'. */}

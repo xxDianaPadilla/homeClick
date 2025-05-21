@@ -5,8 +5,13 @@ import imgConfig from '../assets/imgConfig.png';
 import imgShop from '../assets/imgShop.png';
 import payment from '../assets/payment.png';
 import NavBarAdmin from '../components/NavBarAdmin'; // Importa el componente NavBarAdmin
+import AddPropertyCard from '../components/AddPropertyCard';
+import useEditProperty from "../components/Properties/Hooks/useEditProperty";
 
 const Dashboard = () => {
+
+  const {isEditModalOpen, openEditModal, closeEditModal} = useEditProperty();
+
   // Función para obtener la fecha actual en formato español
   const obtenerFechaActual = () => {
     const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -151,7 +156,7 @@ const Dashboard = () => {
             </table>
           </div>
           <div className="button-container">
-            <button className="orange-button">
+            <button className="orange-button" onClick={openEditModal}>
               Crear publicación
             </button>
             <button className="orange-button">
@@ -160,6 +165,8 @@ const Dashboard = () => {
           </div>
         </article>
       </section>
+
+      <AddPropertyCard isOpen={isEditModalOpen} onClose={closeEditModal}/>
     </>
   );
 };
