@@ -3,16 +3,19 @@ import '../styles/Usuarios.css';
 import searchIcon from '../assets/image1.png';
 import EditAdminCard from "../components/EditAdminCard";
 import useUsuarios from "./Administrators/Hooks/useUsuariosCards";
+import AddAdminCard from "./AddAdminCard";
+import useAddPropertyCard from "./Administrators/Hooks/useAddPropertyCard";
 
 const UsuariosCards = () => {
 
     const {usuarios, showEditModal, selectedUser, handleCardClick, closeModal} = useUsuarios();
+    const {isAddModalOpen, openAddModal, closeAddModal} = useAddPropertyCard();
 
     return(
         <div className="administradores-section">
             <div className="admin-header">
                 <h2>Administradores</h2>
-                <button className="btn-crear-admin">Crear administrador</button>
+                <button className="btn-crear-admin" onClick={openAddModal}>Crear administrador</button>
             </div>
 
             <div className="search-bar">
@@ -32,6 +35,7 @@ const UsuariosCards = () => {
             </div>
 
             <EditAdminCard isOpen={showEditModal} onClose={closeModal} userData={selectedUser}/>
+            <AddAdminCard isOpen={isAddModalOpen} onClose={closeAddModal}/>
         </div>
     );
 };
