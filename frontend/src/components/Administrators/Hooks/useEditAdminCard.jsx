@@ -3,16 +3,16 @@ import React, {useState, useEffect} from "react";
 const useEditAdminCard = (isOpen, onClose, userData) => {
     const [isEditable, setIsEditable] =  useState(false);
     const [formData, setFormData] = useState({
-        nombre: userData?.nombre || "Nombre Nombre",
-        email: userData?.email || "persona@gmail.com",
+        nombre: userData?.nombreCasa || "Nombre Nombre",
+        email: userData?.estado || "pagado",
         password: "****************"
     });
 
     useEffect(() => {
         if(userData){
             setFormData({
-                nombre: userData.nombre || "Nombre Nombre",
-                email: userData.email || "persona@gmail.com",
+                nombre: userData.nombreCasa || "Nombre Nombre",
+                email: userData.estado || "pagado",
                 password: "****************"
             });
         }
