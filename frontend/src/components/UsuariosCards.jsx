@@ -14,8 +14,7 @@ const UsuariosCards = () => {
     return(
         <div className="administradores-section">
             <div className="admin-header">
-                <h2>Administradores</h2>
-                <button className="btn-crear-admin" onClick={openAddModal}>Crear administrador</button>
+                <h2>Listado de ventas</h2>
             </div>
 
             <div className="search-bar">
@@ -27,9 +26,9 @@ const UsuariosCards = () => {
 
             <div className="admin-list">
                 {usuarios.map((usuario) => (
-                    <div key={usuario.id} className="admin-card" onClick={() => handleCardClick(usuario)}>
-                        <span className="admin-nombre">{usuario.nombre}</span>
-                        <span className="admin-email">{usuario.email}</span>
+                    <div key={usuario.id} className="admin-card">
+                        <span className="admin-nombre">{usuario.nombreCasa}</span>
+                        <span className="admin-email">{usuario.estado}</span>
                     </div>
                 ))}
             </div>

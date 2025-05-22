@@ -61,7 +61,7 @@ const NavBarAdmin = () => {
           to="/usuariosAdmin"
           className={`nav-link ${activeLink === 'Perfil de Administradores' ? 'active' : ''}`}
         >
-          Perfil de Administradores
+          Listado de ventas
         </Link>
         <div className="nav-line"></div>
       </nav>
