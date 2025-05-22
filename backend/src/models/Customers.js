@@ -1,15 +1,15 @@
 /*
 Customers 
 
-firstName
-lastName
-birthDate
-dui
-password
-email
-phone
-profilePicture
-address
+firstName,
+lastName,
+birthDate,
+dui,
+password,
+email,
+phone,
+profilePicture,
+address,
 budget
 */
 
