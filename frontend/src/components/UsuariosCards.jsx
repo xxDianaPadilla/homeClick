@@ -26,7 +26,7 @@ const UsuariosCards = () => {
 
             <div className="admin-list">
                 {usuarios.map((usuario) => (
-                    <div key={usuario.id} className="admin-card" onClick={() => handleCardClick(usuario)}>
+                    <div key={usuario.id} className="admin-card">
                         <span className="admin-nombre">{usuario.nombreCasa}</span>
                         <span className="admin-email">{usuario.estado}</span>
                     </div>
