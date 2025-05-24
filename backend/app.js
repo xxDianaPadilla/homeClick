@@ -17,6 +17,7 @@ app.use(
 );
 
 app.use(express.json());
+app.use(cookieParser());
 
 app.use("/api/properties", propertiesRoutes);
 app.use("/api/categories", categoriesRoutes);
