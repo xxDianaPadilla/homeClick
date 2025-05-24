@@ -2,7 +2,7 @@ import { useState } from 'react'; // Importa el hook useState para gestionar el 
 import { useNavigate } from 'react-router-dom'; // Importa el hook useNavigate para la navegación programática entre rutas.
 import "../styles/InicioSesion.css"; // Importa el archivo CSS que contiene los estilos específicos para la página de inicio de sesión.
 import bgImgHouse from "../assets/imgLoginFondo.png"; // Importa la imagen de fondo para la página de inicio de sesión.
-import { usePasswordToggle } from '../components/Customers/Hooks/usePasswordToggle';
+import usePasswordToggle from '../components/Customers/Hooks/usePasswordToggle';
 
 // Define el componente funcional InicioSesion, que representa la página de inicio de sesión de la aplicación.
 function InicioSesion() {

@@ -364,6 +364,114 @@ select option {
   margin-bottom: 15px;
 }
 
+.input-group {
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.error-text {
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  display: block;
+}
+
+.text-input.error {
+  border-color: #dc3545;
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+.message {
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  border-radius: 0.375rem;
+  text-align: center;
+  font-weight: 500;
+}
+
+.message.success {
+  background-color: #d1eddd;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.message.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.password-requirements ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.password-requirements li {
+  font-size: 0.875rem;
+  margin: 0.25rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.password-requirements li.valid {
+  color: #28a745;
+}
+
+.password-requirements li.invalid {
+  color: #dc3545;
+}
+
+.password-requirements li.valid::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #28a745;
+  font-weight: bold;
+}
+
+.password-requirements li.invalid::before {
+  content: "✗";
+  position: absolute;
+  left: 0;
+  color: #dc3545;
+  font-weight: bold;
+}
+
+.submit-button2:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.fecha-nacimiento-container select.error {
+  border-color: #dc3545;
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.terms-label {
+  cursor: pointer;
+  user-select: none;
+}
+
+.eye-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  cursor: pointer;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
 /* --- MEDIA QUERIES PARA RESPONSIVE --- */
 
 /* Para pantallas de hasta 1200px (laptops pequeños) */

@@ -1,13 +1,13 @@
 import React from "react";
 
 const useBirthDate = () => {
-    const [selectedDate, setSelectedDate] = React.useState({
+    const [selectedDate, setSelectedDate, resetBirthDate] = React.useState({
         day: "",
         month: "",
         year: ""
     });
 
-    return {selectedDate};
+    return {selectedDate, setSelectedDate, resetBirthDate};
 };
 
 export default useBirthDate;

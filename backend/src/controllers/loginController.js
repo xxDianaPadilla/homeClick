@@ -1,6 +1,6 @@
 import bcryptjs from "bcryptjs";
 import jsonwebtoken from "jsonwebtoken";
-import clientModel from "../models/customers.js";
+import customersModel from "../models/Customers.js";
 import { config } from "../config.js";
 
 // Array de funciones
@@ -19,7 +19,7 @@ loginController.login = async (req, res) => {
       userFound = { _id: "admin" };
     } else {
       //cliente
-      userFound = await clientModel.findOne({ email });
+      userFound = await customersModel.findOne({ email });
       userType = "Customer";
 
     }
