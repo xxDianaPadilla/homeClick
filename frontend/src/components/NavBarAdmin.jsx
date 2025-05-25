@@ -18,6 +18,8 @@ const NavBarAdmin = () => {
       setActiveLink('Administrar propiedades');
     } else if (path === '/listadoVentas') {
       setActiveLink('Perfil de Administradores');
+    } else if (path === '/categorias') {  
+      setActiveLink('Categorías');        
     }
   }, [location.pathname]);
 
@@ -62,6 +64,12 @@ const NavBarAdmin = () => {
           className={`nav-link ${activeLink === 'Perfil de Administradores' ? 'active' : ''}`}
         >
           Listado de ventas
+        </Link>
+        <Link
+          to="/categorias"
+          className={`nav-link ${activeLink === 'Categorías' ? 'active' : ''}`}
+        >
+          Categorías
         </Link>
         <div className="nav-line"></div>
       </nav>

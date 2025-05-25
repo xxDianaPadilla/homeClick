@@ -22,6 +22,7 @@ import SavedProperties from './pages/SavedProperties';
 import AboutUs from './pages/AboutUs';
 import PrivacyPolicies from './pages/PrivacyPolicies';
 import TermsConditions from './pages/TermsConditions';
+import Categorias from './pages/Categorias';
 
 function App() {
   return (
@@ -66,6 +67,14 @@ function App() {
             element={
               <ProtectedRoute requiredUserType="admin">
                 <ListadoVentas />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path='/categorias' 
+            element={
+              <ProtectedRoute requiredUserType="admin">
+                <Categorias />
               </ProtectedRoute>
             } 
           />
