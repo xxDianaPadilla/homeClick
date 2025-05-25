@@ -16,7 +16,7 @@ const NavBarAdmin = () => {
       setActiveLink('Inicio');
     } else if (path === '/propertyAdmin') {
       setActiveLink('Administrar propiedades');
-    } else if (path === '/usuariosAdmin') {
+    } else if (path === '/listadoVentas') {
       setActiveLink('Perfil de Administradores');
     }
   }, [location.pathname]);
@@ -58,7 +58,7 @@ const NavBarAdmin = () => {
           Administrar propiedades
         </Link>
         <Link
-          to="/usuariosAdmin"
+          to="/listadoVentas"
           className={`nav-link ${activeLink === 'Perfil de Administradores' ? 'active' : ''}`}
         >
           Listado de ventas

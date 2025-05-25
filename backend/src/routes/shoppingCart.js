@@ -8,6 +8,7 @@ router.route("/")
 .post(shoppingCartController.createShoppingCart);
 
 router.route("/:id")
+.get(shoppingCartController.getShoppingCartById)  
 .put(shoppingCartController.updateShoppingCart)
 .delete(shoppingCartController.deleteShoppingCart);
 

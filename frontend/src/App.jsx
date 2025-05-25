@@ -13,7 +13,7 @@ import CodigoVerificacion from './pages/CodigoVerificacion';
 import Dashboard from "./pages/Dashboard";
 import PropertyAdmin from './pages/PropertyAdmin';
 import PropertyViewAdmin from './pages/PropertyViewAdmin';
-import Usuarios from './pages/Usuarios';
+import ListadoVentas from './pages/ListadoVentas';
 import LandingPage from './pages/LandingPage';
 import PropertyCategories from './pages/PropertyCategories';
 import PropertyView from './pages/PropertyView';
@@ -62,10 +62,10 @@ function App() {
             } 
           />
           <Route 
-            path='/usuariosAdmin' 
+            path='/listadoVentas' 
             element={
               <ProtectedRoute requiredUserType="admin">
-                <Usuarios />
+                <ListadoVentas />
               </ProtectedRoute>
             } 
           />

@@ -8,6 +8,7 @@ router.route("/")
     .post(customersController.createCustomer);
 
 router.route("/:id")
+    .get(customersController.getCustomerById)  
     .delete(customersController.deleteCustomer)
     .put(customersController.updateCustomer);
 

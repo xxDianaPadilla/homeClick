@@ -51,7 +51,7 @@ const NavBarAdminSearch = () => {
                 <div className="nav-line"></div>
                 <a href="/dashboard" className={`nav-link ${activeLink === 'Inicio' ? 'active' : ''}`} onClick={() => handleLinkClick('Inicio', '/dashboard')}>Inicio</a>
                 <a href="/propertyAdmin" className={`nav-link ${activeLink === 'Administrar propiedades' ? 'active' : ''}`} onClick={() => handleLinkClick('Administrar propiedades', '/propertyAdmin')}>Administrar propiedades</a>
-                <a href="/usuariosAdmin" className={`nav-link ${activeLink === 'Perfil de Administradores' ? 'active' : ''}`} onClick={() => handleLinkClick('Perfil de Administradores', '/usuariosAdmin')}>Listado de ventas</a>
+                <a href="/listadoVentas" className={`nav-link ${activeLink === 'Perfil de Administradores' ? 'active' : ''}`} onClick={() => handleLinkClick('Perfil de Administradores', '/listadoVentas')}>Listado de ventas</a>
                 <div className="nav-line"></div>
             </nav>
 
