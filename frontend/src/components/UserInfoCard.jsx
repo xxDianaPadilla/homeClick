@@ -1,9 +1,10 @@
-import React from "react"; // Importa la biblioteca React para la creación de componentes.
+import React, { useContext } from "react"; // Importa la biblioteca React para la creación de componentes.
 import '../styles/UserInfoCard.css'; // Importa los estilos CSS específicos para este componente.
 import closeIcon from '../assets/image10.png'; // Importa la imagen del icono de cerrar.
 import profileIcon from '../assets/image9.png'; // Importa la imagen del icono de perfil de usuario por defecto.
 import cameraIcon from '../assets/image11.png'; // Importa la imagen del icono de la cámara para cambiar la foto de perfil.
 import { useLocation, useNavigate } from 'react-router-dom'; // Importa hooks para acceder a la ubicación actual y para la navegación.
+import { useAuth } from '../context/AuthContext';
 
 // Define el componente funcional UserInfoCard, que recibe dos props: 'isOpen' (booleano para controlar la visibilidad) y 'onClose' (función para cerrar la tarjeta).
 const UserInfoCard = ({ isOpen, onClose }) => {
@@ -12,10 +13,18 @@ const UserInfoCard = ({ isOpen, onClose }) => {
   // Hook para obtener la función 'navigate' que permite la navegación programática entre rutas.
   const navigate = useNavigate();
 
-  // Función que se ejecuta al hacer clic en el botón de "Cerrar sesión". Navega a la página de inicio de sesión.
-  const handleLoginClick = () => {
-    navigate('/inicio-sesion');
-  };
+  const { user, isAuthenticated, logout, loading } = useAuth();
+
+  const handleLogout = async () => {
+        const result = await logout();
+        if (result.success) {
+            // Logout exitoso
+            console.log('Sesión cerrada correctamente');
+        } else {
+            // Manejar error si es necesario
+            console.error('Error al cerrar sesión:', result.error);
+        }
+    };
 
   // Si la prop 'isOpen' es falsa, el componente devuelve 'null', lo que significa que no se renderiza nada.
   if (!isOpen) return null;
@@ -124,8 +133,8 @@ const UserInfoCard = ({ isOpen, onClose }) => {
         <div className="button-section8">
           {/* Botón para actualizar la información del perfil. */}
           <button className="update-profile-btn8">Actualizar perfil</button>
-          {/* Botón para cerrar la sesión del usuario. Al hacer clic, llama a la función 'handleLoginClick' para navegar a la página de inicio de sesión. */}
-          <button className="close-session-btn8" onClick={handleLoginClick}>Cerrar sesión</button>
+          {/* Botón para cerrar la sesión del usuario. Al hacer clic, llama a la función 'handleLogoutClick' para cerrar sesión y navegar a la página de inicio de sesión. */}
+          <button className="close-session-btn8" onClick={handleLogout}>Cerrar sesión</button>
         </div>
       </div>
     </div>

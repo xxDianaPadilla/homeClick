@@ -1,95 +1,149 @@
-import { useState } from 'react'; // Importa el hook useState para gestionar el estado local del componente.
-import { useNavigate } from 'react-router-dom'; // Importa el hook useNavigate para la navegación programática entre rutas.
-import "../styles/InicioSesion.css"; // Importa el archivo CSS que contiene los estilos específicos para la página de inicio de sesión.
-import bgImgHouse from "../assets/imgLoginFondo.png"; // Importa la imagen de fondo para la página de inicio de sesión.
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import "../styles/InicioSesion.css";
+import bgImgHouse from "../assets/imgLoginFondo.png";
 import usePasswordToggle from '../components/Customers/Hooks/usePasswordToggle';
+import useLoginForm from '../components/Customers/Hooks/useLoginForm';
+import { useAuth } from '../context/AuthContext';
 
-// Define el componente funcional InicioSesion, que representa la página de inicio de sesión de la aplicación.
 function InicioSesion() {
-
-  const {showPassword, togglePasswordVisibility } = usePasswordToggle();
-
-  // Utiliza el hook useNavigate para obtener la función 'navigate', que permite redirigir al usuario a otras rutas.
+  const { showPassword, togglePasswordVisibility } = usePasswordToggle();
+  const { formData, errors, isLoading, handleInputChange, handleSubmit } = useLoginForm();
+  const { isAuthenticated, user } = useAuth();
   const navigate = useNavigate();
 
-  // Función que se ejecuta al hacer clic en el enlace de registro. Navega a la página de registro.
-  const handleRegisterClick = () => {
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      if (user.userType === 'admin') {
+        navigate('/dashboard');
+      } else {
+        navigate('/landingPage');
+      }
+    }
+  }, [isAuthenticated, user, navigate]);
+
+  const handleRegisterClick = (e) => {
+    e.preventDefault();
     navigate('/registro');
   };
 
-  // Función que se ejecuta al hacer clic en el enlace de "¿Olvidaste tu contraseña?". Navega a la página de recuperación de contraseña.
-  const handleRecuperarContrasenaClick = () => {
+  const handleRecuperarContrasenaClick = (e) => {
+    e.preventDefault();
     navigate('/recuperarContrasena');
   };
 
-  // Función que se ejecuta al hacer clic en el botón de "Iniciar sesión". Navega a la página principal (landingPage).
-  const handleLandingPageClick = () => {
-    navigate('/landingPage');
-  };
-
-  const handleDashboard = () => {
-    navigate('/dashboard');
-  };
-
-  // Renderiza la estructura de la página de inicio de sesión.
   return (
     <div className="landing-container">
-      {/* Imagen de fondo de la página de inicio de sesión. */}
       <img
         src={bgImgHouse}
         alt="Row of Victorian houses with warm sunlight and clear sky"
         className="background-image"
       />
-      {/* Contenedor principal para el formulario de inicio de sesión. */}
       <div className="form-container2">
-        {/* Título principal del formulario de inicio de sesión. */}
         <h1 className="form-title">Inicio de sesión</h1>
-        {/* Formulario de inicio de sesión. */}
-        <form className="login-form">
-          {/* Campo de entrada para el correo electrónico. */}
-          <input
-            type="email"
-            placeholder="Correo electrónico"
-            className="text-input"
-          />
-          {/* Contenedor para el campo de contraseña y el icono para mostrar/ocultar la contraseña. */}
+        
+        {errors.general && (
+          <div className="error-message" style={{
+            color: '#ff4444',
+            backgroundColor: '#ffe6e6',
+            padding: '10px',
+            borderRadius: '5px',
+            marginBottom: '15px',
+            textAlign: 'center',
+            border: '1px solid #ffcccc'
+          }}>
+            {errors.general}
+          </div>
+        )}
+
+        <form className="login-form" onSubmit={handleSubmit}>
+          <div className="input-group">
+            <input
+              type="email"
+              name="email"
+              placeholder="Correo electrónico"
+              className={`text-input ${errors.email ? 'error' : ''}`}
+              value={formData.email}
+              onChange={handleInputChange}
+              disabled={isLoading}
+            />
+            {errors.email && (
+              <span className="error-text" style={{ color: '#ff4444', fontSize: '14px' }}>
+                {errors.email}
+              </span>
+            )}
+          </div>
+
           <div className="password-container">
-            {/* Campo de entrada para la contraseña. El tipo de input se cambia dinámicamente entre "password" y "text" basado en el estado 'showPassword'. */}
             <input
               type={showPassword ? "text" : "password"}
+              name="password"
               placeholder="Contraseña"
-              className="text-input"
+              className={`text-input ${errors.password ? 'error' : ''}`}
+              value={formData.password}
+              onChange={handleInputChange}
+              disabled={isLoading}
             />
-            {/* Span que actúa como un botón para mostrar u ocultar la contraseña. El atributo 'aria-label' mejora la accesibilidad. */}
             <span
               className="password-toggle"
               aria-label="Mostrar contraseña"
-              onClick={() => togglePasswordVisibility}
+              onClick={togglePasswordVisibility}
+              style={{ cursor: 'pointer' }}
             >
-              {/* Icono de un ojo SVG para indicar la acción de mostrar/ocultar la contraseña. */}
               <svg className="eye-icon" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" strokeLinecap="round" strokeLinejoin="round"></path>
-                <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" strokeLinecap="round" strokeLinejoin="round"></path>
+                {showPassword ? (
+                  <>
+                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" strokeLinecap="round" strokeLinejoin="round"></path>
+                    <path d="M1 1l22 22" strokeLinecap="round" strokeLinejoin="round"></path>
+                  </>
+                ) : (
+                  <>
+                    <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" strokeLinecap="round" strokeLinejoin="round"></path>
+                    <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" strokeLinecap="round" strokeLinejoin="round"></path>
+                  </>
+                )}
               </svg>
             </span>
+            {errors.password && (
+              <span className="error-text" style={{ 
+                color: '#ff4444', 
+                fontSize: '14px',
+                position: 'absolute',
+                bottom: '-20px',
+                left: '0'
+              }}>
+                {errors.password}
+              </span>
+            )}
           </div>
-          {/* Contenedor para la opción de "Mantener sesión iniciada" y el enlace de "¿Olvidaste tu contraseña?". */}
+
           <div className="remember-forgot">
-            {/* Label para la casilla de verificación de "Mantener sesión iniciada". */}
             <label className="remember-me">
               <input type="checkbox" />
               Mantener sesión iniciada
             </label>
-            {/* Enlace para la página de recuperación de contraseña. Al hacer clic, se ejecuta 'handleRecuperarContrasenaClick'. */}
-            <a href="" className="forgot-password" onClick={handleRecuperarContrasenaClick}>¿Olvidaste tu contraseña?</a>
+            <a href="#" className="forgot-password" onClick={handleRecuperarContrasenaClick}>
+              ¿Olvidaste tu contraseña?
+            </a>
           </div>
-          {/* Botón para iniciar sesión. Al hacer clic, se ejecuta 'handleLandingPageClick'. */}
-          <button className="submit-button4" type="submit" onClick={handleDashboard}>
-            Iniciar sesión
+
+          <button 
+            className="submit-button4" 
+            type="submit" 
+            disabled={isLoading}
+            style={{
+              opacity: isLoading ? 0.6 : 1,
+              cursor: isLoading ? 'not-allowed' : 'pointer'
+            }}
+          >
+            {isLoading ? 'Iniciando sesión...' : 'Iniciar sesión'}
           </button>
-          {/* Sección para usuarios que no tienen una cuenta, con un enlace a la página de registro. Al hacer clic, se ejecuta 'handleRegisterClick'. */}
+
           <div className="no-account">
-            ¿No tienes una cuenta? <a href="" className="register-link" onClick={handleRegisterClick}>Regístrate</a>
+            ¿No tienes una cuenta? 
+            <a href="#" className="register-link" onClick={handleRegisterClick}>
+              Regístrate
+            </a>
           </div>
         </form>
       </div>
