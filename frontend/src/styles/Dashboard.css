@@ -228,3 +228,70 @@ body {
   gap: 1rem;
   margin-top: 1.5rem;
 }
+
+.loading-container, .error-container {
+  padding: 2rem;
+  text-align: center;
+}
+
+.loading-container p {
+  color: #666;
+  font-style: italic;
+}
+
+.error-container p {
+  color: #dc3545;
+  margin-bottom: 1rem;
+}
+
+.retry-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.retry-button:hover {
+  background-color: #0056b3;
+}
+
+.status {
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.status.pendiente {
+  background-color: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeaa7;
+}
+
+.status.pagado {
+  background-color: #d1edff;
+  color: #155724;
+  border: 1px solid #bee5eb;
+}
+
+.no-data {
+  text-align: center;
+  color: #666;
+  font-style: italic;
+  padding: 2rem;
+}
+
+@media (max-width: 768px) {
+  .properties-table {
+    font-size: 0.85rem;
+  }
+  
+  .properties-table th,
+  .properties-table td {
+    padding: 0.5rem 0.25rem;
+  }
+}

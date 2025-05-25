@@ -9,6 +9,10 @@ const propertiesSchema = new Schema({
             },
         },
     ],
+    name: {
+        type: String,
+        require: true,
+    },
     description: {
         type: String, 
         require: true
@@ -23,10 +27,6 @@ const propertiesSchema = new Schema({
     },
     floors: {
         type: Number,
-        require: true
-    },
-    flooringType: {
-        type: String,
         require: true
     },
     lotSize: {
@@ -55,11 +55,6 @@ const propertiesSchema = new Schema({
     },
     patio: {
         type: Boolean,
-        require: true
-    },
-    sellerId: {
-        type: Schema.Types.ObjectId,
-        ref: "Administrator",
         require: true
     },
     categoryId: {

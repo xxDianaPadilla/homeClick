@@ -8,11 +8,13 @@ import NavBarAdmin from '../components/NavBarAdmin'; // Importa el componente Na
 import AddPropertyCard from '../components/AddPropertyCard';
 import useEditProperty from "../components/Properties/Hooks/useEditProperty";
 import HomeClickModal from '../components/HomeClickModal';
+import useSalesData from '../components/Sales/Hooks/useSalesData';
 
 const Dashboard = () => {
 
   const { isEditModalOpen, openEditModal, closeEditModal } = useEditProperty();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { salesData, loading, error, refetch } = useSalesData();
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -44,6 +46,31 @@ const Dashboard = () => {
 
     return `${horasFormato12}:${minutosFormateados} ${ampm}`;
   };
+
+  if (loading) {
+    return (
+      <article className="dashboard-box properties-box">
+        <p className="box-title">Propiedades</p>
+        <div className="loading-container">
+          <p>Cargando datos de ventas...</p>
+        </div>
+      </article>
+    );
+  }
+
+  if (error) {
+    return (
+      <article className="dashboard-box properties-box">
+        <p className="box-title">Propiedades</p>
+        <div className="error-container">
+          <p>Error al cargar los datos: {error}</p>
+          <button onClick={refetch} className="retry-button">
+            Reintentar
+          </button>
+        </div>
+      </article>
+    );
+  }
 
   return (
     <>
@@ -125,9 +152,7 @@ const Dashboard = () => {
 
         {/* Right properties box */}
         <article className="dashboard-box properties-box">
-          <p className="box-title">
-            Propiedades
-          </p>
+          <p className="box-title">Propiedades</p>
           <div className="table-container">
             <table className="properties-table">
               <thead>
@@ -139,24 +164,26 @@ const Dashboard = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>Cabaña acogedora en zona boscosa</td>
-                  <td>$80,000</td>
-                  <td>26/02/2020</td>
-                  <td>Pendiente</td>
-                </tr>
-                <tr>
-                  <td>Loft minimalista con diseño abierto</td>
-                  <td>$110,000</td>
-                  <td>01/08/2010</td>
-                  <td>Pagado</td>
-                </tr>
-                <tr>
-                  <td>Apartamento con vista panorámica</td>
-                  <td>$95,000</td>
-                  <td>01/07/2006</td>
-                  <td>Pagado</td>
-                </tr>
+                {salesData.length > 0 ? (
+                  salesData.map((sale) => (
+                    <tr key={sale.id}>
+                      <td>{sale.propertyName}</td>
+                      <td>{sale.price}</td>
+                      <td>{sale.publishDate}</td>
+                      <td>
+                        <span className={`status ${sale.paymentStatus.toLowerCase()}`}>
+                          {sale.paymentStatus}
+                        </span>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="4" className="no-data">
+                      No hay ventas registradas
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>

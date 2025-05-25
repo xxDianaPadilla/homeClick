@@ -150,8 +150,8 @@ const AddPropertyCard = ({ isOpen, onClose, property }) => {
                                 <div className="form-group">
                                     <input
                                         type="text"
-                                        name="floorType"
-                                        placeholder="Tipo de piso"
+                                        name="name"
+                                        placeholder="Nombre de la propiedad"
                                         onChange={handleChange}
                                     />
                                 </div>

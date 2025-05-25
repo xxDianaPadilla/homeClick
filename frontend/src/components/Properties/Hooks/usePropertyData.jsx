@@ -11,7 +11,7 @@ export const usePropertyData = (propertyId) => {
 
     // Objeto con los datos de la propiedad mostrada.
     const propertyData = {
-        title: "Casa en Colonia Escalón",
+        name: "Casa en Colonia Escalón",
         price: "$150,000",
         location: "San Salvador, El Salvador",
         description: "Hermosa y lugar de lujo donde se une espectacularmente zona residencial. Disfruta una viviesta privada y accesible, con amplios espacios iluminados, comodidad y seguridad. Ideal para familias que buscan calidad de vida, cerca de centros comerciales, colegios y zonas recreativas. Acaba y detalles modernos, ofrecen un equilibrio perfecto entre estilo, funcionalidad y confort.",
@@ -22,7 +22,6 @@ export const usePropertyData = (propertyId) => {
             "Patio: Sí",
             "Ubicación: Urbanización Alpes de la Escalón, San Salvador centro",
             "Número: 42",
-            "Tipo de piso: Cemento pulido",
             "Año de construcción: 2021"
         ],
         dimensions: [

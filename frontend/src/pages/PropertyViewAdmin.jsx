@@ -67,7 +67,7 @@ const PropertyViewAdmin = () => {
                         <div className="property-info3">
                             {/* Título de la propiedad */}
                             <div className="property-title-section3">
-                                <h1>{propertyData.title}</h1>
+                                <h1>{propertyData.name}</h1>
                             </div>
 
                             {/* Ubicación de la propiedad */}

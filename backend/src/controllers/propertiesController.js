@@ -8,10 +8,10 @@ propertiesController.getProperties = async(req, res) =>{
 };
 
 propertiesController.createProperties = async (req, res) =>{
-    const {images, description, location, price, floors, flooringType, lotSize, height, constructionYear, rooms, bathrooms, parkingLot, patio, sellerId, categoryId} = req.body;
+    const {images, name, description, location, price, floors, lotSize, height, constructionYear, rooms, bathrooms, parkingLot, patio, categoryId} = req.body;
     
     const newProperty = new propertiesModel({
-        images, description, location, price, floors, flooringType, lotSize, height, constructionYear, rooms, bathrooms, parkingLot, patio, sellerId, categoryId
+        images, name, description, location, price, floors, flooringType, lotSize, height, constructionYear, rooms, bathrooms, parkingLot, patio, categoryId
     });
 
     await newProperty.save();
@@ -24,9 +24,9 @@ propertiesController.deleteProperties = async (req, res) =>{
 };
 
 propertiesController.updateProperties = async (req, res) =>{
-    const {images, description, location, price, floors, flooringType, lotSize, height, constructionYear, rooms, bathrooms, parkingLot, patio, sellerId, categoryId} = req.body;
+    const {images, name, description, location, price, floors, lotSize, height, constructionYear, rooms, bathrooms, parkingLot, patio, categoryId} = req.body;
 
-    const updateProperty = await propertiesModel.findByIdAndUpdate(req.params.id, {images, description, location, price, floors, flooringType, lotSize, height, constructionYear, rooms, bathrooms, parkingLot, patio, sellerId, categoryId}, {new: true});
+    const updateProperty = await propertiesModel.findByIdAndUpdate(req.params.id, {images, name, description, location, price, floors, lotSize, height, constructionYear, rooms, bathrooms, parkingLot, patio, categoryId}, {new: true});
 
     res.json({message: "Property updated!"})
 };

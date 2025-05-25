@@ -94,7 +94,7 @@ const PropertyView = () => {
             <div className="property-info3">
               {/* Sección para el título de la propiedad y el botón de guardar. */}
               <div className="property-title-section3">
-                <h1>{propertyData.title}</h1>
+                <h1>{propertyData.name}</h1>
                 <div className="bookmark3" onClick={toggleSaved}>
                   <img src={isSaved ? savedIcon : saveIcon} alt={isSaved ? "Guardado" : "Guardar"} />
                 </div>
