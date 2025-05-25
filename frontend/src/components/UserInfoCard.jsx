@@ -13,128 +13,148 @@ const UserInfoCard = ({ isOpen, onClose }) => {
   // Hook para obtener la función 'navigate' que permite la navegación programática entre rutas.
   const navigate = useNavigate();
 
-  const { user, isAuthenticated, logout, loading } = useAuth();
+  const { user, userInfo, isAuthenticated, logout, loading } = useAuth();
 
   const handleLogout = async () => {
-        const result = await logout();
-        if (result.success) {
-            // Logout exitoso
-            console.log('Sesión cerrada correctamente');
-        } else {
-            // Manejar error si es necesario
-            console.error('Error al cerrar sesión:', result.error);
-        }
-    };
+    const result = await logout();
+    if (result.success) {
+      // Logout exitoso
+      console.log('Sesión cerrada correctamente');
+    } else {
+      // Manejar error si es necesario
+      console.error('Error al cerrar sesión:', result.error);
+    }
+  };
 
   // Si la prop 'isOpen' es falsa, el componente devuelve 'null', lo que significa que no se renderiza nada.
   if (!isOpen) return null;
 
-  // Si 'isOpen' es verdadera, se renderiza la estructura de la tarjeta de información del usuario.
+  if (loading || !userInfo) {
+    return (
+      <div className="user-info-overlay8">
+        <div className="user-info-card8">
+          <div className="card-header8">
+            <button className="close-button8" onClick={onClose}>
+              <img src={closeIcon} alt="Cerrar" />
+            </button>
+          </div>
+          <div style={{ padding: '20px', textAlign: 'center' }}>
+            Cargando información del usuario...
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const isAdmin = user?.userType === 'admin';
+
   return (
     <div className="user-info-overlay8">
-      {/* Contenedor principal de la tarjeta de información del usuario. */}
       <div className="user-info-card8">
-        {/* Encabezado de la tarjeta, contiene el botón de cerrar. */}
         <div className="card-header8">
-          {/* Botón de cerrar la tarjeta. Al hacer clic, llama a la función 'onClose' proporcionada como prop. */}
           <button className="close-button8" onClick={onClose}>
-            {/* Imagen del icono de cerrar con texto alternativo para accesibilidad. */}
             <img src={closeIcon} alt="Cerrar" />
           </button>
         </div>
 
-        {/* Sección de perfil, muestra la imagen del perfil y el nombre del usuario. */}
         <div className="profile-section8">
-          {/* Contenedor de la imagen de perfil, utilizado para posicionar el icono de la cámara. */}
           <div className="profile-image-container8">
-            {/* Contenedor de la imagen de perfil en sí. */}
             <div className="profile-image8">
-              {/* Imagen del perfil de usuario con texto alternativo. */}
-              <img src={profileIcon} alt="Perfil" />
+              <img 
+                src={userInfo.profilePicture || profileIcon} 
+                alt="Perfil" 
+              />
             </div>
-            {/* Icono de la cámara para indicar la posibilidad de cambiar la foto de perfil. */}
-            <div className="camera-icon8">
-              {/* Imagen del icono de la cámara con texto alternativo. */}
-              <img src={cameraIcon} alt="Cambiar foto" />
-            </div>
+
+            {!isAdmin && (
+              <div className="camera-icon8">
+                <img src={cameraIcon} alt="Cambiar foto" />
+              </div>
+            )}
           </div>
-          {/* Nombre del usuario que se muestra en la tarjeta. */}
-          <h3 className="profile-name8">Juan Pablo Rodriguez López</h3>
+          <h3 className="profile-name8">
+            {userInfo.name || 'Usuario'}
+            {isAdmin && " (Administrador)"}
+          </h3>
         </div>
 
-        {/* Sección de información básica del usuario. */}
         <div className="info-section8">
-          {/* Título de la sección. */}
           <h4>Información básica</h4>
 
-          {/* Campo para la fecha de nacimiento. */}
           <div className="info-field8">
             <label>Fecha de nacimiento</label>
-            {/* Input de tipo texto con un valor por defecto. */}
-            <input defaultValue="1999-07-14" />
+            <input 
+              defaultValue={userInfo.birthdate || ""} 
+              disabled={isAdmin}
+              style={isAdmin ? { backgroundColor: '#f5f5f5', cursor: 'not-allowed' } : {}}
+            />
           </div>
-          {/* Campo para la dirección. */}
+          
           <div className="info-field8">
             <label>Dirección</label>
-            {/* Input de tipo texto con un valor por defecto. */}
-            <input defaultValue="Calle #21 San Salvador" />
+            <input 
+              defaultValue={userInfo.address || ""} 
+              disabled={isAdmin}
+              style={isAdmin ? { backgroundColor: '#f5f5f5', cursor: 'not-allowed' } : {}}
+            />
           </div>
-          {/* Campo para el número de DUI (Documento Único de Identidad, un documento de identificación en El Salvador). */}
+          
           <div className="info-field8">
             <label>DUI</label>
-            {/* Input de tipo texto con un valor por defecto. */}
-            <input defaultValue="12345678-9" />
+            <input 
+              defaultValue={userInfo.dui || ""} 
+              disabled={isAdmin}
+              style={isAdmin ? { backgroundColor: '#f5f5f5', cursor: 'not-allowed' } : {}}
+            />
           </div>
         </div>
 
-        {/* Sección de información de contacto del usuario. */}
         <div className="info-section8">
-          {/* Título de la sección. */}
           <h4>Información de contacto</h4>
 
-          {/* Campo para el correo electrónico. */}
           <div className="info-field8">
             <label>Correo electrónico</label>
-            {/* Input de tipo texto con un valor por defecto. */}
-            <input defaultValue="jp@example.com" />
+            <input 
+              defaultValue={userInfo.email || ""} 
+              disabled={isAdmin}
+              style={isAdmin ? { backgroundColor: '#f5f5f5', cursor: 'not-allowed' } : {}}
+            />
           </div>
 
-          {/* Campo para el número de teléfono. */}
           <div className="info-field8">
             <label>Teléfono</label>
-            {/* Input de tipo texto con un valor por defecto. */}
-            <input defaultValue="1234-5678" />
+            <input 
+              defaultValue={userInfo.phone || ""} 
+              disabled={isAdmin}
+              style={isAdmin ? { backgroundColor: '#f5f5f5', cursor: 'not-allowed' } : {}}
+            />
           </div>
         </div>
 
-        {/* Sección de presupuestos del usuario. */}
-        <div className="info-section8">
-          {/* Título de la sección. */}
-          <h4>Presupuestos</h4>
+        {!isAdmin && (
+          <div className="info-section8">
+            <h4>Presupuestos</h4>
 
-          {/* Contenedor para los campos de presupuesto mínimo y máximo. */}
-          <div className="budget-field8">
-            {/* Campo para el presupuesto mínimo. */}
-            <div className="budget-input8">
-              <label>Min.</label>
-              {/* Input de tipo texto sin valor por defecto. */}
-              <input />
-            </div>
-            {/* Campo para el presupuesto máximo. */}
-            <div className="budget-input8">
-              <label>Max.</label>
-              {/* Input de tipo texto sin valor por defecto. */}
-              <input />
+            <div className="budget-field8">
+              <div className="budget-input8">
+                <label>Min.</label>
+                <input />
+              </div>
+              <div className="budget-input8">
+                <label>Max.</label>
+                <input />
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
-        {/* Sección de botones de acción. */}
         <div className="button-section8">
-          {/* Botón para actualizar la información del perfil. */}
-          <button className="update-profile-btn8">Actualizar perfil</button>
-          {/* Botón para cerrar la sesión del usuario. Al hacer clic, llama a la función 'handleLogoutClick' para cerrar sesión y navegar a la página de inicio de sesión. */}
-          <button className="close-session-btn8" onClick={handleLogout}>Cerrar sesión</button>
+          {!isAdmin && (
+            <button className="update-profile-btn8">Actualizar perfil</button>
+          )}
+          <button className="close-session-btn8" onClick={handleLogout}>
+            Cerrar sesión
+          </button>
         </div>
       </div>
     </div>

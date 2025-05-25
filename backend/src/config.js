@@ -15,7 +15,12 @@ export const config = {
     },
     admin: {
         email: process.env.ADMIN_EMAIL,
-        password: process.env.ADMIN_PASSWORD
+        password: process.env.ADMIN_PASSWORD,
+        profilePicture: process.env.ADMIN_PROFILE_PICTURE,
+        birthdate: process.env.ADMIN_BIRTHDATE,
+        address: process.env.ADMIN_ADDRESS,
+        dui: process.env.ADMIN_DUI,
+        phone: process.env.ADMIN_PHONE
     },
     emailUser: {
         user_email: process.env.USER_EMAIL,

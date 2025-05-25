@@ -14,6 +14,7 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [userInfo, setUserInfo] = useState(null);
 
     const getTokenFromCookies = () => {
         const cookies = document.cookie.split(';');
@@ -32,11 +33,35 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
+    const getUserInfo = async () => {
+        try {
+            const response = await fetch('http://localhost:4000/api/auth/user-info', {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                if (data.success) {
+                    setUserInfo(data.user);
+                    return data.user;
+                }
+            }
+            return null;
+        } catch (error) {
+            console.error('Error getting user info:', error);
+            return null;
+        }
+    };
+
     useEffect(() => {
         checkAuthStatus();
     }, []);
 
-    const checkAuthStatus = () => {
+    const checkAuthStatus = async () => {
         try {
             const token = getTokenFromCookies();
             if (token) {
@@ -47,19 +72,24 @@ export const AuthProvider = ({ children }) => {
                         userType: decodedToken.userType
                     });
                     setIsAuthenticated(true);
+                    
+                    await getUserInfo();
                 } else {
                     document.cookie = 'authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
                     setUser(null);
                     setIsAuthenticated(false);
+                    setUserInfo(null);
                 }
             } else {
                 setUser(null);
                 setIsAuthenticated(false);
+                setUserInfo(null);
             }
         } catch (error) {
             console.error('Error verificando autenticación:', error);
             setUser(null);
             setIsAuthenticated(false);
+            setUserInfo(null);
         } finally {
             setLoading(false);
         }
@@ -79,7 +109,7 @@ export const AuthProvider = ({ children }) => {
             const data = await response.json();
 
             if (data.message === "login successful") {
-                setTimeout(() => {
+                setTimeout(async () => {
                     const token = getTokenFromCookies();
                     if (token) {
                         const decodedToken = decodeToken(token);
@@ -88,6 +118,8 @@ export const AuthProvider = ({ children }) => {
                             userType: decodedToken.userType
                         });
                         setIsAuthenticated(true);
+                        
+                        await getUserInfo();
                     }
                 }, 100);
 
@@ -114,6 +146,7 @@ export const AuthProvider = ({ children }) => {
             document.cookie = 'authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
             setUser(null);
             setIsAuthenticated(false);
+            setUserInfo(null);
 
             if (response.ok) {
                 console.log('Sesión cerrada correctamente en el servidor');
@@ -127,17 +160,20 @@ export const AuthProvider = ({ children }) => {
             document.cookie = 'authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
             setUser(null);
             setIsAuthenticated(false);
+            setUserInfo(null);
             return { success: false, error: 'Error de conexión' };
         }
     };
 
     const contextValue = {
         user,
+        userInfo,
         loading,
         isAuthenticated,
         login,
         logout,
-        checkAuthStatus
+        checkAuthStatus,
+        getUserInfo
     };
 
     return (
