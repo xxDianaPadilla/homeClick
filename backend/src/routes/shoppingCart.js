@@ -3,6 +3,12 @@ import shoppingCartController from "../controllers/shoppingCartController.js";
 
 const router = express.Router();
 
+router.route("/total-earnings")
+.get(shoppingCartController.getTotalEarnings);
+
+router.route("/stats")
+.get(shoppingCartController.getCartStats);
+
 router.route("/")
 .get(shoppingCartController.getShoppingCart)
 .post(shoppingCartController.createShoppingCart);

@@ -9,12 +9,46 @@ import AddPropertyCard from '../components/AddPropertyCard';
 import useEditProperty from "../components/Properties/Hooks/useEditProperty";
 import HomeClickModal from '../components/HomeClickModal';
 import useSalesData from '../components/Sales/Hooks/useSalesData';
+import useEarningsData from '../components/Sales/Hooks/useEarningsData';
 
 const Dashboard = () => {
 
   const { isEditModalOpen, openEditModal, closeEditModal } = useEditProperty();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { salesData, loading, error, refetch } = useSalesData();
+  const { totalSales, totalEarnings, loading2, error2, refreshData } = useEarningsData();
+
+  const formatNumber = (num) => {
+    if (num >= 1000000) {
+      return (num / 1000000).toFixed(1) + 'M';
+    }
+
+    if (num >= 1000) {
+      return (num / 1000).toFixed(1) + 'K';
+    }
+
+    return num.toLocaleString();
+  };
+
+  const formatCurrency = (amount) => {
+    return new Intl.NumberFormat('es-CO', {
+      style: 'currency',
+      currency: 'COP',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0
+    }).format(amount);
+  };
+
+  if (error2) {
+    return (
+      <div className="error-container">
+        <p>Error al cargar los datos: {error}</p>
+        <button onClick={refreshData} className="retry-button">
+          Reintentar
+        </button>
+      </div>
+    );
+  }
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -82,7 +116,7 @@ const Dashboard = () => {
         <section className="dashboard-card greeting-card">
           <div className="greeting-text">
             <p className="greeting-hello">
-              ¡Buenos días, Ricky!
+              ¡Bienvenido Administrador!
               <img src={sol} alt="Icono del sol" className="sun-icon" />
             </p>
             <p className="greeting-date">
@@ -102,7 +136,11 @@ const Dashboard = () => {
         {/* Middle orange card */}
         <section className="dashboard-card metrics-card">
           <div className="metric-value">
-            80
+            {loading ? (
+              <div className="loading-spinner">...</div>
+            ) : (
+              formatNumber(totalSales)
+            )}
           </div>
           <div className="metric-label">
             Ventas
@@ -117,7 +155,11 @@ const Dashboard = () => {
         {/* Right orange card */}
         <section className="dashboard-card metrics-card">
           <div className="metric-value">
-            7,842
+            {loading ? (
+              <div className="loading-spinner">...</div>
+            ) : (
+              formatCurrency(totalEarnings)
+            )}
           </div>
           <div className="metric-label">
             Ganancias

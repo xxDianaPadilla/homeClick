@@ -92,4 +92,55 @@ salesController.getSaleById = async (req, res) => {
   }
 };
 
+salesController.getSalesCount = async (req, res) => {
+  try {
+    const count = await salesModel.countDocuments();
+    res.status(200).json({
+      success: true,
+      count
+    });
+  } catch (error) {
+    console.error('Error al obtener el conteo de ventas:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error interno del servidor',
+      error: error.message
+    });
+  }
+};
+
+salesController.getSalesStats = async (req, res) => {
+  try {
+    const totalSales = await salesModel.countDocuments();
+    const paidSales = await salesModel.countDocuments({ status: 'Pagado' });
+    const pendingSales = await salesModel.countDocuments({ status: 'Pendiente' });
+
+    const paymentMethods = await salesModel.aggregate([
+      {
+        $group: {
+          _id: '$paymentType',
+          count: { $sum: 1 }
+        }
+      }
+    ]);
+
+    res.status(200).json({
+      success: true,
+      stats: {
+        totalSales,
+        paidSales,
+        pendingSales,
+        paymentMethods
+      }
+    });
+  } catch (error) {
+    console.error('Error al obtener estadísticas de ventas:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error interno del servidor',
+      error: error.message
+    });
+  }
+};
+
 export default salesController;

@@ -6,6 +6,12 @@ const router = express.Router();
 router.route("/with-properties")
 .get(salesController.getSalesWithProperties);
 
+router.route('/count')
+.get(salesController.getSalesCount);
+
+router.route('/sales')
+.get(salesController.getSalesStats);
+
 router.route("/")
 .get(salesController.getAllSales)  
 .post(salesController.createSales);
