@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../styles/Dashboard.css'; // Importa el archivo CSS para estilos específicos del Dashboard
 import sol from '../assets/sol.png';
 import imgConfig from '../assets/imgConfig.png';
@@ -7,10 +7,15 @@ import payment from '../assets/payment.png';
 import NavBarAdmin from '../components/NavBarAdmin'; // Importa el componente NavBarAdmin
 import AddPropertyCard from '../components/AddPropertyCard';
 import useEditProperty from "../components/Properties/Hooks/useEditProperty";
+import HomeClickModal from '../components/HomeClickModal';
 
 const Dashboard = () => {
 
-  const {isEditModalOpen, openEditModal, closeEditModal} = useEditProperty();
+  const { isEditModalOpen, openEditModal, closeEditModal } = useEditProperty();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   // Función para obtener la fecha actual en formato español
   const obtenerFechaActual = () => {
@@ -113,7 +118,7 @@ const Dashboard = () => {
             realizar compras seguras, dejar reseñas y recibir notificaciones sobre
             novedades y oportunidades del sector.
           </p>
-          <button className="orange-button centered-button">
+          <button className="orange-button centered-button" onClick={openModal}>
             LEER MÁS
           </button>
         </article>
@@ -121,7 +126,7 @@ const Dashboard = () => {
         {/* Right properties box */}
         <article className="dashboard-box properties-box">
           <p className="box-title">
-            Mis propiedades
+            Propiedades
           </p>
           <div className="table-container">
             <table className="properties-table">
@@ -159,14 +164,12 @@ const Dashboard = () => {
             <button className="orange-button" onClick={openEditModal}>
               Crear publicación
             </button>
-            <button className="orange-button">
-              Ver más
-            </button>
           </div>
         </article>
       </section>
 
-      <AddPropertyCard isOpen={isEditModalOpen} onClose={closeEditModal}/>
+      <AddPropertyCard isOpen={isEditModalOpen} onClose={closeEditModal} />
+      <HomeClickModal isOpen={isModalOpen} onClose={closeModal} />
     </>
   );
 };
