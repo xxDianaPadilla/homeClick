@@ -58,3 +58,38 @@
     color: #333;
     font-weight: bold;
 }
+
+.loading-message, .error-message, .no-properties-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+    text-align: center;
+}
+
+.loading-message p {
+    font-size: 18px;
+    color: #666;
+}
+
+.error-message p {
+    font-size: 18px;
+    color: #ff4444;
+}
+
+.no-properties-message p {
+    font-size: 18px;
+    color: #888;
+}
+
+.house-image-placeholder {
+    width: 100%;
+    height: 100%;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #999;
+    font-size: 14px;
+    border-radius: 8px;
+}
