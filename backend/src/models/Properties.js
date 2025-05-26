@@ -60,7 +60,7 @@ const propertiesSchema = new Schema({
     categoryId: {
         type: Schema.Types.ObjectId,
         ref: "Category",
-        require: true
+        require: false
     }
 }, {
     timestamps: true,

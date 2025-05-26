@@ -185,7 +185,8 @@
 }
 
 .form-group input,
-.form-group textarea {
+.form-group textarea, 
+.form-group select {
   width: 100%;
   padding: 12px 15px;
   border: 1px solid #e0e0e0;
@@ -202,6 +203,10 @@
 .form-group textarea {
   height: 150px;
   resize: none;
+}
+
+.form-group select{
+  color: #777;
 }
 
 .description-group {
@@ -240,6 +245,57 @@
   width: 20px;
   height: 20px;
   margin-right: 10px;
+}
+
+.add-button.loading {
+    opacity: 0.7;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.add-button.loading span {
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+}
+
+.upload-image-button.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+input:disabled,
+select:disabled,
+textarea:disabled {
+    background-color: #f5f5f5;
+    color: #999;
+    cursor: not-allowed;
+}
+
+.close-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.add-property-modal-overlay.loading {
+    pointer-events: none;
+}
+
+.add-property-modal-overlay.loading .add-property-modal {
+    opacity: 0.8;
+}
+
+.add-property-content.loading {
+    animation: subtlePulse 2s ease-in-out infinite;
+}
+
+@keyframes subtlePulse {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 1; }
 }
 
 @media screen and (max-width: 992px) {
