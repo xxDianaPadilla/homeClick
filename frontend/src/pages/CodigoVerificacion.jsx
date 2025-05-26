@@ -27,7 +27,7 @@ function CodigoVerificacion() {
         className="background-image-2"
       />
       {/* Overlay que contiene el contenido principal de la verificación. */}
-      <div className="verification-overlay-3">
+      <div className="verification-form">
         {/* Título de la página. */}
         <h1 className="heading-4">Verificación de Correo</h1>
         {/* Texto informativo explicando que se ha enviado un código al correo electrónico del usuario. */}
@@ -105,7 +105,7 @@ function CodigoVerificacion() {
             />
           </div>
           {/* Botón para enviar y verificar el código ingresado. Al hacer clic, se ejecuta 'handleChangePasswordClick'. */}
-          <button type="submit" className="verification-button-15" onClick={handleChangePasswordClick}>
+          <button  className="verification-button-15" onClick={handleChangePasswordClick}>
             Verificar Código
           </button>
           {/* Enlace para reenviar el código de verificación en caso de no haberlo recibido. */}

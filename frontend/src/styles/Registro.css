@@ -3,13 +3,6 @@
 /* Importa la fuente Raleway con peso 400 desde Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400&display=swap');
 
-/* Estilos para el elemento body */
-body {
-  font-family: 'Inter', sans-serif;
-  margin: 0;
-  padding: 0;
-}
-
 /* Estilos para el título del formulario de registro */
 .form-title2 {
   color: white;
@@ -25,7 +18,7 @@ body {
 }
 
 /* Estilos para el contenedor principal de la página de destino */
-.landing-container {
+.register-container {
   position: relative;
   min-height: 100vh;
   width: 100%;
@@ -47,7 +40,7 @@ body {
 }
 
 /* Estilos para la capa superpuesta con el formulario */
-.overlay {
+.register-overlay {
   background-color: rgba(129, 73, 22, 0.7);
   max-width: 900px;
   width: 90%;

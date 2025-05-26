@@ -38,7 +38,7 @@
 }
 
 /* Capa de superposición para el contenido de verificación */
-.verification-overlay-3 {
+.verification-form {
   /* Color de fondo semitransparente */
   background-color: rgba(129, 73, 22, 0.7);
   /* Bordes redondeados */
@@ -52,7 +52,7 @@
   /* Ocupa el 90% del ancho del contenedor padre */
   width: 90%;
   /* Establece un ancho máximo para evitar que se vea demasiado ancho en pantallas grandes */
-  max-width: 500px;
+  max-width: 900px;
 }
 
 /* Encabezado principal */
@@ -67,6 +67,7 @@
   font-size: 32px;
   /* Margen inferior */
   margin-bottom: 20px;
+  margin-top: 20px;
 }
 
 /* Texto de verificación */
@@ -99,6 +100,7 @@
   gap: 15px;
   /* Centra los campos horizontalmente */
   justify-content: center;
+  margin-top: 30px;
 }
 
 /* Campos de entrada para el código de verificación */
@@ -185,6 +187,7 @@
   font-family: 'Raleway', sans-serif;
   /* Aplica estilo itálico a la fuente */
   font-style: italic;
+  margin-top: 50px;
 }
 
 /* Estilo del botón de verificación al pasar el ratón */

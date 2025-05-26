@@ -59,7 +59,7 @@ function RecuperarContraseña() {
             className="text-input"
           />
           {/* Botón para enviar el enlace de inicio de sesión (en este caso, navega a '/passwordCode'). */}
-          <button className="submit-button3" type="submit" onClick={handlePasswordCodeClick}>
+          <button className="submit-button4"  onClick={handlePasswordCodeClick}>
             Enviar enlace de inicio de sesión
           </button>
         </form>

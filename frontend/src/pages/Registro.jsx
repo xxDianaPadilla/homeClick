@@ -45,7 +45,7 @@ function Registro() {
 
   // Renderiza la estructura de la página de registro.
   return (
-    <div className="landing-container">
+    <div className="register-container">
       {/* Imagen de fondo de la página de registro. */}
       <img
         src={bgImgHouse}
@@ -53,8 +53,8 @@ function Registro() {
         className="background-image"
       />
 
-      <div className="overlay">
-        <h1 className="form-title2">Registro</h1>
+      <div className="register-overlay">
+        <h1 className="form-title3">Registro</h1>
 
         {/* Mensaje de estado */}
         {message && (
