@@ -1,16 +1,30 @@
 import React, { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import "../styles/InicioSesion.css";
 import bgImgHouse from "../assets/imgLoginFondo.png";
 import usePasswordToggle from '../components/Customers/Hooks/usePasswordToggle';
-import useLoginForm from '../components/Customers/Hooks/useLoginForm';
 import { useAuth } from '../context/AuthContext';
 
 function InicioSesion() {
   const { showPassword, togglePasswordVisibility } = usePasswordToggle();
-  const { formData, errors, isLoading, handleInputChange, handleSubmit } = useLoginForm();
-  const { isAuthenticated, user } = useAuth();
+  const { isAuthenticated, user, login } = useAuth();
   const navigate = useNavigate();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    setError,
+    clearErrors
+  } = useForm({
+    mode: 'onChange',
+    defaultValues: {
+      email: '',
+      password: '',
+      rememberMe: false
+    }
+  });
 
   useEffect(() => {
     if (isAuthenticated && user) {
@@ -21,6 +35,63 @@ function InicioSesion() {
       }
     }
   }, [isAuthenticated, user, navigate]);
+
+  const validationRules = {
+    email: {
+      required: 'El correo electrónico es requerido',
+      pattern: {
+        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+        message: 'El correo electrónico no es válido'
+      }
+    },
+    password: {
+      required: 'La contraseña es requerida',
+      minLength: {
+        value: 6,
+        message: 'La contraseña debe tener al menos 6 caracteres'
+      }
+    }
+  };
+
+  const onSubmit = async (data) => {
+    try {
+      clearErrors();
+
+      const result = await login(data.email, data.password);
+
+      if (!result.success) {
+        const errorMessage = result.message || 'Error en la autenticación';
+
+        if (errorMessage.toLowerCase().includes('email') ||
+          errorMessage.toLowerCase().includes('correo') ||
+          errorMessage.toLowerCase().includes('usuario no encontrado')) {
+          setError('email', {
+            type: 'server',
+            message: errorMessage
+          });
+        } else if (errorMessage.toLowerCase().includes('password') ||
+          errorMessage.toLowerCase().includes('contraseña') ||
+          errorMessage.toLowerCase().includes('credenciales incorrectas')) {
+          setError('password', {
+            type: 'server',
+            message: errorMessage
+          });
+        } else {
+          setError('root.serverError', {
+            type: 'server',
+            message: errorMessage
+          });
+        }
+      }
+
+    } catch (error) {
+      console.error('Error durante el login:', error);
+      setError('root.serverError', {
+        type: 'server',
+        message: 'Ha ocurrido un error inesperado. Por favor, inténtalo de nuevo.'
+      });
+    }
+  };
 
   const handleRegisterClick = (e) => {
     e.preventDefault();
@@ -41,8 +112,9 @@ function InicioSesion() {
       />
       <div className="form-container2">
         <h1 className="form-title">Inicio de sesión</h1>
-        
-        {errors.general && (
+
+        {/* Error general del servidor */}
+        {errors.root?.serverError && (
           <div className="error-message" style={{
             color: '#ff4444',
             backgroundColor: '#ffe6e6',
@@ -52,24 +124,22 @@ function InicioSesion() {
             textAlign: 'center',
             border: '1px solid #ffcccc'
           }}>
-            {errors.general}
+            {errors.root.serverError.message}
           </div>
         )}
 
-        <form className="login-form" onSubmit={handleSubmit}>
+        <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
           <div className="input-group">
             <input
               type="email"
-              name="email"
               placeholder="Correo electrónico"
               className={`text-input ${errors.email ? 'error' : ''}`}
-              value={formData.email}
-              onChange={handleInputChange}
-              disabled={isLoading}
+              disabled={isSubmitting}
+              {...register('email', validationRules.email)}
             />
             {errors.email && (
               <span className="error-text" style={{ color: '#ff4444', fontSize: '14px' }}>
-                {errors.email}
+                {errors.email.message}
               </span>
             )}
           </div>
@@ -77,12 +147,10 @@ function InicioSesion() {
           <div className="password-container">
             <input
               type={showPassword ? "text" : "password"}
-              name="password"
               placeholder="Contraseña"
               className={`text-input ${errors.password ? 'error' : ''}`}
-              value={formData.password}
-              onChange={handleInputChange}
-              disabled={isLoading}
+              disabled={isSubmitting}
+              {...register('password', validationRules.password)}
             />
             <span
               className="password-toggle"
@@ -105,21 +173,24 @@ function InicioSesion() {
               </svg>
             </span>
             {errors.password && (
-              <span className="error-text" style={{ 
-                color: '#ff4444', 
+              <span className="error-text" style={{
+                color: '#ff4444',
                 fontSize: '14px',
                 position: 'absolute',
                 bottom: '-20px',
                 left: '0'
               }}>
-                {errors.password}
+                {errors.password.message}
               </span>
             )}
           </div>
 
           <div className="remember-forgot">
             <label className="remember-me">
-              <input type="checkbox" />
+              <input
+                type="checkbox"
+                {...register('rememberMe')}
+              />
               Mantener sesión iniciada
             </label>
             <a href="#" className="forgot-password" onClick={handleRecuperarContrasenaClick}>
@@ -127,20 +198,20 @@ function InicioSesion() {
             </a>
           </div>
 
-          <button 
-            className="submit-button4" 
-            type="submit" 
-            disabled={isLoading}
+          <button
+            className="submit-button4"
+            type="submit"
+            disabled={isSubmitting}
             style={{
-              opacity: isLoading ? 0.6 : 1,
-              cursor: isLoading ? 'not-allowed' : 'pointer'
+              opacity: isSubmitting ? 0.6 : 1,
+              cursor: isSubmitting ? 'not-allowed' : 'pointer'
             }}
           >
-            {isLoading ? 'Iniciando sesión...' : 'Iniciar sesión'}
+            {isSubmitting ? 'Iniciando sesión...' : 'Iniciar sesión'}
           </button>
 
           <div className="no-account">
-            ¿No tienes una cuenta? 
+            ¿No tienes una cuenta?
             <a href="#" className="register-link" onClick={handleRegisterClick}>
               Regístrate
             </a>
