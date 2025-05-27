@@ -1,50 +1,118 @@
 import { useState, useEffect } from "react";
-import house1 from '../../../assets/image5.png';
-import house6 from '../../../assets/image6.png';
-import house7 from '../../../assets/image7.png';
-import house8 from '../../../assets/image5.png';
+import { toast } from "react-hot-toast";
 
 export const usePropertyData = (propertyId) => {
-    const [mainImage, setMainImage] = useState(house8);
+    const [mainImage, setMainImage] = useState('');
+    const [thumbnails, setThumbnails] = useState([]);
+    const [propertyData, setPropertyData] = useState({
+        name: '',
+        price: '',
+        location: '',
+        description: '',
+        details: [],
+        dimensions: []
+    });
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    const thumbnails = [house1, house6, house7, house1];
-
-    // Objeto con los datos de la propiedad mostrada.
-    const propertyData = {
-        name: "Casa en Colonia Escalón",
-        price: "$150,000",
-        location: "San Salvador, El Salvador",
-        description: "Hermosa y lugar de lujo donde se une espectacularmente zona residencial. Disfruta una viviesta privada y accesible, con amplios espacios iluminados, comodidad y seguridad. Ideal para familias que buscan calidad de vida, cerca de centros comerciales, colegios y zonas recreativas. Acaba y detalles modernos, ofrecen un equilibrio perfecto entre estilo, funcionalidad y confort.",
-        details: [
-            "Habitaciones: 3",
-            "Baños: 4",
-            "Parqueo: Sí",
-            "Patio: Sí",
-            "Ubicación: Urbanización Alpes de la Escalón, San Salvador centro",
-            "Número: 42",
-            "Año de construcción: 2021"
-        ],
-        dimensions: [
-            "Tamaño del lote: 150 metros cuadrados",
-            "Altura: 3.2 metros"
-        ]
-    };
+    const API = "http://localhost:4000/api/properties";
 
     useEffect(() => {
+        const fetchPropertyData = async () => {
+            if (!propertyId) {
+                setLoading(false);
+                return;
+            }
 
-        if (propertyId === '2' || propertyId === '5' || propertyId === '8') {
-            setMainImage(house6);
-        } else if (propertyId === '3' || propertyId === '6' || propertyId === '9') {
-            setMainImage(house7);
-        }else{
-            setMainImage(house1)
-        }
+            try {
+                setLoading(true);
+                console.log('Fetching property with ID:', propertyId);
+                const response = await fetch(`${API}/${propertyId}`);
+                
+                if (!response.ok) {
+                    if (response.status === 404) {
+                        throw new Error(`Propiedad no encontrada (ID: ${propertyId})`);
+                    }
+                    throw new Error(`Error del servidor: ${response.status}`);
+                }
+                
+                const property = await response.json();
+                console.log('Property data received:', property);
+                console.log('Property _id:', property._id);
+                console.log('Property _id type:', typeof property._id);
+                
+                const imageUrls = property.images?.map(img => img.image) || [];
+                setThumbnails(imageUrls);
+                setMainImage(imageUrls[0] || '');
+                
+                // AQUÍ ESTÁ EL FIX: Incluir TODOS los datos originales + los procesados
+                const processedPropertyData = {
+                    // ✅ PRIMERO: Incluir TODOS los datos originales de la propiedad
+                    ...property,
+                    
+                    // ✅ SEGUNDO: Sobrescribir solo los campos que necesitas procesar para la vista
+                    name: property.name || 'Propiedad sin nombre',
+                    price: property.price ? `$${property.price.toLocaleString()}` : 'Precio no disponible',
+                    location: property.location || 'Ubicación no especificada',
+                    description: property.description || 'Sin descripción disponible',
+                    
+                    // ✅ TERCERO: Agregar arrays procesados para la vista
+                    details: [
+                        `Habitaciones: ${property.rooms || 'No especificado'}`,
+                        `Baños: ${property.bathrooms || 'No especificado'}`,
+                        `Pisos: ${property.floors || 'No especificado'}`,
+                        `Parqueo: ${property.parkingLot ? 'Sí' : 'No'}`,
+                        `Patio: ${property.patio ? 'Sí' : 'No'}`,
+                        `Año de construcción: ${property.constructionYear || 'No especificado'}`
+                    ],
+                    dimensions: [
+                        `Tamaño del lote: ${property.lotSize || 'No especificado'}`,
+                        `Altura: ${property.height || 'No especificado'}`
+                    ],
+                    
+                    // ✅ CUARTO: Mantener los datos originales para edición con nombres alternativos
+                    originalName: property.name,
+                    originalPrice: property.price,
+                    originalLocation: property.location,
+                    originalDescription: property.description
+                };
+                
+                console.log('Processed property data with _id:', {
+                    _id: processedPropertyData._id,
+                    id: processedPropertyData.id,
+                    name: processedPropertyData.name
+                });
+                
+                setPropertyData(processedPropertyData);
+                setError(null);
+                
+            } catch (err) {
+                console.error('Error fetching property data:', err);
+                setError(err.message);
+                toast.error(`Error al cargar la propiedad: ${err.message}`);
+                
+                setPropertyData({
+                    name: 'Error al cargar propiedad',
+                    price: 'No disponible',
+                    location: 'No disponible',
+                    description: 'No se pudo cargar la información de esta propiedad.',
+                    details: ['Información no disponible'],
+                    dimensions: ['Información no disponible']
+                });
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchPropertyData();
     }, [propertyId]);
 
     return {
         mainImage,
         setMainImage,
         thumbnails,
-        propertyData
+        propertyData,
+        loading,
+        error
     };
 };

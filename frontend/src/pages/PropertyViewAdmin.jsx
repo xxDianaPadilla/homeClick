@@ -1,9 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import NavBarAdminSearch from "../components/NavBarAdminSearch";
 import "../styles/PropertyViewAdmin.css";
-import house1 from "../assets/image27.png";
-import house6 from "../assets/image6.png";
-import house7 from "../assets/image7.png";
 import EditPropertyCard from "../components/EditPropertyCard";
 import { usePropertyData } from '../components/Properties/Hooks/usePropertyData';
 import { useExpandableSections } from '../components/Properties/Hooks/useExpandableSections';
@@ -11,21 +8,113 @@ import useEditProperty from "../components/Properties/Hooks/useEditProperty";
 
 // Definición del componente principal PropertyViewAdmin
 const PropertyViewAdmin = () => {
-
+    const location = useLocation();
     const { fromCategory, propertyId } = location.state || { fromCategory: '/propertyAdmin', propertyId: '1' };
 
-    const { mainImage, setMainImage, thumbnails, propertyData } = usePropertyData(propertyId);
+    const { mainImage, setMainImage, thumbnails, propertyData, loading, error } = usePropertyData(propertyId);
     const { detailsExpanded, dimensionsExpanded, toggleDetails, toggleDimensions } = useExpandableSections();
-    const {isEditModalOpen, openEditModal, closeEditModal} = useEditProperty();
-
-    // Array de propiedades similares para recomendaciones
-    const similarProperties = [
-        { id: 1, image: house6, title: "Casa en la zona Rosa" },
-        { id: 2, image: house7, title: "Casa en santa tecla" },
-        { id: 3, image: house1, title: "Casa en Colonia Escalón" }
-    ];
+    const { isEditModalOpen, openEditModal, closeEditModal } = useEditProperty();
 
     const center = [13.6929, -89.2182];
+
+    const extractRoomsAndFloors = (details) => {
+        let rooms = null;
+        let floors = null;
+
+        if (details && Array.isArray(details)) {
+            details.forEach(detail => {
+                if (typeof detail === 'string') {
+                    // Buscar habitaciones
+                    const roomMatch = detail.match(/habitaciones?:\s*(\d+)/i) || detail.match(/cuartos?:\s*(\d+)/i);
+                    if (roomMatch) {
+                        rooms = parseInt(roomMatch[1]);
+                    }
+
+                    // Buscar pisos/niveles
+                    const floorMatch = detail.match(/pisos?:\s*(\d+)/i) || detail.match(/niveles?:\s*(\d+)/i);
+                    if (floorMatch) {
+                        floors = parseInt(floorMatch[1]);
+                    }
+                }
+            });
+        }
+
+        return { rooms, floors };
+    };
+
+    // Usar la función para extraer los datos
+    const { rooms, floors } = extractRoomsAndFloors(propertyData.details);
+
+    // Crear objeto completo de la propiedad para pasar al modal
+    // AQUÍ ESTÁ EL FIX PRINCIPAL: Asegurar que el ID esté presente
+    const completePropertyData = {
+        ...propertyData,
+        // Asegurar que el ID esté presente en el formato correcto
+        _id: propertyData._id || propertyData.id || propertyId,
+        id: propertyData.id || propertyData._id || propertyId,
+        thumbnails: thumbnails,
+        images: thumbnails,
+        rooms: rooms,           // ← Agregar rooms extraído
+        floors: floors,         // ← Agregar floors extraído
+    };
+
+    // Debug log para verificar el ID
+    console.log('PropertyViewAdmin - Debug Info:', {
+        propertyId,
+        propertyData_id: propertyData._id,
+        propertyData_id_type: typeof propertyData._id,
+        completePropertyData_id: completePropertyData._id,
+        completePropertyData_id_type: typeof completePropertyData._id
+    });
+
+    // Mostrar loading mientras se cargan los datos
+    if (loading) {
+        return (
+            <>
+                <NavBarAdminSearch />
+                <div className="property-container3">
+                    <div className="loading-message" style={{ textAlign: 'center', padding: '2rem' }}>
+                        <p>Cargando información de la propiedad...</p>
+                    </div>
+                </div>
+            </>
+        );
+    }
+
+    // Mostrar error si hay problemas al cargar
+    if (error) {
+        return (
+            <>
+                <NavBarAdminSearch />
+                <div className="property-container3">
+                    <div className="error-message" style={{ textAlign: 'center', padding: '2rem', color: 'red' }}>
+                        <p>Error al cargar la propiedad: {error}</p>
+                        <button onClick={() => window.history.back()}>Volver atrás</button>
+                    </div>
+                </div>
+            </>
+        );
+    }
+
+    // Función para manejar la apertura del modal con validación adicional
+    const handleOpenEditModal = () => {
+        // Validar que tenemos un ID válido antes de abrir el modal
+        const validId = completePropertyData._id || completePropertyData.id || propertyId;
+
+        console.log('Opening edit modal with ID:', validId);
+
+        if (!validId || validId === 'undefined' || validId === 'null') {
+            alert('Error: No se puede editar la propiedad. ID inválido.');
+            return;
+        }
+
+        // Verificar formato de ObjectId (24 caracteres hexadecimales)
+        if (typeof validId === 'string' && !/^[0-9a-fA-F]{24}$/.test(validId)) {
+            console.warn('ID format may be invalid:', validId);
+        }
+
+        openEditModal();
+    };
 
     // Estructura JSX del componente
     return (
@@ -40,26 +129,42 @@ const PropertyViewAdmin = () => {
                     {/* Columna lateral con miniaturas de imágenes */}
                     <div className="thumbnail-column">
                         {/* Mapeo del array de miniaturas para crear elementos clickeables */}
-                        {thumbnails.map((thumb, index) => (
-                            <div
-                                key={index}
-                                className="thumbnail-wrapper"
-                                onClick={() => setMainImage(thumb)} // Cambia la imagen principal al hacer clic
-                            >
-                                <img
-                                    src={thumb}
-                                    alt={`Thumbnail ${index + 1}`}
-                                    className={`thumbnail ${mainImage === thumb ? 'active' : ''}`} // Añade clase 'active' si es la miniatura activa
-                                />
+                        {thumbnails.length > 0 ? (
+                            thumbnails.map((thumb, index) => (
+                                <div
+                                    key={index}
+                                    className="thumbnail-wrapper"
+                                    onClick={() => setMainImage(thumb)} // Cambia la imagen principal al hacer clic
+                                >
+                                    <img
+                                        src={thumb}
+                                        alt={`Thumbnail ${index + 1}`}
+                                        className={`thumbnail ${mainImage === thumb ? 'active' : ''}`} // Añade clase 'active' si es la miniatura activa
+                                        onError={(e) => {
+                                            e.target.src = '/default-house.png'; // Imagen por defecto si falla la carga
+                                        }}
+                                    />
+                                </div>
+                            ))
+                        ) : (
+                            <div className="no-images-message">
+                                <p>No hay imágenes disponibles</p>
                             </div>
-                        ))}
+                        )}
                     </div>
 
                     {/* Contenido principal con imagen e información */}
                     <div className="main-content">
                         {/* Contenedor de la imagen principal con fecha de publicación */}
                         <div className="main-image-container">
-                            <img src={mainImage} alt="Casa en Colonia Escalón" className="main-image" />
+                            <img
+                                src={mainImage || '/default-house.png'}
+                                alt={propertyData.name}
+                                className="main-image"
+                                onError={(e) => {
+                                    e.target.src = '/default-house.png'; // Imagen por defecto si falla la carga
+                                }}
+                            />
                             <div className="image-date">Fecha Publicación: 15 de Febrero de 2024</div>
                         </div>
 
@@ -100,7 +205,7 @@ const PropertyViewAdmin = () => {
                         <div className="details-content3">
                             <ul>
                                 {/* Mapeo de la lista de detalles de la propiedad */}
-                                {propertyData.details.map((detail, index) => (
+                                {propertyData.details && propertyData.details.map((detail, index) => (
                                     <li key={index}>{detail}</li>
                                 ))}
                             </ul>
@@ -121,7 +226,7 @@ const PropertyViewAdmin = () => {
                         <div className="dimensions-content3">
                             <ul>
                                 {/* Mapeo de la lista de dimensiones de la propiedad */}
-                                {propertyData.dimensions.map((dimension, index) => (
+                                {propertyData.dimensions && propertyData.dimensions.map((dimension, index) => (
                                     <li key={index}>{dimension}</li>
                                 ))}
                             </ul>
@@ -130,7 +235,12 @@ const PropertyViewAdmin = () => {
                 </div>
             </div>
 
-            <EditPropertyCard isOpen={isEditModalOpen} onClose={closeEditModal} property={propertyData} />
+            {/* Pasar el objeto completo con todas las imágenes y datos */}
+            <EditPropertyCard
+                isOpen={isEditModalOpen}
+                onClose={closeEditModal}
+                property={completePropertyData}
+            />
 
         </>
     );

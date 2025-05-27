@@ -66,6 +66,7 @@ router.route("/")
     .post(upload.array("images", 10), handleMulterError, propertiesController.createProperties);
 
 router.route("/:id")
+    .get(propertiesController.getPropertyById)  
     .put(upload.array("images", 10), handleMulterError, propertiesController.updateProperties)
     .delete(propertiesController.deleteProperties);
 
