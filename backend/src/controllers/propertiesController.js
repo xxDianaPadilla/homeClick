@@ -125,11 +125,9 @@ propertiesController.deleteProperties = async (req, res) => {
 
 propertiesController.updateProperties = async (req, res) => {
     try {
-        // Validar que el ID es válido
         const propertyId = req.params.id;
         console.log('Received propertyId:', propertyId);
         
-        // Validación más robusta del ObjectId
         if (!propertyId || 
             propertyId === 'undefined' || 
             propertyId === 'null' || 
@@ -176,24 +174,19 @@ propertiesController.updateProperties = async (req, res) => {
 
         let imageURLs = [];
 
-        // Manejar imágenes existentes
         if (keepExistingImages === 'true' && existingImages) {
             try {
                 const parsedExistingImages = JSON.parse(existingImages);
-                // Mantener imágenes existentes que están en la lista
                 imageURLs = parsedExistingImages.map(imagePath => ({
                     image: imagePath
                 }));
             } catch (parseError) {
                 console.error('Error parsing existing images:', parseError);
-                // Si hay error parseando, mantener las imágenes actuales
                 imageURLs = existingProperty.images || [];
             }
         } else if (keepExistingImages === 'true') {
-            // Mantener todas las imágenes existentes
             imageURLs = existingProperty.images || [];
         } else {
-            // Eliminar imágenes existentes de Cloudinary si no se van a mantener
             if (existingProperty.images && existingProperty.images.length > 0) {
                 for (const img of existingProperty.images) {
                     if (img.image) {
@@ -208,7 +201,6 @@ propertiesController.updateProperties = async (req, res) => {
             }
         }
 
-        // Subir nuevas imágenes
         if (req.files && req.files.length > 0) {
             console.log('Uploading new images:', req.files.length);
             for (const file of req.files) {
@@ -228,7 +220,6 @@ propertiesController.updateProperties = async (req, res) => {
             }
         }
 
-        // Función helper para validar valores
         const isValidValue = (value) => {
             return value !== undefined && 
                    value !== null && 
@@ -237,18 +228,15 @@ propertiesController.updateProperties = async (req, res) => {
                    value !== 'null';
         };
 
-        // Preparar datos de actualización - campos requeridos
         const updateData = {
             images: imageURLs
         };
 
-        // Solo actualizar campos que tienen valores válidos
         if (isValidValue(name)) updateData.name = name;
         if (isValidValue(description)) updateData.description = description;
         if (isValidValue(location)) updateData.location = location;
         if (isValidValue(price)) updateData.price = price;
 
-        // Campos opcionales con validación adicional
         if (isValidValue(floors)) {
             const floorsNum = parseInt(floors);
             if (!isNaN(floorsNum) && floorsNum > 0) {
@@ -265,7 +253,6 @@ propertiesController.updateProperties = async (req, res) => {
         }
 
         if (isValidValue(constructionYear)) {
-            // Manejar constructionYear como string según tu schema
             const yearStr = constructionYear.toString().trim();
             if (yearStr.length === 4 && !isNaN(parseInt(yearStr))) {
                 updateData.constructionYear = yearStr;
@@ -301,7 +288,7 @@ propertiesController.updateProperties = async (req, res) => {
             updateData,
             { 
                 new: true,
-                runValidators: true // Ejecutar validaciones del schema
+                runValidators: true 
             }
         );
 
@@ -323,7 +310,6 @@ propertiesController.updateProperties = async (req, res) => {
             name: error.name
         });
         
-        // Manejar diferentes tipos de errores
         if (error.name === 'ValidationError') {
             return res.status(400).json({ 
                 error: "Error de validación: " + error.message 

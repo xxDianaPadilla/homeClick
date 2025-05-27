@@ -45,18 +45,14 @@ export const usePropertyData = (propertyId) => {
                 setThumbnails(imageUrls);
                 setMainImage(imageUrls[0] || '');
                 
-                // AQUÍ ESTÁ EL FIX: Incluir TODOS los datos originales + los procesados
                 const processedPropertyData = {
-                    // ✅ PRIMERO: Incluir TODOS los datos originales de la propiedad
                     ...property,
                     
-                    // ✅ SEGUNDO: Sobrescribir solo los campos que necesitas procesar para la vista
                     name: property.name || 'Propiedad sin nombre',
                     price: property.price ? `$${property.price.toLocaleString()}` : 'Precio no disponible',
                     location: property.location || 'Ubicación no especificada',
                     description: property.description || 'Sin descripción disponible',
                     
-                    // ✅ TERCERO: Agregar arrays procesados para la vista
                     details: [
                         `Habitaciones: ${property.rooms || 'No especificado'}`,
                         `Baños: ${property.bathrooms || 'No especificado'}`,
@@ -70,7 +66,6 @@ export const usePropertyData = (propertyId) => {
                         `Altura: ${property.height || 'No especificado'}`
                     ],
                     
-                    // ✅ CUARTO: Mantener los datos originales para edición con nombres alternativos
                     originalName: property.name,
                     originalPrice: property.price,
                     originalLocation: property.location,

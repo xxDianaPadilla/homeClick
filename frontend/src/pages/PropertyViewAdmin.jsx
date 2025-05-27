@@ -1,19 +1,24 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import NavBarAdminSearch from "../components/NavBarAdminSearch";
 import "../styles/PropertyViewAdmin.css";
 import EditPropertyCard from "../components/EditPropertyCard";
 import { usePropertyData } from '../components/Properties/Hooks/usePropertyData';
 import { useExpandableSections } from '../components/Properties/Hooks/useExpandableSections';
 import useEditProperty from "../components/Properties/Hooks/useEditProperty";
+import useFetchProperties from "../components/Properties/Hooks/useFetchProperties";
 
-// Definición del componente principal PropertyViewAdmin
 const PropertyViewAdmin = () => {
     const location = useLocation();
+    const navigate = useNavigate();
     const { fromCategory, propertyId } = location.state || { fromCategory: '/propertyAdmin', propertyId: '1' };
 
     const { mainImage, setMainImage, thumbnails, propertyData, loading, error } = usePropertyData(propertyId);
     const { detailsExpanded, dimensionsExpanded, toggleDetails, toggleDimensions } = useExpandableSections();
     const { isEditModalOpen, openEditModal, closeEditModal } = useEditProperty();
+    const { deleteProperty } = useFetchProperties();
+
+    const [isDeleting, setIsDeleting] = useState(false);
 
     const center = [13.6929, -89.2182];
 
@@ -24,13 +29,11 @@ const PropertyViewAdmin = () => {
         if (details && Array.isArray(details)) {
             details.forEach(detail => {
                 if (typeof detail === 'string') {
-                    // Buscar habitaciones
                     const roomMatch = detail.match(/habitaciones?:\s*(\d+)/i) || detail.match(/cuartos?:\s*(\d+)/i);
                     if (roomMatch) {
                         rooms = parseInt(roomMatch[1]);
                     }
 
-                    // Buscar pisos/niveles
                     const floorMatch = detail.match(/pisos?:\s*(\d+)/i) || detail.match(/niveles?:\s*(\d+)/i);
                     if (floorMatch) {
                         floors = parseInt(floorMatch[1]);
@@ -42,23 +45,18 @@ const PropertyViewAdmin = () => {
         return { rooms, floors };
     };
 
-    // Usar la función para extraer los datos
     const { rooms, floors } = extractRoomsAndFloors(propertyData.details);
 
-    // Crear objeto completo de la propiedad para pasar al modal
-    // AQUÍ ESTÁ EL FIX PRINCIPAL: Asegurar que el ID esté presente
     const completePropertyData = {
         ...propertyData,
-        // Asegurar que el ID esté presente en el formato correcto
         _id: propertyData._id || propertyData.id || propertyId,
         id: propertyData.id || propertyData._id || propertyId,
         thumbnails: thumbnails,
         images: thumbnails,
-        rooms: rooms,           // ← Agregar rooms extraído
-        floors: floors,         // ← Agregar floors extraído
+        rooms: rooms,
+        floors: floors,
     };
 
-    // Debug log para verificar el ID
     console.log('PropertyViewAdmin - Debug Info:', {
         propertyId,
         propertyData_id: propertyData._id,
@@ -67,7 +65,31 @@ const PropertyViewAdmin = () => {
         completePropertyData_id_type: typeof completePropertyData._id
     });
 
-    // Mostrar loading mientras se cargan los datos
+    const handleDeleteProperty = async () => {
+        const validId = completePropertyData._id || completePropertyData.id || propertyId;
+
+        if (!validId || validId === 'undefined' || validId === 'null') {
+            alert('Error: No se puede eliminar la propiedad. ID inválido.');
+            return;
+        }
+
+        const confirmDelete = window.confirm(
+            `¿Estás seguro de que deseas eliminar la propiedad "${propertyData.name}"? Esta acción no se puede deshacer.`
+        );
+
+        if (confirmDelete) {
+            try {
+                setIsDeleting(true); 
+                await deleteProperty(validId);
+                navigate('/propertyAdmin', { replace: true });
+            } catch (error) {
+                console.error('Error al eliminar la propiedad:', error);
+                alert('Error al eliminar la propiedad. Por favor, inténtalo de nuevo.');
+                setIsDeleting(false); 
+            }
+        }
+    };
+
     if (loading) {
         return (
             <>
@@ -81,7 +103,6 @@ const PropertyViewAdmin = () => {
         );
     }
 
-    // Mostrar error si hay problemas al cargar
     if (error) {
         return (
             <>
@@ -96,9 +117,7 @@ const PropertyViewAdmin = () => {
         );
     }
 
-    // Función para manejar la apertura del modal con validación adicional
     const handleOpenEditModal = () => {
-        // Validar que tenemos un ID válido antes de abrir el modal
         const validId = completePropertyData._id || completePropertyData.id || propertyId;
 
         console.log('Opening edit modal with ID:', validId);
@@ -108,7 +127,6 @@ const PropertyViewAdmin = () => {
             return;
         }
 
-        // Verificar formato de ObjectId (24 caracteres hexadecimales)
         if (typeof validId === 'string' && !/^[0-9a-fA-F]{24}$/.test(validId)) {
             console.warn('ID format may be invalid:', validId);
         }
@@ -116,7 +134,6 @@ const PropertyViewAdmin = () => {
         openEditModal();
     };
 
-    // Estructura JSX del componente
     return (
         <>
             {/* Barra de navegación para administradores con función de búsqueda */}
@@ -185,8 +202,20 @@ const PropertyViewAdmin = () => {
 
                             {/* Botones de acción para administradores */}
                             <div className="action-buttons3">
-                                <button className="btn-edit" onClick={openEditModal}>Editar publicación</button>
-                                <button className="btn-delete">Eliminar publicación</button>
+                                <button 
+                                    className="btn-edit" 
+                                    onClick={openEditModal}
+                                    disabled={isDeleting}
+                                >
+                                    Editar publicación
+                                </button>
+                                <button 
+                                    className="btn-delete" 
+                                    onClick={handleDeleteProperty}
+                                    disabled={isDeleting}
+                                >
+                                    {isDeleting ? 'Eliminando...' : 'Eliminar publicación'}
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -241,6 +270,20 @@ const PropertyViewAdmin = () => {
                 onClose={closeEditModal}
                 property={completePropertyData}
             />
+
+            {/* Modal de carga durante la eliminación */}
+            {isDeleting && (
+                <div className="delete-loading-overlay">
+                    <div className="delete-loading-modal">
+                        <div className="loading-spinner"></div>
+                        <h3>Eliminando propiedad...</h3>
+                        <p>Por favor espera mientras se elimina la propiedad y sus imágenes.</p>
+                        <div className="loading-bar">
+                            <div className="loading-bar-fill"></div>
+                        </div>
+                    </div>
+                </div>
+            )}
 
         </>
     );
