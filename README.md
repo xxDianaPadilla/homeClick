@@ -141,27 +141,27 @@ HomeClick está construido con el stack MERN, combinando lo mejor de MongoDB, Ex
 
 <h3>🚀 Cómo ejecutar la aplicación</h3>
 
-<div style="background-color: #f0f8f0; border-left: 4px solid #28a745; padding: 15px; margin: 15px 0;">
+<div style='background-color: #f0f8f0; border-left: 4px solid #28a745; padding: 15px; margin: 15px 0;'>
   <p><strong>⚡ Pasos para ejecutar HomeClick:</strong></p>
-  
-  <div style="display: flex; gap: 20px; margin-top: 15px;">
-    <div style="flex: 1; background: white; padding: 12px; border-radius: 8px; border: 1px solid #28a745;">
-      <h4 style="margin-top: 0; color: #28a745;">🖥️ Backend</h4>
-      <p style="margin: 5px 0;"><code>cd backend</code></p>
-        <p style="margin: 5px 0;"><code>npm install</code></p>
-      <p style="margin: 5px 0;"><code>node index.js</code></p>
+
+  <div style='flex: 1; background: white; padding: 12px; border-radius: 8px; border: 1px solid #007bff;'>
+      <h4 style='margin-top: 0; color: #007bff;'>🎨 Frontend</h4>
+      <p style='margin: 5px 0;'><code>cd frontend</code></p>
+      <p style='margin: 5px 0;'><code>npm install</code></p>
+      <p style='margin: 5px 0;'><code>npm run dev</code></p>
     </div>
-    
-    <div style="flex: 1; background: white; padding: 12px; border-radius: 8px; border: 1px solid #007bff;">
-      <h4 style="margin-top: 0; color: #007bff;">🎨 Frontend</h4>
-      <p style="margin: 5px 0;"><code>cd frontend</code></p>
-        <p style="margin: 5px 0;"><code>npm install</code></p>
-      <p style="margin: 5px 0;"><code>npm run dev</code></p>
+  
+  <div style='display: flex; gap: 20px; margin-top: 15px;'>
+    <div style='flex: 1; background: white; padding: 12px; border-radius: 8px; border: 1px solid #28a745;'>
+      <h4 style='margin-top: 0; color: #28a745;'>🖥️ Backend</h4>
+      <p style='margin: 5px 0;'><code>cd backend</code></p>
+      <p style='margin: 5px 0;'><code>npm install</code></p>
+      <p style='margin: 5px 0;'><code>node index.js</code></p>
     </div>
   </div>
   
-  <div style="background: #fff3cd; border: 1px solid #ffeaa7; padding: 10px; border-radius: 5px; margin-top: 15px;">
-    <p style="margin: 0;"><strong>💡 Tip:</strong> Asegúrate de tener MongoDB ejecutándose antes de iniciar el backend. Ambos servidores deben estar corriendo simultáneamente para el funcionamiento completo de la aplicación.</p>
+  <div style='background: #fff3cd; border: 1px solid #ffeaa7; padding: 10px; border-radius: 5px; margin-top: 15px;'>
+    <p style='margin: 0;'><strong>💡 Tip:</strong> Asegúrate de tener MongoDB ejecutándose antes de iniciar el backend. Ambos servidores deben estar corriendo simultáneamente para el funcionamiento completo de la aplicación.</p>
   </div>
 </div>
 
