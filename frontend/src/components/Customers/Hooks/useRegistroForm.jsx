@@ -1,35 +1,38 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 const useRegistroForm = () => {
     const navigate = useNavigate();
-
-    const [formData, setFormData] = React.useState({
-        firstName: "",
-        lastName: "",
-        phone: "",
-        password: "",
-        dui: "",
-        email: "",
-        budget: 0
-    });
-
-    const resetForm = () => {
-        setFormData({
-            firstName: '',
-            lastName: '',
-            email: '',
-            password: '',
-            confirmPassword: '',
-            phone: ''
-        });
-        setErrors({});
-        setMessage('');
-    };
-
-    const [errors, setErrors] = React.useState({});
     const [isLoading, setIsLoading] = React.useState(false);
     const [message, setMessage] = React.useState("");
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        watch,
+        reset,
+        setValue,
+        trigger
+    } = useForm({
+        mode: "onChange", 
+        defaultValues: {
+            firstName: "",
+            lastName: "",
+            phone: "",
+            address: "",
+            password: "",
+            dui: "",
+            email: "",
+            birthDay: "",
+            birthMonth: "",
+            birthYear: "",
+            termsAccepted: false
+        }
+    });
+
+    const watchedPassword = watch("password", "");
 
     const validatePassword = (password) => {
         const minLength = password.length >= 8;
@@ -46,66 +49,126 @@ const useRegistroForm = () => {
         };
     };
 
-    const validateForm = (data, birthDate, termsAccepted) => {
-        const newErrors = {};
-
-        if (!data.firstName.trim()) newErrors.firstName = "El nombre es requerido";
-        if (!data.lastName.trim()) newErrors.lastName = "Los apellidos son requeridos";
-        if (!data.phone.trim()) newErrors.phone = "El teléfono es requerido";
-        if (!data.address.trim()) newErrors.address = "La dirección es requerida";
-        if (!data.dui.trim()) newErrors.dui = "El DUI es requerido";
-        if (!data.email.trim()) newErrors.email = "El correo electrónico es requerido";
-
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (data.email && !emailRegex.test(data.email)) {
-            newErrors.email = "El formato del correo eletrónico es inválido";
+    const validationRules = {
+        firstName: {
+            required: "El nombre es requerido",
+            minLength: {
+                value: 2,
+                message: "El nombre debe tener al menos 2 caracteres"
+            },
+            pattern: {
+                value: /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/,
+                message: "El nombre solo puede contener letras"
+            }
+        },
+        lastName: {
+            required: "Los apellidos son requeridos",
+            minLength: {
+                value: 2,
+                message: "Los apellidos deben tener al menos 2 caracteres"
+            },
+            pattern: {
+                value: /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/,
+                message: "Los apellidos solo pueden contener letras"
+            }
+        },
+        phone: {
+            required: "El teléfono es requerido",
+            pattern: {
+                value: /^[0-9]{4}-[0-9]{4}$/,
+                message: "El teléfono debe tener el formato 1334-4716"
+            }
+        },
+        address: {
+            required: "La dirección es requerida",
+            minLength: {
+                value: 10,
+                message: "La dirección debe tener al menos 10 caracteres"
+            }
+        },
+        password: {
+            required: "La contraseña es requerida",
+            validate: (value) => {
+                const validation = validatePassword(value);
+                return validation.isValid || "La contraseña no cumple con los requisitos";
+            }
+        },
+        dui: {
+            required: "El DUI es requerido",
+            pattern: {
+                value: /^\d{8}-\d$/,
+                message: "El DUI debe tener el formato 12345678-9"
+            }
+        },
+        email: {
+            required: "El correo electrónico es requerido",
+            pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: "El formato del correo electrónico es inválido"
+            }
+        },
+        birthDay: {
+            required: "El día de nacimiento es requerido",
+            min: {
+                value: 1,
+                message: "Día inválido"
+            },
+            max: {
+                value: 31,
+                message: "Día inválido"
+            }
+        },
+        birthMonth: {
+            required: "El mes de nacimiento es requerido",
+            min: {
+                value: 1,
+                message: "Mes inválido"
+            },
+            max: {
+                value: 12,
+                message: "Mes inválido"
+            }
+        },
+        birthYear: {
+            required: "El año de nacimiento es requerido",
+            min: {
+                value: 1924,
+                message: "Año inválido"
+            },
+            max: {
+                value: new Date().getFullYear() - 18,
+                message: "Debe ser mayor de 18 años"
+            }
+        },
+        termsAccepted: {
+            required: "Debe aceptar los términos y condiciones"
         }
-
-        const passwordValidation = validatePassword(data.password);
-        if (!passwordValidation.isValid) {
-            newErrors.password = "La contraseña no cumple con los requisitos";
-        }
-
-        if (!birthDate.day || !birthDate.month || !birthDate.year) {
-            newErrors.birthDate = "La fecha de nacimiento es requerida";
-        }
-
-        if (!termsAccepted) {
-            newErrors.terms = "Debe aceptar los términos y condiciones";
-        }
-
-        return newErrors;
     };
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [name]: value
-        }));
-
-        if (errors[name]) {
-            setErrors(prev => ({
-                ...prev,
-                [name]: ""
-            }));
-        }
+    const resetForm = () => {
+        reset();
+        setMessage('');
     };
 
-    const submitForm = async (birthDate, termsAccepted) => {
-        const validationErrors = validateForm(formData, birthDate, termsAccepted);
-
-        if (Object.keys(validationErrors).length > 0) {
-            setErrors(validationErrors);
-            setMessage("Por favor, corrija los errores en el formulario");
-            return;
-        }
-
+    const submitForm = async (data) => {
         setIsLoading(true);
         setMessage("");
 
         try {
-            const birthDateString = `${birthDate.year}-${birthDate.month.toString().padStart(2, '0')}-${birthDate.day.toString().padStart(2, '0')}`;
+            // Construir la fecha de nacimiento
+            const birthDateString = `${data.birthYear}-${data.birthMonth.toString().padStart(2, '0')}-${data.birthDay.toString().padStart(2, '0')}`;
+
+            // Preparar los datos para enviar
+            const formDataToSend = {
+                firstName: data.firstName,
+                lastName: data.lastName,
+                phone: data.phone,
+                address: data.address,
+                password: data.password,
+                dui: data.dui,
+                email: data.email,
+                birthDate: birthDateString
+            };
 
             const response = await fetch("http://localhost:4000/api/registerCustomers", {
                 method: "POST",
@@ -113,19 +176,17 @@ const useRegistroForm = () => {
                     "Content-Type": "application/json",
                 },
                 credentials: "include",
-                body: JSON.stringify({
-                    ...formData,
-                    birthDate: birthDateString
-                }),
+                body: JSON.stringify(formDataToSend),
             });
 
-            const data = await response.json();
+            const responseData = await response.json();
 
             if (response.ok) {
                 alert('¡Registro exitoso! Ahora puedes iniciar sesión.');
                 resetForm();
+                // navigate("/inicio-sesion"); // Descomenta si quieres redirigir automáticamente
             } else {
-                setMessage(data.message || "Error en el registro");
+                setMessage(responseData.message || "Error en el registro");
             }
         } catch (error) {
             console.error("Error: ", error);
@@ -136,14 +197,17 @@ const useRegistroForm = () => {
     };
 
     return {
-        formData,
+        register,
+        handleSubmit: handleSubmit(submitForm),
         errors,
         isLoading,
         message,
-        handleInputChange,
-        submitForm,
-        validateForm,
-        resetForm
+        resetForm,
+        validatePassword,
+        watchedPassword,
+        setValue,
+        trigger,
+        validationRules
     };
 };
 

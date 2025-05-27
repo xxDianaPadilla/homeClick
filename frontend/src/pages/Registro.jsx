@@ -2,7 +2,6 @@ import React from 'react'; // Importa React y el hook useState para gestionar el
 import "../styles/Registro.css"; // Importa los estilos CSS específicos para la página de registro.
 import bgImgHouse from "../assets/imgLoginFondo.png"; // Importa la imagen de fondo para la página.
 import usePasswordToggle from '../components/Customers/Hooks/usePasswordToggle';
-import useBirthDate from '../components/Customers/Hooks/useBirthDate';
 import useTermsModal from '../components/Customers/Hooks/useTermsModal';
 import useRegistroForm from '../components/Customers/Hooks/useRegistroForm';
 
@@ -11,42 +10,37 @@ function Registro() {
   // Estado para controlar la visibilidad de la contraseña (mostrar u ocultar).
   const { showPassword, togglePasswordVisibility } = usePasswordToggle();
   const { showModal, handleModalOpen, handleModalClose } = useTermsModal();
-  const { selectedDate, setSelectedDate, resetBirthDate } = useBirthDate();
+
   const {
-    formData,
+    register,
+    handleSubmit,
     errors,
     isLoading,
     message,
-    handleInputChange,
-    submitForm,
+    resetForm,
     validatePassword,
-    resetForm
+    watchedPassword,
+    setValue,
+    trigger,
+    validationRules
   } = useRegistroForm();
 
-  const [isTermsAccepted, setIsTermsAccepted] = React.useState(false);
+  const passwordValidation = validatePassword(watchedPassword);
 
-  const passwordValidation = validatePassword ? validatePassword(formData.password) : null;
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    submitForm(selectedDate, isTermsAccepted);
+  const handleTermsChange = async (e) => {
+    setValue("termsAccepted", e.target.checked);
+    await trigger("termsAccepted");
   };
 
-  const handleResetComplete = () => {
-    resetForm();
-    setIsTermsAccepted(false);
-
-    setSelectedDate({day: '', month: '', year: ''});
-  };
-
-  const handleTermsChange = (e) => {
-    setIsTermsAccepted(e.target.checked);
+  const handleModalAccept = () => {
+    setValue("termsAccepted", true);
+    trigger("termsAccepted");
+    handleModalClose();
   };
 
   // Renderiza la estructura de la página de registro.
   return (
     <div className="register-container">
-      {/* Imagen de fondo de la página de registro. */}
       <img
         src={bgImgHouse}
         alt="Row of Victorian houses with warm sunlight"
@@ -64,68 +58,58 @@ function Registro() {
         )}
 
         <form className="registro-form" onSubmit={handleSubmit}>
-          {/* Campo de entrada para el nombre. */}
+          {/* Campo de entrada para el nombre */}
           <div className="input-group">
             <input
               type="text"
-              name="firstName"
               placeholder="Nombres"
               className={`text-input ${errors.firstName ? 'error' : ''}`}
-              value={formData.firstName}
-              onChange={handleInputChange}
+              {...register("firstName", validationRules.firstName)}
             />
-            {errors.firstName && <span className="error-text">{errors.firstName}</span>}
+            {errors.firstName && <span className="error-text">{errors.firstName.message}</span>}
           </div>
 
-          {/* Campo de entrada para los apellidos. */}
+          {/* Campo de entrada para los apellidos */}
           <div className="input-group">
             <input
               type="text"
-              name="lastName"
               placeholder="Apellidos"
               className={`text-input ${errors.lastName ? 'error' : ''}`}
-              value={formData.lastName}
-              onChange={handleInputChange}
+              {...register("lastName", validationRules.lastName)}
             />
-            {errors.lastName && <span className="error-text">{errors.lastName}</span>}
+            {errors.lastName && <span className="error-text">{errors.lastName.message}</span>}
           </div>
 
-          {/* Campo de entrada para el teléfono. */}
+          {/* Campo de entrada para el teléfono */}
           <div className="input-group">
             <input
               type="text"
-              name="phone"
               placeholder="Teléfono"
               className={`text-input ${errors.phone ? 'error' : ''}`}
-              value={formData.phone}
-              onChange={handleInputChange}
+              {...register("phone", validationRules.phone)}
             />
-            {errors.phone && <span className="error-text">{errors.phone}</span>}
+            {errors.phone && <span className="error-text">{errors.phone.message}</span>}
           </div>
 
-          {/* Campo de entrada para la dirección. */}
+          {/* Campo de entrada para la dirección */}
           <div className="input-group">
             <input
               type="text"
-              name="address"
               placeholder="Dirección"
               className={`text-input ${errors.address ? 'error' : ''}`}
-              value={formData.address}
-              onChange={handleInputChange}
+              {...register("address", validationRules.address)}
             />
-            {errors.address && <span className="error-text">{errors.address}</span>}
+            {errors.address && <span className="error-text">{errors.address.message}</span>}
           </div>
 
-          {/* Contenedor para el campo de contraseña y el icono para mostrar/ocultar la contraseña. */}
+          {/* Campo de entrada para la contraseña */}
           <div className="input-group">
             <div className="input-password-wrapper">
               <input
                 type={showPassword ? "text" : "password"}
-                name="password"
                 placeholder="Contraseña"
                 className={`text-input ${errors.password ? 'error' : ''}`}
-                value={formData.password}
-                onChange={handleInputChange}
+                {...register("password", validationRules.password)}
               />
               <span
                 className="toggle-password"
@@ -146,9 +130,9 @@ function Registro() {
                 </svg>
               </span>
             </div>
-            {errors.password && <span className="error-text">{errors.password}</span>}
+            {errors.password && <span className="error-text">{errors.password.message}</span>}
 
-            {/* Lista de requisitos para la contraseña. */}
+            {/* Lista de requisitos para la contraseña */}
             <div className="password-requirements">
               <ul>
                 <li className={passwordValidation?.minLength ? 'valid' : 'invalid'}>
@@ -167,41 +151,36 @@ function Registro() {
             </div>
           </div>
 
-          {/* Campo de entrada para el DUI (Documento Único de Identidad). */}
+          {/* Campo de entrada para el DUI */}
           <div className="input-group">
             <input
               type="text"
-              name="dui"
-              placeholder="DUI"
+              placeholder="DUI (Ej: 12345678-9)"
               className={`text-input ${errors.dui ? 'error' : ''}`}
-              value={formData.dui}
-              onChange={handleInputChange}
+              {...register("dui", validationRules.dui)}
             />
-            {errors.dui && <span className="error-text">{errors.dui}</span>}
+            {errors.dui && <span className="error-text">{errors.dui.message}</span>}
           </div>
 
-          {/* Campo de entrada para el correo electrónico. */}
+          {/* Campo de entrada para el correo electrónico */}
           <div className="input-group">
             <input
               type="email"
-              name="email"
               placeholder="Correo electrónico"
               className={`text-input ${errors.email ? 'error' : ''}`}
-              value={formData.email}
-              onChange={handleInputChange}
+              {...register("email", validationRules.email)}
             />
-            {errors.email && <span className="error-text">{errors.email}</span>}
+            {errors.email && <span className="error-text">{errors.email.message}</span>}
           </div>
 
-          {/* Contenedor para la selección de la fecha de nacimiento. */}
+          {/* Contenedor para la selección de la fecha de nacimiento */}
           <div className="input-group">
             <div className="fecha-container">
               <div className="fecha-nacimiento-label">Fecha de nacimiento</div>
               <div className="fecha-nacimiento-container">
                 <select
-                  value={selectedDate.day}
-                  onChange={(e) => setSelectedDate({ ...selectedDate, day: e.target.value })}
-                  className={errors.birthDate ? 'error' : ''}
+                  className={`${errors.birthDay ? 'error' : ''}`}
+                  {...register("birthDay", validationRules.birthDay)}
                 >
                   <option value="">Día</option>
                   {[...Array(31)].map((_, i) => (
@@ -210,9 +189,8 @@ function Registro() {
                 </select>
 
                 <select
-                  value={selectedDate.month}
-                  onChange={(e) => setSelectedDate({ ...selectedDate, month: e.target.value })}
-                  className={errors.birthDate ? 'error' : ''}
+                  className={`${errors.birthMonth ? 'error' : ''}`}
+                  {...register("birthMonth", validationRules.birthMonth)}
                 >
                   <option value="">Mes</option>
                   {['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'].map((month, i) => (
@@ -221,9 +199,8 @@ function Registro() {
                 </select>
 
                 <select
-                  value={selectedDate.year}
-                  onChange={(e) => setSelectedDate({ ...selectedDate, year: e.target.value })}
-                  className={errors.birthDate ? 'error' : ''}
+                  className={`${errors.birthYear ? 'error' : ''}`}
+                  {...register("birthYear", validationRules.birthYear)}
                 >
                   <option value="">Año</option>
                   {[...Array(100)].map((_, i) => {
@@ -232,27 +209,31 @@ function Registro() {
                   })}
                 </select>
               </div>
-              {errors.birthDate && <span className="error-text">{errors.birthDate}</span>}
+              {(errors.birthDay || errors.birthMonth || errors.birthYear) && (
+                <span className="error-text">
+                  {errors.birthDay?.message || errors.birthMonth?.message || errors.birthYear?.message}
+                </span>
+              )}
             </div>
           </div>
 
-          {/* Casilla de verificación para aceptar los términos y condiciones. */}
+          {/* Casilla de verificación para aceptar los términos y condiciones */}
           <div className="input-group">
             <div className="checkbox-container">
               <input
                 type="checkbox"
                 id="terms"
-                checked={isTermsAccepted}
+                {...register("termsAccepted", validationRules.termsAccepted)}
                 onChange={handleTermsChange}
               />
               <label htmlFor="terms" className="terms-label" onClick={handleModalOpen}>
                 Acepto los términos y condiciones
               </label>
             </div>
-            {errors.terms && <span className="error-text">{errors.terms}</span>}
+            {errors.termsAccepted && <span className="error-text">{errors.termsAccepted.message}</span>}
           </div>
 
-          {/* Botón para enviar el formulario de registro. */}
+          {/* Botón para enviar el formulario de registro */}
           <button
             className="submit-button2"
             type="submit"
@@ -261,7 +242,7 @@ function Registro() {
             {isLoading ? 'Registrando...' : 'Regístrate'}
           </button>
 
-          {/* Enlace para iniciar sesión si ya se tiene una cuenta. */}
+          {/* Enlace para iniciar sesión si ya se tiene una cuenta */}
           <div className="login-text">
             ¿Ya tienes una cuenta creada? <a href="/inicio-sesion">Inicia sesión</a>
           </div>
@@ -352,7 +333,7 @@ function Registro() {
               </div>
             </div>
 
-            <button className="accept-button" onClick={handleModalClose}>
+            <button className="accept-button" onClick={handleModalAccept}>
               Aceptar términos y condiciones
             </button>
           </div>
