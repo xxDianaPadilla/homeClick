@@ -125,6 +125,46 @@ HomeClick está construido con el stack MERN, combinando lo mejor de MongoDB, Ex
 4. Crea un archivo .env en la carpeta backend
 5. Inicia el servidor de desarrollo
 
+<h3>🔒 Validación y manejo de errores</h3>
+
+<div style="background-color: #f8f9fa; border-left: 4px solid #007bff; padding: 15px; margin: 15px 0;">
+  <p><strong>✅ Validación de formularios y manejo de errores:</strong></p>
+  <p>Los formularios implementan validaciones efectivas tanto a nivel de cliente como servidor. Los mensajes de error son claros y guían al usuario. Los errores comunes están contemplados y gestionados apropiadamente. En el cliente se utiliza la validación de formularios con la librería <strong>React-hook-form</strong>.</p>
+  
+  <ul style="margin-top: 10px;">
+    <li><strong>🎯 Validación del lado del cliente:</strong> React-hook-form proporciona validación en tiempo real</li>
+    <li><strong>🛡️ Validación del servidor:</strong> Verificaciones adicionales en el backend</li>
+    <li><strong>💬 Mensajes informativos:</strong> Feedback claro para el usuario</li>
+    <li><strong>⚡ Manejo de errores:</strong> Gestión robusta de casos excepcionales</li>
+  </ul>
+</div>
+
+<h3>🚀 Cómo ejecutar la aplicación</h3>
+
+<div style="background-color: #f0f8f0; border-left: 4px solid #28a745; padding: 15px; margin: 15px 0;">
+  <p><strong>⚡ Pasos para ejecutar HomeClick:</strong></p>
+  
+  <div style="display: flex; gap: 20px; margin-top: 15px;">
+    <div style="flex: 1; background: white; padding: 12px; border-radius: 8px; border: 1px solid #28a745;">
+      <h4 style="margin-top: 0; color: #28a745;">🖥️ Backend</h4>
+      <p style="margin: 5px 0;"><code>cd backend</code></p>
+        <p style="margin: 5px 0;"><code>npm install</code></p>
+      <p style="margin: 5px 0;"><code>node index.js</code></p>
+    </div>
+    
+    <div style="flex: 1; background: white; padding: 12px; border-radius: 8px; border: 1px solid #007bff;">
+      <h4 style="margin-top: 0; color: #007bff;">🎨 Frontend</h4>
+      <p style="margin: 5px 0;"><code>cd frontend</code></p>
+        <p style="margin: 5px 0;"><code>npm install</code></p>
+      <p style="margin: 5px 0;"><code>npm run dev</code></p>
+    </div>
+  </div>
+  
+  <div style="background: #fff3cd; border: 1px solid #ffeaa7; padding: 10px; border-radius: 5px; margin-top: 15px;">
+    <p style="margin: 0;"><strong>💡 Tip:</strong> Asegúrate de tener MongoDB ejecutándose antes de iniciar el backend. Ambos servidores deben estar corriendo simultáneamente para el funcionamiento completo de la aplicación.</p>
+  </div>
+</div>
+
 <hr>
 
 <div align="center">
