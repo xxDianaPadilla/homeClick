@@ -2,16 +2,13 @@ import { useState } from "react";
 
 export const usePropertySubmit = (formData, images, onClose, property = null, setIsLoading, setLoadingMessage) => {
     
-    // Función helper para validar ObjectId de MongoDB
     const isValidObjectId = (id) => {
         if (!id) return false;
         if (typeof id !== 'string') return false;
         if (id === 'undefined' || id === 'null') return false;
-        // Verificar formato hexadecimal de 24 caracteres
         return /^[0-9a-fA-F]{24}$/.test(id);
     };
 
-    // Función para extraer y validar el ID de la propiedad
     const extractPropertyId = (property) => {
         if (!property) return null;
         
@@ -22,10 +19,8 @@ export const usePropertySubmit = (formData, images, onClose, property = null, se
             id: property.id
         });
 
-        // Intentar obtener el ID de diferentes formas
         let propertyId = property._id || property.id;
         
-        // Si es un objeto con $oid (formato de algunos drivers de MongoDB)
         if (typeof propertyId === 'object' && propertyId.$oid) {
             propertyId = propertyId.$oid;
         }
@@ -36,11 +31,12 @@ export const usePropertySubmit = (formData, images, onClose, property = null, se
         return propertyId;
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const handleSubmit = async (e, processedFormData = null) => {
+        if (e) e.preventDefault();
 
-        // Validación inicial de campos requeridos
-        if (!formData.name || !formData.description || !formData.price || !formData.location) {
+        const submitFormData = processedFormData || formData;
+
+        if (!submitFormData.name || !submitFormData.description || !submitFormData.price || !submitFormData.location) {
             alert('Por favor completa todos los campos requeridos');
             return;
         }
@@ -50,7 +46,6 @@ export const usePropertySubmit = (formData, images, onClose, property = null, se
             return;
         }
 
-        // Validación específica para actualización de propiedades
         let propertyId = null;
         if (property) {
             propertyId = extractPropertyId(property);
@@ -72,7 +67,6 @@ export const usePropertySubmit = (formData, images, onClose, property = null, se
 
             const submitData = new FormData();
 
-            // Función helper para validar si un valor es válido
             const isValidValue = (value) => {
                 return value !== '' && 
                        value !== null && 
@@ -81,24 +75,33 @@ export const usePropertySubmit = (formData, images, onClose, property = null, se
                        value !== 'null';
             };
 
-            // Procesar datos del formulario
-            Object.keys(formData).forEach(key => {
-                if (!isValidValue(formData[key])) {
-                    return; // Skip valores inválidos
+            Object.keys(submitFormData).forEach(key => {
+                if (!isValidValue(submitFormData[key])) {
+                    return; 
                 }
 
                 let backendKey = key;
-                let value = formData[key];
+                let value = submitFormData[key];
 
                 switch (key) {
                     case 'bedrooms': 
+                        if (submitFormData.rooms !== undefined) {
+                            return; 
+                        }
                         backendKey = 'rooms'; 
+                        value = parseInt(value);
+                        if (isNaN(value) || value <= 0) return;
+                        break;
+                    case 'rooms':
                         value = parseInt(value);
                         if (isNaN(value) || value <= 0) return;
                         break;
                     case 'parking':
                         backendKey = 'parkingLot';
                         value = value === 'Sí' ? true : false;
+                        break;
+                    case 'parkingLot':
+                        value = Boolean(value);
                         break;
                     case 'patio':
                         value = value === 'Sí' ? true : false;
@@ -114,12 +117,10 @@ export const usePropertySubmit = (formData, images, onClose, property = null, se
                         break;
                     case 'lotSize':
                     case 'height':
-                        // Para campos de texto, verificar que no estén vacíos
                         if (typeof value === 'string' && value.trim() === '') return;
                         break;
                     case 'address':
-                        // El address no está en el esquema, skip
-                        return;
+                        return; 
                 }
 
                 submitData.append(backendKey, value);
@@ -127,25 +128,21 @@ export const usePropertySubmit = (formData, images, onClose, property = null, se
 
             setLoadingMessage('Procesando imágenes...');
 
-            // Manejar imágenes nuevas
             const newImages = images.filter(image => image.file);
             newImages.forEach((image, index) => {
                 submitData.append('images', image.file);
             });
 
-            // Manejar imágenes existentes para actualización
             if (property) {
                 const existingImages = images.filter(image => image.isExisting);
                 if (existingImages.length > 0) {
                     submitData.append('existingImages', JSON.stringify(existingImages.map(img => img.path || img.image)));
                 }
-                // Agregar flag para mantener imágenes existentes si las hay
                 if (existingImages.length > 0) {
                     submitData.append('keepExistingImages', 'true');
                 }
             }
 
-            // Construir URL
             const baseUrl = 'http://localhost:4000/api/properties';
             const url = property ? `${baseUrl}/${propertyId}` : baseUrl;
             const method = property ? 'PUT' : 'POST';
@@ -155,7 +152,8 @@ export const usePropertySubmit = (formData, images, onClose, property = null, se
                 method,
                 propertyId,
                 hasImages: newImages.length > 0,
-                hasExistingImages: property ? images.filter(image => image.isExisting).length : 0
+                hasExistingImages: property ? images.filter(image => image.isExisting).length : 0,
+                formData: Object.fromEntries(submitData.entries()) 
             });
 
             setLoadingMessage(
@@ -193,7 +191,6 @@ export const usePropertySubmit = (formData, images, onClose, property = null, se
                 );
                 
                 if (property) {
-                    // En lugar de recargar toda la página, podrías emitir un evento o llamar una función de callback
                     window.location.reload();
                 }
             }, 1000);
@@ -202,7 +199,6 @@ export const usePropertySubmit = (formData, images, onClose, property = null, se
             console.error("Error completo:", error);
             setIsLoading(false);
             
-            // Mensaje de error más descriptivo
             let errorMessage = "Error al guardar la propiedad: ";
             if (error.message.includes('ID de propiedad inválido')) {
                 errorMessage += "El identificador de la propiedad no es válido. Intenta recargar la página e intentar nuevamente.";

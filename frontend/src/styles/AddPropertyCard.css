@@ -354,3 +354,90 @@ textarea:disabled {
     justify-content: center;
   }
 }
+
+.form-group input.error,
+.form-group select.error,
+.form-group textarea.error {
+    border: 2px solid #e74c3c;
+    background-color: #fdf2f2;
+}
+
+.form-group input.error:focus,
+.form-group select.error:focus,
+.form-group textarea.error:focus {
+    border-color: #e74c3c;
+    box-shadow: 0 0 0 0.2rem rgba(231, 76, 60, 0.25);
+    outline: none;
+}
+
+.form-error {
+    color: #e74c3c;
+    font-size: 12px;
+    margin-top: 4px;
+    display: block;
+    font-weight: 500;
+}
+
+.form-group {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.form-group.has-error {
+    margin-bottom: 25px;
+}
+
+.form-error {
+    animation: slideIn 0.3s ease-in-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-group input:valid:not(:placeholder-shown),
+.form-group select:valid,
+.form-group textarea:valid:not(:placeholder-shown) {
+    border-color: #27ae60;
+}
+
+.form-group input[required]::placeholder::after,
+.form-group select[required]::after,
+.form-group textarea[required]::placeholder::after {
+    content: " *";
+    color: #e74c3c;
+}
+
+.add-button:disabled {
+    background-color: #bdc3c7;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.add-button:disabled:hover {
+    background-color: #bdc3c7;
+    transform: none;
+}
+
+.add-property-modal form.submitting {
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.form-error.long-message {
+    font-size: 11px;
+    line-height: 1.3;
+}
+
+@media (max-width: 768px) {
+    .form-error {
+        font-size: 11px;
+    }
+}

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import '../styles/AddPropertyCard.css';
 import closeIcon from '../assets/image10.png';
 import pictureIcon from "../assets/image35.png";
@@ -14,20 +14,42 @@ const AddPropertyCard = ({ isOpen, onClose, property }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [loadingMessage, setLoadingMessage] = useState('');
 
-    const { formData, handleChange, resetForm } = usePropertyForm(property);
+    const {
+        register,
+        handleSubmit: handleFormSubmit,
+        errors,
+        isSubmitting,
+        resetForm,
+        validationRules,
+        handleCustomChange,
+        prepareDataForSubmit,
+        getFieldError,
+        hasFieldError
+    } = usePropertyForm(property);
+
     const { images, handleRemoveImage, handleImageUpload, getImagePreview, clearImages } = usePropertyImages(initialImages);
 
     const { handleSubmit } = usePropertySubmit(
-        formData, 
-        images, 
-        onClose, 
-        property, 
-        setIsLoading, 
+        null,
+        images,
+        onClose,
+        property,
+        setIsLoading,
         setLoadingMessage
     );
 
+    const onSubmit = (data) => {
+        if (images.length === 0) {
+            alert('Por favor sube al menos una imagen');
+            return;
+        }
+
+        const processedData = prepareDataForSubmit(data);
+        handleSubmit(null, processedData);
+    };
+
     const handleClose = () => {
-        if (isLoading) return; 
+        if (isLoading || isSubmitting) return;
         resetForm();
         clearImages();
         onClose();
@@ -41,10 +63,10 @@ const AddPropertyCard = ({ isOpen, onClose, property }) => {
                 <div className="add-property-modal">
                     <div className="add-property-header">
                         <h2>{property ? 'Editar propiedad' : 'Información de la publicación'}</h2>
-                        <button 
-                            className="close-button" 
+                        <button
+                            className="close-button"
                             onClick={handleClose}
-                            disabled={isLoading}
+                            disabled={isLoading || isSubmitting}
                         >
                             <img src={closeIcon} alt="Cerrar" />
                         </button>
@@ -68,7 +90,7 @@ const AddPropertyCard = ({ isOpen, onClose, property }) => {
                                                     borderRadius: '4px'
                                                 }}
                                                 onError={(e) => {
-                                                    e.target.src = pictureIcon; 
+                                                    e.target.src = pictureIcon;
                                                 }}
                                             />
                                             <div className="image-info">
@@ -82,14 +104,14 @@ const AddPropertyCard = ({ isOpen, onClose, property }) => {
                                             className="remove-image-button"
                                             onClick={() => handleRemoveImage(image.id)}
                                             type="button"
-                                            disabled={isLoading}
+                                            disabled={isLoading || isSubmitting}
                                         >
                                             ×
                                         </button>
                                     </div>
                                 ))}
                             </div>
-                            <label className={`upload-image-button ${isLoading ? 'disabled' : ''}`}>
+                            <label className={`upload-image-button ${(isLoading || isSubmitting) ? 'disabled' : ''}`}>
                                 <img src={uploadIcon} alt="Subir" />
                                 <span>Cargar Imagen</span>
                                 <input
@@ -98,46 +120,55 @@ const AddPropertyCard = ({ isOpen, onClose, property }) => {
                                     multiple
                                     onChange={handleImageUpload}
                                     style={{ display: 'none' }}
-                                    disabled={isLoading}
+                                    disabled={isLoading || isSubmitting}
                                 />
                             </label>
                             <p className="upload-info">
                                 Puedes seleccionar múltiples imágenes. Formatos permitidos: JPG, PNG, JPEG
                             </p>
+
+                            {/* Mostrar error si no hay imágenes */}
+                            {images.length === 0 && (
+                                <div className="form-error" style={{ marginTop: '10px', color: '#e74c3c', fontSize: '14px' }}>
+                                    * Se requiere al menos una imagen
+                                </div>
+                            )}
                         </div>
 
                         <div className="add-property-right">
                             <h3>Detalles y dimensiones de la propiedad</h3>
-                            <form onSubmit={handleSubmit}>
+                            <form onSubmit={handleFormSubmit(onSubmit)}>
                                 <div className="form-row">
                                     <div className="form-group">
                                         <input
                                             type="number"
-                                            name="bedrooms"
                                             placeholder="Cant. habitaciones"
-                                            value={formData.bedrooms}
-                                            onChange={handleChange}
+                                            {...register("bedrooms", validationRules.bedrooms)}
                                             min="0"
-                                            disabled={isLoading}
+                                            disabled={isLoading || isSubmitting}
+                                            className={hasFieldError('bedrooms') ? 'error' : ''}
                                         />
+                                        {hasFieldError('bedrooms') && (
+                                            <span className="form-error">{getFieldError('bedrooms')}</span>
+                                        )}
                                     </div>
                                     <div className="form-group">
                                         <input
                                             type="number"
-                                            name="bathrooms"
                                             placeholder="Cant. baños"
-                                            value={formData.bathrooms}
-                                            onChange={handleChange}
+                                            {...register("bathrooms", validationRules.bathrooms)}
                                             min="0"
-                                            disabled={isLoading}
+                                            disabled={isLoading || isSubmitting}
+                                            className={hasFieldError('bathrooms') ? 'error' : ''}
                                         />
+                                        {hasFieldError('bathrooms') && (
+                                            <span className="form-error">{getFieldError('bathrooms')}</span>
+                                        )}
                                     </div>
                                     <div className="form-group">
                                         <select
-                                            name="parking"
-                                            value={formData.parking}
-                                            onChange={handleChange}
-                                            disabled={isLoading}
+                                            {...register("parking")}
+                                            disabled={isLoading || isSubmitting}
                                         >
                                             <option value="">¿Tiene parqueo?</option>
                                             <option value="Sí">Sí</option>
@@ -149,10 +180,8 @@ const AddPropertyCard = ({ isOpen, onClose, property }) => {
                                 <div className="form-row">
                                     <div className="form-group">
                                         <select
-                                            name="patio"
-                                            value={formData.patio}
-                                            onChange={handleChange}
-                                            disabled={isLoading}
+                                            {...register("patio")}
+                                            disabled={isLoading || isSubmitting}
                                         >
                                             <option value="">¿Tiene patio?</option>
                                             <option value="Sí">Sí</option>
@@ -162,23 +191,27 @@ const AddPropertyCard = ({ isOpen, onClose, property }) => {
                                     <div className="form-group">
                                         <input
                                             type="number"
-                                            name="floors"
                                             placeholder="Cantidad de niveles"
-                                            value={formData.floors}
-                                            onChange={handleChange}
+                                            {...register("floors", validationRules.floors)}
                                             min="1"
-                                            disabled={isLoading}
+                                            disabled={isLoading || isSubmitting}
+                                            className={hasFieldError('floors') ? 'error' : ''}
                                         />
+                                        {hasFieldError('floors') && (
+                                            <span className="form-error">{getFieldError('floors')}</span>
+                                        )}
                                     </div>
                                     <div className="form-group">
                                         <input
                                             type="text"
-                                            name="constructionYear"
                                             placeholder="Año de construcción"
-                                            value={formData.constructionYear}
-                                            onChange={handleChange}
-                                            disabled={isLoading}
+                                            {...register("constructionYear", validationRules.constructionYear)}
+                                            disabled={isLoading || isSubmitting}
+                                            className={hasFieldError('constructionYear') ? 'error' : ''}
                                         />
+                                        {hasFieldError('constructionYear') && (
+                                            <span className="form-error">{getFieldError('constructionYear')}</span>
+                                        )}
                                     </div>
                                 </div>
 
@@ -186,60 +219,67 @@ const AddPropertyCard = ({ isOpen, onClose, property }) => {
                                     <div className="form-group">
                                         <input
                                             type="text"
-                                            name="location"
                                             placeholder="Donde queda, ejemplo: Colonia Escalon"
-                                            value={formData.location}
-                                            onChange={handleChange}
-                                            required
-                                            disabled={isLoading}
+                                            {...register("location", validationRules.location)}
+                                            disabled={isLoading || isSubmitting}
+                                            className={hasFieldError('location') ? 'error' : ''}
                                         />
+                                        {hasFieldError('location') && (
+                                            <span className="form-error">{getFieldError('location')}</span>
+                                        )}
                                     </div>
                                 </div>
 
                                 <div className="form-row">
                                     <div className="form-group">
                                         <input
-                                            name="name"
                                             placeholder="Nombre de la propiedad"
-                                            value={formData.name}
-                                            onChange={handleChange}
-                                            required
-                                            disabled={isLoading}
+                                            {...register("name", validationRules.name)}
+                                            disabled={isLoading || isSubmitting}
+                                            className={hasFieldError('name') ? 'error' : ''}
                                         />
+                                        {hasFieldError('name') && (
+                                            <span className="form-error">{getFieldError('name')}</span>
+                                        )}
                                     </div>
                                     <div className="form-group">
                                         <input
                                             type="text"
-                                            name="lotSize"
                                             placeholder="Tamaño del lote (ej: 200m²)"
-                                            value={formData.lotSize}
-                                            onChange={handleChange}
-                                            disabled={isLoading}
+                                            {...register("lotSize", validationRules.lotSize)}
+                                            disabled={isLoading || isSubmitting}
+                                            className={hasFieldError('lotSize') ? 'error' : ''}
                                         />
+                                        {hasFieldError('lotSize') && (
+                                            <span className="form-error">{getFieldError('lotSize')}</span>
+                                        )}
                                     </div>
                                     <div className="form-group">
                                         <input
                                             type="text"
-                                            name="height"
                                             placeholder="Altura (ej: 2.5m)"
-                                            value={formData.height}
-                                            onChange={handleChange}
-                                            disabled={isLoading}
+                                            {...register("height", validationRules.height)}
+                                            disabled={isLoading || isSubmitting}
+                                            className={hasFieldError('height') ? 'error' : ''}
                                         />
+                                        {hasFieldError('height') && (
+                                            <span className="form-error">{getFieldError('height')}</span>
+                                        )}
                                     </div>
                                 </div>
 
                                 <div className="form-row full-width">
                                     <div className="form-group description-group">
                                         <textarea
-                                            name="description"
                                             placeholder="Descripción de la propiedad"
-                                            value={formData.description}
-                                            onChange={handleChange}
+                                            {...register("description", validationRules.description)}
                                             rows="4"
-                                            required
-                                            disabled={isLoading}
+                                            disabled={isLoading || isSubmitting}
+                                            className={hasFieldError('description') ? 'error' : ''}
                                         ></textarea>
+                                        {hasFieldError('description') && (
+                                            <span className="form-error">{getFieldError('description')}</span>
+                                        )}
                                     </div>
                                 </div>
 
@@ -247,25 +287,27 @@ const AddPropertyCard = ({ isOpen, onClose, property }) => {
                                     <div className="form-group price-group">
                                         <input
                                             type="text"
-                                            name="price"
                                             placeholder="Precio (ej: $150,000)"
-                                            value={formData.price}
-                                            onChange={handleChange}
-                                            required
-                                            disabled={isLoading}
+                                            {...register("price", validationRules.price)}
+                                            disabled={isLoading || isSubmitting}
+                                            className={hasFieldError('price') ? 'error' : ''}
+                                            onChange={(e) => handleCustomChange('price', e.target.value)}
                                         />
+                                        {hasFieldError('price') && (
+                                            <span className="form-error">{getFieldError('price')}</span>
+                                        )}
                                     </div>
-                                    <button 
-                                        type="submit" 
-                                        className={`add-button ${isLoading ? 'loading' : ''}`}
-                                        disabled={isLoading}
+                                    <button
+                                        type="submit"
+                                        className={`add-button ${(isLoading || isSubmitting) ? 'loading' : ''}`}
+                                        disabled={isLoading || isSubmitting}
                                     >
                                         <img src={saveIcon} alt="Guardar" />
                                         <span>
-                                            {isLoading 
-                                                ? 'Guardando...' 
-                                                : property 
-                                                    ? 'Actualizar propiedad' 
+                                            {(isLoading || isSubmitting)
+                                                ? 'Guardando...'
+                                                : property
+                                                    ? 'Actualizar propiedad'
                                                     : 'Crear publicación'
                                             }
                                         </span>
@@ -276,9 +318,9 @@ const AddPropertyCard = ({ isOpen, onClose, property }) => {
                     </div>
                 </div>
             </div>
-            
-            <LoadingOverlay 
-                isVisible={isLoading} 
+
+            <LoadingOverlay
+                isVisible={isLoading}
                 message={loadingMessage}
             />
         </>
