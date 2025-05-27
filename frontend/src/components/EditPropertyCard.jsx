@@ -12,18 +12,28 @@ const EditPropertyCard = ({ isOpen, onClose, property }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState('');
 
-  // Procesar la propiedad antes de pasarla al hook
   const processedProperty = property ? {
     ...property,
-    // Extraer datos adicionales si existen
     ...extractPropertyData(property)
   } : null;
 
-  // Inicializar hooks con los datos procesados
-  const { formData, handleChange, setFormData } = usePropertyForm(processedProperty);
+  const { 
+    register, 
+    handleSubmit: handleFormSubmit, 
+    errors, 
+    isSubmitting,
+    setValue,
+    getValues,
+    validationRules,
+    handleCustomChange,
+    prepareDataForSubmit,
+    getFieldError,
+    hasFieldError
+  } = usePropertyForm(processedProperty);
+
   const { images, handleRemoveImage, handleImageUpload, setImages } = usePropertyImages(property?.images || []);
-  const { handleSubmit } = usePropertySubmit(
-    formData,
+  const { handleSubmit: handlePropertySubmit } = usePropertySubmit(
+    null, 
     images,
     onClose,
     property,
@@ -35,7 +45,6 @@ const EditPropertyCard = ({ isOpen, onClose, property }) => {
     if (property && isOpen) {
       console.log('Property data:', property);
       
-      // Procesar imágenes
       const imagesToUse = property.thumbnails || property.images || [];
       if (imagesToUse && Array.isArray(imagesToUse) && imagesToUse.length > 0) {
         const processedImages = imagesToUse.map((img, index) => ({
@@ -47,40 +56,33 @@ const EditPropertyCard = ({ isOpen, onClose, property }) => {
         setImages(processedImages);
       }
     }
-  }, [property, isOpen, setImages]); // Remover setFormData del array de dependencias
+  }, [property, isOpen, setImages]); 
 
-  // Función para extraer datos de details y dimensions
   function extractPropertyData(property) {
     const extracted = {};
 
-    // Solo extraer de details si existe y es un array
     if (property.details && Array.isArray(property.details)) {
       property.details.forEach(detail => {
         const lowerDetail = detail.toLowerCase();
 
-        // Extraer habitaciones
         if (lowerDetail.includes('habitación') || lowerDetail.includes('dormitorio')) {
           const match = detail.match(/(\d+)/);
           if (match && !property.rooms) extracted.rooms = parseInt(match[1]);
         }
 
-        // Extraer baños
         if (lowerDetail.includes('baño')) {
           const match = detail.match(/(\d+)/);
           if (match && !property.bathrooms) extracted.bathrooms = parseInt(match[1]);
         }
 
-        // Extraer parqueo
         if (lowerDetail.includes('parqueo') || lowerDetail.includes('garaje')) {
           if (property.parkingLot === undefined) extracted.parkingLot = true;
         }
 
-        // Extraer patio
         if (lowerDetail.includes('patio') || lowerDetail.includes('jardín')) {
           if (property.patio === undefined) extracted.patio = true;
         }
 
-        // Extraer año de construcción
         if (lowerDetail.includes('año') || lowerDetail.includes('construc')) {
           const match = detail.match(/(\d{4})/);
           if (match && !property.constructionYear) extracted.constructionYear = match[1];
@@ -88,24 +90,20 @@ const EditPropertyCard = ({ isOpen, onClose, property }) => {
       });
     }
 
-    // Solo extraer de dimensions si existe y es un array
     if (property.dimensions && Array.isArray(property.dimensions)) {
       property.dimensions.forEach(dimension => {
         const lowerDimension = dimension.toLowerCase();
 
-        // Extraer niveles/pisos
         if (lowerDimension.includes('nivel') || lowerDimension.includes('piso')) {
           const match = dimension.match(/(\d+)/);
           if (match && !property.floors) extracted.floors = parseInt(match[1]);
         }
 
-        // Extraer tamaño del lote
         if (lowerDimension.includes('lote') || lowerDimension.includes('terreno')) {
           const match = dimension.match(/(\d+(?:\.\d+)?)/);
           if (match && !property.lotSize) extracted.lotSize = match[1];
         }
 
-        // Extraer altura
         if (lowerDimension.includes('altura') || lowerDimension.includes('alto')) {
           const match = dimension.match(/(\d+(?:\.\d+)?)/);
           if (match && !property.height) extracted.height = match[1];
@@ -115,6 +113,22 @@ const EditPropertyCard = ({ isOpen, onClose, property }) => {
 
     return extracted;
   }
+
+  const onSubmit = async (formData) => {
+    if (images.length === 0) {
+      alert('Por favor sube al menos una imagen');
+      return;
+    }
+
+    const processedData = prepareDataForSubmit(formData);
+    
+    await handlePropertySubmit(null, processedData);
+  };
+
+  const handleFieldChange = (fieldName) => (e) => {
+    const value = e.target.value;
+    handleCustomChange(fieldName, value);
+  };
 
   if (!isOpen) return null;
 
@@ -183,147 +197,174 @@ const EditPropertyCard = ({ isOpen, onClose, property }) => {
 
           <div className="edit-property-right">
             <h3>Detalles y dimensiones de la propiedad</h3>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleFormSubmit(onSubmit)}>
               <div className="form-row">
                 <div className="form-group">
                   <input
+                    {...register("bedrooms", validationRules.bedrooms)}
                     type="number"
-                    name="bedrooms"
                     placeholder="Cant. habitaciones"
-                    value={formData.bedrooms}
-                    onChange={handleChange}
                     min="0"
+                    className={hasFieldError("bedrooms") ? "error" : ""}
                   />
+                  {hasFieldError("bedrooms") && (
+                    <span className="error-message">{getFieldError("bedrooms")}</span>
+                  )}
                 </div>
                 <div className="form-group">
                   <input
+                    {...register("bathrooms", validationRules.bathrooms)}
                     type="number"
-                    name="bathrooms"
                     placeholder="Cant. baños"
-                    value={formData.bathrooms}
-                    onChange={handleChange}
                     min="0"
+                    className={hasFieldError("bathrooms") ? "error" : ""}
                   />
+                  {hasFieldError("bathrooms") && (
+                    <span className="error-message">{getFieldError("bathrooms")}</span>
+                  )}
                 </div>
                 <div className="form-group">
                   <select
-                    name="parking"
-                    value={formData.parking}
-                    onChange={handleChange}
+                    {...register("parking")}
+                    className={hasFieldError("parking") ? "error" : ""}
                   >
                     <option value="">Parqueo</option>
                     <option value="Sí">Sí</option>
                     <option value="No">No</option>
                   </select>
+                  {hasFieldError("parking") && (
+                    <span className="error-message">{getFieldError("parking")}</span>
+                  )}
                 </div>
               </div>
 
               <div className="form-row">
                 <div className="form-group">
                   <select
-                    name="patio"
-                    value={formData.patio}
-                    onChange={handleChange}
+                    {...register("patio")}
+                    className={hasFieldError("patio") ? "error" : ""}
                   >
                     <option value="">Patio</option>
                     <option value="Sí">Sí</option>
                     <option value="No">No</option>
                   </select>
+                  {hasFieldError("patio") && (
+                    <span className="error-message">{getFieldError("patio")}</span>
+                  )}
                 </div>
                 <div className="form-group">
                   <input
+                    {...register("floors", validationRules.floors)}
                     type="number"
-                    name="floors"
                     placeholder="Cantidad de niveles"
-                    value={formData.floors}
-                    onChange={handleChange}
                     min="1"
+                    className={hasFieldError("floors") ? "error" : ""}
                   />
+                  {hasFieldError("floors") && (
+                    <span className="error-message">{getFieldError("floors")}</span>
+                  )}
                 </div>
                 <div className="form-group">
                   <input
+                    {...register("constructionYear", validationRules.constructionYear)}
                     type="number"
-                    name="constructionYear"
                     placeholder="Año de construcción"
-                    value={formData.constructionYear}
-                    onChange={handleChange}
                     min="1900"
                     max={new Date().getFullYear()}
+                    className={hasFieldError("constructionYear") ? "error" : ""}
                   />
+                  {hasFieldError("constructionYear") && (
+                    <span className="error-message">{getFieldError("constructionYear")}</span>
+                  )}
                 </div>
               </div>
 
               <div className="form-row full-width">
                 <div className="form-group">
                   <input
+                    {...register("location", validationRules.location)}
                     type="text"
-                    name="location"
                     placeholder="Donde queda, ejemplo: Colonia Escalon"
-                    value={formData.location}
-                    onChange={handleChange}
-                    required
+                    className={hasFieldError("location") ? "error" : ""}
                   />
+                  {hasFieldError("location") && (
+                    <span className="error-message">{getFieldError("location")}</span>
+                  )}
                 </div>
               </div>
 
               <div className="form-row">
                 <div className="form-group">
                   <input
+                    {...register("name", validationRules.name)}
                     type="text"
-                    name="name"
                     placeholder="Nombre de la propiedad"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
+                    className={hasFieldError("name") ? "error" : ""}
                   />
+                  {hasFieldError("name") && (
+                    <span className="error-message">{getFieldError("name")}</span>
+                  )}
                 </div>
                 <div className="form-group">
                   <input
+                    {...register("lotSize", validationRules.lotSize)}
                     type="text"
-                    name="lotSize"
                     placeholder="Tamaño del lote (m²)"
-                    value={formData.lotSize}
-                    onChange={handleChange}
+                    className={hasFieldError("lotSize") ? "error" : ""}
                   />
+                  {hasFieldError("lotSize") && (
+                    <span className="error-message">{getFieldError("lotSize")}</span>
+                  )}
                 </div>
                 <div className="form-group">
                   <input
+                    {...register("height", validationRules.height)}
                     type="text"
-                    name="height"
                     placeholder="Altura (m)"
-                    value={formData.height}
-                    onChange={handleChange}
+                    className={hasFieldError("height") ? "error" : ""}
                   />
+                  {hasFieldError("height") && (
+                    <span className="error-message">{getFieldError("height")}</span>
+                  )}
                 </div>
               </div>
 
               <div className="form-row full-width">
                 <div className="form-group description-group">
                   <textarea
-                    name="description"
+                    {...register("description", validationRules.description)}
                     placeholder="Descripción"
-                    value={formData.description}
-                    onChange={handleChange}
                     rows="4"
-                    required
+                    className={hasFieldError("description") ? "error" : ""}
                   ></textarea>
+                  {hasFieldError("description") && (
+                    <span className="error-message">{getFieldError("description")}</span>
+                  )}
                 </div>
               </div>
 
               <div className="form-actions">
                 <div className="form-group price-group">
                   <input
+                    {...register("price", validationRules.price)}
                     type="text"
-                    name="price"
                     placeholder="Precio ($)"
-                    value={formData.price}
-                    onChange={handleChange}
-                    required
+                    onChange={handleFieldChange("price")}
+                    className={hasFieldError("price") ? "error" : ""}
                   />
+                  {hasFieldError("price") && (
+                    <span className="error-message">{getFieldError("price")}</span>
+                  )}
                 </div>
-                <button type="submit" className="save-button" disabled={isLoading}>
+                <button 
+                  type="submit" 
+                  className="save-button" 
+                  disabled={isLoading || isSubmitting}
+                >
                   <img src={saveIcon} alt="Guardar" />
-                  <span>{isLoading ? 'Guardando...' : 'Guardar Cambios'}</span>
+                  <span>
+                    {isLoading || isSubmitting ? 'Guardando...' : 'Guardar Cambios'}
+                  </span>
                 </button>
               </div>
             </form>

@@ -121,6 +121,11 @@ export const usePropertySubmit = (formData, images, onClose, property = null, se
                         break;
                     case 'address':
                         return; 
+                    case 'price':
+                        if (typeof value === 'string') {
+                            value = value.replace(/[^\d.,]/g, '');
+                        }
+                        break;
                 }
 
                 submitData.append(backendKey, value);
@@ -137,8 +142,6 @@ export const usePropertySubmit = (formData, images, onClose, property = null, se
                 const existingImages = images.filter(image => image.isExisting);
                 if (existingImages.length > 0) {
                     submitData.append('existingImages', JSON.stringify(existingImages.map(img => img.path || img.image)));
-                }
-                if (existingImages.length > 0) {
                     submitData.append('keepExistingImages', 'true');
                 }
             }
