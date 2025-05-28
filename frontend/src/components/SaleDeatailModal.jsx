@@ -158,9 +158,6 @@ const SaleDetailModal = ({ sale, customer, shoppingCart, onClose }) => {
                                             </div>
                                         </div>
                                         <div className="property-pricing">
-                                            <div className="property-price">
-                                                {formatCurrency(property.price)}
-                                            </div>
                                             <div className="property-quantity">
                                                 Cantidad: {property.quantity}
                                             </div>
