@@ -11,56 +11,56 @@ const propertiesSchema = new Schema({
     ],
     name: {
         type: String,
-        require: true,
+        required: true,
     },
     description: {
         type: String, 
-        require: true
+        required: true
     },
     location: {
         type: String,
-        require: true
+        required: true
     },
     price: {
         type: String,
-        require: true
+        required: true
     },
     floors: {
         type: Number,
-        require: true
+        required: false 
     },
     lotSize: {
         type: String,
-        require: true
+        required: false
     },
     height: {
         type: String,
-        require: true
+        required: false
     },
     constructionYear: {
         type: String,
-        require: true
+        required: false
     },
     rooms: {
         type: Number,
-        require: true
+        required: false
     },
     bathrooms: {
         type: Number, 
-        require: true
+        required: false
     },
     parkingLot: {
         type: Boolean,
-        require: true
+        required: false
     },
     patio: {
         type: Boolean,
-        require: true
+        required: false
     },
-    categoryId: {
+    category: {
         type: Schema.Types.ObjectId,
         ref: "Category",
-        require: false
+        required: true // Cambiado a true ya que tu validación lo requiere
     }
 }, {
     timestamps: true,

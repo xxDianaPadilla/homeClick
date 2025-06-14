@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { X, Save } from "lucide-react";
+import { X, Save, AlertCircle } from "lucide-react";
 
 const CategoryModal = ({ isOpen, onClose, onSave, category = null }) => {
   const {

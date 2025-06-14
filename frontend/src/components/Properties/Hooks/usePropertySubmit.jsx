@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 export const usePropertySubmit = (formData, images, onClose, property = null, setIsLoading, setLoadingMessage) => {
-    
+
     const isValidObjectId = (id) => {
         if (!id) return false;
         if (typeof id !== 'string') return false;
@@ -11,7 +11,7 @@ export const usePropertySubmit = (formData, images, onClose, property = null, se
 
     const extractPropertyId = (property) => {
         if (!property) return null;
-        
+
         console.log('Property object structure:', {
             property,
             keys: Object.keys(property),
@@ -20,14 +20,14 @@ export const usePropertySubmit = (formData, images, onClose, property = null, se
         });
 
         let propertyId = property._id || property.id;
-        
+
         if (typeof propertyId === 'object' && propertyId.$oid) {
             propertyId = propertyId.$oid;
         }
-        
+
         console.log('Extracted propertyId:', propertyId);
         console.log('Is valid ObjectId:', isValidObjectId(propertyId));
-        
+
         return propertyId;
     };
 
@@ -41,6 +41,16 @@ export const usePropertySubmit = (formData, images, onClose, property = null, se
             return;
         }
 
+        if (!submitFormData.category || submitFormData.category === '') {
+            alert('Por favor selecciona una categoría para la propiedad');
+            return;
+        }
+
+        if (!isValidObjectId(submitFormData.category)) {
+            alert('Error: La categoría seleccionada no es válida');
+            return;
+        }
+
         if (images.length === 0) {
             alert('Por favor sube al menos una imagen');
             return;
@@ -49,7 +59,7 @@ export const usePropertySubmit = (formData, images, onClose, property = null, se
         let propertyId = null;
         if (property) {
             propertyId = extractPropertyId(property);
-            
+
             if (!isValidObjectId(propertyId)) {
                 console.error('Invalid property ID detected:', {
                     propertyId,
@@ -68,27 +78,27 @@ export const usePropertySubmit = (formData, images, onClose, property = null, se
             const submitData = new FormData();
 
             const isValidValue = (value) => {
-                return value !== '' && 
-                       value !== null && 
-                       value !== undefined && 
-                       value !== 'undefined' && 
-                       value !== 'null';
+                return value !== '' &&
+                    value !== null &&
+                    value !== undefined &&
+                    value !== 'undefined' &&
+                    value !== 'null';
             };
 
             Object.keys(submitFormData).forEach(key => {
                 if (!isValidValue(submitFormData[key])) {
-                    return; 
+                    return;
                 }
 
                 let backendKey = key;
                 let value = submitFormData[key];
 
                 switch (key) {
-                    case 'bedrooms': 
+                    case 'bedrooms':
                         if (submitFormData.rooms !== undefined) {
-                            return; 
+                            return;
                         }
-                        backendKey = 'rooms'; 
+                        backendKey = 'rooms';
                         value = parseInt(value);
                         if (isNaN(value) || value <= 0) return;
                         break;
@@ -120,11 +130,18 @@ export const usePropertySubmit = (formData, images, onClose, property = null, se
                         if (typeof value === 'string' && value.trim() === '') return;
                         break;
                     case 'address':
-                        return; 
+                        return;
                     case 'price':
                         if (typeof value === 'string') {
                             value = value.replace(/[^\d.,]/g, '');
                         }
+                        break;
+                    case 'category':
+                        if (!isValidObjectId(value)) {
+                            console.error('Invalid category ID: ', value);
+                            throw new Error('ID de categoría inválido');
+                        }
+                        console.log('Category ID to submit: ', value);
                         break;
                 }
 
@@ -156,7 +173,7 @@ export const usePropertySubmit = (formData, images, onClose, property = null, se
                 propertyId,
                 hasImages: newImages.length > 0,
                 hasExistingImages: property ? images.filter(image => image.isExisting).length : 0,
-                formData: Object.fromEntries(submitData.entries()) 
+                formData: Object.fromEntries(submitData.entries())
             });
 
             setLoadingMessage(
@@ -187,12 +204,12 @@ export const usePropertySubmit = (formData, images, onClose, property = null, se
             setTimeout(() => {
                 setIsLoading(false);
                 onClose();
-                
+
                 alert(property
                     ? 'Propiedad actualizada correctamente'
                     : 'Propiedad creada correctamente'
                 );
-                
+
                 if (property) {
                     window.location.reload();
                 }
@@ -201,14 +218,14 @@ export const usePropertySubmit = (formData, images, onClose, property = null, se
         } catch (error) {
             console.error("Error completo:", error);
             setIsLoading(false);
-            
+
             let errorMessage = "Error al guardar la propiedad: ";
             if (error.message.includes('ID de propiedad inválido')) {
                 errorMessage += "El identificador de la propiedad no es válido. Intenta recargar la página e intentar nuevamente.";
             } else {
                 errorMessage += error.message;
             }
-            
+
             alert(errorMessage);
         }
     };

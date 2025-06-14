@@ -11,17 +11,16 @@ cloudinary.config({
 
 propertiesController.getProperties = async(req, res) => {
     try {
-        const propertiesSeller = await propertiesModel.find().populate('categoryId');
+        const propertiesSeller = await propertiesModel.find().populate('category');
         res.json(propertiesSeller);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 };
 
-
 propertiesController.getPropertyById = async(req, res) => {
     try {
-        const property = await propertiesModel.findById(req.params.id).populate('categoryId');
+        const property = await propertiesModel.findById(req.params.id).populate('category');
         
         if (!property) {
             return res.status(404).json({ message: "Property not found" });
@@ -41,6 +40,8 @@ propertiesController.getPropertyById = async(req, res) => {
 
 propertiesController.createProperties = async (req, res) => {
     try {
+        console.log('Received data for creation:', req.body); // Debug log
+        
         const {
             name, 
             description, 
@@ -54,8 +55,22 @@ propertiesController.createProperties = async (req, res) => {
             bathrooms, 
             parkingLot, 
             patio, 
-            categoryId
+            category // CAMBIO: categoryId -> category
         } = req.body;
+
+        // Validar que la categoría esté presente
+        if (!category) {
+            return res.status(400).json({ 
+                error: "La categoría es requerida" 
+            });
+        }
+
+        // Validar formato de ObjectId
+        if (!/^[0-9a-fA-F]{24}$/.test(category)) {
+            return res.status(400).json({ 
+                error: "Formato de categoría inválido" 
+            });
+        }
 
         let imageURLs = [];
         
@@ -78,23 +93,36 @@ propertiesController.createProperties = async (req, res) => {
             description,
             location,
             price,
-            floors: parseInt(floors),
+            floors: floors ? parseInt(floors) : null,
             lotSize,
             height,
             constructionYear,
-            rooms: parseInt(rooms),
-            bathrooms: parseInt(bathrooms),
+            rooms: rooms ? parseInt(rooms) : null,
+            bathrooms: bathrooms ? parseInt(bathrooms) : null,
             parkingLot: parkingLot === 'true' || parkingLot === true,
             patio: patio === 'true' || patio === true,
-            categoryId
+            category 
         });
 
+        console.log('Property object before save:', newProperty); 
+
         await newProperty.save();
+        
+        const populatedProperty = await propertiesModel.findById(newProperty._id).populate('category');
+        
         res.status(201).json({
             message: "Property created successfully!",
-            property: newProperty
+            property: populatedProperty
         });
     } catch (error) {
+        console.error('Error creating property:', error);
+        
+        if (error.name === 'ValidationError') {
+            return res.status(400).json({ 
+                error: "Error de validación: " + error.message 
+            });
+        }
+        
         res.status(500).json({ error: error.message });
     }
 };
@@ -152,6 +180,7 @@ propertiesController.updateProperties = async (req, res) => {
             bathrooms,
             parkingLot,
             patio,
+            category, // AGREGAR: campo category para actualización
             keepExistingImages,
             existingImages
         } = req.body;
@@ -159,6 +188,7 @@ propertiesController.updateProperties = async (req, res) => {
         console.log('Update request data:', {
             propertyId,
             name,
+            category, // Debug log para category
             hasNewImages: req.files?.length > 0,
             keepExistingImages,
             existingImages: existingImages ? JSON.parse(existingImages) : null
@@ -237,6 +267,16 @@ propertiesController.updateProperties = async (req, res) => {
         if (isValidValue(location)) updateData.location = location;
         if (isValidValue(price)) updateData.price = price;
 
+        // AGREGAR: Validación y actualización de categoría
+        if (isValidValue(category)) {
+            if (!/^[0-9a-fA-F]{24}$/.test(category)) {
+                return res.status(400).json({ 
+                    error: "Formato de categoría inválido" 
+                });
+            }
+            updateData.category = category;
+        }
+
         if (isValidValue(floors)) {
             const floorsNum = parseInt(floors);
             if (!isNaN(floorsNum) && floorsNum > 0) {
@@ -290,7 +330,7 @@ propertiesController.updateProperties = async (req, res) => {
                 new: true,
                 runValidators: true 
             }
-        );
+        ).populate('category'); // AGREGAR: populate para devolver categoría completa
 
         if (!updatedProperty) {
             return res.status(404).json({ 

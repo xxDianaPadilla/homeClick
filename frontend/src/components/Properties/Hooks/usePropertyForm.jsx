@@ -1,4 +1,4 @@
-import {useForm} from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 export const usePropertyForm = (initialData = {}) => {
     const getNumericValue = (value) => {
@@ -6,6 +6,42 @@ export const usePropertyForm = (initialData = {}) => {
         if (typeof value === "number") return value;
         const numValue = parseInt(value);
         return isNaN(numValue) ? "" : numValue;
+    };
+
+    const getCategoryId = (categoryData) => {
+        if (!categoryData) return "";
+
+        console.log('getCategoryId - Input:', categoryData);
+        console.log('getCategoryId - Type:', typeof categoryData);
+
+        // Si ya es un string (ObjectId), devolverlo directamente
+        if (typeof categoryData === 'string') {
+            console.log('getCategoryId - String found:', categoryData);
+            return categoryData;
+        }
+
+        // Si es un objeto con _id
+        if (categoryData._id) {
+            console.log('getCategoryId - _id found:', categoryData._id);
+            console.log('getCategoryId - _id type:', typeof categoryData._id);
+            
+            if (typeof categoryData._id === 'object' && categoryData._id.$oid) {
+                console.log('getCategoryId - $oid found:', categoryData._id.$oid);
+                return categoryData._id.$oid;
+            } else if (typeof categoryData._id === 'string') {
+                console.log('getCategoryId - _id as string:', categoryData._id);
+                return categoryData._id;
+            }
+        }
+
+        // Si tiene propiedad id
+        if (categoryData.id) {
+            console.log('getCategoryId - id found:', categoryData.id);
+            return categoryData.id;
+        }
+
+        console.log('getCategoryId - No valid ID found, returning empty string');
+        return "";
     };
 
     const {
@@ -30,7 +66,9 @@ export const usePropertyForm = (initialData = {}) => {
             lotSize: initialData.lotSize || "",
             height: initialData.height || "",
             description: initialData.originalDescription || initialData.description || "",
-            price: initialData.originalPrice || (typeof initialData.price === 'string' ? initialData.price.replace(/[$,]/g, '') : initialData.price) || ""
+            price: initialData.originalPrice || (typeof initialData.price === 'string' ? initialData.price.replace(/[$,]/g, '') : initialData.price) || "",
+            // CAMBIO: category -> categoryId
+            categoryId: getCategoryId(initialData.category || initialData.categoryId)
         }
     });
 
@@ -81,9 +119,24 @@ export const usePropertyForm = (initialData = {}) => {
                 return true;
             }
         },
+        // CAMBIO: category -> categoryId
+        categoryId: {
+            required: "La categoría es requerida",
+            validate: (value) => {
+                console.log('CategoryId validation - Value:', value);
+                if (!value || value === '') {
+                    return "La categoría es requerida";
+                }
+                // Validar que sea un ObjectId válido (24 caracteres hexadecimales)
+                if (!/^[0-9a-fA-F]{24}$/.test(value)) {
+                    return "La categoría seleccionada no es válida";
+                }
+                return true;
+            }
+        },
         bedrooms: {
             validate: (value) => {
-                if (value === "" || value === null) return true; // Campo opcional
+                if (value === "" || value === null) return true;
                 const num = parseInt(value);
                 if (isNaN(num) || num < 0) {
                     return "El número de habitaciones debe ser un número válido";
@@ -96,7 +149,7 @@ export const usePropertyForm = (initialData = {}) => {
         },
         bathrooms: {
             validate: (value) => {
-                if (value === "" || value === null) return true; // Campo opcional
+                if (value === "" || value === null) return true;
                 const num = parseInt(value);
                 if (isNaN(num) || num < 0) {
                     return "El número de baños debe ser un número válido";
@@ -109,7 +162,7 @@ export const usePropertyForm = (initialData = {}) => {
         },
         floors: {
             validate: (value) => {
-                if (value === "" || value === null) return true; // Campo opcional
+                if (value === "" || value === null) return true;
                 const num = parseInt(value);
                 if (isNaN(num) || num < 1) {
                     return "El número de niveles debe ser al menos 1";
@@ -122,7 +175,7 @@ export const usePropertyForm = (initialData = {}) => {
         },
         constructionYear: {
             validate: (value) => {
-                if (value === "" || value === null) return true; // Campo opcional
+                if (value === "" || value === null) return true;
                 const num = parseInt(value);
                 const currentYear = new Date().getFullYear();
                 if (isNaN(num)) {
@@ -139,8 +192,7 @@ export const usePropertyForm = (initialData = {}) => {
         },
         lotSize: {
             validate: (value) => {
-                if (!value || value.trim() === "") return true; // Campo opcional
-                // Validar formato como "200m²" o "200 m²" o "200"
+                if (!value || value.trim() === "") return true;
                 const pattern = /^\d+(\.\d+)?\s*(m²|m2|metros?²?)?$/i;
                 if (!pattern.test(value.trim())) {
                     return "Formato inválido. Ejemplo: 200m² o 200";
@@ -150,8 +202,7 @@ export const usePropertyForm = (initialData = {}) => {
         },
         height: {
             validate: (value) => {
-                if (!value || value.trim() === "") return true; // Campo opcional
-                // Validar formato como "2.5m" o "2.5 m" o "2.5"
+                if (!value || value.trim() === "") return true;
                 const pattern = /^\d+(\.\d+)?\s*(m|metros?)?$/i;
                 if (!pattern.test(value.trim())) {
                     return "Formato inválido. Ejemplo: 2.5m o 2.5";
@@ -165,7 +216,6 @@ export const usePropertyForm = (initialData = {}) => {
         let processedValue = value;
 
         if (fieldName === 'price') {
-            // Permitir solo números, comas, puntos y símbolo de dólar
             processedValue = value.replace(/[^\d.,$ ]/g, '');
         } else if (fieldName === 'bedrooms' || fieldName === 'bathrooms' || fieldName === 'floors') {
             if (value === '' || value === null || value === undefined) {
@@ -200,12 +250,16 @@ export const usePropertyForm = (initialData = {}) => {
             lotSize: "",
             height: "",
             description: "",
-            price: ""
+            price: "",
+            categoryId: "" // CAMBIO: category -> categoryId
         });
     };
 
     const prepareDataForSubmit = (data) => {
-        return {
+        console.log('prepareDataForSubmit - Input data:', data);
+        console.log('prepareDataForSubmit - CategoryId:', data.categoryId);
+        
+        const preparedData = {
             ...data,
             rooms: data.bedrooms === "" ? null : Number(data.bedrooms),
             bathrooms: data.bathrooms === "" ? null : Number(data.bathrooms),
@@ -214,7 +268,13 @@ export const usePropertyForm = (initialData = {}) => {
             parkingLot: data.parking === "Sí",
             patio: data.patio === "Sí",
             bedrooms: undefined
+            // categoryId se mantiene tal como está
         };
+        
+        console.log('prepareDataForSubmit - Output data:', preparedData);
+        console.log('prepareDataForSubmit - Final categoryId:', preparedData.categoryId);
+        
+        return preparedData;
     };
 
     const getFieldError = (fieldName) => {

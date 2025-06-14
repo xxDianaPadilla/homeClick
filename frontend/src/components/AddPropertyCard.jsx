@@ -7,6 +7,7 @@ import saveIcon from "../assets/guardar.png";
 import { usePropertyForm } from '../components/Properties/Hooks/usePropertyForm';
 import { usePropertyImages } from '../components/Properties/Hooks/usePropertyImages';
 import { usePropertySubmit } from '../components/Properties/Hooks/usePropertySubmit';
+import { useCategories } from "./Categories/hooks/useCategories";
 import LoadingOverlay from "./LoadingOverlay";
 
 const AddPropertyCard = ({ isOpen, onClose, property }) => {
@@ -28,6 +29,8 @@ const AddPropertyCard = ({ isOpen, onClose, property }) => {
     } = usePropertyForm(property);
 
     const { images, handleRemoveImage, handleImageUpload, getImagePreview, clearImages } = usePropertyImages(initialImages);
+
+    const { categories, isLoadingCategories, categoriesError } = useCategories();
 
     const { handleSubmit } = usePropertySubmit(
         null,
@@ -138,6 +141,40 @@ const AddPropertyCard = ({ isOpen, onClose, property }) => {
                         <div className="add-property-right">
                             <h3>Detalles y dimensiones de la propiedad</h3>
                             <form onSubmit={handleFormSubmit(onSubmit)}>
+
+                                <div className="form-row full-width">
+                                    <div className="form-group">
+                                        <select
+                                            {...register("category", validationRules.category)}
+                                            disabled={isLoading || isSubmitting || isLoadingCategories}
+                                            className={hasFieldError('category') ? 'error' : ''}
+                                        >
+                                            <option value="">Seleccionar tipo de propiedad</option>
+                                            {isLoadingCategories ? (
+                                                <option disabled>Cargando categorías...</option>
+                                            ) : categoriesError ? (
+                                                <option disabled>Error al cargar categorías</option>
+                                            ) : (
+                                                categories.map((category) => {
+                                                    // Extraer el ID de la categoría correctamente
+                                                    const categoryId = category._id?.$oid || category._id || category.id;
+                                                    return (
+                                                        <option key={categoryId} value={categoryId}>
+                                                            {category.propertyType}
+                                                        </option>
+                                                    );
+                                                })
+                                            )}
+                                        </select>
+                                        {hasFieldError('category') && (
+                                            <span className="form-error">{getFieldError('category')}</span>
+                                        )}
+                                        {categoriesError && (
+                                            <span className="form-error">Error al cargar categorías: {categoriesError}</span>
+                                        )}
+                                    </div>
+                                </div>
+
                                 <div className="form-row">
                                     <div className="form-group">
                                         <input
