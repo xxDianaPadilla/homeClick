@@ -7,20 +7,27 @@ import saveIcon from "../assets/guardar.png";
 import { usePropertyForm } from '../components/Properties/Hooks/usePropertyForm';
 import { usePropertyImages } from '../components/Properties/Hooks/usePropertyImages';
 import { usePropertySubmit } from '../components/Properties/Hooks/usePropertySubmit';
+import { useCategories } from "./Categories/hooks/useCategories";
 
 const EditPropertyCard = ({ isOpen, onClose, property }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState('');
+
+  const {
+    categories,
+    isLoadingCategories,
+    categoriesError
+  } = useCategories();
 
   const processedProperty = property ? {
     ...property,
     ...extractPropertyData(property)
   } : null;
 
-  const { 
-    register, 
-    handleSubmit: handleFormSubmit, 
-    errors, 
+  const {
+    register,
+    handleSubmit: handleFormSubmit,
+    errors,
     isSubmitting,
     setValue,
     getValues,
@@ -33,7 +40,7 @@ const EditPropertyCard = ({ isOpen, onClose, property }) => {
 
   const { images, handleRemoveImage, handleImageUpload, setImages } = usePropertyImages(property?.images || []);
   const { handleSubmit: handlePropertySubmit } = usePropertySubmit(
-    null, 
+    null,
     images,
     onClose,
     property,
@@ -55,8 +62,13 @@ const EditPropertyCard = ({ isOpen, onClose, property }) => {
         }));
         setImages(processedImages);
       }
+
+      if (property.category) {
+        const categoryId = property.category._id?.$oid || property.category._id || property.category.id || property.category;
+        setValue('category', categoryId);
+      }
     }
-  }, [property, isOpen, setImages]); 
+  }, [property, isOpen, setImages, setValue]); 
 
   function extractPropertyData(property) {
     const extracted = {};
@@ -121,7 +133,7 @@ const EditPropertyCard = ({ isOpen, onClose, property }) => {
     }
 
     const processedData = prepareDataForSubmit(formData);
-    
+
     await handlePropertySubmit(null, processedData);
   };
 
@@ -198,6 +210,40 @@ const EditPropertyCard = ({ isOpen, onClose, property }) => {
           <div className="edit-property-right">
             <h3>Detalles y dimensiones de la propiedad</h3>
             <form onSubmit={handleFormSubmit(onSubmit)}>
+
+              <div className="form-row full-width">
+                <div className="form-group">
+                  <select
+                    {...register("category", validationRules.category)}
+                    disabled={isLoading || isSubmitting || isLoadingCategories}
+                    className={hasFieldError('category') ? 'error' : ''}
+                  >
+                    <option value="">Seleccionar tipo de propiedad</option>
+                    {isLoadingCategories ? (
+                      <option disabled>Cargando categorías...</option>
+                    ) : categoriesError ? (
+                      <option disabled>Error al cargar categorías</option>
+                    ) : (
+                      categories.map((category) => {
+                        // Extraer el ID de la categoría correctamente
+                        const categoryId = category._id?.$oid || category._id || category.id;
+                        return (
+                          <option key={categoryId} value={categoryId}>
+                            {category.propertyType}
+                          </option>
+                        );
+                      })
+                    )}
+                  </select>
+                  {hasFieldError('category') && (
+                    <span className="error-message">{getFieldError('category')}</span>
+                  )}
+                  {categoriesError && (
+                    <span className="error-message">Error al cargar categorías: {categoriesError}</span>
+                  )}
+                </div>
+              </div>
+
               <div className="form-row">
                 <div className="form-group">
                   <input
@@ -356,9 +402,9 @@ const EditPropertyCard = ({ isOpen, onClose, property }) => {
                     <span className="error-message">{getFieldError("price")}</span>
                   )}
                 </div>
-                <button 
-                  type="submit" 
-                  className="save-button" 
+                <button
+                  type="submit"
+                  className="save-button"
                   disabled={isLoading || isSubmitting}
                 >
                   <img src={saveIcon} alt="Guardar" />
