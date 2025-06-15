@@ -3,14 +3,17 @@ import NavBarAdmin from '../components/NavBarAdmin';
 import CategoryCard from "../components/CategoryCard";
 import CategoryModal from "../components/CategoryModal";
 import IconButton from "../components/IconButton";
+import SuccessAlert from "../components/SuccessAlert";
+import useAlert from "../components/Categories/hooks/useAlert";
 import { Plus } from "lucide-react";
 
 const Categorias = () => {
-
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingCategory, setEditingCategory] = useState(null);
+    
+    const { alert, showAlert, hideAlert } = useAlert();
 
     const fetchCategories = async () => {
         try {
@@ -61,8 +64,10 @@ const Categorias = () => {
                     setCategories(categories.map(cat =>
                         cat._id === editingCategory._id ? savedCategory : cat
                     ));
+                    showAlert(`La categoría "${categoryData.propertyType}" se ha actualizado correctamente.`);
                 } else {
                     setCategories([...categories, savedCategory]);
+                    showAlert(`La categoría "${categoryData.propertyType}" se ha creado exitosamente.`);
                 }
 
                 setIsModalOpen(false);
@@ -84,8 +89,10 @@ const Categorias = () => {
                         ? { ...editingCategory, ...categoryData }
                         : cat
                 ));
+                showAlert(`La categoría "${categoryData.propertyType}" se ha actualizado correctamente.`);
             } else {
                 setCategories([...categories, tempCategory]);
+                showAlert(`La categoría "${categoryData.propertyType}" se ha creado exitosamente.`);
             }
 
             setIsModalOpen(false);
@@ -96,17 +103,22 @@ const Categorias = () => {
     const handleDeleteCategory = async (categoryId) => {
         if (window.confirm('¿Estás seguro de que deseas eliminar esta categoría?')) {
             try {
+                const categoryToDelete = categories.find(cat => cat._id === categoryId);
+                
                 const response = await fetch(`http://localhost:4000/api/categories/${categoryId}`, {
                     method: 'DELETE',
                 });
 
                 if (response.ok) {
                     setCategories(categories.filter(cat => cat._id !== categoryId));
+                    showAlert(`La categoría "${categoryToDelete?.propertyType}" se ha eliminado correctamente.`);
                 }
             } catch (error) {
                 console.error('Error al eliminar categoría: ', error);
-
+                
+                const categoryToDelete = categories.find(cat => cat._id === categoryId);
                 setCategories(categories.filter(cat => cat._id !== categoryId));
+                showAlert(`La categoría "${categoryToDelete?.propertyType}" se ha eliminado correctamente.`);
             }
         }
     };
@@ -129,6 +141,7 @@ const Categorias = () => {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between items-center mb-8">
                         <div>
+                            <h1 className="text-3xl font-bold text-gray-900">Gestión de Categorías</h1>
                             <p className="text-gray-600 mt-2">
                                 Administra las categorías de propiedades disponibles
                             </p>
@@ -183,6 +196,12 @@ const Categorias = () => {
                 }}
                 onSave={handleSaveCategory}
                 category={editingCategory}
+            />
+
+            <SuccessAlert
+                message={alert.message}
+                isVisible={alert.isVisible}
+                onClose={hideAlert}
             />
         </>
     );
