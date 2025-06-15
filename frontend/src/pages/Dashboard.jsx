@@ -10,6 +10,7 @@ import useEditProperty from "../components/Properties/Hooks/useEditProperty";
 import HomeClickModal from '../components/HomeClickModal';
 import useSalesData from '../components/Sales/Hooks/useSalesData';
 import useEarningsData from '../components/Sales/Hooks/useEarningsData';
+import OrangeButton from '../components/OrangeButton';
 
 const Dashboard = () => {
 
@@ -187,9 +188,9 @@ const Dashboard = () => {
             realizar compras seguras, dejar reseñas y recibir notificaciones sobre
             novedades y oportunidades del sector.
           </p>
-          <button className="orange-button centered-button" onClick={openModal}>
+          <OrangeButton onClick={openModal} centered>
             LEER MÁS
-          </button>
+          </OrangeButton>
         </article>
 
         {/* Right properties box */}
@@ -230,9 +231,9 @@ const Dashboard = () => {
             </table>
           </div>
           <div className="button-container">
-            <button className="orange-button" onClick={openEditModal}>
+            <OrangeButton onClick={openEditModal}>
               Crear publicación
-            </button>
+            </OrangeButton>
           </div>
         </article>
       </section>

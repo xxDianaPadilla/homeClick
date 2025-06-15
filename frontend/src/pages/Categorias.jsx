@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import NavBarAdmin from '../components/NavBarAdmin';
 import CategoryCard from "../components/CategoryCard";
 import CategoryModal from "../components/CategoryModal";
+import IconButton from "../components/IconButton";
 import { Plus } from "lucide-react";
 
 const Categorias = () => {
@@ -133,13 +134,9 @@ const Categorias = () => {
                             </p>
                         </div>
 
-                        <button
-                            onClick={handleAddCategory}
-                            className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-lg flex items-center space-x-2 transition-colors duration-200 shadow-md"
-                        >
-                            <Plus size={20} />
-                            <span>Nueva Categoría</span>
-                        </button>
+                        <IconButton onClick={handleAddCategory} icon={Plus}>
+                            Nueva Categoría
+                        </IconButton>
                     </div>
 
                     {loading ? (
