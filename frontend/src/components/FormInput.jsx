@@ -10,9 +10,11 @@ const FormInput = ({
     hasError = false,
     errorMessage,
     min,
+    max,
     rows,
     onChange,
     className = "",
+    errorClassName = "form-error",
     ...props
 }) => {
     const baseClassName = `form-input ${hasError ? 'error' : ''} ${className}`;
@@ -30,7 +32,7 @@ const FormInput = ({
                     {...props}
                 />
                 {hasError && errorMessage && (
-                    <span className="form-error">{errorMessage}</span>
+                    <span className={errorClassName}>{errorMessage}</span>
                 )}
             </div>
         );
@@ -43,13 +45,14 @@ const FormInput = ({
                 placeholder={placeholder}
                 {...register(name, validationRules)}
                 min={min}
+                max={max}
                 disabled={disabled}
                 className={baseClassName}
                 onChange={onChange}
                 {...props}
             />
             {hasError && errorMessage && (
-                <span className="form-error">{errorMessage}</span>
+                <span className={errorClassName}>{errorMessage}</span>
             )}
         </div>
     );

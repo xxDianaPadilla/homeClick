@@ -10,6 +10,7 @@ const ImageUploader = ({
     disabled = false,
     hasError = false,
     errorMessage,
+    variant = "preview",
     className = ""
 }) => {
     return (
@@ -20,23 +21,31 @@ const ImageUploader = ({
                 {images.map((image) => (
                     <div key={image.id} className="property-image-item">
                         <div className="image-item-content">
-                            <img
-                                src={getImagePreview(image)}
-                                alt="Preview"
-                                className="image-preview"
-                                style={{
-                                    width: '50px',
-                                    height: '50px',
-                                    objectFit: 'cover',
-                                    borderRadius: '4px'
-                                }}
-                                onError={(e) => {
-                                    e.target.src = icon2;
-                                }}
-                            />
+                            {variant === "preview" ? (
+                                <img
+                                    src={getImagePreview ? getImagePreview(image) : icon2}
+                                    alt="Preview"
+                                    className="image-preview"
+                                    style={{
+                                        width: '50px',
+                                        height: '50px',
+                                        objectFit: 'cover',
+                                        borderRadius: '4px'
+                                    }}
+                                    onError={(e) => {
+                                        e.target.src = icon2;
+                                    }}
+                                />
+                            ) : (
+                                <img src={icon2} alt="Icono de imagen" className="picture-icon" />
+                            )}
+
                             <div className="image-info">
                                 <span className="image-name">{image.name}</span>
-                                {image.isExisting && (
+                                {variant === "list" && image.path && (
+                                    <span className="image-path">{image.path}</span>
+                                )}
+                                {variant === "preview" && image.isExisting && (
                                     <span className="image-status">Imagen existente</span>
                                 )}
                             </div>
@@ -66,9 +75,11 @@ const ImageUploader = ({
                 />
             </label>
 
-            <p className="upload-info">
-                Puedes seleccionar múltiples imágenes. Formatos permitidos: JPG, PNG, JPEG
-            </p>
+            {variant === "preview" && (
+                <p className="upload-info">
+                    Puedes seleccionar múltiples imágenes. Formatos permitidos: JPG, PNG, JPEG
+                </p>
+            )}
 
             {hasError && errorMessage && (
                 <div className="form-error" style={{ marginTop: '10px', color: '#e74c3c', fontSize: '14px' }}>

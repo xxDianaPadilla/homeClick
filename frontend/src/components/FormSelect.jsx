@@ -13,6 +13,7 @@ const FormSelect = ({
     loadingText = "Cargando...",
     errorText,
     className = "",
+    errorClassName = "form-error",
     ...props
 }) => {
     return (
@@ -30,7 +31,6 @@ const FormSelect = ({
                     <option disabled>{errorText}</option>
                 ) : (
                     options.map((option) => {
-                        // Soporte para diferentes estructuras de opciones
                         const value = option.value || option._id?.$oid || option._id || option.id;
                         const label = option.label || option.propertyType || option.name || option.text;
 
@@ -43,10 +43,10 @@ const FormSelect = ({
                 )}
             </select>
             {hasError && errorMessage && (
-                <span className="form-error">{errorMessage}</span>
+                <span className={errorClassName}>{errorMessage}</span>
             )}
             {errorText && !isLoading && (
-                <span className="form-error">{errorText}</span>
+                <span className={errorClassName}>{errorText}</span>
             )}
         </div>
     );

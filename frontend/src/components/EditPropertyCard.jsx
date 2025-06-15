@@ -8,8 +8,22 @@ import { usePropertyForm } from '../components/Properties/Hooks/usePropertyForm'
 import { usePropertyImages } from '../components/Properties/Hooks/usePropertyImages';
 import { usePropertySubmit } from '../components/Properties/Hooks/usePropertySubmit';
 import { useCategories } from "./Categories/hooks/useCategories";
+import FormInput from "./FormInput";
+import FormSelect from "./FormSelect";
+import FormButton from "./FormButton";
+import FormRow from "./FormRow";
+import ImageUploader from "./ImageUploader";
+import Modal from "./Modal";
 
-const EditPropertyCard = ({ isOpen, onClose, property }) => {
+const EditPropertyCard = ({ isOpen, onClose, property,
+  // Iconos
+  icon,
+  icon2,
+  icon3,
+  icon4 }) => {
+
+  const currentYear = new Date().getFullYear();
+
   const [isLoading, setIsLoading] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState('');
 
@@ -18,6 +32,21 @@ const EditPropertyCard = ({ isOpen, onClose, property }) => {
     isLoadingCategories,
     categoriesError
   } = useCategories();
+
+  const categoryOptions = categories.map(category => ({
+    value: category._id?.$oid || category._id || category.id,
+    label: category.propertyType
+  }));
+
+  const parkingOptions = [
+    { value: "Sí", label: "Sí" },
+    { value: "No", label: "No" }
+  ];
+
+  const patioOptions = [
+    { value: "Sí", label: "Sí" },
+    { value: "No", label: "No" }
+  ];
 
   const processedProperty = property ? {
     ...property,
@@ -51,7 +80,7 @@ const EditPropertyCard = ({ isOpen, onClose, property }) => {
   useEffect(() => {
     if (property && isOpen) {
       console.log('Property data:', property);
-      
+
       const imagesToUse = property.thumbnails || property.images || [];
       if (imagesToUse && Array.isArray(imagesToUse) && imagesToUse.length > 0) {
         const processedImages = imagesToUse.map((img, index) => ({
@@ -68,7 +97,7 @@ const EditPropertyCard = ({ isOpen, onClose, property }) => {
         setValue('category', categoryId);
       }
     }
-  }, [property, isOpen, setImages, setValue]); 
+  }, [property, isOpen, setImages, setValue]);
 
   function extractPropertyData(property) {
     const extracted = {};
@@ -145,279 +174,224 @@ const EditPropertyCard = ({ isOpen, onClose, property }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="edit-property-modal-overlay">
-      <div className="edit-property-modal">
-        <div className="edit-property-header">
-          <h2>Editar información de la publicación</h2>
-          <button className="close-button" onClick={onClose}>
-            <img src={closeIcon} alt="Cerrar" />
-          </button>
-        </div>
-
-        {isLoading && (
-          <div className="loading-overlay" style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: 'rgba(255, 255, 255, 0.9)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            zIndex: 1000
-          }}>
-            <div style={{ textAlign: 'center' }}>
-              <div style={{ marginBottom: '1rem' }}>Cargando...</div>
-              <div>{loadingMessage}</div>
-            </div>
-          </div>
-        )}
-
-        <div className="edit-property-content">
-          <div className="edit-property-left">
-            <h3>Imágenes de la propiedad</h3>
-            <div className="property-images-list">
-              {images.map((image) => (
-                <div key={image.id} className="property-image-item">
-                  <div className="image-item-content">
-                    <img src={pictureIcon} alt="Icono de imagen" className="picture-icon" />
-                    <span className="image-name">{image.name}</span>
-                    <span className="image-path">{image.path}</span>
-                  </div>
-                  <button
-                    className="remove-image-button"
-                    onClick={() => handleRemoveImage(image.id)}
-                  >
-                    ×
-                  </button>
-                </div>
-              ))}
-            </div>
-            <label className="upload-image-button">
-              <img src={uploadIcon} alt="Subir" />
-              <span>Cargar Imagen</span>
-              <input
-                type="file"
-                accept="image/*"
-                multiple
-                onChange={handleImageUpload}
-                style={{ display: 'none' }}
-              />
-            </label>
-          </div>
-
-          <div className="edit-property-right">
-            <h3>Detalles y dimensiones de la propiedad</h3>
-            <form onSubmit={handleFormSubmit(onSubmit)}>
-
-              <div className="form-row full-width">
-                <div className="form-group">
-                  <select
-                    {...register("category", validationRules.category)}
-                    disabled={isLoading || isSubmitting || isLoadingCategories}
-                    className={hasFieldError('category') ? 'error' : ''}
-                  >
-                    <option value="">Seleccionar tipo de propiedad</option>
-                    {isLoadingCategories ? (
-                      <option disabled>Cargando categorías...</option>
-                    ) : categoriesError ? (
-                      <option disabled>Error al cargar categorías</option>
-                    ) : (
-                      categories.map((category) => {
-                        // Extraer el ID de la categoría correctamente
-                        const categoryId = category._id?.$oid || category._id || category.id;
-                        return (
-                          <option key={categoryId} value={categoryId}>
-                            {category.propertyType}
-                          </option>
-                        );
-                      })
-                    )}
-                  </select>
-                  {hasFieldError('category') && (
-                    <span className="error-message">{getFieldError('category')}</span>
-                  )}
-                  {categoriesError && (
-                    <span className="error-message">Error al cargar categorías: {categoriesError}</span>
-                  )}
-                </div>
-              </div>
-
-              <div className="form-row">
-                <div className="form-group">
-                  <input
-                    {...register("bedrooms", validationRules.bedrooms)}
-                    type="number"
-                    placeholder="Cant. habitaciones"
-                    min="0"
-                    className={hasFieldError("bedrooms") ? "error" : ""}
-                  />
-                  {hasFieldError("bedrooms") && (
-                    <span className="error-message">{getFieldError("bedrooms")}</span>
-                  )}
-                </div>
-                <div className="form-group">
-                  <input
-                    {...register("bathrooms", validationRules.bathrooms)}
-                    type="number"
-                    placeholder="Cant. baños"
-                    min="0"
-                    className={hasFieldError("bathrooms") ? "error" : ""}
-                  />
-                  {hasFieldError("bathrooms") && (
-                    <span className="error-message">{getFieldError("bathrooms")}</span>
-                  )}
-                </div>
-                <div className="form-group">
-                  <select
-                    {...register("parking")}
-                    className={hasFieldError("parking") ? "error" : ""}
-                  >
-                    <option value="">Parqueo</option>
-                    <option value="Sí">Sí</option>
-                    <option value="No">No</option>
-                  </select>
-                  {hasFieldError("parking") && (
-                    <span className="error-message">{getFieldError("parking")}</span>
-                  )}
-                </div>
-              </div>
-
-              <div className="form-row">
-                <div className="form-group">
-                  <select
-                    {...register("patio")}
-                    className={hasFieldError("patio") ? "error" : ""}
-                  >
-                    <option value="">Patio</option>
-                    <option value="Sí">Sí</option>
-                    <option value="No">No</option>
-                  </select>
-                  {hasFieldError("patio") && (
-                    <span className="error-message">{getFieldError("patio")}</span>
-                  )}
-                </div>
-                <div className="form-group">
-                  <input
-                    {...register("floors", validationRules.floors)}
-                    type="number"
-                    placeholder="Cantidad de niveles"
-                    min="1"
-                    className={hasFieldError("floors") ? "error" : ""}
-                  />
-                  {hasFieldError("floors") && (
-                    <span className="error-message">{getFieldError("floors")}</span>
-                  )}
-                </div>
-                <div className="form-group">
-                  <input
-                    {...register("constructionYear", validationRules.constructionYear)}
-                    type="number"
-                    placeholder="Año de construcción"
-                    min="1900"
-                    max={new Date().getFullYear()}
-                    className={hasFieldError("constructionYear") ? "error" : ""}
-                  />
-                  {hasFieldError("constructionYear") && (
-                    <span className="error-message">{getFieldError("constructionYear")}</span>
-                  )}
-                </div>
-              </div>
-
-              <div className="form-row full-width">
-                <div className="form-group">
-                  <input
-                    {...register("location", validationRules.location)}
-                    type="text"
-                    placeholder="Donde queda, ejemplo: Colonia Escalon"
-                    className={hasFieldError("location") ? "error" : ""}
-                  />
-                  {hasFieldError("location") && (
-                    <span className="error-message">{getFieldError("location")}</span>
-                  )}
-                </div>
-              </div>
-
-              <div className="form-row">
-                <div className="form-group">
-                  <input
-                    {...register("name", validationRules.name)}
-                    type="text"
-                    placeholder="Nombre de la propiedad"
-                    className={hasFieldError("name") ? "error" : ""}
-                  />
-                  {hasFieldError("name") && (
-                    <span className="error-message">{getFieldError("name")}</span>
-                  )}
-                </div>
-                <div className="form-group">
-                  <input
-                    {...register("lotSize", validationRules.lotSize)}
-                    type="text"
-                    placeholder="Tamaño del lote (m²)"
-                    className={hasFieldError("lotSize") ? "error" : ""}
-                  />
-                  {hasFieldError("lotSize") && (
-                    <span className="error-message">{getFieldError("lotSize")}</span>
-                  )}
-                </div>
-                <div className="form-group">
-                  <input
-                    {...register("height", validationRules.height)}
-                    type="text"
-                    placeholder="Altura (m)"
-                    className={hasFieldError("height") ? "error" : ""}
-                  />
-                  {hasFieldError("height") && (
-                    <span className="error-message">{getFieldError("height")}</span>
-                  )}
-                </div>
-              </div>
-
-              <div className="form-row full-width">
-                <div className="form-group description-group">
-                  <textarea
-                    {...register("description", validationRules.description)}
-                    placeholder="Descripción"
-                    rows="4"
-                    className={hasFieldError("description") ? "error" : ""}
-                  ></textarea>
-                  {hasFieldError("description") && (
-                    <span className="error-message">{getFieldError("description")}</span>
-                  )}
-                </div>
-              </div>
-
-              <div className="form-actions">
-                <div className="form-group price-group">
-                  <input
-                    {...register("price", validationRules.price)}
-                    type="text"
-                    placeholder="Precio ($)"
-                    onChange={handleFieldChange("price")}
-                    className={hasFieldError("price") ? "error" : ""}
-                  />
-                  {hasFieldError("price") && (
-                    <span className="error-message">{getFieldError("price")}</span>
-                  )}
-                </div>
-                <button
-                  type="submit"
-                  className="save-button"
-                  disabled={isLoading || isSubmitting}
-                >
-                  <img src={saveIcon} alt="Guardar" />
-                  <span>
-                    {isLoading || isSubmitting ? 'Guardando...' : 'Guardar Cambios'}
-                  </span>
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
+    <Modal
+      isOpen={true}
+      onClose={onClose}
+      title="Editar información de la publicación"
+      closeIcon={closeIcon}
+      variant="edit"
+      isLoading={isLoading}
+      loadingMessage={loadingMessage}
+    >
+      <div className="edit-property-left">
+        <ImageUploader
+          images={images}
+          onImageUpload={handleImageUpload}
+          onRemoveImage={handleRemoveImage}
+          icon3={uploadIcon}
+          icon2={pictureIcon}
+          disabled={isLoading || isSubmitting}
+          variant="list" // Usar variante de lista para el formulario de edición
+        />
       </div>
-    </div>
+
+      <div className="edit-property-right">
+        <h3>Detalles y dimensiones de la propiedad</h3>
+        <form onSubmit={handleFormSubmit(onSubmit)}>
+
+          <FormRow fullWidth>
+            <FormSelect
+              placeholder="Seleccionar tipo de propiedad"
+              options={categoryOptions}
+              register={register}
+              name="category"
+              validationRules={validationRules.category}
+              disabled={isLoading || isSubmitting}
+              hasError={hasFieldError('category')}
+              errorMessage={getFieldError('category')}
+              errorClassName="error-message"
+              isLoading={isLoadingCategories}
+              loadingText="Cargando categorías..."
+              errorText={categoriesError ? `Error al cargar categorías: ${categoriesError}` : null}
+            />
+          </FormRow>
+
+          <FormRow>
+            <FormInput
+              type="number"
+              placeholder="Cant. habitaciones"
+              register={register}
+              name="bedrooms"
+              validationRules={validationRules.bedrooms}
+              min="0"
+              disabled={isLoading || isSubmitting}
+              hasError={hasFieldError('bedrooms')}
+              errorMessage={getFieldError('bedrooms')}
+              errorClassName="error-message"
+            />
+
+            <FormInput
+              type="number"
+              placeholder="Cant. baños"
+              register={register}
+              name="bathrooms"
+              validationRules={validationRules.bathrooms}
+              min="0"
+              disabled={isLoading || isSubmitting}
+              hasError={hasFieldError('bathrooms')}
+              errorMessage={getFieldError('bathrooms')}
+              errorClassName="error-message"
+            />
+
+            <FormSelect
+              placeholder="Parqueo"
+              options={parkingOptions}
+              register={register}
+              name="parking"
+              disabled={isLoading || isSubmitting}
+              hasError={hasFieldError('parking')}
+              errorMessage={getFieldError('parking')}
+              errorClassName="error-message"
+            />
+          </FormRow>
+
+          <FormRow>
+            <FormSelect
+              placeholder="Patio"
+              options={patioOptions}
+              register={register}
+              name="patio"
+              disabled={isLoading || isSubmitting}
+              hasError={hasFieldError('patio')}
+              errorMessage={getFieldError('patio')}
+              errorClassName="error-message"
+            />
+
+            <FormInput
+              type="number"
+              placeholder="Cantidad de niveles"
+              register={register}
+              name="floors"
+              validationRules={validationRules.floors}
+              min="1"
+              disabled={isLoading || isSubmitting}
+              hasError={hasFieldError('floors')}
+              errorMessage={getFieldError('floors')}
+              errorClassName="error-message"
+            />
+
+            <FormInput
+              type="number"
+              placeholder="Año de construcción"
+              register={register}
+              name="constructionYear"
+              validationRules={validationRules.constructionYear}
+              min="1900"
+              max={currentYear}
+              disabled={isLoading || isSubmitting}
+              hasError={hasFieldError('constructionYear')}
+              errorMessage={getFieldError('constructionYear')}
+              errorClassName="error-message"
+            />
+          </FormRow>
+
+          <FormRow fullWidth>
+            <FormInput
+              type="text"
+              placeholder="Donde queda, ejemplo: Colonia Escalon"
+              register={register}
+              name="location"
+              validationRules={validationRules.location}
+              disabled={isLoading || isSubmitting}
+              hasError={hasFieldError('location')}
+              errorMessage={getFieldError('location')}
+              errorClassName="error-message"
+            />
+          </FormRow>
+
+          <FormRow>
+            <FormInput
+              type="text"
+              placeholder="Nombre de la propiedad"
+              register={register}
+              name="name"
+              validationRules={validationRules.name}
+              disabled={isLoading || isSubmitting}
+              hasError={hasFieldError('name')}
+              errorMessage={getFieldError('name')}
+              errorClassName="error-message"
+            />
+
+            <FormInput
+              type="text"
+              placeholder="Tamaño del lote (m²)"
+              register={register}
+              name="lotSize"
+              validationRules={validationRules.lotSize}
+              disabled={isLoading || isSubmitting}
+              hasError={hasFieldError('lotSize')}
+              errorMessage={getFieldError('lotSize')}
+              errorClassName="error-message"
+            />
+
+            <FormInput
+              type="text"
+              placeholder="Altura (m)"
+              register={register}
+              name="height"
+              validationRules={validationRules.height}
+              disabled={isLoading || isSubmitting}
+              hasError={hasFieldError('height')}
+              errorMessage={getFieldError('height')}
+              errorClassName="error-message"
+            />
+          </FormRow>
+
+          <FormRow fullWidth>
+            <FormInput
+              type="textarea"
+              placeholder="Descripción"
+              register={register}
+              name="description"
+              validationRules={validationRules.description}
+              rows={4}
+              disabled={isLoading || isSubmitting}
+              hasError={hasFieldError('description')}
+              errorMessage={getFieldError('description')}
+              errorClassName="error-message"
+              className="description-group"
+            />
+          </FormRow>
+
+          <div className="form-actions">
+            <FormInput
+              type="text"
+              placeholder="Precio ($)"
+              register={register}
+              name="price"
+              validationRules={validationRules.price}
+              disabled={isLoading || isSubmitting}
+              hasError={hasFieldError('price')}
+              errorMessage={getFieldError('price')}
+              errorClassName="error-message"
+              onChange={handleFieldChange("price")}
+              className="price-group"
+            />
+
+            <FormButton
+              type="submit"
+              disabled={isLoading || isSubmitting}
+              isLoading={isLoading || isSubmitting}
+              loadingText="Guardando..."
+              icon4={saveIcon}
+              className="save-button"
+            >
+              Guardar Cambios
+            </FormButton>
+          </div>
+        </form>
+      </div>
+    </Modal>
   );
 };
 
