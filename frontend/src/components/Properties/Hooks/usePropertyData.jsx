@@ -10,7 +10,8 @@ export const usePropertyData = (propertyId) => {
         location: '',
         description: '',
         details: [],
-        dimensions: []
+        dimensions: [],
+        coordinates: null
     });
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -44,6 +45,17 @@ export const usePropertyData = (propertyId) => {
                 const imageUrls = property.images?.map(img => img.image) || [];
                 setThumbnails(imageUrls);
                 setMainImage(imageUrls[0] || '');
+
+                let coordinates = null;
+                if (property.latitude && property.longitude) {
+                    coordinates = [parseFloat(property.latitude), parseFloat(property.longitude)];
+                } else if (property.coordinates) {
+                    if (Array.isArray(property.coordinates) && property.coordinates.length === 2) {
+                        coordinates = [parseFloat(property.coordinates[0]), parseFloat(property.coordinates[1])];
+                    } else if (property.coordinates.lat && property.coordinates.lng) {
+                        coordinates = [parseFloat(property.coordinates.lat), parseFloat(property.coordinates.lng)];
+                    }
+                }
                 
                 const processedPropertyData = {
                     ...property,
@@ -65,6 +77,8 @@ export const usePropertyData = (propertyId) => {
                         `Tamaño del lote: ${property.lotSize || 'No especificado'}`,
                         `Altura: ${property.height || 'No especificado'}`
                     ],
+
+                    coordinates: coordinates,
                     
                     originalName: property.name,
                     originalPrice: property.price,
@@ -75,7 +89,8 @@ export const usePropertyData = (propertyId) => {
                 console.log('Processed property data with _id:', {
                     _id: processedPropertyData._id,
                     id: processedPropertyData.id,
-                    name: processedPropertyData.name
+                    name: processedPropertyData.name,
+                    coordinates: processedPropertyData.coordinates
                 });
                 
                 setPropertyData(processedPropertyData);
@@ -92,7 +107,8 @@ export const usePropertyData = (propertyId) => {
                     location: 'No disponible',
                     description: 'No se pudo cargar la información de esta propiedad.',
                     details: ['Información no disponible'],
-                    dimensions: ['Información no disponible']
+                    dimensions: ['Información no disponible'],
+                    coordinates: null
                 });
             } finally {
                 setLoading(false);
