@@ -2,6 +2,7 @@ const propertiesController = {};
 import propertiesModel from "../models/Properties.js";
 import {v2 as cloudinary} from "cloudinary";
 import { config } from "../config.js";
+import mongoose from "mongoose";
 
 cloudinary.config({
     cloud_name: config.cloudinary.cloud_name,
@@ -15,6 +16,49 @@ propertiesController.getProperties = async(req, res) => {
         res.json(propertiesSeller);
     } catch (error) {
         res.status(500).json({ error: error.message });
+    }
+};
+
+propertiesController.getPropertiesByCategory = async(req, res) => {
+    try {
+        const { category } = req.params; 
+        
+        if (!category) {
+            return res.status(400).json({ 
+                error: 'Se requiere el ID de la categoría' 
+            });
+        }
+
+        if (!mongoose.Types.ObjectId.isValid(category)) {
+            return res.status(400).json({ 
+                error: 'ID de categoría inválido' 
+            });
+        }
+
+        const propertiesByCategory = await propertiesModel
+            .find({ category: new mongoose.Types.ObjectId(category) })
+            .populate('category')
+            .sort({ createdAt: -1 }); 
+            
+        if (propertiesByCategory.length === 0) {
+            return res.status(404).json({ 
+                message: 'No se encontraron propiedades para esta categoría',
+                data: []
+            });
+        }
+
+        res.status(200).json({
+            message: `Se encontraron ${propertiesByCategory.length} propiedades`,
+            count: propertiesByCategory.length,
+            data: propertiesByCategory
+        });
+
+    } catch (error) {
+        console.error('Error al buscar propiedades por categoría:', error);
+        res.status(500).json({ 
+            error: 'Error interno del servidor',
+            details: error.message 
+        });
     }
 };
 

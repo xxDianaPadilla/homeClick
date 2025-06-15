@@ -1,60 +1,110 @@
-import React from "react"; // Importa la biblioteca React para la creación de componentes.
-import Navbar from '../components/Navbar'; // Importa el componente Navbar, que representa la barra de navegación.
-import Footer from "../components/Footer"; // Importa el componente Footer, que representa el pie de página.
-import "../styles/PropertyCategories.css"; // Importa los estilos CSS específicos para la página de categorías de propiedades.
-import house1 from "../assets/image5.png"; // Importa una imagen de casa.
-import house2 from "../assets/image6.png"; // Importa otra imagen de casa.
-import house3 from "../assets/image7.png"; // Importa una tercera imagen de casa.
-import { useNavigate, useLocation } from 'react-router-dom'; // Importa hooks para la navegación y para acceder a la ubicación actual.
+import Navbar from '../components/Navbar';
+import Footer from "../components/Footer";
+import "../styles/PropertyCategories.css";
+import { useNavigate, useLocation } from 'react-router-dom';
 import PropertyCategoriesCards from "../components/PropertyCategoriesCards";
+import useProperties from "../components/Properties/Hooks/useProperties";
 
-// Define el componente funcional PropertyCategories, que muestra una lista de categorías de propiedades (en este caso, casas individuales).
 const PropertyCategories = () => {
-  // Hook para obtener la función 'navigate' que permite la navegación programática.
   const navigate = useNavigate();
-  // Hook para acceder al objeto de ubicación actual, utilizado para pasar información sobre la página de origen.
   const location = useLocation();
+  
+  // Obtener la categoría seleccionada desde el estado de navegación
+  const selectedCategory = location.state?.selectedCategory;
+  
+  // Usar el hook con el categoryId para filtrar las propiedades
+  const { properties, loading, error } = useProperties(selectedCategory?.id);
 
-  // Función que se ejecuta al hacer clic en una tarjeta de propiedad. Navega a la página de vista de propiedad, pasando el ID de la propiedad y la ruta actual.
+  // Función que se ejecuta al hacer clic en una tarjeta de propiedad
   const handlePropertyViewClick = (propertyId) => {
     navigate('/propertyView', {
       state: {
-        fromCategory: location.pathname, // Pasa la ruta actual como 'fromCategory' en el estado de la navegación.
-        propertyId: propertyId // Pasa el ID de la propiedad seleccionada.
+        fromCategory: location.pathname,
+        propertyId: propertyId,
+        selectedCategory: selectedCategory // Mantener la categoría seleccionada
       }
     });
   };
 
-  const properties = [
-    {id: '1', image: house1, description: 'Casa en Colonia Escalón'},
-    {id: '2', image: house2, description: 'Casa en la zona Rosa'},
-    {id: '3', image: house3, description: 'Casa en santa tecla'},
-    {id: '4', image: house1, description: 'Casa en Colonia Escalón'},
-    {id: '5', image: house2, description: 'Casa en la zona Rosa'},
-    {id: '6', image: house3, description: 'Casa en santa tecla'},
-    {id: '7', image: house1, description: 'Casa en Colonia Escalón'},
-    {id: '8', image: house2, description: 'Casa en la zona rosa'},
-    {id: '9', image: house3, description: 'Casa en santa tecla'}
-  ];
+  // Función para navegar de vuelta o mostrar todas las categorías
+  const handleShowAllCategories = () => {
+    navigate('/propertyCategories', {
+      state: { selectedCategory: null }
+    });
+  };
 
-  // Renderiza la estructura de la página de categorías de propiedades.
-  return(
+  if (loading) {
+    return (
+      <>
+        <Navbar />
+        <div className="properties-container2">
+          <div className="loading-message">
+            <p>Cargando propiedades...</p>
+          </div>
+        </div>
+        <Footer />
+      </>
+    );
+  }
+
+  if (error) {
+    return (
+      <>
+        <Navbar />
+        <div className="properties-container2">
+          <div className="error-message">
+            <p>Error al cargar las propiedades: {error}</p>
+            <button onClick={handleShowAllCategories} className="retry-button">
+              Ver todas las categorías
+            </button>
+          </div>
+        </div>
+        <Footer />
+      </>
+    );
+  }
+
+  return (
     <>
-      {/* Renderiza el componente Navbar en la parte superior. */}
-      <Navbar/>
-
-      {/* Contenedor principal para la cuadrícula de propiedades. */}
-      <div className="properties-container2">
-        {/* Cuadrícula que organiza las tarjetas de propiedad. */}
-        <div className="properties-grid2">
-          {properties.map((property) => (
-            <PropertyCategoriesCards key={property.id} image={property.image} description={property.description} onClick={() => handlePropertyViewClick(property.id)}/>
-          ))}
+      <Navbar />
+      <div className='min-h-screen bg-white-50'>
+        <div className='container mx-auto px-4 py-6 sm:px-6 lg:px-8'>
+          {selectedCategory && (
+            <div className="mb-8 text-center sm:text-left">
+              <p className="text-sm sm:text-base text-gray-600">
+                {properties.length} {properties.length === 1 ? 'propiedad encontrada' : 'propiedades encontradas'}
+              </p>
+            </div>
+          )}
+          
+          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8'>
+            {properties.map((property) => (
+              <PropertyCategoriesCards
+                key={property._id}
+                image={property.images && property.images.length > 0 ? property.images[0].image : '/default-house.png'}
+                location={property.location || property.name}
+                name={property.name}
+                price={property.price}
+                category={property.category?.propertyType || selectedCategory?.propertyType}
+                onClick={() => handlePropertyViewClick(property._id)}
+              />
+            ))}
+          </div>
+          
+          {properties.length === 0 && (
+            <div className="text-center py-12">
+              <div className="text-gray-400 mb-4">
+                <svg className="mx-auto h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                </svg>
+              </div>
+              <p className="text-lg text-gray-500">No se encontraron propiedades</p>
+              <p className="text-sm text-gray-400 mt-1">Prueba ajustando los filtros de búsqueda</p>
+            </div>
+          )}
         </div>
       </div>
-
-      {/* Renderiza el componente Footer en la parte inferior. */}
-      <Footer/>
+      <Footer />
     </>
   );
 };

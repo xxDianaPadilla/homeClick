@@ -1,14 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import "../styles/PropertyCategories.css";
 
-const PropertyCategoriesCards = ({image, description, onClick}) =>{
-    return(
-        <div className="property-card2" onClick={onClick}>
-            <div className="image-container">
-                <img src={image} alt={description} />
+const PropertyCategoriesCards = ({ image, location, onClick }) => {
+    const [imageError, setImageError] = useState(false);
+
+    const handleImageError = () => {
+        setImageError(true);
+    };
+
+    return (
+        <div className="house-card" onClick={onClick}>
+            <div className="house-image-container">
+                {!imageError ? (
+                    <img
+                        src={image}
+                        alt={location}
+                        className="house-image"
+                        onError={handleImageError}
+                    />
+                ) : (
+                    <div className="house-image-placeholder">
+                        <p>Sin imagen</p>
+                    </div>
+                )}
             </div>
-            <div className="property-footer">
-                <p>{description}</p>
+            <div className="house-location">
+                <p>{location}</p>
             </div>
         </div>
     );

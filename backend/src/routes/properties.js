@@ -65,6 +65,9 @@ router.route("/")
     .get(propertiesController.getProperties)
     .post(upload.array("images", 10), handleMulterError, propertiesController.createProperties);
 
+router.route("/category/:category")
+    .get(propertiesController.getPropertiesByCategory);
+
 router.route("/:id")
     .get(propertiesController.getPropertyById)  
     .put(upload.array("images", 10), handleMulterError, propertiesController.updateProperties)

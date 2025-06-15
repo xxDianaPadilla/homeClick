@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
 
-const useFetchProperties = () => {
+const useProperties = (categoryId = null, propertyType = null) => {
     const API = "http://localhost:4000/api/properties";
     const [properties, setProperties] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -25,22 +25,53 @@ const useFetchProperties = () => {
 
     const fetchProperties = async () => {
         try {
-            const response = await fetch(API);
-            if (!response.ok) {
-                throw new Error("Error fetching properties");
+            setLoading(true);
+            setError(null);
+            let url = API;
+
+            if (categoryId) {
+                url = `${API}/category/${categoryId}`;
             }
-            const data = await response.json();
-            setProperties(data);
-            setLoading(false);
+            else if (propertyType) {
+                url = `${API}?propertyType=${encodeURIComponent(propertyType)}`;
+            }
+
+            console.log('Fetching from URL:', url); 
+
+            const response = await fetch(url);
+            
+            if (!response.ok) {
+                if (response.status === 404) {
+                    const errorData = await response.json();
+                    setProperties([]);
+                    setError(null); 
+                    console.log(errorData.message);
+                } else {
+                    throw new Error(`Error ${response.status}: ${response.statusText}`);
+                }
+            } else {
+                const data = await response.json();
+                
+                if (data.data) {
+                    setProperties(data.data);
+                    console.log(`${data.message} (${data.count} propiedades)`);
+                } else {
+                    setProperties(data); 
+                }
+            }
+
         } catch (err) {
+            console.error('Error fetching properties:', err);
             setError(err.message);
+            setProperties([]);
+        } finally {
             setLoading(false);
         }
     };
 
     useEffect(() => {
         fetchProperties();
-    }, []);
+    }, [categoryId, propertyType]);
 
     const createProperty = async (e) => {
         e.preventDefault();
@@ -121,6 +152,7 @@ const useFetchProperties = () => {
             category: ""
         });
     }
+
     const handleInputChange = (e) => {
         const { name, value, type, checked } = e.target;
         setPropertyForm((prevForm) => ({
@@ -138,8 +170,10 @@ const useFetchProperties = () => {
         createProperty,
         updateProperty,
         deleteProperty,
-        handleInputChange
+        handleInputChange,
+        refetchProperties: fetchProperties 
     };
 
 }
-export default useFetchProperties;
+
+export default useProperties;
