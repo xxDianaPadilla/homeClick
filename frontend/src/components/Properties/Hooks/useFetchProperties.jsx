@@ -6,6 +6,7 @@ const useFetchProperties = () => {
     const [properties, setProperties] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [selectedCategory, setSelectedCategory] = useState(null);
     const [propertyForm, setPropertyForm] = useState({
         images: [],
         name: "",
@@ -36,6 +37,42 @@ const useFetchProperties = () => {
             setError(err.message);
             setLoading(false);
         }
+    };
+
+    const fetchPropertiesByCategory = async (categoryId) => {
+        try {
+            setLoading(true);
+            const response = await fetch(`${API}/category/${categoryId}`);
+            if(!response.ok){
+                if(response.status === 404){
+                    setProperties([]);
+                    setLoading(false);
+                    return;
+                }
+                throw new Error("Error fetching properties by category");
+            }
+            const result = await response.json();
+
+            setProperties(result.data || []);
+            setLoading(false);
+        } catch (error) {
+            setError(error.message);
+            setLoading(false);
+        }
+    };
+
+    const handleCategoryFilter = async (categoryId) => {
+        setSelectedCategory(categoryId);
+        if(categoryId){
+            await fetchPropertiesByCategory(categoryId);
+        }else{
+            await fetchProperties();
+        }
+    };
+
+    const clearCategoryFilter = () => {
+        setSelectedCategory(null);
+        fetchProperties();
     };
 
     useEffect(() => {
@@ -133,12 +170,17 @@ const useFetchProperties = () => {
         properties,
         loading,
         error,
+        selectedCategory,
         propertyForm,
         setPropertyForm,
         createProperty,
         updateProperty,
         deleteProperty,
-        handleInputChange
+        handleInputChange,
+        handleCategoryFilter,
+        clearCategoryFilter,
+        fetchProperties,
+        fetchPropertiesByCategory
     };
 
 }
