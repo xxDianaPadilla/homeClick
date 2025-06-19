@@ -7,11 +7,15 @@ export const usePropertyData = (propertyId) => {
     const [propertyData, setPropertyData] = useState({
         name: '',
         price: '',
+        originalPrice: '', // Agregar precio original para el carrito
         location: '',
         description: '',
         details: [],
         dimensions: [],
-        coordinates: null
+        coordinates: null,
+        rooms: 0,
+        bathrooms: 0,
+        lotSize: ''
     });
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -57,13 +61,30 @@ export const usePropertyData = (propertyId) => {
                     }
                 }
                 
+                // Extraer el precio numérico para el carrito
+                let originalPrice = 0;
+                if (property.price) {
+                    // Si el precio es un string, extraer el número
+                    if (typeof property.price === 'string') {
+                        originalPrice = parseFloat(property.price.replace(/[^0-9.-]+/g, "")) || 0;
+                    } else if (typeof property.price === 'number') {
+                        originalPrice = property.price;
+                    }
+                }
+                
                 const processedPropertyData = {
                     ...property,
                     
                     name: property.name || 'Propiedad sin nombre',
-                    price: property.price ? `$${property.price.toLocaleString()}` : 'Precio no disponible',
+                    price: property.price ? `$${originalPrice.toLocaleString()}` : 'Precio no disponible',
+                    originalPrice: originalPrice, // Guardar el precio numérico original
                     location: property.location || 'Ubicación no especificada',
                     description: property.description || 'Sin descripción disponible',
+                    
+                    // Extraer información numérica para el carrito
+                    rooms: property.rooms || 0,
+                    bathrooms: property.bathrooms || 0,
+                    lotSize: property.lotSize || 'No especificado',
                     
                     details: [
                         `Habitaciones: ${property.rooms || 'No especificado'}`,
@@ -80,8 +101,8 @@ export const usePropertyData = (propertyId) => {
 
                     coordinates: coordinates,
                     
+                    // Mantener las propiedades originales para referencia
                     originalName: property.name,
-                    originalPrice: property.price,
                     originalLocation: property.location,
                     originalDescription: property.description
                 };
@@ -90,6 +111,7 @@ export const usePropertyData = (propertyId) => {
                     _id: processedPropertyData._id,
                     id: processedPropertyData.id,
                     name: processedPropertyData.name,
+                    originalPrice: processedPropertyData.originalPrice,
                     coordinates: processedPropertyData.coordinates
                 });
                 
@@ -104,11 +126,15 @@ export const usePropertyData = (propertyId) => {
                 setPropertyData({
                     name: 'Error al cargar propiedad',
                     price: 'No disponible',
+                    originalPrice: 0,
                     location: 'No disponible',
                     description: 'No se pudo cargar la información de esta propiedad.',
                     details: ['Información no disponible'],
                     dimensions: ['Información no disponible'],
-                    coordinates: null
+                    coordinates: null,
+                    rooms: 0,
+                    bathrooms: 0,
+                    lotSize: 'No especificado'
                 });
             } finally {
                 setLoading(false);

@@ -15,6 +15,8 @@ import { useExpandableSections } from '../components/Properties/Hooks/useExpanda
 import { useSavedProperties } from '../components/Properties/Hooks/useSavedProperties';
 import useContactForm from '../components/Customers/Hooks/useContactForm';
 import { useEffect, useRef } from 'react';
+import { useCart } from '../context/CartContext'; // Importar el hook del carrito
+import { toast } from 'react-hot-toast'; // Para mostrar notificaciones
 
 const PropertyView = () => {
   const location = useLocation();
@@ -27,6 +29,9 @@ const PropertyView = () => {
   const { detailsExpanded, dimensionsExpanded, toggleDetails, toggleDimensions } = useExpandableSections();
   const { isSaved, toggleSaved } = useSavedProperties();
   const { showContactForm, toggleContactForm } = useContactForm();
+  
+  // Usar el contexto del carrito
+  const { addToCart, isInCart } = useCart();
 
   // Coordenadas por defecto (San Salvador)
   const defaultCenter = [13.6929, -89.2182];
@@ -57,8 +62,38 @@ const PropertyView = () => {
     { image: house1, caption: "Casa en Santa Elene" }
   ];
 
+  // Función actualizada para manejar el click del carrito
   const handleShoppingCartClick = () => {
-    navigate('/shoppingCart');
+    // Verificar si la propiedad ya está en el carrito
+    if (isInCart(propertyId)) {
+      // Si ya está en el carrito, solo navegar
+      toast.success('Esta propiedad ya está en tu carrito');
+      navigate('/shoppingCart');
+    } else {
+      // Si no está en el carrito, agregarla primero
+      const propertyToAdd = {
+        id: propertyId,
+        name: propertyData.name,
+        originalPrice: propertyData.originalPrice,
+        price: propertyData.price,
+        description: propertyData.description,
+        thumbnails: thumbnails,
+        lotSize: propertyData.lotSize,
+        rooms: propertyData.rooms,
+        bathrooms: propertyData.bathrooms
+      };
+      
+      // Agregar al carrito
+      addToCart(propertyToAdd);
+      
+      // Mostrar notificación de éxito
+      toast.success('Propiedad agregada al carrito exitosamente');
+      
+      // Navegar al carrito después de un pequeño delay para que se vea la notificación
+      setTimeout(() => {
+        navigate('/shoppingCart');
+      }, 1000);
+    }
   };
 
   // Función para obtener el texto del popup del mapa
@@ -132,7 +167,10 @@ const PropertyView = () => {
 
               <div className="action-buttons3">
                 <button className="btn-contact3" onClick={toggleContactForm}>Contactar al dueño</button>
-                <button className="btn-save3" onClick={handleShoppingCartClick}>Agregar al carrito</button>
+                {/* Botón actualizado con nueva funcionalidad de carrito */}
+                <button className="btn-save3" onClick={handleShoppingCartClick}>
+                  {isInCart(propertyId) ? 'Ver en carrito' : 'Agregar al carrito'}
+                </button>
               </div>
             </div>
           </div>
