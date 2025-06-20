@@ -15,12 +15,12 @@ import { useExpandableSections } from '../components/Properties/Hooks/useExpanda
 import { useSavedProperties } from '../components/Properties/Hooks/useSavedProperties';
 import useContactForm from '../components/Customers/Hooks/useContactForm';
 import { useEffect, useRef, useState } from 'react';
-<<<<<<< HEAD
-=======
 import { useCart } from '../context/CartContext'; // Importar el hook del carrito
 import { toast } from 'react-hot-toast'; // Para mostrar notificaciones
 import ConfirmationModal from '../components/ConfirmationModal'; // Importar el modal de confirmación
->>>>>>> Monterrosa
+import { useCart } from '../context/CartContext'; // Importar el hook del carrito
+import { toast } from 'react-hot-toast'; // Para mostrar notificaciones
+import ConfirmationModal from '../components/ConfirmationModal'; // Importar el modal de confirmación
 
 const PropertyView = () => {
   const location = useLocation();
@@ -77,7 +77,6 @@ const PropertyView = () => {
     navigate('/shoppingCart');
   };
 
-<<<<<<< HEAD
   const handleSaveProperty = () => {
     if (!loading && propertyData) {
       const wasAdded = toggleSaved(propertyData);
@@ -88,7 +87,7 @@ const PropertyView = () => {
       
       // Log para debugging
       console.log(wasAdded ? 'Propiedad guardada' : 'Propiedad removida de guardados');
-=======
+
   // Función para manejar el modal de confirmación
   const handleConfirmationResponse = (continueShopping) => {
     if (continueShopping) {
@@ -126,7 +125,6 @@ const PropertyView = () => {
       
       // Mostrar modal de confirmación
       setShowConfirmationModal(true);
->>>>>>> Monterrosa
     }
   };
 
