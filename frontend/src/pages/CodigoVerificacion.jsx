@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { CheckCircle, RefreshCw, ArrowLeft } from 'lucide-react';
+import { CheckCircle, RefreshCw } from 'lucide-react';
 import AuthLayout from '../components/AuthLayout';
 import CodeInput from '../components/CodeInput';
 import Timer from '../components/Timer';
 import useCodeVerification from '../components/Customers/Hooks/useCodeVerification';
 import usePasswordRecovery from '../components/Customers/Hooks/usePasswordRecovery';
+import ArrowLeftIcon from "../assets/arrowRight.png";
 
 function CodigoVerificacion() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { verifyRecoveryCode, loading } = usePasswordRecovery();
+  const { verifyRecoveryCode, requestRecoveryCode, loading } = usePasswordRecovery();
   
   // Obtener email del estado de navegación
   const email = location.state?.email;
@@ -83,7 +84,16 @@ function CodigoVerificacion() {
   const handleResendCode = async () => {
     if (!canResend) return;
     
-    navigate('/recuperarContrasena');
+    const result = await requestRecoveryCode(email);
+    if (result.success) {
+      setTimeLeft(1200);
+      setCanResend(false);
+      setSuccessMessage('Nuevo código enviado exitosamente');
+      setErrorMessage('');
+      clearCode();
+    } else {
+      setErrorMessage(result.message || 'Error al reenviar el código');
+    }
   };
 
   const handleBackClick = () => {
@@ -106,7 +116,7 @@ function CodigoVerificacion() {
       }
       showBackButton={true}
       onBackClick={handleBackClick}
-      backIcon="/assets/arrowRight.png"
+      backIcon={ArrowLeftIcon}
     >
       {/* Mensajes de estado */}
       {successMessage && (
@@ -186,9 +196,19 @@ function CodigoVerificacion() {
                 onClick={handleResendCode}
                 className="auth-button primary"
                 style={{ padding: '0.5rem 1.5rem', fontSize: '0.875rem' }}
+                disabled={loading}
               >
-                <RefreshCw size={16} />
-                Solicitar nuevo código
+                {loading ? (
+                  <>
+                    <div className="auth-loading-spinner" />
+                    Enviando...
+                  </>
+                ) : (
+                  <>
+                    <RefreshCw size={16} />
+                    Solicitar nuevo código
+                  </>
+                )}
               </button>
             </div>
           )}

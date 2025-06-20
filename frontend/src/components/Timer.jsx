@@ -8,44 +8,52 @@ const Timer = ({ timeLeft, isExpired = false, className = "" }) => {
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
-  const getStatusColor = () => {
+  const getStatusClass = () => {
     if (isExpired) return 'expired';
     if (timeLeft <= 300) return 'warning'; // 5 minutos
     return 'normal';
   };
 
   return (
-    <div className={`timer-container ${getStatusColor()} ${className}`}>
-      <div className="timer-content">
-        {isExpired ? (
-          <AlertTriangle className="timer-icon" size={20} />
-        ) : (
-          <Clock className="timer-icon" size={20} />
-        )}
-        
-        <div className="timer-text">
-          {isExpired ? (
-            <span className="timer-expired">El código ha expirado</span>
-          ) : (
-            <>
-              <span className="timer-label">Tiempo restante:</span>
-              <span className="timer-value">{formatTime(timeLeft)}</span>
-            </>
-          )}
-        </div>
-      </div>
-      
-      {!isExpired && (
-        <div className="timer-progress">
-          <div 
-            className="timer-progress-bar"
-            style={{ 
-              width: `${(timeLeft / 1200) * 100}%`,
-              backgroundColor: timeLeft <= 300 ? '#ef4444' : '#10b981'
-            }}
-          />
-        </div>
+    <div className={`timer-container ${getStatusClass()} ${className}`} style={{
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: '0.5rem',
+      padding: '0.75rem 1rem',
+      backgroundColor: isExpired ? 'rgba(239, 68, 68, 0.1)' : timeLeft <= 300 ? 'rgba(255, 193, 7, 0.1)' : 'rgba(34, 197, 94, 0.1)',
+      border: `1px solid ${isExpired ? 'rgba(239, 68, 68, 0.3)' : timeLeft <= 300 ? 'rgba(255, 193, 7, 0.4)' : 'rgba(34, 197, 94, 0.3)'}`,
+      borderRadius: '8px',
+      backdropFilter: 'blur(10px)',
+      marginBottom: '1rem'
+    }}>
+      {isExpired ? (
+        <AlertTriangle size={20} style={{ color: '#ef4444' }} />
+      ) : (
+        <Clock size={20} style={{ color: timeLeft <= 300 ? '#fbbf24' : '#10b981' }} />
       )}
+      
+      <div style={{ 
+        color: 'rgba(255, 255, 255, 0.9)',
+        fontSize: '0.875rem',
+        fontFamily: 'Raleway, sans-serif',
+        fontStyle: 'italic'
+      }}>
+        {isExpired ? (
+          <span style={{ color: '#fca5a5' }}>El código ha expirado</span>
+        ) : (
+          <>
+            <span>Tiempo restante: </span>
+            <span style={{ 
+              fontWeight: 'bold', 
+              color: timeLeft <= 300 ? '#fbbf24' : '#60d394',
+              fontFamily: 'Courier New, monospace'
+            }}>
+              {formatTime(timeLeft)}
+            </span>
+          </>
+        )}
+      </div>
     </div>
   );
 };
