@@ -1,5 +1,5 @@
 import { useState } from "react";
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
 
 const useLoginForm = () => {
@@ -21,6 +21,7 @@ const useLoginForm = () => {
             [name]: value
         }));
 
+        // Limpiar error específico cuando el usuario empiece a escribir
         if(errors[name]){
             setErrors(prev => ({
                 ...prev,
@@ -32,15 +33,17 @@ const useLoginForm = () => {
     const validateForm = () => {
         const newErrors = {};
 
+        // Validar email
         if(!formData.email.trim()){
             newErrors.email = 'El correo electrónico es requerido';
-        }else if (!/\S+@\S+\.\S+/.test(formData.email)){
+        } else if (!/\S+@\S+\.\S+/.test(formData.email)){
             newErrors.email = 'El correo electrónico no es válido';
         }
 
+        // Validar contraseña
         if(!formData.password.trim()){
             newErrors.password = 'La contraseña es requerida';
-        }else if(formData.password.length < 6){ 
+        } else if(formData.password.length < 6){ 
             newErrors.password = 'La contraseña debe tener al menos 6 caracteres';
         }
 
@@ -56,52 +59,47 @@ const useLoginForm = () => {
         }
 
         setIsLoading(true);
+        setErrors({}); // Limpiar errores previos
 
         try {
             const result = await login(formData.email, formData.password);
 
             if(result.success){
-                setTimeout(() => {
-                    const cookies = document.cookie.split(';');
-                    const authCookie = cookies.find(cookie => cookie.trim().startsWith('authToken='));
-
-                    if(authCookie){
-                        const token = authCookie.split('=')[1];
-                        const payload = token.split('.')[1];
-                        const decodedPayload = JSON.parse(atob(payload));
-
-                        if(decodedPayload.userType === 'admin'){
-                            navigate('/dashboard');
-                        }else{
-                            navigate('/landingPage');
-                        }
-                    }
-                }, 200);
-            }else{
+                // El AuthContext maneja la redirección
+                console.log('Login exitoso');
+            } else {
+                // Mapear errores específicos del backend
                 let errorMessage = 'Error en el inicio de sesión';
+                
                 if(result.message === 'user not found'){
-                    errorMessage = 'Usuario no encontrado';
-                }else if (result.message === 'Invalid password'){
-                    errorMessage = 'Contraseña incorrecta';
+                    setErrors({ email: 'Usuario no encontrado' });
+                } else if (result.message === 'Invalid password'){
+                    setErrors({ password: 'Contraseña incorrecta' });
+                } else {
+                    setErrors({ general: result.message || errorMessage });
                 }
-
-                setErrors({general: errorMessage});
             }
         } catch (error) {
             console.error('Error en login: ', error);
-            setErrors({general: 'Error de conexión. Intente nuevamente'});
-        }finally{
+            setErrors({ general: 'Error de conexión. Intente nuevamente' });
+        } finally {
             setIsLoading(false);
         }
     };
 
-    return{
+    const clearErrors = () => {
+        setErrors({});
+    };
+
+    return {
         formData,
         errors,
         isLoading,
         handleInputChange,
-        handleSubmit
+        handleSubmit,
+        clearErrors,
+        setFormData
     };
 };
 
-export default useLoginForm;
+export default useLoginForm;    

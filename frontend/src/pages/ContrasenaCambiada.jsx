@@ -1,39 +1,134 @@
-import React from 'react'; // Importa la biblioteca React para la creación de componentes.
-import "../styles/ContrasenaCambiada.css"; // Importa el archivo CSS que contiene los estilos específicos para la página de contraseña cambiada.
-import bgImgHouse from "../assets/imgLoginFondo.png"; // Importa la imagen de fondo para la página.
-import { useNavigate } from 'react-router-dom'; // Importa el hook useNavigate para la navegación programática.
+import React, { useEffect } from 'react';
+import "../styles/ContrasenaCambiada.css";
+import bgImgHouse from "../assets/imgLoginFondo.png";
+import { useNavigate, useLocation } from 'react-router-dom';
 
-// Define el componente funcional ContrasenaCambiada, que representa la página que se muestra después de que la contraseña del usuario ha sido cambiada exitosamente.
 function ContrasenaCambiada() {
-  // Utiliza el hook useNavigate para obtener la función 'navigate', que permite redirigir al usuario a otras rutas.
   const navigate = useNavigate();
+  const location = useLocation();
+  
+  // Obtener mensaje personalizado del estado
+  const fromPasswordReset = location.state?.fromPasswordReset;
+  const customMessage = location.state?.message;
 
-  // Función que se ejecuta al hacer clic en el botón "Aceptar". Navega a la página de inicio de sesión.
+  // Auto-redirección después de 5 segundos
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      navigate('/inicio-sesion');
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, [navigate]);
+
   const handleLoginClick = () => {
     navigate('/inicio-sesion');
   };
 
-  // Renderiza la estructura de la página de contraseña cambiada.
   return (
     <div className="landing-container">
-      {/* Imagen de fondo de la página. */}
       <img
         src={bgImgHouse}
         alt="Row of Victorian houses with warm sunlight and clear sky"
         className="background-image"
       />
-      {/* Contenedor para el mensaje de éxito y el botón para volver a la página de inicio de sesión. */}
       <div className="password-changed-container">
-        {/* Título principal indicando que la contraseña se cambió correctamente. */}
-        <h1 className="title">Contraseña cambiada correctamente</h1>
-        {/* Mensaje descriptivo que indica al usuario que debe iniciar sesión nuevamente para verificar las nuevas credenciales. */}
+        {/* Icono de éxito */}
+        <div style={{ 
+          textAlign: 'center', 
+          marginBottom: '20px' 
+        }}>
+          <div style={{
+            width: '80px',
+            height: '80px',
+            backgroundColor: '#28a745',
+            borderRadius: '50%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            margin: '0 auto 20px auto',
+            boxShadow: '0 4px 20px rgba(40, 167, 69, 0.3)'
+          }}>
+            <svg 
+              width="40" 
+              height="40" 
+              fill="white" 
+              viewBox="0 0 24 24"
+            >
+              <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+            </svg>
+          </div>
+        </div>
+
+        <h1 className="title">
+          {fromPasswordReset ? '¡Contraseña cambiada exitosamente!' : 'Contraseña cambiada correctamente'}
+        </h1>
+        
         <p className="description">
-          Vuelva a iniciar sesión<br/>
-          para poder verificar que las
-          nuevas credenciales funcionen.
+          {fromPasswordReset ? (
+            <>
+              Tu contraseña ha sido actualizada correctamente.<br/>
+              Ya puedes iniciar sesión con tu nueva contraseña.
+            </>
+          ) : (
+            <>
+              Vuelva a iniciar sesión<br/>
+              para poder verificar que las
+              nuevas credenciales funcionen.
+            </>
+          )}
         </p>
-        {/* Botón para que el usuario vuelva a la página de inicio de sesión. Al hacer clic, se ejecuta la función 'handleLoginClick'. */}
-        <button className="accept-button" onClick={handleLoginClick}>Aceptar</button>
+
+        {/* Mensaje personalizado si existe */}
+        {customMessage && (
+          <div style={{
+            backgroundColor: '#e6ffe6',
+            border: '1px solid #ccffcc',
+            borderRadius: '5px',
+            padding: '10px',
+            margin: '15px 0',
+            color: '#28a745',
+            fontSize: '14px',
+            textAlign: 'center'
+          }}>
+            {customMessage}
+          </div>
+        )}
+
+        {/* Información de redirección automática */}
+        <div style={{
+          backgroundColor: '#f8f9fa',
+          border: '1px solid #dee2e6',
+          borderRadius: '5px',
+          padding: '10px',
+          margin: '15px 0',
+          color: '#6c757d',
+          fontSize: '12px',
+          textAlign: 'center'
+        }}>
+          Serás redirigido automáticamente al inicio de sesión en 5 segundos...
+        </div>
+
+        <button className="accept-button" onClick={handleLoginClick}>
+          Ir a iniciar sesión
+        </button>
+
+        {/* Consejos de seguridad */}
+        <div style={{
+          marginTop: '20px',
+          padding: '15px',
+          backgroundColor: '#fff3cd',
+          border: '1px solid #ffeaa7',
+          borderRadius: '5px',
+          fontSize: '12px',
+          color: '#856404'
+        }}>
+          <strong>💡 Consejos de seguridad:</strong>
+          <ul style={{ margin: '5px 0 0 15px', textAlign: 'left' }}>
+            <li>No compartas tu contraseña con nadie</li>
+            <li>Usa contraseñas únicas para cada servicio</li>
+            <li>Considera usar un gestor de contraseñas</li>
+          </ul>
+        </div>
       </div>
     </div>
   );

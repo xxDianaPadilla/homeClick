@@ -1,78 +1,187 @@
-import React from 'react'; // Importa la biblioteca React para la creación de componentes.
-import "../styles/RecuperarContrasena.css"; // Importa los estilos CSS específicos para la página de recuperación de contraseña.
-import bgImgHouse from "../assets/imgLoginFondo.png"; // Importa la imagen de fondo para la página.
-import ArrowLeftIcon from "../assets/arrowRight.png"; // Importa el icono de flecha izquierda (para volver).
-import LockImg from "../assets/LockIcon.png"; // Importa el icono de candado.
-import { useNavigate } from 'react-router-dom'; // Importa el hook useNavigate para la navegación programática.
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import "../styles/RecuperarContrasena.css";
+import bgImgHouse from "../assets/imgLoginFondo.png";
+import ArrowLeftIcon from "../assets/arrowRight.png";
+import LockImg from "../assets/LockIcon.png";
+import { useNavigate } from 'react-router-dom';
+import usePasswordRecovery from '../components/Customers/Hooks/usePasswordRecovery';
+import usePasswordRecoveryAlert from '../components/Customers/Hooks/usePasswordRecoveryAlert';
+import PasswordRecoveryAlert from '../components/PasswordRecoveryAlert';
 
-// Define el componente funcional RecuperarContraseña, que permite al usuario solicitar un enlace para restablecer su contraseña.
 function RecuperarContraseña() {
-  // Utiliza el hook useNavigate para obtener la función 'navigate', que permite redirigir al usuario a otras rutas.
   const navigate = useNavigate();
+  const { loading, requestRecoveryCode } = usePasswordRecovery();
+  const { alert, showSuccess, showError, hideAlert } = usePasswordRecoveryAlert();
+  const [emailSent, setEmailSent] = useState(false);
 
-  // Función que se ejecuta al hacer clic en el botón de "volver". Navega a la página de inicio de sesión.
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    getValues
+  } = useForm({
+    mode: 'onChange',
+    defaultValues: {
+      email: ''
+    }
+  });
+
+  const validationRules = {
+    email: {
+      required: 'El correo electrónico es requerido',
+      pattern: {
+        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+        message: 'El correo electrónico no es válido'
+      }
+    }
+  };
+
   const handleLoginClick = () => {
     navigate('/inicio-sesion');
   };
 
-  // Función que se ejecuta al hacer clic en el botón de "Enviar enlace de inicio de sesión". Navega a la página de código de contraseña.
-  const handlePasswordCodeClick = () =>{
-    navigate('/passwordCode');
+  const onSubmit = async (data) => {
+    const result = await requestRecoveryCode(data.email);
+    
+    if (result.success) {
+      setEmailSent(true);
+      showSuccess('¡Código enviado exitosamente! Revisa tu correo electrónico.', {
+        duration: 3000
+      });
+      
+      // Pasar el email al siguiente paso
+      setTimeout(() => {
+        navigate('/passwordCode', { 
+          state: { 
+            email: data.email,
+            fromPasswordReset: true 
+          } 
+        });
+      }, 2000);
+    } else {
+      showError(result.message || 'Error al enviar el código de verificación');
+    }
   };
 
-  // Renderiza la estructura de la página de recuperación de contraseña.
+  const handlePasswordCodeClick = () => {
+    const email = getValues('email');
+    if (email && !errors.email) {
+      navigate('/passwordCode', { 
+        state: { 
+          email: email,
+          fromPasswordReset: true 
+        } 
+      });
+    } else {
+      showError('Por favor, ingresa un correo electrónico válido primero');
+    }
+  };
+
   return (
-    <div className="landing-container">
-      {/* Imagen de fondo de la página. */}
-      <img
-        src={bgImgHouse}
-        alt="Row of Victorian houses with warm sunlight and clear sky"
-        className="background-image"
-      />
-      {/* Contenedor principal para el formulario de recuperación de contraseña. */}
-      <div className="form-container2">
-        {/* Encabezado con el botón para volver a la página de inicio de sesión. */}
-        <div className="header">
-          <button className="back-button" onClick={handleLoginClick}>
-            <img src={ArrowLeftIcon} alt="Volver" className="back-icon" />
-          </button>
-        </div>
+    <>
+      <div className="landing-container">
+        <img
+          src={bgImgHouse}
+          alt="Row of Victorian houses with warm sunlight and clear sky"
+          className="background-image"
+        />
+        <div className="form-container2">
+          <div className="header">
+            <button className="back-button" onClick={handleLoginClick}>
+              <img src={ArrowLeftIcon} alt="Volver" className="back-icon" />
+            </button>
+          </div>
 
-        {/* Contenedor para el icono de candado. */}
-        <div className="lock-icon-container2">
-          <img src={LockImg} alt="Icono de seguridad" className="lock-icon" />
-        </div>
+          <div className="lock-icon-container2">
+            <img src={LockImg} alt="Icono de seguridad" className="lock-icon" />
+          </div>
 
-        {/* Título principal de la página de recuperación de contraseña. */}
-        <h1 className="form-title4">¿Tienes problemas para iniciar sesión?</h1>
-        {/* Descripción del formulario. */}
-        <p className="form-description">
-          Ingresa tu correo electrónico y te enviaremos un código{"\n"}
-          para que recuperes el acceso a tu cuenta
-        </p>
-        {/* Formulario para ingresar el correo electrónico y solicitar el enlace de restablecimiento. */}
-        <form className="reset-form">
-          {/* Campo de entrada para el correo electrónico. */}
-          <input
-            type="email"
-            placeholder="Correo electrónico"
-            className="text-input"
-          />
-          {/* Botón para enviar el enlace de inicio de sesión (en este caso, navega a '/passwordCode'). */}
-          <button className="submit-button4"  onClick={handlePasswordCodeClick}>
-            Enviar enlace de inicio de sesión
-          </button>
-        </form>
-        {/* Separador "O" entre el formulario y el enlace para crear una cuenta nueva. */}
-        <div className="or-separator"><hr /> &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; <strong>O</strong> &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; <hr /></div> {/* Agrega la "O" con las líneas */}
-        {/* Enlace para crear una cuenta nueva. */}
-        <div className="create-account">
-          <a href="/registro" className="create-account-link">
-            <strong>Crear cuenta nueva</strong>
-          </a>
+          <h1 className="form-title4">¿Tienes problemas para iniciar sesión?</h1>
+          
+          {!emailSent ? (
+            <>
+              <p className="form-description">
+                Ingresa tu correo electrónico y te enviaremos un código
+                para que recuperes el acceso a tu cuenta
+              </p>
+
+              <form className="reset-form" onSubmit={handleSubmit(onSubmit)}>
+                <div className="input-group">
+                  <input
+                    type="email"
+                    placeholder="Correo electrónico"
+                    className={`text-input ${errors.email ? 'input-error' : ''}`}
+                    disabled={loading}
+                    {...register('email', validationRules.email)}
+                  />
+                  {errors.email && (
+                    <span className="error-text-improved">
+                      {errors.email.message}
+                    </span>
+                  )}
+                </div>
+
+                <button 
+                  className="submit-button4" 
+                  type="submit"
+                  disabled={loading}
+                >
+                  {loading && (
+                    <span className="loading-spinner-inline"></span>
+                  )}
+                  {loading ? 'Enviando...' : 'Enviar código de verificación'}
+                </button>
+              </form>
+            </>
+          ) : (
+            <>
+              <div className="success-container">
+                <div className="success-icon">
+                  ✓
+                </div>
+                <h3 className="success-title">
+                  ¡Código enviado!
+                </h3>
+                <p className="success-description">
+                  Hemos enviado un código de verificación a tu correo electrónico. 
+                  Serás redirigido automáticamente...
+                </p>
+              </div>
+
+              <button 
+                className="submit-button4 success-button" 
+                onClick={handlePasswordCodeClick}
+              >
+                Continuar con la verificación
+              </button>
+            </>
+          )}
+
+          <div className="or-separator">
+            <span className="separator-line"></span>
+            <strong className="separator-text">O</strong>
+            <span className="separator-line"></span>
+          </div>
+          
+          <div className="create-account">
+            <a href="/registro" className="create-account-link">
+              <strong>Crear cuenta nueva</strong>
+            </a>
+          </div>
         </div>
       </div>
-    </div>
+
+      {/* Componente de Alerta */}
+      <PasswordRecoveryAlert
+        type={alert.type}
+        message={alert.message}
+        isVisible={alert.isVisible}
+        onClose={hideAlert}
+        autoClose={alert.autoClose}
+        duration={alert.duration}
+      />
+    </>
   );
 }
 

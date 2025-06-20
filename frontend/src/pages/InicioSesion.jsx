@@ -26,6 +26,7 @@ function InicioSesion() {
     }
   });
 
+  // Redireccionar si ya está autenticado
   useEffect(() => {
     if (isAuthenticated && user) {
       if (user.userType === 'admin') {
@@ -62,19 +63,20 @@ function InicioSesion() {
       if (!result.success) {
         const errorMessage = result.message || 'Error en la autenticación';
 
+        // Mapear errores específicos
         if (errorMessage.toLowerCase().includes('email') ||
           errorMessage.toLowerCase().includes('correo') ||
-          errorMessage.toLowerCase().includes('usuario no encontrado')) {
+          errorMessage.toLowerCase().includes('user not found')) {
           setError('email', {
             type: 'server',
-            message: errorMessage
+            message: 'Usuario no encontrado'
           });
         } else if (errorMessage.toLowerCase().includes('password') ||
           errorMessage.toLowerCase().includes('contraseña') ||
-          errorMessage.toLowerCase().includes('credenciales incorrectas')) {
+          errorMessage.toLowerCase().includes('invalid password')) {
           setError('password', {
             type: 'server',
-            message: errorMessage
+            message: 'Contraseña incorrecta'
           });
         } else {
           setError('root.serverError', {

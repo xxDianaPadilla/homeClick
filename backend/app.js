@@ -9,6 +9,7 @@ import registerCustomersRoutes from "./src/routes/registerCustomers.js";
 import loginRoutes from "./src/routes/login.js";
 import logOutRoutes from './src/routes/logout.js';
 import authRoutes from './src/routes/auth.js';
+import recoveryPasswordRoutes from './src/routes/recoveryPassword.js'; // Ruta de recuperación añadida
 import cookieParser from 'cookie-parser';
 import cors from "cors";
 
@@ -39,5 +40,6 @@ app.use("/api/registerCustomers", registerCustomersRoutes);
 app.use("/api/login", loginRoutes);
 app.use("/api/logout", logOutRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/recovery-password", recoveryPasswordRoutes); // Ruta de recuperación añadida
 
 export default app;

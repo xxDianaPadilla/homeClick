@@ -1,357 +1,493 @@
 /* Importa la fuente Raleway desde Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600&display=swap');
 
 /* Contenedor principal para la verificación */
 .verification-container-1 {
-  /* Posicionamiento relativo para contener elementos absolutos */
   position: relative;
-  /* Asegura que el contenedor ocupe al menos toda la altura de la pantalla */
   min-height: 100vh;
-  /* Ocupa todo el ancho disponible */
   width: 100%;
-  /* Utiliza Flexbox para centrar el contenido */
   display: flex;
-  /* Centra los elementos verticalmente */
   align-items: center;
-  /* Centra los elementos horizontalmente */
   justify-content: center;
-  /* Establece la fuente principal */
   font-family: 'Raleway', sans-serif;
-  /* Aplica estilo itálico a la fuente */
   font-style: italic;
 }
 
 /* Imagen de fondo */
 .background-image-2 {
-  /* Posicionamiento absoluto para cubrir todo el contenedor */
   position: absolute;
-  /* Establece todas las propiedades de inserción en 0 para cubrir todo el contenedor */
   inset: 0;
-  /* Ocupa todo el ancho */
   width: 100%;
-  /* Ocupa toda la altura */
   height: 100%;
-  /* Ajusta el tamaño de la imagen para cubrir el contenedor manteniendo su relación de aspecto */
   object-fit: cover;
-  /* Asegura que la imagen esté detrás del contenido */
   z-index: -1;
 }
 
 /* Capa de superposición para el contenido de verificación */
 .verification-form {
-  /* Color de fondo semitransparente */
   background-color: rgba(129, 73, 22, 0.7);
-  /* Bordes redondeados */
   border-radius: 30px;
-  /* Relleno interno */
-  padding: 100px;
-  /* Color del texto */
+  padding: 60px;
   color: white;
-  /* Centra el texto horizontalmente */
   text-align: center;
-  /* Ocupa el 90% del ancho del contenedor padre */
   width: 90%;
-  /* Establece un ancho máximo para evitar que se vea demasiado ancho en pantallas grandes */
   max-width: 900px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 /* Encabezado principal */
 .heading-4 {
-  /* Fuente específica para el encabezado */
-  font-family: 'Roboto', sans-serif;
-  /* Texto en negrita */
+  font-family: 'Raleway', sans-serif;
   font-weight: 700;
-  /* Estilo itálico */
   font-style: italic;
-  /* Tamaño de la fuente */
   font-size: 32px;
-  /* Margen inferior */
   margin-bottom: 20px;
-  margin-top: 20px;
+  margin-top: 0;
 }
 
-/* Texto de verificación */
+/* Texto de verificación mejorado */
 .verification-text-5 {
-  /* Tamaño de la fuente */
   font-size: 16px;
-  /* Altura de la línea para mejor legibilidad */
-  line-height: 1.5;
-  /* Margen inferior */
-  margin-bottom: 30px;
+  line-height: 1.6;
+  margin-bottom: 40px;
+  font-family: 'Raleway', sans-serif;
+  font-style: italic;
+  font-weight: 400;
+}
+
+.email-highlight {
+  color: #ff6b35;
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 /* Formulario de verificación */
 .verification-form-6 {
-  /* Utiliza Flexbox para organizar los elementos */
   display: flex;
-  /* Organiza los elementos en una columna */
   flex-direction: column;
-  /* Espacio entre los elementos */
   gap: 30px;
-  /* Centra los elementos horizontalmente */
   align-items: center;
 }
 
-/* Grupo de campos de entrada para el código */
-.code-input-group-7 {
-  /* Utiliza Flexbox para organizar los campos en una fila */
+/* Grupo de campos de entrada para el código mejorado */
+.code-input-group-enhanced {
   display: flex;
-  /* Espacio entre los campos */
-  gap: 15px;
-  /* Centra los campos horizontalmente */
   justify-content: center;
-  margin-top: 30px;
+  align-items: center;
+  gap: 12px;
+  margin: 30px 0;
+  flex-wrap: wrap;
 }
 
-/* Campos de entrada para el código de verificación */
-.code-input-8,
-.code-input-9,
-.code-input-10,
-.code-input-12,
-.code-input-13,
-.code-input-14 {
-  /* Ancho de los campos */
+/* Campos de entrada para el código de verificación mejorados */
+.code-input-enhanced {
   width: 50px;
-  /* Altura de los campos */
   height: 50px;
-  /* Borde blanco */
-  border: 1px solid white;
-  /* Bordes redondeados */
-  border-radius: 5px;
-  /* Fondo transparente */
-  background-color: transparent;
-  /* Color del texto */
-  color: white;
-  /* Tamaño de la fuente */
-  font-size: 20px;
-  /* Estilo itálico */
-  font-style: italic;
-  /* Centra el texto dentro del campo */
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
   text-align: center;
-  /* Elimina las flechas de los campos numéricos en Firefox */
-  -moz-appearance: textfield;
-  /* Elimina las flechas de los campos numéricos en otros navegadores */
-  appearance: textfield;
-}
-
-/* Oculta las flechas de los campos numéricos en Webkit (Chrome, Safari) */
-.code-input-8::-webkit-outer-spin-button,
-.code-input-8::-webkit-inner-spin-button,
-.code-input-9::-webkit-outer-spin-button,
-.code-input-9::-webkit-inner-spin-button,
-.code-input-10::-webkit-outer-spin-button,
-.code-input-10::-webkit-inner-spin-button,
-.code-input-12::-webkit-outer-spin-button,
-.code-input-12::-webkit-inner-spin-button,
-.code-input-13::-webkit-outer-spin-button,
-.code-input-13::-webkit-inner-spin-button,
-.code-input-14::-webkit-outer-spin-button,
-.code-input-14::-webkit-inner-spin-button {
-  /* Elimina la apariencia de las flechas */
-  -webkit-appearance: none;
-  /* Elimina el margen asociado a las flechas */
-  margin: 0;
-}
-
-/* Separador entre los grupos de códigos (si los hubiera) */
-.code-separator-11 {
-  /* Tamaño de la fuente */
   font-size: 20px;
-  /* Color del texto */
+  font-weight: bold;
+  transition: all 0.3s ease;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-family: 'Raleway', sans-serif;
+  backdrop-filter: blur(5px);
+}
+
+.code-input-enhanced:focus {
+  outline: none;
+  border-color: #ff6b35;
+  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.3);
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
+
+.code-input-enhanced.filled {
+  border-color: #28a745;
+  background-color: rgba(40, 167, 69, 0.2);
+}
+
+.code-input-enhanced.expired {
+  border-color: #dc3545;
+  background-color: rgba(220, 53, 69, 0.1);
+  opacity: 0.6;
+}
+
+.code-input-enhanced:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Separador entre los grupos de códigos */
+.code-separator-enhanced {
+  font-size: 24px;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0 8px;
+}
+
+/* Contenedor del temporizador mejorado */
+.timer-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 15px 20px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.timer-container.warning {
+  background: linear-gradient(135deg, rgba(255, 193, 7, 0.2), rgba(255, 193, 7, 0.1));
+  border-color: rgba(255, 193, 7, 0.4);
+}
+
+.timer-container.expired {
+  background: linear-gradient(135deg, rgba(220, 53, 69, 0.2), rgba(220, 53, 69, 0.1));
+  border-color: rgba(220, 53, 69, 0.4);
+}
+
+.timer-icon {
+  font-size: 20px;
+}
+
+.timer-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.timer-label {
+  font-size: 14px;
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+.timer-value {
+  font-size: 18px;
+  font-weight: 700;
+  font-family: 'Courier New', monospace;
+  color: #ff6b35;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.timer-message {
+  font-size: 12px;
+  opacity: 0.8;
+  font-style: italic;
+}
+
+/* Botón de verificación mejorado */
+.verification-button-15 {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.8));
+  color: #333;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Raleway', sans-serif;
+  font-style: italic;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.verification-button-15:hover:not(:disabled) {
+  background: linear-gradient(135deg, #ffffff, #f8f9fa);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.verification-button-15.ready {
+  background: linear-gradient(135deg, #28a745, #20c997);
   color: white;
 }
 
-/* Botón de verificación */
-.verification-button-15 {
-  /* Color de fondo blanco */
-  background-color: white;
-  /* Color del texto negro */
-  color: black;
-  /* Texto en negrita */
-  font-weight: bold;
-  /* Tamaño de la fuente */
-  font-size: 16px;
-  /* Relleno interno */
-  padding: 12px 30px;
-  /* Elimina el borde */
-  border: none;
-  /* Bordes redondeados */
-  border-radius: 5px;
-  /* Cambia el cursor a una mano al pasar por encima */
-  cursor: pointer;
-  /* Transición suave para el cambio de color de fondo */
-  transition: background-color 0.3s ease;
-  /* Ajusta el ancho automáticamente al contenido */
-  width: auto;
-  /* Establece la fuente principal */
-  font-family: 'Raleway', sans-serif;
-  /* Aplica estilo itálico a la fuente */
-  font-style: italic;
-  margin-top: 50px;
+.verification-button-15.ready:hover {
+  background: linear-gradient(135deg, #218838, #1ca085);
 }
 
-/* Estilo del botón de verificación al pasar el ratón */
-.verification-button-15:hover {
-  /* Color de fondo ligeramente grisáceo */
-  background-color: #f0f0f0;
+.verification-button-15:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Texto para reenviar el código */
+/* Spinner inline */
+.loading-spinner-inline {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid currentColor;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Sección de reenvío mejorada */
+.resend-section {
+  text-align: center;
+  margin-top: 25px;
+}
+
 .resend-text-16 {
-  /* Tamaño de la fuente */
   font-size: 14px;
-  /* Margen superior */
-  margin-top: 30px;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  font-family: 'Raleway', sans-serif;
+  font-style: italic;
 }
 
-/* Enlace para reenviar el código */
-.resend-link-17 {
-  /* Color del texto azul claro */
-  color: #5bc0de;
-  /* Elimina la decoración de texto (subrayado) */
-  text-decoration: none;
-  /* Texto seminegrita */
+.countdown-timer {
+  font-weight: 700;
+  color: #ff6b35;
+  font-family: 'Courier New', monospace;
+  font-size: 15px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.resend-container {
+  background: linear-gradient(135deg, rgba(220, 53, 69, 0.2), rgba(220, 53, 69, 0.1));
+  border: 1px solid rgba(220, 53, 69, 0.3);
+  border-radius: 12px;
+  padding: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.resend-expired-text {
+  margin: 0 0 15px 0;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 14px;
+  font-family: 'Raleway', sans-serif;
+  font-style: italic;
+}
+
+.resend-button {
+  background: linear-gradient(135deg, #dc3545, #c82333);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
   font-weight: 600;
+  font-family: 'Raleway', sans-serif;
+  font-style: italic;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(220, 53, 69, 0.3);
 }
 
-/* Estilo del enlace para reenviar al pasar el ratón */
-.resend-link-17:hover {
-  /* Subraya el texto al pasar el ratón */
+.resend-button:hover {
+  background: linear-gradient(135deg, #c82333, #a71e2a);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);
+}
+
+/* Contenedor del enlace de regreso */
+.back-link-container {
+  margin-top: 20px;
+}
+
+.back-link {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.8);
   text-decoration: underline;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: 'Raleway', sans-serif;
+  font-style: italic;
+  transition: color 0.3s ease;
 }
 
-/* --- MEDIA QUERIES PARA RESPONSIVE --- */
+.back-link:hover {
+  color: #e3f2fd;
+}
 
-/* Para pantallas más pequeñas (ancho máximo de 768px) */
+/* Media queries para responsive */
 @media (max-width: 768px) {
-  .verification-overlay-3 {
-    /* Reduce el relleno para pantallas más pequeñas */
-    padding: 60px;
-    /* Ajusta el radio de los bordes */
+  .verification-form {
+    padding: 40px 30px;
     border-radius: 20px;
   }
 
   .heading-4 {
-    /* Reduce el tamaño de la fuente del encabezado */
     font-size: 28px;
-    /* Reduce el margen inferior */
     margin-bottom: 15px;
   }
 
   .verification-text-5 {
-    /* Reduce el tamaño de la fuente del texto */
     font-size: 15px;
-    /* Reduce el margen inferior */
-    margin-bottom: 25px;
+    margin-bottom: 30px;
   }
 
-  .code-input-group-7 {
-    /* Reduce el espacio entre los campos de entrada */
+  .code-input-group-enhanced {
     gap: 10px;
+    margin: 20px 0;
   }
 
-  .code-input-8,
-  .code-input-9,
-  .code-input-10,
-  .code-input-12,
-  .code-input-13,
-  .code-input-14 {
-    /* Reduce el ancho y la altura de los campos de entrada */
+  .code-input-enhanced {
     width: 40px;
     height: 40px;
-    /* Reduce el tamaño de la fuente dentro de los campos */
     font-size: 18px;
   }
 
-  .code-separator-11 {
-    /* Reduce el tamaño de la fuente del separador */
-    font-size: 18px;
+  .code-separator-enhanced {
+    font-size: 20px;
+    margin: 0 6px;
   }
 
   .verification-button-15 {
-    /* Reduce el tamaño de la fuente del botón */
     font-size: 15px;
-    /* Reduce el relleno del botón */
-    padding: 10px 25px;
+    padding: 12px 25px;
+  }
+
+  .timer-container {
+    padding: 12px 16px;
+    gap: 10px;
+  }
+
+  .timer-icon {
+    font-size: 18px;
+  }
+
+  .timer-label {
+    font-size: 13px;
+  }
+
+  .timer-value {
+    font-size: 16px;
   }
 
   .resend-text-16 {
-    /* Reduce el tamaño de la fuente del texto para reenviar */
     font-size: 13px;
-    /* Reduce el margen superior */
-    margin-top: 25px;
   }
 
-  .resend-link-17 {
-    /* Reduce el tamaño de la fuente del enlace para reenviar */
+  .countdown-timer {
+    font-size: 14px;
+  }
+
+  .resend-container {
+    padding: 16px;
+  }
+
+  .resend-expired-text {
+    font-size: 13px;
+  }
+
+  .resend-button {
+    font-size: 13px;
+    padding: 8px 16px;
+  }
+
+  .back-link {
     font-size: 13px;
   }
 }
 
-/* Para pantallas aún más pequeñas (ancho máximo de 480px) */
 @media (max-width: 480px) {
-  .verification-overlay-3 {
-    /* Reduce aún más el relleno para pantallas muy pequeñas */
-    padding: 40px;
-    /* Ajusta aún más el radio de los bordes */
+  .verification-form {
+    padding: 30px 20px;
     border-radius: 15px;
   }
 
   .heading-4 {
-    /* Reduce aún más el tamaño de la fuente del encabezado */
     font-size: 24px;
-    /* Reduce aún más el margen inferior */
     margin-bottom: 12px;
   }
 
   .verification-text-5 {
-    /* Reduce aún más el tamaño de la fuente del texto */
     font-size: 14px;
-    /* Reduce aún más el margen inferior */
-    margin-bottom: 20px;
-    /* Ajusta la altura de la línea para pantallas muy pequeñas */
-    line-height: 1.4;
+    margin-bottom: 25px;
+    line-height: 1.5;
   }
 
-  .code-input-group-7 {
-    /* Reduce aún más el espacio entre los campos de entrada */
+  .code-input-group-enhanced {
     gap: 8px;
+    margin: 15px 0;
   }
 
-  .code-input-8,
-  .code-input-9,
-  .code-input-10,
-  .code-input-12,
-  .code-input-13,
-  .code-input-14 {
-    /* Reduce aún más el ancho y la altura de los campos de entrada */
+  .code-input-enhanced {
     width: 35px;
     height: 35px;
-    /* Reduce aún más el tamaño de la fuente dentro de los campos */
     font-size: 16px;
   }
 
-  .code-separator-11 {
-    /* Reduce aún más el tamaño de la fuente del separador */
-    font-size: 16px;
+  .code-separator-enhanced {
+    font-size: 18px;
+    margin: 0 4px;
   }
 
   .verification-button-15 {
-    /* Reduce aún más el tamaño de la fuente del botón */
     font-size: 14px;
-    /* Reduce aún más el relleno del botón */
-    padding: 8px 20px;
+    padding: 10px 20px;
+  }
+
+  .timer-container {
+    padding: 10px 12px;
+    gap: 8px;
+    flex-direction: column;
+  }
+
+  .timer-info {
+    align-items: center;
+  }
+
+  .timer-icon {
+    font-size: 16px;
+  }
+
+  .timer-label {
+    font-size: 12px;
+  }
+
+  .timer-value {
+    font-size: 15px;
+  }
+
+  .timer-message {
+    font-size: 11px;
   }
 
   .resend-text-16 {
-    /* Reduce aún más el tamaño de la fuente del texto para reenviar */
     font-size: 12px;
-    /* Reduce aún más el margen superior */
-    margin-top: 20px;
   }
 
-  .resend-link-17 {
-    /* Reduce aún más el tamaño de la fuente del enlace para reenviar */
+  .countdown-timer {
+    font-size: 13px;
+  }
+
+  .resend-container {
+    padding: 14px;
+  }
+
+  .resend-expired-text {
+    font-size: 12px;
+    margin-bottom: 12px;
+  }
+
+  .resend-button {
+    font-size: 12px;
+    padding: 8px 14px;
+  }
+
+  .back-link {
     font-size: 12px;
   }
 }
