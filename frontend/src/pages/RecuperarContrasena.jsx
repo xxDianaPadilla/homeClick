@@ -136,19 +136,6 @@ function RecuperarContraseña() {
             </>
           ) : (
             <>
-              <div className="success-container">
-                <div className="success-icon">
-                  ✓
-                </div>
-                <h3 className="success-title">
-                  ¡Código enviado!
-                </h3>
-                <p className="success-description">
-                  Hemos enviado un código de verificación a tu correo electrónico. 
-                  Serás redirigido automáticamente...
-                </p>
-              </div>
-
               <button 
                 className="submit-button4 success-button" 
                 onClick={handlePasswordCodeClick}
@@ -172,7 +159,7 @@ function RecuperarContraseña() {
         </div>
       </div>
 
-      {/* Componente de Alerta */}
+      {/* Solo la alerta superior derecha, SIN alerta en el recuadro café */}
       <PasswordRecoveryAlert
         type={alert.type}
         message={alert.message}

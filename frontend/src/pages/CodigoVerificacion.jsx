@@ -116,51 +116,40 @@ function CodigoVerificacion() {
           </p>
 
           <form className="verification-form-6" onSubmit={handleVerifyCode}>
-            {/* Contenedor mejorado para los inputs del código */}
-            <div className="code-input-group-enhanced">
+            {/* Interfaz tradicional de código de verificación */}
+            <div className="code-input-container-traditional">
               {code.map((digit, index) => (
-                <React.Fragment key={index}>
-                  {index === 2 && (
-                    <span className="code-separator-enhanced">
-                      -
-                    </span>
-                  )}
-                  <input
-                    ref={el => inputRefs.current[index] = { current: el }}
-                    type="text"
-                    className={`code-input-enhanced ${digit ? 'filled' : ''} ${timeLeft === 0 ? 'expired' : ''}`}
-                    maxLength="1"
-                    value={digit}
-                    onChange={(e) => handleInputChange(index, e.target.value)}
-                    onKeyDown={(e) => handleKeyDown(index, e)}
-                    disabled={loading || timeLeft === 0}
-                  />
-                </React.Fragment>
+                <input
+                  key={index}
+                  ref={el => inputRefs.current[index] = { current: el }}
+                  type="text"
+                  className={`code-input-traditional ${digit ? 'filled' : ''} ${timeLeft === 0 ? 'expired' : ''}`}
+                  maxLength="1"
+                  value={digit}
+                  onChange={(e) => handleInputChange(index, e.target.value)}
+                  onKeyDown={(e) => handleKeyDown(index, e)}
+                  onPaste={index === 0 ? handlePaste : undefined}
+                  disabled={loading || timeLeft === 0}
+                />
               ))}
             </div>
 
-            {/* Información del temporizador mejorada */}
-            <div className={`timer-container ${timeLeft <= 300 ? 'warning' : ''} ${timeLeft === 0 ? 'expired' : ''}`}>
-              <div className="timer-icon">
-                {timeLeft > 0 ? '⏱️' : '⚠️'}
-              </div>
-              <div className="timer-info">
-                {timeLeft > 0 ? (
-                  <>
-                    <span className="timer-label">Tiempo restante:</span>
-                    <span className="timer-value">{formatTime(timeLeft)}</span>
-                  </>
-                ) : (
-                  <>
-                    <span className="timer-label">Código expirado</span>
-                    <span className="timer-message">Solicita un nuevo código</span>
-                  </>
-                )}
-              </div>
+            {/* Información del temporizador */}
+            <div className={`timer-info-traditional ${timeLeft <= 300 ? 'warning' : ''} ${timeLeft === 0 ? 'expired' : ''}`}>
+              {timeLeft > 0 ? (
+                <p>
+                  <span className="timer-label">Tiempo restante:</span>
+                  <span className="timer-value">{formatTime(timeLeft)}</span>
+                </p>
+              ) : (
+                <p className="timer-expired">
+                  El código ha expirado. Solicita uno nuevo.
+                </p>
+              )}
             </div>
 
             <button 
-              className={`verification-button-15 ${isCodeComplete() && timeLeft > 0 ? 'ready' : ''}`}
+              className={`verification-button-traditional ${isCodeComplete() && timeLeft > 0 ? 'ready' : ''}`}
               type="submit"
               disabled={loading || !isCodeComplete() || timeLeft === 0}
             >
@@ -170,24 +159,24 @@ function CodigoVerificacion() {
               {loading ? 'Verificando...' : 'Verificar Código'}
             </button>
 
-            {/* Sección de reenvío mejorada */}
-            <div className="resend-section">
+            {/* Sección de reenvío */}
+            <div className="resend-section-traditional">
               {!canResend ? (
-                <p className="resend-text-16">
+                <p className="resend-text-traditional">
                   ¿No recibiste el código? Podrás solicitar uno nuevo en{' '}
                   <span className="countdown-timer">
                     {formatTime(timeLeft)}
                   </span>
                 </p>
               ) : (
-                <div className="resend-container">
+                <div className="resend-container-traditional">
                   <p className="resend-expired-text">
                     ¿No recibiste el código?
                   </p>
                   <button 
                     type="button"
                     onClick={handleResendCode}
-                    className="resend-button"
+                    className="resend-button-traditional"
                   >
                     Solicitar nuevo código
                   </button>
@@ -208,7 +197,7 @@ function CodigoVerificacion() {
         </div>
       </div>
 
-      {/* Componente de Alerta */}
+      {/* Solo la alerta superior derecha */}
       <PasswordRecoveryAlert
         type={alert.type}
         message={alert.message}
