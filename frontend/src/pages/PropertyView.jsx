@@ -14,14 +14,18 @@ import { usePropertyData } from '../components/Properties/Hooks/usePropertyData'
 import { useExpandableSections } from '../components/Properties/Hooks/useExpandableSections';
 import { useSavedProperties } from '../components/Properties/Hooks/useSavedProperties';
 import useContactForm from '../components/Customers/Hooks/useContactForm';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useCart } from '../context/CartContext'; // Importar el hook del carrito
 import { toast } from 'react-hot-toast'; // Para mostrar notificaciones
+import ConfirmationModal from '../components/ConfirmationModal'; // Importar el modal de confirmación
 
 const PropertyView = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const mapRef = useRef(null);
+  
+  // Estado para controlar el modal de confirmación
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
 
   const { fromCategory, propertyId } = location.state || { fromCategory: '/propertyCategories', propertyId: '1' };
 
@@ -62,13 +66,29 @@ const PropertyView = () => {
     { image: house1, caption: "Casa en Santa Elene" }
   ];
 
+  // Función para agregar al carrito sin mostrar modal (para propiedades ya en carrito)
+  const goToCartDirectly = () => {
+    navigate('/shoppingCart');
+  };
+
+  // Función para manejar el modal de confirmación
+  const handleConfirmationResponse = (continueShopping) => {
+    if (continueShopping) {
+      // Si quiere seguir comprando, solo mostrar toast de éxito
+      toast.success('Propiedad agregada al carrito exitosamente');
+    } else {
+      // Si no quiere seguir comprando, ir al carrito (sin toast adicional)
+      navigate('/shoppingCart');
+    }
+  };
+
   // Función actualizada para manejar el click del carrito
   const handleShoppingCartClick = () => {
     // Verificar si la propiedad ya está en el carrito
     if (isInCart(propertyId)) {
-      // Si ya está en el carrito, solo navegar
+      // Si ya está en el carrito, ir directamente al carrito
       toast.success('Esta propiedad ya está en tu carrito');
-      navigate('/shoppingCart');
+      goToCartDirectly();
     } else {
       // Si no está en el carrito, agregarla primero
       const propertyToAdd = {
@@ -86,13 +106,8 @@ const PropertyView = () => {
       // Agregar al carrito
       addToCart(propertyToAdd);
       
-      // Mostrar notificación de éxito
-      toast.success('Propiedad agregada al carrito exitosamente');
-      
-      // Navegar al carrito después de un pequeño delay para que se vea la notificación
-      setTimeout(() => {
-        navigate('/shoppingCart');
-      }, 1000);
+      // Mostrar modal de confirmación
+      setShowConfirmationModal(true);
     }
   };
 
@@ -167,7 +182,7 @@ const PropertyView = () => {
 
               <div className="action-buttons3">
                 <button className="btn-contact3" onClick={toggleContactForm}>Contactar al dueño</button>
-                {/* Botón actualizado con nueva funcionalidad de carrito */}
+                {/* Botón actualizado con nueva funcionalidad de modal */}
                 <button className="btn-save3" onClick={handleShoppingCartClick}>
                   {isInCart(propertyId) ? 'Ver en carrito' : 'Agregar al carrito'}
                 </button>
@@ -265,6 +280,14 @@ const PropertyView = () => {
         <h3 className="descubre-title2">Propiedades similares</h3>
         <LandingPageCards cards={cardData} />
       </section>
+
+      {/* Modal de confirmación */}
+      <ConfirmationModal
+        isOpen={showConfirmationModal}
+        onClose={() => setShowConfirmationModal(false)}
+        onConfirm={handleConfirmationResponse}
+        propertyName={propertyData.name}
+      />
 
       {showContactForm && <ContactForm onClose={toggleContactForm} />}
 
