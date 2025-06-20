@@ -1,117 +1,217 @@
-import React, { useRef, useEffect } from 'react'; // Importa React, useRef para crear referencias a elementos del DOM y useEffect para gestionar efectos secundarios.
-import "../styles/CodigoVerificacion.css"; // Importa los estilos CSS específicos para la página de verificación de código.
-import bgImgHouseF from "../assets/imgLoginFondo.png"; // Importa la imagen de fondo para la página.
-import { useNavigate } from 'react-router-dom'; // Importa el hook useNavigate para la navegación programática.
-import useVerificationInputs from '../components/Customers/Hooks/useVerificationInputs';
+import React, { useState, useEffect } from 'react';
+import "../styles/CodigoVerificacion.css";
+import bgImgHouseF from "../assets/imgLoginFondo.png";
+import { useNavigate, useLocation } from 'react-router-dom';
+import useCodeVerification from '../components/Customers/Hooks/useCodeVerification';
+import usePasswordRecovery from '../components/Customers/Hooks/usePasswordRecovery'; // Hook corregido
 
-// Define el componente funcional CodigoVerificacion, que representa la página para que el usuario ingrese un código de verificación enviado por correo electrónico.
 function CodigoVerificacion() {
-
-  const {inputRefs, handleInputChangeA, handleKeyDownB} = useVerificationInputs(6);
-
-  // Utiliza el hook useNavigate para obtener la función 'navigate', que permite redirigir al usuario a otras rutas.
   const navigate = useNavigate();
+  const location = useLocation();
+  const { verifyRecoveryCode, loading, error, message } = usePasswordRecovery(); // Función corregida
+  
+  // Obtener email del estado de navegación
+  const email = location.state?.email;
+  const fromPasswordReset = location.state?.fromPasswordReset;
 
-  // Función que se ejecuta al hacer clic en el botón para verificar el código. Navega a la página de cambio de contraseña.
-  const handleChangePasswordClick = () =>{
-    navigate('/changePassword');
+  const {
+    code,
+    inputRefs,
+    handleInputChange,
+    handleKeyDown,
+    handlePaste,
+    getCodeString,
+    isCodeComplete,
+    clearCode
+  } = useCodeVerification(5); // Cambiado a 5 dígitos según tu backend
+
+  const [timeLeft, setTimeLeft] = useState(1200); // 20 minutos en segundos (según tu backend)
+  const [canResend, setCanResend] = useState(false);
+
+  // Redireccionar si no hay email
+  useEffect(() => {
+    if (!email || !fromPasswordReset) {
+      navigate('/recuperarContrasena');
+    }
+  }, [email, fromPasswordReset, navigate]);
+
+  // Contador regresivo
+  useEffect(() => {
+    if (timeLeft > 0) {
+      const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
+      return () => clearTimeout(timer);
+    } else {
+      setCanResend(true);
+    }
+  }, [timeLeft]);
+
+  const formatTime = (seconds) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
-  // Renderiza la estructura de la página de verificación de código.
+  const handleVerifyCode = async (e) => {
+    e.preventDefault();
+    
+    if (!isCodeComplete()) {
+      alert('Por favor, completa el código de 5 dígitos');
+      return;
+    }
+
+    const codeString = getCodeString();
+    const result = await verifyRecoveryCode(codeString); // Función corregida
+
+    if (result.success) {
+      // Navegar a cambiar contraseña
+      navigate('/changePassword', {
+        state: {
+          email: email,
+          fromCodeVerification: true
+        }
+      });
+    }
+  };
+
+  const handleResendCode = async () => {
+    if (!canResend) return;
+    
+    // Recargar la página de recuperar contraseña para enviar nuevo código
+    navigate('/recuperarContrasena');
+  };
+
+  const handleBackClick = () => {
+    navigate('/recuperarContrasena');
+  };
+
+  if (!email) {
+    return null; // Componente se redireccionará
+  }
+
   return (
     <div className="verification-container-1">
-      {/* Imagen de fondo de la página. */}
       <img
         src={bgImgHouseF}
         alt="Row of Victorian houses with warm sunlight and clear sky"
         className="background-image-2"
       />
-      {/* Overlay que contiene el contenido principal de la verificación. */}
       <div className="verification-form">
-        {/* Título de la página. */}
         <h1 className="heading-4">Verificación de Correo</h1>
-        {/* Texto informativo explicando que se ha enviado un código al correo electrónico del usuario. */}
         <p className="verification-text-5">
-          Hemos enviado un código de verificación a tu correo electrónico. Por favor,
-          ingresa el código para continuar.
+          Hemos enviado un código de verificación de <strong>5 dígitos</strong> a<br />
+          <strong>{email}</strong><br />
+          Por favor, ingresa el código para continuar.
         </p>
-        {/* Formulario para ingresar el código de verificación. */}
-        <form className="verification-form-6">
-          {/* Contenedor para los campos de entrada del código. */}
-          <div className="code-input-group-7">
-            {/* Cada input es un campo para un dígito del código de verificación.
-                - type="text": Permite la entrada de texto (números en este caso).
-                - className: Aplica estilos específicos para los campos de código.
-                - maxLength="1": Limita la entrada a un solo carácter.
-                - required: Asegura que el campo sea obligatorio.
-                - ref: Asigna la referencia correspondiente del array 'inputRefs' a este input.
-                - onChange: Llama a 'handleInputChangeA' para manejar el cambio de valor y enfocar el siguiente input.
-                - onKeyDown: Llama a 'handleKeyDownB' para manejar la tecla 'Backspace' y enfocar el input anterior. */}
-            <input
-              type="text"
-              className="code-input-8"
-              maxLength="1"
-              required
-              ref={inputRefs[0]}
-              onChange={(e) => handleInputChangeA(0, e)}
-              onKeyDown={(e) => handleKeyDownB(0, e)}
-            />
-            <input
-              type="text"
-              className="code-input-9"
-              maxLength="1"
-              required
-              ref={inputRefs[1]}
-              onChange={(e) => handleInputChangeA(1, e)}
-              onKeyDown={(e) => handleKeyDownB(1, e)}
-            />
-            <input
-              type="text"
-              className="code-input-10"
-              maxLength="1"
-              required
-              ref={inputRefs[2]}
-              onChange={(e) => handleInputChangeA(2, e)}
-              onKeyDown={(e) => handleKeyDownB(2, e)}
-            />
-            {/* Separador visual entre los grupos de dígitos del código. */}
-            <span className="code-separator-11">-</span>
-            <input
-              type="text"
-              className="code-input-12"
-              maxLength="1"
-              required
-              ref={inputRefs[3]}
-              onChange={(e) => handleInputChangeA(3, e)}
-              onKeyDown={(e) => handleKeyDownB(3, e)}
-            />
-            <input
-              type="text"
-              className="code-input-13"
-              maxLength="1"
-              required
-              ref={inputRefs[4]}
-              onChange={(e) => handleInputChangeA(4, e)}
-              onKeyDown={(e) => handleKeyDownB(4, e)}
-            />
-            <input
-              type="text"
-              className="code-input-14"
-              maxLength="1"
-              required
-              ref={inputRefs[5]}
-              onChange={(e) => handleInputChangeA(5, e)}
-              onKeyDown={(e) => handleKeyDownB(5, e)}
-            />
+
+        {/* Mostrar mensajes de error o éxito */}
+        {error && (
+          <div className="error-message" style={{
+            color: '#ff4444',
+            backgroundColor: '#ffe6e6',
+            padding: '10px',
+            borderRadius: '5px',
+            marginBottom: '15px',
+            textAlign: 'center',
+            border: '1px solid #ffcccc'
+          }}>
+            {error}
           </div>
-          {/* Botón para enviar y verificar el código ingresado. Al hacer clic, se ejecuta 'handleChangePasswordClick'. */}
-          <button  className="verification-button-15" onClick={handleChangePasswordClick}>
-            Verificar Código
+        )}
+
+        {message && !error && (
+          <div className="success-message" style={{
+            color: '#28a745',
+            backgroundColor: '#e6ffe6',
+            padding: '10px',
+            borderRadius: '5px',
+            marginBottom: '15px',
+            textAlign: 'center',
+            border: '1px solid #ccffcc'
+          }}>
+            {message}
+          </div>
+        )}
+
+        <form className="verification-form-6" onSubmit={handleVerifyCode}>
+          <div className="code-input-group-7" onPaste={handlePaste}>
+            {code.map((digit, index) => (
+              <React.Fragment key={index}>
+                {index === 2 && <span className="code-separator-11">-</span>}
+                <input
+                  ref={el => inputRefs.current[index] = { current: el }}
+                  type="text"
+                  className={`code-input-${8 + index}`}
+                  maxLength="1"
+                  value={digit}
+                  onChange={(e) => handleInputChange(index, e.target.value)}
+                  onKeyDown={(e) => handleKeyDown(index, e)}
+                  disabled={loading}
+                  style={{
+                    opacity: loading ? 0.6 : 1
+                  }}
+                />
+              </React.Fragment>
+            ))}
+          </div>
+
+          <button 
+            className="verification-button-15" 
+            type="submit"
+            disabled={loading || !isCodeComplete()}
+            style={{
+              opacity: loading || !isCodeComplete() ? 0.6 : 1,
+              cursor: loading || !isCodeComplete() ? 'not-allowed' : 'pointer'
+            }}
+          >
+            {loading ? 'Verificando...' : 'Verificar Código'}
           </button>
-          {/* Enlace para reenviar el código de verificación en caso de no haberlo recibido. */}
-          <p className="resend-text-16">
-            ¿No recibiste el código? <a href="#" className="resend-link-17">Reenviar código</a>
-          </p>
+
+          <div className="resend-section" style={{ marginTop: '20px' }}>
+            {!canResend ? (
+              <p className="resend-text-16">
+                ¿No recibiste el código? Podrás solicitar uno nuevo en{' '}
+                <span style={{ fontWeight: 'bold', color: '#ff6b35' }}>
+                  {formatTime(timeLeft)}
+                </span>
+              </p>
+            ) : (
+              <p className="resend-text-16">
+                ¿No recibiste el código?{' '}
+                <button 
+                  type="button"
+                  className="resend-link-17" 
+                  onClick={handleResendCode}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    color: '#ff6b35',
+                    textDecoration: 'underline',
+                    cursor: 'pointer',
+                    fontWeight: 'bold'
+                  }}
+                >
+                  Reenviar código
+                </button>
+              </p>
+            )}
+          </div>
+
+          <div style={{ marginTop: '15px' }}>
+            <button 
+              type="button"
+              onClick={handleBackClick}
+              style={{
+                background: 'none',
+                border: 'none',
+                color: '#666',
+                textDecoration: 'underline',
+                cursor: 'pointer',
+                fontSize: '14px'
+              }}
+            >
+              ← Volver a ingresar correo
+            </button>
+          </div>
         </form>
       </div>
     </div>

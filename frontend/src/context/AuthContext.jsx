@@ -63,36 +63,43 @@ export const AuthProvider = ({ children }) => {
 
     const checkAuthStatus = async () => {
         try {
+            setLoading(true);
             const token = getTokenFromCookies();
+            
             if (token) {
                 const decodedToken = decodeToken(token);
+                
                 if (decodedToken && decodedToken.exp * 1000 > Date.now()) {
+                    // Token válido
                     setUser({
                         id: decodedToken.id,
                         userType: decodedToken.userType
                     });
                     setIsAuthenticated(true);
                     
+                    // Obtener información adicional del usuario
                     await getUserInfo();
                 } else {
-                    document.cookie = 'authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-                    setUser(null);
-                    setIsAuthenticated(false);
-                    setUserInfo(null);
+                    // Token expirado
+                    clearAuthData();
                 }
             } else {
-                setUser(null);
-                setIsAuthenticated(false);
-                setUserInfo(null);
+                // No hay token
+                clearAuthData();
             }
         } catch (error) {
             console.error('Error verificando autenticación:', error);
-            setUser(null);
-            setIsAuthenticated(false);
-            setUserInfo(null);
+            clearAuthData();
         } finally {
             setLoading(false);
         }
+    };
+
+    const clearAuthData = () => {
+        document.cookie = 'authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        setUser(null);
+        setIsAuthenticated(false);
+        setUserInfo(null);
     };
 
     const login = async (email, password) => {
@@ -107,25 +114,31 @@ export const AuthProvider = ({ children }) => {
             });
 
             const data = await response.json();
+            console.log('Login response:', data); // Debug
 
             if (data.message === "login successful") {
+                // Esperar un poco para que la cookie se establezca
                 setTimeout(async () => {
                     const token = getTokenFromCookies();
                     if (token) {
                         const decodedToken = decodeToken(token);
-                        setUser({
-                            id: decodedToken.id,
-                            userType: decodedToken.userType
-                        });
-                        setIsAuthenticated(true);
-                        
-                        await getUserInfo();
+                        if (decodedToken) {
+                            setUser({
+                                id: decodedToken.id,
+                                userType: decodedToken.userType
+                            });
+                            setIsAuthenticated(true);
+                            
+                            // Obtener información del usuario
+                            await getUserInfo();
+                        }
                     }
                 }, 100);
 
-                return { success: true };
+                return { success: true, message: data.message };
             } else {
-                return { success: false, message: data.message };
+                // Login fallido
+                return { success: false, message: data.message || 'Error en la autenticación' };
             }
         } catch (error) {
             console.error('Login error: ', error);
@@ -135,6 +148,7 @@ export const AuthProvider = ({ children }) => {
 
     const logout = async () => {
         try {
+            // Llamar al endpoint de logout en el backend
             const response = await fetch('http://localhost:4000/api/logout', {
                 method: 'POST',
                 credentials: 'include',
@@ -143,10 +157,8 @@ export const AuthProvider = ({ children }) => {
                 },
             });
 
-            document.cookie = 'authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-            setUser(null);
-            setIsAuthenticated(false);
-            setUserInfo(null);
+            // Limpiar datos locales independientemente de la respuesta del servidor
+            clearAuthData();
 
             if (response.ok) {
                 console.log('Sesión cerrada correctamente en el servidor');
@@ -157,10 +169,8 @@ export const AuthProvider = ({ children }) => {
             }
         } catch (error) {
             console.error('Error de red al cerrar sesión:', error);
-            document.cookie = 'authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-            setUser(null);
-            setIsAuthenticated(false);
-            setUserInfo(null);
+            // Aún así limpiar datos locales
+            clearAuthData();
             return { success: false, error: 'Error de conexión' };
         }
     };
