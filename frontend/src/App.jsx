@@ -3,7 +3,9 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext'; 
 import { SavedPropertiesProvider } from './context/SavedPropertiesContext';
+import { CartProvider } from './context/CartContext'; // Importar el CartProvider
 import ProtectedRoute from './components/ProtectedRoute'; 
+import { Toaster } from 'react-hot-toast'; // Importar Toaster para las notificaciones
 
 import InicioSesion from './pages/InicioSesion';
 import RecuperarContraseña from './pages/RecuperarContrasena';
@@ -27,9 +29,37 @@ import Categorias from './pages/Categorias';
 
 function App() {
   return (
+    // Envolver toda la aplicación con AuthProvider y CartProvider
     <AuthProvider>
       <SavedPropertiesProvider>
+      <CartProvider>
         <Router>
+          {/* Agregar Toaster para mostrar notificaciones en toda la app */}
+          <Toaster 
+            position="top-right"
+            toastOptions={{
+              duration: 3000,
+              style: {
+                background: '#363636',
+                color: '#fff',
+              },
+              success: {
+                duration: 3000,
+                style: {
+                  background: '#4ade80',
+                  color: '#fff',
+                },
+              },
+              error: {
+                duration: 4000,
+                style: {
+                  background: '#ef4444',
+                  color: '#fff',
+                },
+              },
+            }}
+          />
+          
           <Routes>
             <Route path='/' element={<Navigate to="/inicio-sesion" replace />} />
             
@@ -150,6 +180,7 @@ function App() {
             <Route path='*' element={<Navigate to="/inicio-sesion" replace />} />
           </Routes>
         </Router>
+      </CartProvider>
       </SavedPropertiesProvider>
     </AuthProvider>
   );

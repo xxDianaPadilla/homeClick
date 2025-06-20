@@ -350,6 +350,11 @@
     font-size: 14px;
 }
 
+.titulos{
+    display: flex;
+    justify-content: space-between;
+}
+
 /* Media Queries */
 @media (max-width: 992px){
     .shopping-cart-content{

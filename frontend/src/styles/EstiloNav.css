@@ -189,6 +189,10 @@
   z-index: 999;
 }
 
+#searchInput{
+  color: #000000;
+}
+
 /* --- MEDIA QUERIES PARA RESPONSIVE --- */
 
 /* Para pantallas de tablet (ancho máximo de 768px) */
