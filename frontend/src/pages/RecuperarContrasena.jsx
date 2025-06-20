@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import "../styles/RecuperarContrasena.css";
-import bgImgHouse from "../assets/imgLoginFondo.png";
-import ArrowLeftIcon from "../assets/arrowRight.png";
-import LockImg from "../assets/LockIcon.png";
 import { useNavigate } from 'react-router-dom';
+import { Mail, ArrowLeft, CheckCircle } from 'lucide-react';
+import AuthLayout from '../components/AuthLayout';
+import AuthInput from '../components/AuthInput';
 import usePasswordRecovery from '../components/Customers/Hooks/usePasswordRecovery';
-import usePasswordRecoveryAlert from '../components/Customers/Hooks/usePasswordRecoveryAlert';
-import PasswordRecoveryAlert from '../components/PasswordRecoveryAlert';
+import LockImg from "../assets/LockIcon.png";
+import ArrowLeftIcon from "../assets/arrowRight.png";
 
 function RecuperarContraseña() {
   const navigate = useNavigate();
   const { loading, requestRecoveryCode } = usePasswordRecovery();
-  const { alert, showSuccess, showError, hideAlert } = usePasswordRecoveryAlert();
   const [emailSent, setEmailSent] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const {
     register,
@@ -42,15 +42,16 @@ function RecuperarContraseña() {
   };
 
   const onSubmit = async (data) => {
+    setErrorMessage('');
+    setSuccessMessage('');
+    
     const result = await requestRecoveryCode(data.email);
     
     if (result.success) {
       setEmailSent(true);
-      showSuccess('¡Código enviado exitosamente! Revisa tu correo electrónico.', {
-        duration: 3000
-      });
+      setSuccessMessage('¡Código enviado exitosamente! Revisa tu correo electrónico.');
       
-      // Pasar el email al siguiente paso
+      // Navegar después de un breve delay
       setTimeout(() => {
         navigate('/passwordCode', { 
           state: { 
@@ -60,7 +61,7 @@ function RecuperarContraseña() {
         });
       }, 2000);
     } else {
-      showError(result.message || 'Error al enviar el código de verificación');
+      setErrorMessage(result.message || 'Error al enviar el código de verificación');
     }
   };
 
@@ -74,101 +75,86 @@ function RecuperarContraseña() {
         } 
       });
     } else {
-      showError('Por favor, ingresa un correo electrónico válido primero');
+      setErrorMessage('Por favor, ingresa un correo electrónico válido primero');
     }
   };
 
   return (
-    <>
-      <div className="landing-container">
-        <img
-          src={bgImgHouse}
-          alt="Row of Victorian houses with warm sunlight and clear sky"
-          className="background-image"
-        />
-        <div className="form-container2">
-          <div className="header">
-            <button className="back-button" onClick={handleLoginClick}>
-              <img src={ArrowLeftIcon} alt="Volver" className="back-icon" />
-            </button>
-          </div>
-
-          <div className="lock-icon-container2">
-            <img src={LockImg} alt="Icono de seguridad" className="lock-icon" />
-          </div>
-
-          <h1 className="form-title4">¿Tienes problemas para iniciar sesión?</h1>
-          
-          {!emailSent ? (
-            <>
-              <p className="form-description">
-                Ingresa tu correo electrónico y te enviaremos un código
-                para que recuperes el acceso a tu cuenta
-              </p>
-
-              <form className="reset-form" onSubmit={handleSubmit(onSubmit)}>
-                <div className="input-group">
-                  <input
-                    type="email"
-                    placeholder="Correo electrónico"
-                    className={`text-input ${errors.email ? 'input-error' : ''}`}
-                    disabled={loading}
-                    {...register('email', validationRules.email)}
-                  />
-                  {errors.email && (
-                    <span className="error-text-improved">
-                      {errors.email.message}
-                    </span>
-                  )}
-                </div>
-
-                <button 
-                  className="submit-button4" 
-                  type="submit"
-                  disabled={loading}
-                >
-                  {loading && (
-                    <span className="loading-spinner-inline"></span>
-                  )}
-                  {loading ? 'Enviando...' : 'Enviar código de verificación'}
-                </button>
-              </form>
-            </>
-          ) : (
-            <>
-              <button 
-                className="submit-button4 success-button" 
-                onClick={handlePasswordCodeClick}
-              >
-                Continuar con la verificación
-              </button>
-            </>
-          )}
-
-          <div className="or-separator">
-            <span className="separator-line"></span>
-            <strong className="separator-text">O</strong>
-            <span className="separator-line"></span>
-          </div>
-          
-          <div className="create-account">
-            <a href="/registro" className="create-account-link">
-              <strong>Crear cuenta nueva</strong>
-            </a>
-          </div>
+    <AuthLayout
+      title="¿Problemas para iniciar sesión?"
+      subtitle="Ingresa tu correo electrónico y te enviaremos un código para recuperar tu cuenta"
+      showBackButton={true}
+      onBackClick={handleLoginClick}
+      backIcon={ArrowLeftIcon}
+      showLogo={true}
+      logoIcon={LockImg}
+    >
+      {/* Mensajes de estado */}
+      {successMessage && (
+        <div className="auth-success-message">
+          <CheckCircle className="auth-error-icon" />
+          <span>{successMessage}</span>
         </div>
-      </div>
+      )}
 
-      {/* Solo la alerta superior derecha, SIN alerta en el recuadro café */}
-      <PasswordRecoveryAlert
-        type={alert.type}
-        message={alert.message}
-        isVisible={alert.isVisible}
-        onClose={hideAlert}
-        autoClose={alert.autoClose}
-        duration={alert.duration}
-      />
-    </>
+      {errorMessage && (
+        <div className="auth-error-message">
+          <span>{errorMessage}</span>
+        </div>
+      )}
+
+      {!emailSent ? (
+        <form className="auth-form" onSubmit={handleSubmit(onSubmit)}>
+          <AuthInput
+            type="email"
+            placeholder="Correo electrónico"
+            register={register}
+            name="email"
+            validationRules={validationRules.email}
+            error={errors.email?.message}
+            disabled={loading}
+            icon={<Mail size={20} />}
+          />
+
+          <button 
+            type="submit"
+            className="auth-button primary"
+            disabled={loading}
+          >
+            {loading ? (
+              <>
+                <div className="auth-loading-spinner" />
+                Enviando código...
+              </>
+            ) : (
+              <>
+                <Mail size={20} />
+                Enviar código de verificación
+              </>
+            )}
+          </button>
+        </form>
+      ) : (
+        <div className="auth-form">
+          <button 
+            type="button"
+            className="auth-button success" 
+            onClick={handlePasswordCodeClick}
+          >
+            <CheckCircle size={20} />
+            Continuar con la verificación
+          </button>
+        </div>
+      )}
+
+      <div className="auth-separator">O</div>
+      
+      <div className="auth-navigation">
+        <a href="/registro" className="auth-navigation-link">
+          <strong>Crear cuenta nueva</strong>
+        </a>
+      </div>
+    </AuthLayout>
   );
 }
 
