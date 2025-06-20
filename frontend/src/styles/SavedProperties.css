@@ -9,12 +9,109 @@
   font-family: 'Trocchi', serif;
 }
 
+/* Encabezado de la página de propiedades guardadas */
+.saved-properties-header {
+  margin-bottom: 32px;
+}
+
 /* Título de la página de propiedades guardadas */
 .saved-properties-title {
   font-size: 32px;
   font-weight: bold;
   text-align: center;
-  margin-bottom: 32px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.saved-count {
+  color: #e67e22;
+  font-size: 24px;
+}
+
+/* Estado vacío cuando no hay propiedades guardadas */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  border: 2px dashed #dee2e6;
+}
+
+.empty-state-icon {
+  font-size: 64px;
+  margin-bottom: 20px;
+  opacity: 0.6;
+}
+
+.empty-state h3 {
+  color: #495057;
+  margin-bottom: 12px;
+  font-size: 24px;
+}
+
+.empty-state p {
+  color: #6c757d;
+  margin-bottom: 24px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.explore-button {
+  background-color: #e67e22;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: 'Trocchi', serif;
+}
+
+.explore-button:hover {
+  background-color: #d35400;
+}
+
+/* Resumen de propiedades guardadas */
+.saved-properties-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding: 16px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #e67e22;
+}
+
+.saved-properties-summary p {
+  margin: 0;
+  font-weight: 500;
+  color: #495057;
+}
+
+.saved-properties-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.clear-all-button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.clear-all-button:hover {
+  background-color: #c82333;
 }
 
 /* Lista de propiedades guardadas */
@@ -28,17 +125,32 @@
 .property-card {
   display: flex;
   border: 1px solid #e5e5e5;
-  border-radius: 8px;
+  border-radius: 12px;
   overflow: hidden;
   background-color: #ffffff;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.property-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Animación de eliminación */
+.property-card.removing {
+  opacity: 0.5;
+  transform: scale(0.95);
+  transition: all 0.3s ease;
 }
 
 /* Contenedor de la imagen de la propiedad */
 .property-image-container {
   position: relative;
   width: 33%;
+  min-height: 200px;
 }
 
 /* Imagen de la propiedad */
@@ -49,62 +161,96 @@
   display: block;
 }
 
-/* Contador de imágenes (opcional) */
+/* Placeholder para imagen no disponible */
+.property-image-placeholder {
+  width: 100%;
+  height: 100%;
+  background-color: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6c757d;
+  font-style: italic;
+}
+
+/* Contador de imágenes */
 .image-counter {
   position: absolute;
   bottom: 8px;
   left: 8px;
-  background-color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.9);
   padding: 4px 8px;
   border-radius: 4px;
   display: flex;
   align-items: center;
   gap: 4px;
-  font-size: 14px;
+  font-size: 12px;
+  font-weight: 500;
+  backdrop-filter: blur(4px);
 }
 
 /* Detalles de la propiedad */
 .property-details {
   width: 67%;
-  padding: 16px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* Espacia el contenido verticalmente */
+  justify-content: space-between;
 }
 
 /* Encabezado de la propiedad (precio y título) */
 .property-header {
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
 
 /* Precio de la propiedad */
 .property-price {
-  color: #f97316;
+  color: #e67e22;
   font-weight: 600;
+  font-size: 18px;
   display: block;
+  margin-bottom: 4px;
 }
 
 /* Título de la propiedad */
 .property-title {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 700;
-  margin: 4px 0;
+  margin: 0;
+  color: #2c3e50;
+  line-height: 1.3;
 }
 
 /* Descripción de la propiedad */
 .property-description {
   font-size: 14px;
-  color: #4b5563;
-  margin-bottom: 16px;
+  color: #5a6c7d;
+  margin: 12px 0;
   line-height: 1.5;
-  flex-grow: 1; /* Permite que la descripción ocupe el espacio restante */
+  flex-grow: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-/* Fecha de publicación */
+/* Fecha de guardado */
 .publish-date {
   font-size: 12px;
-  color: #6b7280;
+  color: #7f8c8d;
   margin-bottom: 8px;
+  font-style: italic;
+}
+
+/* Información de ubicación */
+.property-location-info {
+  font-size: 13px;
+  color: #34495e;
+  margin-bottom: 12px;
+  background-color: #ecf0f1;
+  padding: 6px 10px;
+  border-radius: 6px;
+  display: inline-block;
 }
 
 /* Metadatos de la propiedad (iconos e información) */
@@ -114,24 +260,30 @@
   align-items: center;
   gap: 16px;
   margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #ecf0f1;
 }
 
 /* Contenedor individual de metadato */
 .meta-item {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
+  min-width: fit-content;
 }
 
 /* Icono del metadato */
 .meta-icon {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
 }
 
 /* Texto del metadato */
 .meta-text {
-  font-size: 14px;
+  font-size: 13px;
+  color: #5a6c7d;
+  font-weight: 500;
 }
 
 /* Botones de contacto y eliminar */
@@ -139,48 +291,136 @@
 .delete-button {
   background: none;
   border: none;
-  font-size: 14px;
-  font-weight: 500;
-  color: #000000;
+  font-size: 13px;
+  font-weight: 600;
   cursor: pointer;
-  padding: 8px 0 0; /* Añadir algo de padding superior para espaciado */
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
   font-family: 'Trocchi', serif;
-  align-self: flex-end; /* Alinea los botones a la parte inferior */
+}
+
+.contact-button {
+  color: #27ae60;
+  background-color: #d5f4e6;
+}
+
+.contact-button:hover {
+  background-color: #a8e6cf;
+  transform: translateY(-1px);
+}
+
+.delete-button {
+  color: #e74c3c;
+  background-color: #fdeaea;
+}
+
+.delete-button:hover {
+  background-color: #f8d7da;
+  transform: translateY(-1px);
+}
+
+.delete-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
 }
 
 /* --- MEDIA QUERIES PARA RESPONSIVE --- */
 
 /* Para pantallas de hasta 768px de ancho (tablets y móviles grandes) */
 @media (max-width: 768px) {
+  .saved-properties-container {
+    padding: 24px 12px;
+  }
+
+  .saved-properties-title {
+    font-size: 24px;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .saved-properties-summary {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
   .property-card {
-    flex-direction: column; /* Apila la imagen y los detalles */
+    flex-direction: column;
   }
 
   .property-image-container,
   .property-details {
-    width: 100%; /* Ocupan todo el ancho */
+    width: 100%;
   }
 
   .property-image-container {
-    height: 240px; /* Altura fija para la imagen en pantallas pequeñas */
+    height: 200px;
   }
 
   .property-meta {
-    gap: 12px; /* Reduce el espacio entre los metadatos */
+    gap: 12px;
+  }
+
+  .meta-item {
+    min-width: calc(50% - 6px);
   }
 
   .contact-button,
   .delete-button {
-    padding-top: 12px; /* Aumenta el padding superior en pantallas pequeñas */
-    align-self: flex-start; /* Alinea los botones al inicio en diseño vertical */
+    font-size: 12px;
+    padding: 6px 10px;
   }
 }
 
 /* Para pantallas de hasta 480px de ancho (móviles pequeños) */
 @media (max-width: 480px) {
+  .saved-properties-container {
+    padding: 16px 8px;
+  }
+
+  .saved-properties-title {
+    font-size: 20px;
+  }
+
+  .property-title {
+    font-size: 18px;
+  }
+
+  .property-price {
+    font-size: 16px;
+  }
+
+  .property-description {
+    font-size: 13px;
+    -webkit-line-clamp: 2;
+  }
+
   .property-meta {
-    flex-direction: column; /* Apila los metadatos verticalmente */
-    align-items: flex-start; /* Alinea los metadatos a la izquierda */
-    gap: 8px; /* Reduce el espacio entre los metadatos apilados */
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .meta-item {
+    width: 100%;
+    min-width: 100%;
+  }
+
+  .empty-state {
+    padding: 40px 16px;
+  }
+
+  .empty-state-icon {
+    font-size: 48px;
+  }
+
+  .empty-state h3 {
+    font-size: 20px;
+  }
+
+  .empty-state p {
+    font-size: 14px;
   }
 }

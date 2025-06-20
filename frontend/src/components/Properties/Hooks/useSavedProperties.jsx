@@ -1,15 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSavedProperties as useSavedPropertiesContext } from '../../../context/SavedPropertiesContext';
 
-export const useSavedProperties = () => {
-
+export const useSavedProperties = (propertyId = null) => {
+    const { isPropertySaved, toggleProperty } = useSavedPropertiesContext();
     const [isSaved, setIsSaved] = useState(false);
 
-    const toggleSaved = () => {
-        setIsSaved(!isSaved);
+    useEffect(() => {
+        if (propertyId) {
+            setIsSaved(isPropertySaved(propertyId));
+        }
+    }, [propertyId, isPropertySaved]);
+
+    const toggleSaved = (property) => {
+        const newSavedState = toggleProperty(property);
+        setIsSaved(newSavedState);
+        return newSavedState;
     };
 
     return {
         isSaved,
-        toggleSaved
+        toggleSaved,
+        isPropertySaved: (id) => isPropertySaved(id)
     };
 };

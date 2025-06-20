@@ -6,10 +6,46 @@
 /* Contenedor principal de la propiedad - Asegurar centrado y evitar desbordamiento */
 .property-container3 {
   max-width: 1200px;
-  margin: 0 auto; /* Centra el contenedor horizontalmente en pantallas más grandes */
+  margin: 0 auto;
   padding: 20px;
   font-family: 'Trocchi', serif;
-  overflow-x: hidden; /* Evita el desplazamiento horizontal del contenedor */
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Mensaje de feedback para guardar/remover propiedades */
+.save-feedback {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 12px 20px;
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+  z-index: 1000;
+  animation: slideInRight 0.3s ease-out;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.save-feedback.saved {
+  background-color: #28a745;
+  border-left: 4px solid #1e7e34;
+}
+
+.save-feedback.removed {
+  background-color: #dc3545;
+  border-left: 4px solid #c82333;
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 /* Encabezado de la propiedad (miniaturas e imagen principal) */
@@ -17,11 +53,6 @@
   display: flex;
   gap: 15px;
   margin-bottom: 30px;
-  /* Centrar elementos en pantallas pequeñas */
-  @media (max-width: 768px) {
-    flex-direction: column;
-    align-items: center; /* Centra las miniaturas y la imagen principal */
-  }
 }
 
 /* Columna de miniaturas */
@@ -30,14 +61,6 @@
   flex-direction: column;
   gap: 10px;
   width: 80px;
-  /* Centrar horizontalmente las miniaturas en pantallas pequeñas */
-  @media (max-width: 768px) {
-    flex-direction: row;
-    width: 100%;
-    overflow-x: auto;
-    margin-bottom: 15px;
-    justify-content: center; /* Centra las miniaturas horizontalmente */
-  }
 }
 
 /* Contenedor individual de la miniatura */
@@ -48,11 +71,6 @@
   border: 1px solid #eee;
   border-radius: 4px;
   overflow: hidden;
-  /* Centrar el contenedor de la miniatura en pantallas pequeñas */
-  @media (max-width: 768px) {
-    min-width: 80px;
-    margin: 0 5px; /* Añadir un pequeño margen entre las miniaturas */
-  }
 }
 
 /* Imagen de la miniatura */
@@ -78,11 +96,6 @@
   flex: 1;
   display: flex;
   gap: 20px;
-  /* Centrar elementos en pantallas pequeñas */
-  @media (max-width: 992px) {
-    flex-direction: column;
-    align-items: center; /* Centra la imagen principal y la información */
-  }
 }
 
 /* Contenedor de la imagen principal */
@@ -90,12 +103,8 @@
   position: relative;
   width: 60%;
   min-width: 300px;
-  border-radius: 8px; /* Añadido para que coincida con la captura */
-  overflow: hidden; /* Asegura que la imagen respete el border-radius */
-  /* Ancho completo en pantallas pequeñas */
-  @media (max-width: 992px) {
-    width: 100%;
-  }
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 /* Imagen principal */
@@ -103,7 +112,7 @@
   width: 100%;
   height: auto;
   object-fit: cover;
-  display: block; /* Evita espacios extra debajo de la imagen */
+  display: block;
 }
 
 /* Fecha de la imagen (opcional) */
@@ -124,12 +133,7 @@
   background-color: #f9f9f9;
   padding: 20px;
   border-radius: 8px;
-  box-sizing: border-box; /* Asegura que el padding no aumente el ancho */
-  /* Ancho completo en pantallas pequeñas */
-  @media (max-width: 992px) {
-    width: 100%;
-    margin-top: 20px; /* Añadir espacio entre la imagen y la info */
-  }
+  box-sizing: border-box;
 }
 
 /* Sección del título de la propiedad */
@@ -148,11 +152,53 @@
   font-weight: 600;
 }
 
-/* Icono de marcador (guardar propiedad) */
+/* Icono de marcador (guardar propiedad) - ESTILOS ACTUALIZADOS */
+.bookmark3 {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.bookmark3:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.bookmark3.saved {
+  background-color: #28a745;
+  animation: saveAnimation 0.5s ease-out;
+}
+
+.bookmark3.saved:hover {
+  background-color: #218838;
+}
+
+@keyframes saveAnimation {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 .bookmark3 img {
   width: 24px;
   height: 24px;
-  cursor: pointer;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+}
+
+.bookmark3.saved img {
+  filter: brightness(0) invert(1) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
 }
 
 /* Ubicación de la propiedad */
@@ -180,11 +226,6 @@
 .action-buttons3 {
   display: flex;
   gap: 10px;
-  /* Centrar botones en pantallas pequeñas */
-  @media (max-width: 480px) {
-    flex-direction: column;
-    align-items: stretch; /* Hacer que los botones ocupen todo el ancho */
-  }
 }
 
 /* Botón de contacto */
@@ -199,7 +240,7 @@
   font-weight: bold;
   font-family: 'Raleway', sans-serif;
   font-style: italic;
-  box-sizing: border-box; /* Asegura que el padding no aumente el ancho */
+  box-sizing: border-box;
 }
 
 /* Estilo específico del botón de contacto */
@@ -286,9 +327,34 @@
   margin-bottom: 30px;
 }
 
-/* Título de la sección de ubicación */
-.property-location-section3 h2 {
+/* Encabezado de ubicación mejorado */
+.location-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 15px;
+}
+
+.location-header h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.status-indicator {
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+.status-indicator.exact {
+  background-color: #d1edff;
+  color: #0066cc;
+}
+
+.status-indicator.approximate {
+  background-color: #fff3cd;
+  color: #856404;
 }
 
 /* Contenedor del mapa */
@@ -298,6 +364,14 @@
   border-radius: 8px;
   overflow: hidden;
   border: 1px solid #ddd;
+}
+
+/* Información adicional del mapa */
+.map-info {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #666;
+  font-style: italic;
 }
 
 /* Sección de propiedades similares */
@@ -352,12 +426,16 @@
 @media (max-width: 992px) {
   .main-content {
     flex-direction: column;
-    align-items: center; /* Centra la imagen principal y la información */
+    align-items: center;
   }
 
   .main-image-container,
   .property-info3 {
     width: 100%;
+  }
+
+  .property-info3 {
+    margin-top: 20px;
   }
 }
 
@@ -365,7 +443,7 @@
 @media (max-width: 768px) {
   .property-header3 {
     flex-direction: column;
-    align-items: center; /* Centra las miniaturas y la imagen principal */
+    align-items: center;
   }
 
   .thumbnail-column {
@@ -373,16 +451,58 @@
     width: 100%;
     overflow-x: auto;
     margin-bottom: 15px;
-    justify-content: center; /* Centra las miniaturas horizontalmente */
+    justify-content: center;
   }
 
   .thumbnail-wrapper {
     min-width: 80px;
-    margin: 0 5px; /* Añadir un pequeño margen entre las miniaturas */
+    margin: 0 5px;
   }
 
   .action-buttons3 {
-    flex-direction: column; /* Apila los botones de acción */
-    align-items: stretch; /* Hacer que los botones ocupen todo el ancho */
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .save-feedback {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    text-align: center;
+  }
+}
+
+/* Para pantallas de hasta 480px de ancho (móviles pequeños) */
+@media (max-width: 480px) {
+  .property-container3 {
+    padding: 15px;
+  }
+
+  .property-title-section3 h1 {
+    font-size: 20px;
+  }
+
+  .property-price3 {
+    font-size: 18px;
+  }
+
+  .bookmark3 {
+    padding: 6px;
+  }
+
+  .bookmark3 img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .location-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .map-info {
+    font-size: 12px;
   }
 }

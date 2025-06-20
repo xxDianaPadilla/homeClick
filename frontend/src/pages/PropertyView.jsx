@@ -14,7 +14,7 @@ import { usePropertyData } from '../components/Properties/Hooks/usePropertyData'
 import { useExpandableSections } from '../components/Properties/Hooks/useExpandableSections';
 import { useSavedProperties } from '../components/Properties/Hooks/useSavedProperties';
 import useContactForm from '../components/Customers/Hooks/useContactForm';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const PropertyView = () => {
   const location = useLocation();
@@ -25,8 +25,11 @@ const PropertyView = () => {
 
   const { mainImage, setMainImage, thumbnails, propertyData, loading, error } = usePropertyData(propertyId);
   const { detailsExpanded, dimensionsExpanded, toggleDetails, toggleDimensions } = useExpandableSections();
-  const { isSaved, toggleSaved } = useSavedProperties();
+  const { isSaved, toggleSaved } = useSavedProperties(propertyId);
   const { showContactForm, toggleContactForm } = useContactForm();
+
+  // Estado para mostrar feedback visual
+  const [showSaveMessage, setShowSaveMessage] = useState(false);
 
   // Coordenadas por defecto (San Salvador)
   const defaultCenter = [13.6929, -89.2182];
@@ -59,6 +62,19 @@ const PropertyView = () => {
 
   const handleShoppingCartClick = () => {
     navigate('/shoppingCart');
+  };
+
+  const handleSaveProperty = () => {
+    if (!loading && propertyData) {
+      const wasAdded = toggleSaved(propertyData);
+      
+      // Mostrar mensaje de feedback
+      setShowSaveMessage(true);
+      setTimeout(() => setShowSaveMessage(false), 2000);
+      
+      // Log para debugging
+      console.log(wasAdded ? 'Propiedad guardada' : 'Propiedad removida de guardados');
+    }
   };
 
   // Función para obtener el texto del popup del mapa
@@ -94,6 +110,13 @@ const PropertyView = () => {
       <Navbar />
 
       <div className="property-container3">
+        {/* Mensaje de feedback para guardar */}
+        {showSaveMessage && (
+          <div className={`save-feedback ${isSaved ? 'saved' : 'removed'}`}>
+            {isSaved ? '✓ Propiedad guardada' : '✗ Propiedad removida de guardados'}
+          </div>
+        )}
+
         <div className="property-header3">
           <div className="thumbnail-column">
             {thumbnails.map((thumb, index) => (
@@ -120,8 +143,15 @@ const PropertyView = () => {
             <div className="property-info3">
               <div className="property-title-section3">
                 <h1>{propertyData.name}</h1>
-                <div className="bookmark3" onClick={toggleSaved}>
-                  <img src={isSaved ? savedIcon : saveIcon} alt={isSaved ? "Guardado" : "Guardar"} />
+                <div 
+                  className={`bookmark3 ${isSaved ? 'saved' : ''}`} 
+                  onClick={handleSaveProperty}
+                  title={isSaved ? "Remover de guardados" : "Guardar propiedad"}
+                >
+                  <img 
+                    src={isSaved ? savedIcon : saveIcon} 
+                    alt={isSaved ? "Guardado" : "Guardar"} 
+                  />
                 </div>
               </div>
 

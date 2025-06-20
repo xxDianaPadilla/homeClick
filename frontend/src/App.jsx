@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext'; 
+import { SavedPropertiesProvider } from './context/SavedPropertiesContext';
 import ProtectedRoute from './components/ProtectedRoute'; 
 
 import InicioSesion from './pages/InicioSesion';
@@ -27,127 +28,129 @@ import Categorias from './pages/Categorias';
 function App() {
   return (
     <AuthProvider>
-      <Router>
-        <Routes>
-          <Route path='/' element={<Navigate to="/inicio-sesion" replace />} />
-          
-          <Route path='/inicio-sesion' element={<InicioSesion />} />
-          <Route path='/registro' element={<Registro />} />
-          <Route path='/recuperarContrasena' element={<RecuperarContraseña />} />
-          <Route path='/passwordCode' element={<CodigoVerificacion />} />
-          <Route path='/changePassword' element={<CambiarContrasena />} />
-          <Route path='/changedPassword' element={<ContrasenaCambiada />} />
-          
-          <Route 
-            path='/dashboard' 
-            element={
-              <ProtectedRoute requiredUserType="admin">
-                <Dashboard />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path='/propertyAdmin' 
-            element={
-              <ProtectedRoute requiredUserType="admin">
-                <PropertyAdmin />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path='/propertyViewAdmin' 
-            element={
-              <ProtectedRoute requiredUserType="admin">
-                <PropertyViewAdmin />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path='/listadoVentas' 
-            element={
-              <ProtectedRoute requiredUserType="admin">
-                <ListadoVentas />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path='/categorias' 
-            element={
-              <ProtectedRoute requiredUserType="admin">
-                <Categorias />
-              </ProtectedRoute>
-            } 
-          />
-          
-          <Route 
-            path='/landingPage' 
-            element={
-              <ProtectedRoute requiredUserType="Customer">
-                <LandingPage />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path='/propertyCategories' 
-            element={
-              <ProtectedRoute requiredUserType="Customer">
-                <PropertyCategories />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path='/propertyView' 
-            element={
-              <ProtectedRoute requiredUserType="Customer">
-                <PropertyView />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path='/shoppingCart' 
-            element={
-              <ProtectedRoute requiredUserType="Customer">
-                <ShoppingCart />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path='/savedProperties' 
-            element={
-              <ProtectedRoute requiredUserType="Customer">
-                <SavedProperties />
-              </ProtectedRoute>
-            } 
-          />
-          
-          <Route 
-            path='/aboutUs' 
-            element={
-              <ProtectedRoute>
-                <AboutUs />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path='/privacyPolicies' 
-            element={
-              <ProtectedRoute>
-                <PrivacyPolicies />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path='/termsConditions' 
-            element={
-              <ProtectedRoute>
-                <TermsConditions />
-              </ProtectedRoute>
-            } 
-          />
-          
-          <Route path='*' element={<Navigate to="/inicio-sesion" replace />} />
-        </Routes>
-      </Router>
+      <SavedPropertiesProvider>
+        <Router>
+          <Routes>
+            <Route path='/' element={<Navigate to="/inicio-sesion" replace />} />
+            
+            <Route path='/inicio-sesion' element={<InicioSesion />} />
+            <Route path='/registro' element={<Registro />} />
+            <Route path='/recuperarContrasena' element={<RecuperarContraseña />} />
+            <Route path='/passwordCode' element={<CodigoVerificacion />} />
+            <Route path='/changePassword' element={<CambiarContrasena />} />
+            <Route path='/changedPassword' element={<ContrasenaCambiada />} />
+            
+            <Route 
+              path='/dashboard' 
+              element={
+                <ProtectedRoute requiredUserType="admin">
+                  <Dashboard />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path='/propertyAdmin' 
+              element={
+                <ProtectedRoute requiredUserType="admin">
+                  <PropertyAdmin />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path='/propertyViewAdmin' 
+              element={
+                <ProtectedRoute requiredUserType="admin">
+                  <PropertyViewAdmin />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path='/listadoVentas' 
+              element={
+                <ProtectedRoute requiredUserType="admin">
+                  <ListadoVentas />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path='/categorias' 
+              element={
+                <ProtectedRoute requiredUserType="admin">
+                  <Categorias />
+                </ProtectedRoute>
+              } 
+            />
+            
+            <Route 
+              path='/landingPage' 
+              element={
+                <ProtectedRoute requiredUserType="Customer">
+                  <LandingPage />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path='/propertyCategories' 
+              element={
+                <ProtectedRoute requiredUserType="Customer">
+                  <PropertyCategories />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path='/propertyView' 
+              element={
+                <ProtectedRoute requiredUserType="Customer">
+                  <PropertyView />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path='/shoppingCart' 
+              element={
+                <ProtectedRoute requiredUserType="Customer">
+                  <ShoppingCart />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path='/savedProperties' 
+              element={
+                <ProtectedRoute requiredUserType="Customer">
+                  <SavedProperties />
+                </ProtectedRoute>
+              } 
+            />
+            
+            <Route 
+              path='/aboutUs' 
+              element={
+                <ProtectedRoute>
+                  <AboutUs />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path='/privacyPolicies' 
+              element={
+                <ProtectedRoute>
+                  <PrivacyPolicies />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path='/termsConditions' 
+              element={
+                <ProtectedRoute>
+                  <TermsConditions />
+                </ProtectedRoute>
+              } 
+            />
+            
+            <Route path='*' element={<Navigate to="/inicio-sesion" replace />} />
+          </Routes>
+        </Router>
+      </SavedPropertiesProvider>
     </AuthProvider>
   );
 }
