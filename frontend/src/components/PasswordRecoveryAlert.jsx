@@ -1,13 +1,12 @@
 import React, { useEffect } from "react";
 
-const AlertMessage = ({ 
+const PasswordRecoveryAlert = ({ 
     type = "info", 
     message, 
     isVisible, 
     onClose, 
     autoClose = true, 
-    duration = 4000,
-    icon 
+    duration = 4000 
 }) => {
     useEffect(() => {
         if (isVisible && autoClose) {
@@ -28,55 +27,45 @@ const AlertMessage = ({
                     backgroundColor: '#d4edda',
                     borderColor: '#c3e6cb',
                     color: '#155724',
-                    iconColor: '#28a745'
+                    iconColor: '#28a745',
+                    icon: '✓'
                 };
             case 'error':
                 return {
                     backgroundColor: '#f8d7da',
                     borderColor: '#f5c6cb',
                     color: '#721c24',
-                    iconColor: '#dc3545'
+                    iconColor: '#dc3545',
+                    icon: '✗'
                 };
             case 'warning':
                 return {
                     backgroundColor: '#fff3cd',
                     borderColor: '#ffeaa7',
                     color: '#856404',
-                    iconColor: '#ffc107'
+                    iconColor: '#ffc107',
+                    icon: '⚠'
                 };
             case 'info':
                 return {
                     backgroundColor: '#d1ecf1',
                     borderColor: '#bee5eb',
                     color: '#0c5460',
-                    iconColor: '#17a2b8'
+                    iconColor: '#17a2b8',
+                    icon: 'ℹ'
                 };
             default:
                 return {
                     backgroundColor: '#e2e3e5',
                     borderColor: '#d6d8db',
                     color: '#383d41',
-                    iconColor: '#6c757d'
+                    iconColor: '#6c757d',
+                    icon: '●'
                 };
         }
     };
 
     const styles = getAlertStyles();
-
-    const getDefaultIcon = () => {
-        switch (type) {
-            case 'success':
-                return '✓';
-            case 'error':
-                return '✗';
-            case 'warning':
-                return '⚠';
-            case 'info':
-                return 'ℹ';
-            default:
-                return '●';
-        }
-    };
 
     return (
         <div 
@@ -120,7 +109,7 @@ const AlertMessage = ({
                         flexShrink: 0
                     }}
                 >
-                    {icon || getDefaultIcon()}
+                    {styles.icon}
                 </div>
 
                 {/* Contenido */}
@@ -129,7 +118,8 @@ const AlertMessage = ({
                         margin: 0, 
                         fontSize: '14px', 
                         lineHeight: '1.4',
-                        fontWeight: '500'
+                        fontWeight: '500',
+                        fontFamily: 'Raleway, sans-serif'
                     }}>
                         {message}
                     </p>
@@ -206,4 +196,4 @@ const AlertMessage = ({
     );
 };
 
-export default AlertMessage;
+export default PasswordRecoveryAlert;

@@ -6,13 +6,13 @@ import ArrowLeftIcon from "../assets/arrowRight.png";
 import LockImg from "../assets/LockIcon.png";
 import { useNavigate } from 'react-router-dom';
 import usePasswordRecovery from '../components/Customers/Hooks/usePasswordRecovery';
-import useAlert from '../components/Customers/Hooks/useAlert';
-import AlertMessage from '../components/AlertMessage';
+import usePasswordRecoveryAlert from '../components/Customers/Hooks/usePasswordRecoveryAlert';
+import PasswordRecoveryAlert from '../components/PasswordRecoveryAlert';
 
 function RecuperarContraseña() {
   const navigate = useNavigate();
   const { loading, requestRecoveryCode } = usePasswordRecovery();
-  const { alert, showSuccess, showError, hideAlert } = useAlert();
+  const { alert, showSuccess, showError, hideAlert } = usePasswordRecoveryAlert();
   const [emailSent, setEmailSent] = useState(false);
 
   const {
@@ -111,18 +111,12 @@ function RecuperarContraseña() {
                   <input
                     type="email"
                     placeholder="Correo electrónico"
-                    className={`text-input ${errors.email ? 'error' : ''}`}
+                    className={`text-input ${errors.email ? 'input-error' : ''}`}
                     disabled={loading}
                     {...register('email', validationRules.email)}
                   />
                   {errors.email && (
-                    <span className="error-text" style={{ 
-                      color: '#dc3545', 
-                      fontSize: '13px',
-                      display: 'block',
-                      marginTop: '5px',
-                      marginLeft: '2px'
-                    }}>
+                    <span className="error-text-improved">
                       {errors.email.message}
                     </span>
                   )}
@@ -132,24 +126,9 @@ function RecuperarContraseña() {
                   className="submit-button4" 
                   type="submit"
                   disabled={loading}
-                  style={{
-                    opacity: loading ? 0.7 : 1,
-                    cursor: loading ? 'not-allowed' : 'pointer',
-                    position: 'relative',
-                    overflow: 'hidden'
-                  }}
                 >
                   {loading && (
-                    <span style={{
-                      display: 'inline-block',
-                      width: '16px',
-                      height: '16px',
-                      border: '2px solid #ffffff40',
-                      borderTop: '2px solid #fff',
-                      borderRadius: '50%',
-                      animation: 'spin 1s linear infinite',
-                      marginRight: '8px'
-                    }}></span>
+                    <span className="loading-spinner-inline"></span>
                   )}
                   {loading ? 'Enviando...' : 'Enviar código de verificación'}
                 </button>
@@ -157,45 +136,22 @@ function RecuperarContraseña() {
             </>
           ) : (
             <>
-              <div className="success-container" style={{
-                backgroundColor: '#d4edda',
-                border: '1px solid #c3e6cb',
-                borderRadius: '8px',
-                padding: '20px',
-                marginBottom: '20px',
-                textAlign: 'center'
-              }}>
-                <div style={{
-                  width: '60px',
-                  height: '60px',
-                  backgroundColor: '#28a745',
-                  borderRadius: '50%',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  margin: '0 auto 15px auto',
-                  color: 'white',
-                  fontSize: '24px',
-                  fontWeight: 'bold'
-                }}>
+              <div className="success-container">
+                <div className="success-icon">
                   ✓
                 </div>
-                <h3 style={{ margin: '0 0 10px 0', color: '#155724', fontSize: '18px' }}>
+                <h3 className="success-title">
                   ¡Código enviado!
                 </h3>
-                <p style={{ margin: 0, color: '#155724', fontSize: '14px' }}>
+                <p className="success-description">
                   Hemos enviado un código de verificación a tu correo electrónico. 
                   Serás redirigido automáticamente...
                 </p>
               </div>
 
               <button 
-                className="submit-button4" 
+                className="submit-button4 success-button" 
                 onClick={handlePasswordCodeClick}
-                style={{
-                  backgroundColor: '#28a745',
-                  borderColor: '#28a745'
-                }}
               >
                 Continuar con la verificación
               </button>
@@ -203,9 +159,9 @@ function RecuperarContraseña() {
           )}
 
           <div className="or-separator">
-            <hr /> &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; 
-            <strong>O</strong> &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; 
-            <hr />
+            <span className="separator-line"></span>
+            <strong className="separator-text">O</strong>
+            <span className="separator-line"></span>
           </div>
           
           <div className="create-account">
@@ -214,18 +170,10 @@ function RecuperarContraseña() {
             </a>
           </div>
         </div>
-
-        {/* Estilos para la animación */}
-        <style jsx>{`
-          @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-          }
-        `}</style>
       </div>
 
       {/* Componente de Alerta */}
-      <AlertMessage
+      <PasswordRecoveryAlert
         type={alert.type}
         message={alert.message}
         isVisible={alert.isVisible}
