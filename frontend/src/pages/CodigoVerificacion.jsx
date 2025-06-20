@@ -116,14 +116,13 @@ function CodigoVerificacion() {
           </p>
 
           <form className="verification-form-6" onSubmit={handleVerifyCode}>
-            {/* Interfaz tradicional de código de verificación */}
-            <div className="code-input-container-traditional">
+            {/* Nueva interfaz de código compacta */}
+            <div className="code-input-container-compact">
               {code.map((digit, index) => (
                 <input
                   key={index}
                   ref={el => inputRefs.current[index] = { current: el }}
-                  type="text"
-                  className={`code-input-traditional ${digit ? 'filled' : ''} ${timeLeft === 0 ? 'expired' : ''}`}
+                  className={`code-input-compact ${digit ? 'filled' : ''} ${timeLeft === 0 ? 'expired' : ''}`}
                   maxLength="1"
                   value={digit}
                   onChange={(e) => handleInputChange(index, e.target.value)}
