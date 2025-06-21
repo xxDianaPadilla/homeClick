@@ -13,6 +13,8 @@ const EnhancedInput = ({
   label,
   icon,
   className = "",
+  onFocus,
+  onBlur,
   ...props
 }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -24,6 +26,40 @@ const EnhancedInput = ({
 
   const togglePassword = () => {
     setShowPassword(!showPassword);
+  };
+
+  const handleFocus = (e) => {
+    setIsFocused(true);
+    if (onFocus) {
+      onFocus(e);
+    }
+  };
+
+  const handleBlur = (e) => {
+    setIsFocused(false);
+    if (onBlur) {
+      onBlur(e);
+    }
+  };
+
+  // Registrar el campo y obtener las funciones de react-hook-form
+  const registerProps = register(name, validationRules);
+  
+  // Combinar nuestros handlers con los de react-hook-form
+  const combinedProps = {
+    ...registerProps,
+    onFocus: (e) => {
+      handleFocus(e);
+      if (registerProps.onFocus) {
+        registerProps.onFocus(e);
+      }
+    },
+    onBlur: (e) => {
+      handleBlur(e);
+      if (registerProps.onBlur) {
+        registerProps.onBlur(e);
+      }
+    }
   };
 
   return (
@@ -41,9 +77,7 @@ const EnhancedInput = ({
           placeholder={placeholder}
           className={`enhanced-input ${error ? 'field-error' : ''}`}
           disabled={disabled}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
-          {...register(name, validationRules)}
+          {...combinedProps}
           style={{
             paddingRight: showPasswordToggle ? '50px' : '16px'
           }}

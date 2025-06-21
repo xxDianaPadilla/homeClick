@@ -7,6 +7,7 @@ import '../styles/RegistroEnhanced.css';
 
 function Registro() {
   const [showTermsModal, setShowTermsModal] = useState(false);
+  const [isPasswordFocused, setIsPasswordFocused] = useState(false);
 
   const {
     register,
@@ -43,6 +44,14 @@ function Registro() {
     setShowTermsModal(false);
   };
 
+  const handlePasswordFocus = () => {
+    setIsPasswordFocused(true);
+  };
+
+  const handlePasswordBlur = () => {
+    setIsPasswordFocused(false);
+  };
+
   return (
     <>
       <AuthLayout
@@ -59,7 +68,7 @@ function Registro() {
           )}
 
           <form className="auth-form" onSubmit={handleSubmit}>
-            {/* GRID PRINCIPAL 4 COLUMNAS */}
+            {/* GRID PRINCIPAL 3 COLUMNAS */}
             <div className="registro-grid">
               {/* Fila 1 */}
               <EnhancedInput
@@ -92,6 +101,27 @@ function Registro() {
                 disabled={isLoading}
               />
 
+              {/* Fila 2 */}
+              <EnhancedInput
+                type="email"
+                placeholder="Correo electrónico"
+                register={register}
+                name="email"
+                validationRules={validationRules.email}
+                error={errors.email?.message}
+                disabled={isLoading}
+              />
+
+              <EnhancedInput
+                type="text"
+                placeholder="Dirección"
+                register={register}
+                name="address"
+                validationRules={validationRules.address}
+                error={errors.address?.message}
+                disabled={isLoading}
+              />
+
               <div className="password-container">
                 <EnhancedInput
                   type="password"
@@ -102,10 +132,12 @@ function Registro() {
                   error={errors.password?.message}
                   disabled={isLoading}
                   showPasswordToggle={true}
+                  onFocus={handlePasswordFocus}
+                  onBlur={handlePasswordBlur}
                 />
                 
-                {/* Requisitos de contraseña flotante */}
-                {watchedPassword && (
+                {/* Requisitos de contraseña flotante - solo se muestran cuando está enfocado */}
+                {isPasswordFocused && watchedPassword && (
                   <div className="password-requirements-popup" style={{ 
                     top: '100%', 
                     left: '0',
@@ -148,24 +180,14 @@ function Registro() {
                 )}
               </div>
 
-              {/* Fila 2 */}
+              {/* Fila 3 */}
               <EnhancedInput
                 type="text"
-                placeholder="Apellidos"
+                placeholder="DUI"
                 register={register}
-                name="lastName"
-                validationRules={validationRules.lastName}
-                error={errors.lastName?.message}
-                disabled={isLoading}
-              />
-
-              <EnhancedInput
-                type="text"
-                placeholder="Dirección"
-                register={register}
-                name="address"
-                validationRules={validationRules.address}
-                error={errors.address?.message}
+                name="dui"
+                validationRules={validationRules.dui}
+                error={errors.dui?.message}
                 disabled={isLoading}
               />
 
@@ -231,26 +253,8 @@ function Registro() {
                 )}
               </div>
 
-              {/* Fila 3 */}
-              <EnhancedInput
-                type="text"
-                placeholder="DUI"
-                register={register}
-                name="dui"
-                validationRules={validationRules.dui}
-                error={errors.dui?.message}
-                disabled={isLoading}
-              />
-
-              <EnhancedInput
-                type="email"
-                placeholder="Correo electrónico"
-                register={register}
-                name="email"
-                validationRules={validationRules.email}
-                error={errors.email?.message}
-                disabled={isLoading}
-              />
+              {/* Espacio vacío para mantener la estructura del grid */}
+              <div></div>
             </div>
 
             {/* TÉRMINOS Y CONDICIONES CREATIVOS */}

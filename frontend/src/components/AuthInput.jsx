@@ -13,6 +13,8 @@ const AuthInput = ({
   className = "",
   icon,
   showPasswordToggle = false,
+  onFocus,
+  onBlur,
   ...props
 }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -23,6 +25,30 @@ const AuthInput = ({
 
   const togglePassword = () => {
     setShowPassword(!showPassword);
+  };
+
+  // Registrar el campo y obtener las funciones de react-hook-form
+  const registerProps = register(name, validationRules);
+  
+  // Combinar nuestros handlers con los de react-hook-form
+  const combinedProps = {
+    ...registerProps,
+    onFocus: (e) => {
+      if (onFocus) {
+        onFocus(e);
+      }
+      if (registerProps.onFocus) {
+        registerProps.onFocus(e);
+      }
+    },
+    onBlur: (e) => {
+      if (onBlur) {
+        onBlur(e);
+      }
+      if (registerProps.onBlur) {
+        registerProps.onBlur(e);
+      }
+    }
   };
 
   return (
@@ -50,7 +76,7 @@ const AuthInput = ({
           placeholder={placeholder}
           className={`auth-input ${error ? 'error' : ''} ${success ? 'success' : ''}`}
           disabled={disabled}
-          {...register(name, validationRules)}
+          {...combinedProps}
           style={{
             paddingLeft: icon ? '3rem' : '1rem',
             paddingRight: showPasswordToggle ? '3rem' : '1rem'
