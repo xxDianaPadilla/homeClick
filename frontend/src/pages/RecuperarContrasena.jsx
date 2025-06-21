@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { Mail, ArrowLeft, CheckCircle } from 'lucide-react';
+import { Mail, CheckCircle } from 'lucide-react';
 import AuthLayout from '../components/AuthLayout';
 import AuthInput from '../components/AuthInput';
 import usePasswordRecovery from '../components/Customers/Hooks/usePasswordRecovery';
@@ -105,6 +105,7 @@ function RecuperarContraseña() {
 
       {!emailSent ? (
         <form className="auth-form" onSubmit={handleSubmit(onSubmit)}>
+          {/* ARREGLADO: AuthInput ya maneja el icono internamente */}
           <AuthInput
             type="email"
             placeholder="Correo electrónico"

@@ -1,0 +1,427 @@
+/* Estilos mejorados para el registro */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* Contenedor principal mejorado */
+.registro-enhanced {
+  max-width: 1000px;
+  /* margin: 0 auto; */
+  padding: 1.5rem;
+}
+
+/* Grid principal 4 columnas */
+.registro-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 250px);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  position:relative;
+  justify-content: center;
+}
+
+/* Grupos de campos con efectos */
+.field-group {
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.field-group:hover {
+  transform: translateY(-2px);
+}
+
+/* Campos de entrada con tamaño específico */
+.enhanced-input {
+  width: 250px;
+  height: 55px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  border-radius: 12px;
+  color: white;
+  padding: 0 16px;
+  font-size: 1rem;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.enhanced-input:focus {
+  outline: none;
+  border-color: rgba(96, 165, 250, 0.8);
+  background: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.2), 0 8px 16px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
+}
+
+.enhanced-input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 400;
+}
+
+/* Contenedor de fecha de nacimiento ajustado */
+.birth-date-container {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.08));
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  border-radius: 12px;
+  padding: 16px;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 250px;
+  height: 55px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.birth-date-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #60a5fa, #34d399, #f59e0b, #ef4444);
+  border-radius: 16px 16px 0 0;
+}
+
+.birth-date-title {
+  display: none;
+}
+
+.birth-date-grid {
+  display: flex;
+  gap: 4px;
+  width: 100%;
+}
+
+.birth-select {
+  height: 35px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 6px;
+  color: white;
+  padding: 0 8px;
+  font-size: 0.8rem;
+  font-family: 'Poppins', sans-serif;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  flex: 1;
+}
+
+.birth-select:focus {
+  outline: none;
+  border-color: rgba(96, 165, 250, 0.8);
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.3);
+}
+
+.birth-select option {
+  background: #2d3748;
+  color: white;
+  padding: 8px;
+}
+
+/* Contenedor de contraseña con requisitos */
+.password-container {
+  position: relative;
+}
+
+.password-requirements-popup {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95));
+  border: 1px solid rgba(96, 165, 250, 0.3);
+  border-radius: 12px;
+  padding: 16px;
+  min-width: 280px;
+  z-index: 20;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+  animation: slideInFade 0.3s ease-out;
+}
+
+@keyframes slideInFade {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.requirements-header {
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.requirement-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  font-size: 0.8rem;
+  font-family: 'Poppins', sans-serif;
+  transition: all 0.2s ease;
+}
+
+.requirement-icon {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.requirement-valid .requirement-icon {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  box-shadow: 0 2px 4px rgba(16, 185, 129, 0.3);
+}
+
+.requirement-invalid .requirement-icon {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+  box-shadow: 0 2px 4px rgba(239, 68, 68, 0.3);
+}
+
+.requirement-valid .requirement-text {
+  color: #86efac;
+}
+
+.requirement-invalid .requirement-text {
+  color: #fca5a5;
+}
+
+/* Sección de términos y condiciones mejorada */
+.terms-section {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(16, 185, 129, 0.08));
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 1.5rem;
+  position: relative;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.terms-checkbox-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.terms-checkbox {
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  cursor: pointer;
+  accent-color: #60a5fa;
+  transform: scale(1.1);
+}
+
+.terms-text {
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+}
+
+.terms-link {
+  color: #60a5fa;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  border-bottom: 1px solid transparent;
+}
+
+.terms-link:hover {
+  color: #93c5fd;
+  border-bottom-color: #93c5fd;
+}
+
+/* Botón de registro mejorado */
+.register-button {
+  width: 100%;
+  height: 54px;
+  background: linear-gradient(135deg, #10b981, #059669);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.25);
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 1.25rem;
+}
+
+.register-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.register-button:hover::before {
+  left: 100%;
+}
+
+.register-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 35px rgba(16, 185, 129, 0.4);
+}
+
+.register-button:active {
+  transform: translateY(0);
+}
+
+.register-button:disabled {
+  background: linear-gradient(135deg, #6b7280, #4b5563);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 0 4px 15px rgba(107, 114, 128, 0.2);
+}
+
+.button-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* Navegación mejorada */
+.auth-navigation-enhanced {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.95rem;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+}
+
+.auth-navigation-enhanced .nav-link {
+  color: #60a5fa;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  border-bottom: 1px solid transparent;
+}
+
+.auth-navigation-enhanced .nav-link:hover {
+  color: #93c5fd;
+  border-bottom-color: #93c5fd;
+}
+
+/* Spinner de carga mejorado */
+.loading-spinner-enhanced {
+  width: 24px;
+  height: 24px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top: 3px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Efectos de error mejorados */
+.field-error {
+  border-color: #ef4444 !important;
+  background: rgba(239, 68, 68, 0.1) !important;
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+/* Responsive Design - Grid 4 columnas ajustado */
+@media (max-width: 1400px) {
+  .registro-grid {
+    grid-template-columns: repeat(3, 300px);
+  }
+}
+
+@media (max-width: 1024px) {
+  .registro-grid {
+    grid-template-columns: repeat(2, 300px);
+    gap: 1.25rem;
+  }
+  
+  .password-requirements-popup {
+    position: relative;
+    right: auto;
+    margin-top: 12px;
+    min-width: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .registro-enhanced {
+    padding: 1rem;
+  }
+  
+  .registro-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .enhanced-input,
+  .birth-date-container {
+    width: 100%;
+  }
+  
+  .password-requirements-popup {
+    min-width: 250px;
+  }
+  
+  .register-button {
+    height: 52px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .birth-date-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  
+  .terms-section {
+    padding: 16px;
+  }
+  
+  .enhanced-input {
+    height: 48px;
+    font-size: 0.9rem;
+  }
+}
