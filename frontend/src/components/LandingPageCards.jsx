@@ -1,6 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
 import '../styles/EstiloLandingPage.css';
-import useCarousel from "./Properties/Hooks/useCarousel";
 
 const Card = ({ image, caption, index }) => {
   const [imageError, setImageError] = useState(false);
@@ -8,6 +7,7 @@ const Card = ({ image, caption, index }) => {
 
   const handleImageError = () => {
     setImageError(true);
+    setIsLoaded(true);
   };
 
   const handleImageLoad = () => {
@@ -30,7 +30,7 @@ const Card = ({ image, caption, index }) => {
             alt={caption}
             onError={handleImageError}
             onLoad={handleImageLoad}
-            loading="lazy" // Lazy loading para mejor performance
+            loading="lazy"
           />
         ) : (
           <div className="image-placeholder">
@@ -45,38 +45,38 @@ const Card = ({ image, caption, index }) => {
 };
 
 const LandingPageCards = ({ cards }) => {
-  const { carouselRef, handlers, navigation } = useCarousel();
+  const carouselRef = useRef(null);
   const [showButtons, setShowButtons] = useState(false);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+  const [isScrolling, setIsScrolling] = useState(false);
 
-  // Check if carousel needs scroll buttons
+  // Verificar si se necesitan botones de scroll
   useEffect(() => {
     const checkScrollability = () => {
       if (carouselRef.current) {
         const { scrollWidth, clientWidth, scrollLeft } = carouselRef.current;
         const needsScroll = scrollWidth > clientWidth;
         setShowButtons(needsScroll);
-        setCanScrollLeft(scrollLeft > 0);
-        setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 1);
+        setCanScrollLeft(scrollLeft > 5); // Pequeño margen para evitar parpadeo
+        setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 5);
       }
     };
 
     checkScrollability();
     window.addEventListener('resize', checkScrollability);
 
-    // Check scroll position
     const handleScroll = () => {
-      if (carouselRef.current) {
+      if (carouselRef.current && !isScrolling) {
         const { scrollWidth, clientWidth, scrollLeft } = carouselRef.current;
-        setCanScrollLeft(scrollLeft > 0);
-        setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 1);
+        setCanScrollLeft(scrollLeft > 5);
+        setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 5);
       }
     };
 
     const carousel = carouselRef.current;
     if (carousel) {
-      carousel.addEventListener('scroll', handleScroll);
+      carousel.addEventListener('scroll', handleScroll, { passive: true });
     }
 
     return () => {
@@ -85,28 +85,78 @@ const LandingPageCards = ({ cards }) => {
         carousel.removeEventListener('scroll', handleScroll);
       }
     };
-  }, [carouselRef]);
+  }, [carouselRef, isScrolling]);
 
-  // Enhanced navigation with smooth scrolling
+  // Navegación mejorada con scroll suave
   const scrollLeft = () => {
-    if (carouselRef.current) {
-      const cardWidth = carouselRef.current.children[0]?.offsetWidth || 300;
-      const scrollAmount = cardWidth + 20; // card width + gap
+    if (carouselRef.current && !isScrolling) {
+      setIsScrolling(true);
+      const cardWidth = 300; // Ancho fijo de las cards
+      const gap = 20; // Gap entre cards
+      const scrollAmount = cardWidth + gap;
+      
       carouselRef.current.scrollBy({ 
         left: -scrollAmount, 
         behavior: 'smooth' 
       });
+
+      // Reset scrolling flag después de la animación
+      setTimeout(() => setIsScrolling(false), 300);
     }
   };
 
   const scrollRight = () => {
-    if (carouselRef.current) {
-      const cardWidth = carouselRef.current.children[0]?.offsetWidth || 300;
-      const scrollAmount = cardWidth + 20; // card width + gap
+    if (carouselRef.current && !isScrolling) {
+      setIsScrolling(true);
+      const cardWidth = 300; // Ancho fijo de las cards
+      const gap = 20; // Gap entre cards
+      const scrollAmount = cardWidth + gap;
+      
       carouselRef.current.scrollBy({ 
         left: scrollAmount, 
         behavior: 'smooth' 
       });
+
+      // Reset scrolling flag después de la animación
+      setTimeout(() => setIsScrolling(false), 300);
+    }
+  };
+
+  // Touch gestures para móviles
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
+
+  const minSwipeDistance = 50;
+
+  const onTouchStart = (e) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe && canScrollRight) {
+      scrollRight();
+    }
+    if (isRightSwipe && canScrollLeft) {
+      scrollLeft();
+    }
+  };
+
+  // Scroll con rueda del mouse
+  const handleWheel = (e) => {
+    if (carouselRef.current && Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+      e.preventDefault();
+      carouselRef.current.scrollLeft += e.deltaX;
     }
   };
 
@@ -116,19 +166,20 @@ const LandingPageCards = ({ cards }) => {
         <button 
           className={`carousel-button prev ${!canScrollLeft ? 'disabled' : ''}`}
           onClick={scrollLeft}
-          disabled={!canScrollLeft}
-          aria-label="Scroll left"
+          disabled={!canScrollLeft || isScrolling}
+          aria-label="Scroll hacia la izquierda"
         >
-          &lt;
+          ←
         </button>
       )}
       
       <div 
-        className="descubre-grid horizontal-carousel" 
+        className="horizontal-carousel" 
         ref={carouselRef} 
-        onTouchStart={handlers.handleTouchStart} 
-        onTouchMove={handlers.handleTouchMove} 
-        onTouchEnd={handlers.handleTouchEnd}
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+        onWheel={handleWheel}
         role="region"
         aria-label="Propiedades destacadas"
       >
@@ -146,10 +197,10 @@ const LandingPageCards = ({ cards }) => {
         <button 
           className={`carousel-button next ${!canScrollRight ? 'disabled' : ''}`}
           onClick={scrollRight}
-          disabled={!canScrollRight}
-          aria-label="Scroll right"
+          disabled={!canScrollRight || isScrolling}
+          aria-label="Scroll hacia la derecha"
         >
-          &gt;
+          →
         </button>
       )}
     </div>

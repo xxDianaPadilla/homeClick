@@ -30,7 +30,7 @@ const LandingPage = () => {
       id: 1,
       title: "Objetivo Clase #1",
       description: "Facilitar el acceso a la oferta inmobiliaria brindando a los usuarios una plataforma intuitiva y accesible que les permita explorar, comparar y adquirir viviendas en diferentes ubicaciones sin la necesidad de desplazarse físicamente, optimizando así su tiempo y recursos.",
-      icon: "🏠" // Puedes cambiar por una imagen si prefieres
+      icon: "🏠"
     },
     {
       id: 2,
@@ -50,9 +50,16 @@ const LandingPage = () => {
     <div className="landing-page">
       <Navbar />
       
-      {/* Hero Section */}
-      <div className="container">
-        <img src={bgImage} alt="Fondo de casas" className="background-image" />
+      {/* Hero Section con imagen de fondo a ancho completo */}
+      <div className="hero-section-fullwidth">
+        {/* Imagen de fondo con la nueva clase específica */}
+        <img 
+          src={bgImage} 
+          alt="Fondo de casas" 
+          className="landing-background-hero" 
+        />
+        
+        {/* Contenido superpuesto */}
         <div className="content2">
           <h1>
             La Casa de Tus Sueños
@@ -62,6 +69,8 @@ const LandingPage = () => {
             Leer más
           </button>
         </div>
+        
+        {/* Texto informativo en la parte inferior */}
         <p className="footer-text">
           HomeClick es una tienda en línea que ofrece una solución integral para el mercado inmobiliario, 
           brindando acceso a una amplia variedad de casas en diferentes ubicaciones.
@@ -83,7 +92,7 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* Discovery Section */}
+      {/* Discovery Section con carousel optimizado */}
       <section className="container2">
         <h3 className="descubre-title">Descubre</h3>
         <LandingPageCards cards={cardData} />
