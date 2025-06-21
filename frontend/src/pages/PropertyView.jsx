@@ -13,24 +13,27 @@ import LandingPageCards from "../components/LandingPageCards";
 import { usePropertyData } from '../components/Properties/Hooks/usePropertyData';
 import { useExpandableSections } from '../components/Properties/Hooks/useExpandableSections';
 import { useSavedProperties } from '../components/Properties/Hooks/useSavedProperties';
-import useContactForm from '../components/Customers/Hooks/useContactForm';
 import { useEffect, useRef, useState } from 'react';
-import { useCart } from '../context/CartContext'; // Importar el hook del carrito
-import { toast } from 'react-hot-toast'; // Para mostrar notificaciones
-import ConfirmationModal from '../components/ConfirmationModal'; // Importar el modal de confirmación
+import { useCart } from '../context/CartContext';
+import { toast } from 'react-hot-toast';
+import ConfirmationModal from '../components/ConfirmationModal';
+import useCustomerInfo from "../components/Customers/Hooks/useCustomerInfo";
+import { useAuth } from "../context/AuthContext";
 
 const PropertyView = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const mapRef = useRef(null);
 
-  // Estado para controlar el modal de confirmación
-  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const { isAuthenticated, userInfo, user } = useAuth();
+  const { customerInfo, loading: customerLoading, isCustomer } = useCustomerInfo();
 
-  // CAMBIO 1: Modificado el valor por defecto de propertyId de '1' a null
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  
+  const [showContactForm, setShowContactForm] = useState(false);
+
   const { fromCategory, propertyId } = location.state || { fromCategory: '/propertyCategories', propertyId: null };
 
-  // CAMBIO 2: AGREGADO - Validación para redirigir si no hay propertyId
   if (!propertyId) {
     console.error('No propertyId found in location.state');
     navigate('/propertyCategories');
@@ -39,23 +42,16 @@ const PropertyView = () => {
 
   const { mainImage, setMainImage, thumbnails, propertyData, loading, error } = usePropertyData(propertyId);
   const { detailsExpanded, dimensionsExpanded, toggleDetails, toggleDimensions } = useExpandableSections();
-  const { isSaved, toggleSaved } = useSavedProperties(propertyId); // CORRECCIÓN: Pasar propertyId
-  const { showContactForm, toggleContactForm } = useContactForm();
+  const { isSaved, toggleSaved } = useSavedProperties(propertyId);
 
-  // Usar el contexto del carrito
   const { addToCart, isInCart } = useCart();
 
-  // Estado para mostrar feedback visual del guardado
   const [showSaveMessage, setShowSaveMessage] = useState(false);
 
-  // Coordenadas por defecto (San Salvador)
   const defaultCenter = [13.6929, -89.2182];
-
-  // Usar las coordenadas de la propiedad si están disponibles, de lo contrario usar las por defecto
   const mapCenter = propertyData.coordinates || defaultCenter;
-  const zoom = propertyData.coordinates ? 15 : 12; // Zoom más cercano si tenemos coordenadas específicas
+  const zoom = propertyData.coordinates ? 15 : 12;
 
-  // Función para centrar el mapa cuando cambien las coordenadas
   useEffect(() => {
     if (mapRef.current && propertyData.coordinates) {
       const map = mapRef.current;
@@ -63,7 +59,6 @@ const PropertyView = () => {
     }
   }, [propertyData.coordinates]);
 
-  // Array de propiedades similares
   const cardData = [
     { image: house1, caption: "Casa en Colonia Escalón" },
     { image: house2, caption: "Casa en zona rosa" },
@@ -77,45 +72,32 @@ const PropertyView = () => {
     { image: house1, caption: "Casa en Santa Elene" }
   ];
 
-  // FUNCIÓN PARA GUARDAR/REMOVER DE FAVORITOS (SAVED)
   const handleSaveProperty = () => {
     if (!loading && propertyData) {
       const wasAdded = toggleSaved(propertyData);
-
-      // Mostrar mensaje de feedback
       setShowSaveMessage(true);
       setTimeout(() => setShowSaveMessage(false), 2000);
-
-      // Log para debugging
       console.log(wasAdded ? 'Propiedad guardada' : 'Propiedad removida de guardados');
     }
   };
 
-  // FUNCIÓN PARA IR DIRECTAMENTE AL CARRITO (sin modal)
   const goToCartDirectly = () => {
     navigate('/shoppingCart');
   };
 
-  // FUNCIÓN PARA MANEJAR LA RESPUESTA DEL MODAL DE CONFIRMACIÓN
   const handleConfirmationResponse = (continueShopping) => {
     if (continueShopping) {
-      // Si quiere seguir comprando, solo mostrar toast de éxito
       toast.success('Propiedad agregada al carrito exitosamente');
     } else {
-      // Si no quiere seguir comprando, ir al carrito (sin toast adicional)
       navigate('/shoppingCart');
     }
   };
 
-  // FUNCIÓN PRINCIPAL PARA MANEJAR EL CLICK DEL BOTÓN DE CARRITO
   const handleShoppingCartClick = () => {
-    // Verificar si la propiedad ya está en el carrito
     if (isInCart(propertyId)) {
-      // Si ya está en el carrito, ir directamente al carrito
       toast.success('Esta propiedad ya está en tu carrito');
       goToCartDirectly();
     } else {
-      // Si no está en el carrito, agregarla primero
       const propertyToAdd = {
         id: propertyId,
         name: propertyData.name,
@@ -128,28 +110,53 @@ const PropertyView = () => {
         bathrooms: propertyData.bathrooms
       };
 
-      // Agregar al carrito
       addToCart(propertyToAdd);
-
-      // Mostrar modal de confirmación
       setShowConfirmationModal(true);
     }
   };
 
-  // Función para obtener el texto del popup del mapa
-  const getPopupText = () => {
-    if (propertyData.coordinates) {
-      return `${propertyData.name} - ${propertyData.location}`;
-    }
-    return "Ubicación aproximada - San Salvador, El Salvador";
+  const closeContactForm = () => {
+    setShowContactForm(false);
   };
 
-  // Función para obtener el estado de la ubicación
+  const handleContactOwner = () => {
+
+    if (isAuthenticated && customerLoading) {
+      toast.loading('Cargando información del usuario...', { duration: 1000 });
+      return;
+    }
+
+    const isActuallyCustomer = user?.userType === 'Customer' || user?.userType === 'customer';
+    
+    if (isAuthenticated && !isActuallyCustomer) {
+      toast.error(`Solo los clientes pueden contactar propietarios. Tu tipo: ${user?.userType}`);
+      return;
+    }
+
+    setShowContactForm(true);
+    
+    if (isActuallyCustomer && userInfo) {
+      toast.success('Formulario pre-llenado con tu información', { duration: 2000 });
+    } else if (isAuthenticated) {
+      toast('Formulario de contacto abierto', { duration: 1500 });
+    }
+  };
+
   const getLocationStatus = () => {
     if (loading) return "Cargando ubicación...";
     if (error) return "Error al cargar ubicación";
     if (!propertyData.coordinates) return "Ubicación aproximada";
     return "Ubicación exacta";
+  };
+
+  const getContactButtonText = () => {
+    if (isAuthenticated && customerLoading) {
+      return 'Cargando...';
+    }
+    if (isCustomer) {
+      return 'Contactar al dueño';
+    }
+    return 'Contactar al dueño';
   };
 
   if (loading) {
@@ -169,7 +176,6 @@ const PropertyView = () => {
       <Navbar />
 
       <div className="property-container3">
-        {/* MENSAJE DE FEEDBACK PARA GUARDAR EN FAVORITOS */}
         {showSaveMessage && (
           <div className={`save-feedback ${isSaved ? 'saved' : 'removed'}`}>
             {isSaved ? '✓ Propiedad guardada' : '✗ Propiedad removida de guardados'}
@@ -202,7 +208,6 @@ const PropertyView = () => {
             <div className="property-info3">
               <div className="property-title-section3">
                 <h1>{propertyData.name}</h1>
-                {/* ICONO DE FAVORITOS (SAVED) CON ESTILOS MEJORADOS */}
                 <div
                   className={`bookmark3 ${isSaved ? 'saved' : ''}`}
                   onClick={handleSaveProperty}
@@ -220,9 +225,23 @@ const PropertyView = () => {
 
               <p className="property-description3">{propertyData.description}</p>
 
+              {isAuthenticated && user?.userType === 'Customer' && userInfo && (
+                <div className="customer-info-display">
+                  <small className="customer-greeting">
+                    👋 Hola {userInfo.firstName || userInfo.name || 'Usuario'}, tu información se llenará automáticamente en el formulario
+                  </small>
+                </div>
+              )}
+              <br />
+
               <div className="action-buttons3">
-                <button className="btn-contact3" onClick={toggleContactForm}>Contactar al dueño</button>
-                {/* BOTÓN DE CARRITO DE COMPRAS CON FUNCIONALIDAD COMPLETA */}
+                <button 
+                  className="btn-contact3" 
+                  onClick={handleContactOwner}
+                  disabled={isAuthenticated && customerLoading}
+                >
+                  {getContactButtonText()}
+                </button>
                 <button className="btn-save3" onClick={handleShoppingCartClick}>
                   {isInCart(propertyId) ? 'Ver en carrito' : 'Agregar al carrito'}
                 </button>
@@ -265,7 +284,6 @@ const PropertyView = () => {
           )}
         </div>
 
-        {/* Sección mejorada del mapa con información de estado */}
         <div className="property-location-section3">
           <div className="location-header">
             <h2>Ubicación satelital</h2>
@@ -278,7 +296,7 @@ const PropertyView = () => {
 
           <div className="map-container">
             <MapContainer
-              key={`${mapCenter[0]}-${mapCenter[1]}`} // Key para forzar re-render cuando cambien las coordenadas
+              key={`${mapCenter[0]}-${mapCenter[1]}`}
               center={mapCenter}
               zoom={zoom}
               style={{ height: "400px", width: "100%" }}
@@ -305,7 +323,6 @@ const PropertyView = () => {
             </MapContainer>
           </div>
           <br />
-          {/* Información adicional del mapa */}
           <div className="map-info">
             {propertyData.coordinates ? (
               <p>📍 Coordenadas: {propertyData.coordinates[0].toFixed(6)}, {propertyData.coordinates[1].toFixed(6)}</p>
@@ -321,7 +338,6 @@ const PropertyView = () => {
         <LandingPageCards cards={cardData} />
       </section>
 
-      {/* MODAL DE CONFIRMACIÓN PARA CARRITO */}
       <ConfirmationModal
         isOpen={showConfirmationModal}
         onClose={() => setShowConfirmationModal(false)}
@@ -329,8 +345,12 @@ const PropertyView = () => {
         propertyName={propertyData.name}
       />
 
-      {/* FORMULARIO DE CONTACTO */}
-      {showContactForm && <ContactForm onClose={toggleContactForm} />}
+      {showContactForm && (
+        <ContactForm
+          onClose={closeContactForm}
+          propertyName={propertyData.name}
+        />
+      )}
 
       <Footer />
     </>

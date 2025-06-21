@@ -1,46 +1,82 @@
 import { useState } from "react";
+import {toast} from 'react-hot-toast';
 
-const useContactForm = (initialState = {}, onSubmitCallback) => {
+const useContactForm = (initialState, onSuccess, propertyName = '') => {
 
-    const [showContactForm, setShowContactForm] = useState(false);
     const [formData, setFormData] = useState(initialState);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
-    // Función para actualizar el estado 'formData' cuando cambia el valor de un campo del formulario
     const handleChange = (e) => {
-        // Obtiene el nombre y el valor del elemento que disparó el evento (el input o textarea)
         const { name, value } = e.target;
-        // Actualiza el estado 'formData' utilizando la función de actualización de estado
         setFormData(prevState => ({
-            // Mantiene los valores anteriores del estado
             ...prevState,
-            // Actualiza el valor del campo específico cuyo nombre coincide con 'name'
             [name]: value
         }));
     };
 
-    // Función para manejar el envío del formulario
-    const handleSubmit = (e) => {
-        // Previene el comportamiento predeterminado del envío del formulario (recargar la página)
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Simula el envío del formulario mostrando los datos en la consola
-        console.log('Formulario enviado:', formData);
+        
+        if(isSubmitting) return;
 
-        if (onSubmitCallback) {
-            onSubmitCallback(formData);
+        try {
+            setIsSubmitting(true);
+
+            const emailData = {
+                senderName: `${formData.firstName} ${formData.lastName}`,
+                senderEmail: formData.email,
+                senderPhone: formData.phone,
+                message: formData.message,
+                subject: propertyName ? `Consulta sobre: ${propertyName}` : 'Mensaje de contacto',
+                propertyName: propertyName
+            };
+
+            const response = await fetch('http://localhost:4000/api/contact/send-message', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include',
+                body: JSON.stringify(emailData)
+            });
+
+            const result = await response.json();
+
+            if(response.ok && result.success){
+                toast.success('Mensaje enviado exitosamente al administrador');
+
+                setFormData(prevState => ({
+                    ...prevState,
+                    message: ''
+                }));
+
+                if(onSuccess){
+                    onSuccess();
+                }
+            }else{
+                toast.error(result.message || 'Error al enviar el mensaje');
+            }
+        } catch (error) {
+            console.error('Error sending message: ', error);
+            toast.error('Error de conexión. Por favor, inténtalo de nuevo');
+        }finally{
+            setIsSubmitting(false);
         }
     };
 
-    const toggleContactForm = () => {
-        setShowContactForm(!showContactForm);
+    const updateFormData = (newData) => {
+        setFormData(prevState => ({
+            ...prevState,
+            ...newData
+        }));
     };
 
     return {
         formData,
-        setFormData,
+        isSubmitting,
         handleChange,
         handleSubmit,
-        showContactForm,
-        toggleContactForm
+        updateFormData
     };
 };
 

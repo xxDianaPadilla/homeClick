@@ -1,24 +1,65 @@
-import React, { useState } from "react";
-import '../styles/ContactForm.css'; // Importa los estilos CSS para este componente
-import closeIcon from '../assets/image10.png'; // Importa la imagen del icono de cerrar
+import React, { useEffect } from "react";
+import '../styles/ContactForm.css';
+import closeIcon from '../assets/image10.png';
 import useContactForm from './Customers/Hooks/useContactForm';
+import useCustomerInfo from "./Customers/Hooks/useCustomerInfo";
+import { useAuth } from "../context/AuthContext";
 
-// Define el componente funcional ContactForm, que recibe una prop 'onClose' para manejar el cierre del formulario
-const ContactForm = ({ onClose }) => {
+const ContactForm = ({ onClose, propertyName = '' }) => {
+  const { isAuthenticated } = useAuth();
+  const { customerInfo, loading: customerLoading, isCustomer, error } = useCustomerInfo();
 
   const initialState = {
     email: '',
-    name: '',
+    firstName: '',
+    lastName: '',
     phone: '',
     message: ''
   };
 
-  const {formData, handleChange, handleSubmit} = useContactForm(
+  const { formData, isSubmitting, handleChange, handleSubmit, updateFormData } = useContactForm(
     initialState,
-    () => onClose()
+    () => onClose(),
+    propertyName
   );
 
-  // Renderiza el componente del formulario de contacto
+  useEffect(() => {
+    console.log('ContactForm - customerInfo:', customerInfo);
+    console.log('ContactForm - isCustomer:', isCustomer);
+    console.log('ContactForm - customerLoading:', customerLoading);
+  }, [customerInfo, isCustomer, customerLoading]);
+
+  useEffect(() => {
+    if (customerInfo && isCustomer && !customerLoading) {
+      console.log('Updating form with customer data:', customerInfo);
+      
+      updateFormData({
+        email: customerInfo.email || '',
+        firstName: customerInfo.firstName || customerInfo.name || '', 
+        lastName: customerInfo.lastName || customerInfo.surname || '', 
+        phone: customerInfo.phone || customerInfo.phoneNumber || '' 
+      });
+    }
+  }, [customerInfo, isCustomer, customerLoading, updateFormData]);
+
+  if (customerLoading && isAuthenticated) {
+    return (
+      <div className="contact-form-overlay">
+        <div className="contact-form-container">
+          <div className="contact-form-header">
+            <h2>Formulario de contacto</h2>
+            <button className="close-button" onClick={onClose}>
+              <img src={closeIcon} alt="Cerrar" />
+            </button>
+          </div>
+          <div className="loading-message">
+            Cargando información del usuario...
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="contact-form-overlay">
       <div className="contact-form-container">
@@ -29,7 +70,18 @@ const ContactForm = ({ onClose }) => {
           </button>
         </div>
 
-        <p className="contact-subtitle">Enviar mensaje al vendedor</p>
+        <p className="contact-subtitle">
+          {propertyName
+            ? `Enviar mensaje sobre: ${propertyName}`
+            : "Enviar mensaje al administrador"
+          }
+        </p>
+
+        {error && (
+          <div className="error-message" style={{ color: 'red', marginBottom: '10px' }}>
+            {error}
+          </div>
+        )}
 
         <form onSubmit={handleSubmit}>
           <div className="form-group4">
@@ -40,6 +92,7 @@ const ContactForm = ({ onClose }) => {
               value={formData.email}
               onChange={handleChange}
               placeholder="Dirección de correo electrónico"
+              disabled={isCustomer && customerInfo} 
               required
             />
           </div>
@@ -48,9 +101,24 @@ const ContactForm = ({ onClose }) => {
             <input
               className="inputs"
               type="text"
-              value={formData.name}
+              name="firstName"
+              value={formData.firstName}
               onChange={handleChange}
               placeholder="Nombre"
+              disabled={isCustomer && customerInfo} 
+              required
+            />
+          </div>
+
+          <div className="form-group4">
+            <input
+              className="inputs"
+              type="text"
+              name="lastName"
+              value={formData.lastName}
+              onChange={handleChange}
+              placeholder="Apellido"
+              disabled={isCustomer && customerInfo} 
               required
             />
           </div>
@@ -63,6 +131,7 @@ const ContactForm = ({ onClose }) => {
               value={formData.phone}
               onChange={handleChange}
               placeholder="Número de teléfono"
+              disabled={isCustomer && customerInfo} 
               required
             />
           </div>
@@ -72,13 +141,28 @@ const ContactForm = ({ onClose }) => {
               name="message"
               value={formData.message}
               onChange={handleChange}
-              placeholder="Mensaje..."
+              placeholder="Escribe tu mensaje aquí..."
               rows="4"
+              required
             ></textarea>
           </div>
 
+          {isCustomer && customerInfo && (
+            <div className="form-info">
+              <small>
+                ℹ️ Los campos de información personal se llenan automáticamente con tu perfil.
+              </small>
+            </div>
+          )}
+
           <div className="form-actions">
-            <button type="submit" className="send-button">Enviar</button>
+            <button
+              type="submit"
+              className="send-button"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? 'Enviando...' : 'Enviar mensaje'}
+            </button>
           </div>
         </form>
       </div>
