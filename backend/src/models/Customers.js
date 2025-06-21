@@ -1,18 +1,3 @@
-/*
-Customers 
-
-firstName,
-lastName,
-birthDate,
-dui,
-password,
-email,
-phone,
-profilePicture,
-address,
-budget
-*/
-
 import { Schema, model } from "mongoose";
 
 const customerSchema = new Schema(
@@ -62,7 +47,8 @@ const customerSchema = new Schema(
         profilePicture:
         {
             type: String,
-            required: false
+            required: true,
+            default: ''
         },
 
         address:
@@ -75,6 +61,18 @@ const customerSchema = new Schema(
         {
             type: Number,
             required: false
+        },
+
+        minBudget: {
+            type: Number,
+            required: false,
+            default: 0
+        },
+
+        maxBudget: {
+            type: Number,
+            required: false,
+            default: 0
         }
     },
     {
