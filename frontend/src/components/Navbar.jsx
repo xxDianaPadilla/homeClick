@@ -13,11 +13,12 @@ import profileIcon from '../assets/image3.png';
 import UserInfoCard from "./UserInfoCard";
 import { useCategories } from "../components/Categories/hooks/useCategories";
 
-const Navbar = () => {
+const Navbar = ({onSearchChange, searchTerm}) => {
   // Estados locales del componente
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [localSearchTerm, setLocalSearchTerm] = useState(searchTerm || '');
 
   // Hooks de enrutamiento
   const location = useLocation();
@@ -39,9 +40,36 @@ const Navbar = () => {
     navigate('/savedProperties');
   };
 
+  const handleSearchChange = (e) => {
+    const value = e.target.value;
+    setLocalSearchTerm(value);
+    
+    if (onSearchChange) {
+      onSearchChange(value);
+    }
+  };
+
+  const handleSearchSubmit = () => {
+    if (onSearchChange) {
+      onSearchChange(localSearchTerm);
+    }
+  };
+
+  const handleSearchKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSearchSubmit();
+    }
+  };
+
   // Manejador optimizado para navegación por categoría
   const handleCategoryClick = (e, category) => {
     e.preventDefault();
+
+    setLocalSearchTerm('');
+    if (onSearchChange) {
+      onSearchChange('');
+    }
+
     navigate('/propertyCategories', {
       state: {
         selectedCategory: {
@@ -52,6 +80,12 @@ const Navbar = () => {
       }
     });
   };
+
+  useEffect(() => {
+    if (searchTerm !== undefined) {
+      setLocalSearchTerm(searchTerm);
+    }
+  }, [searchTerm]);
 
   // Efecto para manejar el responsive design
   useEffect(() => {
@@ -101,8 +135,15 @@ const Navbar = () => {
 
           {/* Barra de búsqueda */}
           <div className="search-container">
-            <input type="text" id="searchInput" placeholder="Buscar..." />
-            <button className="search-button">
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="Buscar por ubicación..."
+              value={localSearchTerm}
+              onChange={handleSearchChange}
+              onKeyPress={handleSearchKeyPress}
+            />
+            <button className="search-button" onClick={handleSearchSubmit}>
               <img src={searchIcon} alt="" />
             </button>
           </div>
