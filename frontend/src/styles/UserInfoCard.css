@@ -112,6 +112,7 @@
     align-items: center;
     /* Oculta cualquier parte de la imagen que se desborde del círculo */
     overflow: hidden;
+    position: relative;
 }
 
 /* Estilos para la etiqueta img dentro del contenedor de la imagen de perfil */
@@ -144,6 +145,12 @@
     height: 25px;
     /* Sombra suave alrededor del icono */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.camera-icon8:hover{
+    opacity: 0.8;
+    transform: scale(1.05);
+    transition: all 0.2s ease;
 }
 
 /* Estilos para la imagen dentro del icono de la cámara */
@@ -227,7 +234,7 @@
     /* Utiliza flexbox para alinear los elementos en fila */
     display: flex;
     /* Espacio entre los elementos */
-    gap: 20px;
+    gap: 10px;
 }
 
 /* Estilos para cada input de presupuesto */

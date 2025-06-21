@@ -11,6 +11,7 @@ import logOutRoutes from './src/routes/logout.js';
 import authRoutes from './src/routes/auth.js';
 import recoveryPasswordRoutes from './src/routes/recoveryPassword.js'; // Ruta de recuperación añadida
 import contactRoutes from './src/routes/contact.js';
+import uploadRoutes from './src/routes/upload.js';
 import cookieParser from 'cookie-parser';
 import cors from "cors";
 
@@ -43,5 +44,6 @@ app.use("/api/logout", logOutRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/recovery-password", recoveryPasswordRoutes); // Ruta de recuperación añadida
 app.use("/api/contact", contactRoutes);
+app.use("/api", uploadRoutes);
 
 export default app;
