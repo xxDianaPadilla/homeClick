@@ -1,101 +1,278 @@
-import React from "react";
+import React, { useMemo } from "react";
 import Navbar from '../components/Navbar';
 import Footer from "../components/Footer";
 import ObjectiveCard from "../components/ObjectiveCard";
-import LandingPageCards from "../components/LandingPageCards";
+import EnhancedLandingPageCards from "../components/EnhancedLandingPageCards";
+import useResponsive from "../components/Customers/Hooks/useResponsive";
 import '../styles/EstiloLandingPage.css';
+
+// Importación de imágenes optimizada
 import bgImage from "../assets/xd1.png";
 import house1 from "../assets/image5.png";
 import house2 from "../assets/image6.png";
 import house3 from "../assets/image7.png";
 
+/**
+ * Componente principal de la Landing Page con responsive optimizado
+ * Utiliza el hook useResponsive para adaptar el contenido según el dispositivo
+ */
 const LandingPage = () => {
-  // Data para las cards del carousel
-  const cardData = [
-    { image: house1, caption: "Casa en Colonia Escalón" },
-    { image: house2, caption: "Casa en zona rosa" },
-    { image: house3, caption: "Casa en santa tecla" },
-    { image: house1, caption: "Casa en Colonia Escalón" },
-    { image: house2, caption: "Casa en zona rosa" },
-    { image: house3, caption: "Casa en santa tecla" },
-    { image: house1, caption: "Casa en Merliot" },
-    { image: house2, caption: "Casa en San Salvador" },
-    { image: house3, caption: "Casa en Antiguo Cuscatlán" },
-    { image: house1, caption: "Casa en Santa Elena" }
-  ];
+  // Hook responsive para obtener información del viewport
+  const {
+    viewport,
+    deviceCapabilities,
+    getResponsiveClasses,
+    getResponsiveValue,
+    isMobile,
+    isTablet,
+    isDesktop,
+    hasTouch,
+    prefersReducedMotion
+  } = useResponsive();
 
-  // Data para los objetivos
-  const objectives = [
+  /**
+   * Datos para las cards del carousel optimizados
+   * Se memorizan para evitar re-renders innecesarios
+   */
+  const cardData = useMemo(() => [
+    { 
+      image: house1, 
+      caption: "Casa en Colonia Escalón",
+      id: "escalon-1" 
+    },
+    { 
+      image: house2, 
+      caption: "Casa en zona rosa",
+      id: "zona-rosa-1" 
+    },
+    { 
+      image: house3, 
+      caption: "Casa en santa tecla",
+      id: "santa-tecla-1" 
+    },
+    { 
+      image: house1, 
+      caption: "Casa en Colonia Escalón",
+      id: "escalon-2" 
+    },
+    { 
+      image: house2, 
+      caption: "Casa en zona rosa",
+      id: "zona-rosa-2" 
+    },
+    { 
+      image: house3, 
+      caption: "Casa en santa tecla",
+      id: "santa-tecla-2" 
+    },
+    { 
+      image: house1, 
+      caption: "Casa en Merliot",
+      id: "merliot-1" 
+    },
+    { 
+      image: house2, 
+      caption: "Casa en San Salvador",
+      id: "san-salvador-1" 
+    },
+    { 
+      image: house3, 
+      caption: "Casa en Antiguo Cuscatlán",
+      id: "antiguo-cuscatlan-1" 
+    },
+    { 
+      image: house1, 
+      caption: "Casa en Santa Elena",
+      id: "santa-elena-1" 
+    }
+  ], []);
+
+  /**
+   * Datos para los objetivos con números en lugar de iconos
+   * Se adaptan según el tipo de dispositivo
+   */
+  const objectives = useMemo(() => [
     {
       id: 1,
       title: "Objetivo Clase #1",
       description: "Facilitar el acceso a la oferta inmobiliaria brindando a los usuarios una plataforma intuitiva y accesible que les permita explorar, comparar y adquirir viviendas en diferentes ubicaciones sin la necesidad de desplazarse físicamente, optimizando así su tiempo y recursos.",
-      icon: "🏠"
+      number: 1,
+      delay: 0
     },
     {
       id: 2,
       title: "Objetivo Clase #2", 
       description: "Optimizar la gestión de ventas y usuarios proporcionando a los administradores herramientas eficientes para gestionar la venta de propiedades, supervisar transacciones y administrar perfiles de usuarios, asegurando un proceso transparente, seguro y organizado.",
-      icon: "⚙️"
+      number: 2,
+      delay: 200
     },
     {
       id: 3,
       title: "Objetivo clave #3",
       description: "Mejorar la experiencia de compra de viviendas integrando funcionalidades innovadoras en el sitio web y la aplicación móvil para ofrecer a los compradores una experiencia fluida, segura y confiable, permitiéndoles interactuar con la plataforma a través de reseñas, notificaciones y un proceso de compra simplificado.",
-      icon: "📱"
+      number: 3,
+      delay: 400
     }
-  ];
+  ], []);
+
+  /**
+   * Configuración responsiva del texto del botón principal
+   * Se adapta según el tamaño de pantalla
+   */
+  const buttonText = getResponsiveValue({
+    xs: "Leer más",
+    sm: "Leer más",
+    md: "Leer más",
+    lg: "Leer más",
+    xl: "Leer más"
+  });
+
+  /**
+   * Configuración responsiva del texto del footer hero
+   * Se oculta en móviles muy pequeños para mejorar la legibilidad
+   */
+  const shouldShowFooterText = getResponsiveValue({
+    xs: false,
+    sm: true,
+    md: true,
+    lg: true,
+    xl: true
+  });
+
+  /**
+   * Configuración de clases CSS responsivas para el contenedor principal
+   */
+  const containerClasses = getResponsiveClasses({
+    xs: 'landing-mobile-xs',
+    sm: 'landing-mobile-sm',
+    md: 'landing-tablet',
+    lg: 'landing-desktop',
+    xl: 'landing-desktop-large'
+  });
+
+  /**
+   * Maneja el click del botón principal con analytics opcional
+   */
+  const handleButtonClick = () => {
+    // Aquí se puede agregar tracking de analytics
+    console.log('Landing button clicked', {
+      viewport: viewport.width,
+      device: isMobile ? 'mobile' : isTablet ? 'tablet' : 'desktop',
+      hasTouch: hasTouch
+    });
+    
+    // Scroll suave hacia la sección de objetivos
+    const objetivosSection = document.querySelector('.objetivos');
+    if (objetivosSection) {
+      objetivosSection.scrollIntoView({ 
+        behavior: prefersReducedMotion ? 'auto' : 'smooth',
+        block: 'start'
+      });
+    }
+  };
+
+  /**
+   * Genera el estilo dinámico para la imagen de fondo del hero
+   * Optimiza la carga según la densidad de píxeles
+   */
+  const heroBackgroundStyle = useMemo(() => {
+    const isHighDensity = viewport.devicePixelRatio > 1.5;
+    
+    return {
+      backgroundImage: `url(${bgImage})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+      // Optimización para pantallas de alta densidad
+      imageRendering: isHighDensity ? 'auto' : 'crisp-edges'
+    };
+  }, [viewport.devicePixelRatio]);
 
   return (
-    <div className="landing-page">
+    <div className={`landing-page ${containerClasses}`}>
       <Navbar />
       
-      {/* Hero Section con imagen de fondo a ancho completo */}
-      <div className="hero-section-fullwidth">
-        {/* Imagen de fondo con la nueva clase específica */}
+      {/* Hero Section con imagen de fondo optimizada */}
+      <section 
+        className="hero-section-fullwidth"
+        role="banner"
+        aria-label="Sección principal - La casa de tus sueños"
+      >
+        {/* Imagen de fondo con lazy loading optimizado */}
         <img 
           src={bgImage} 
-          alt="Fondo de casas" 
-          className="landing-background-hero" 
+          alt="Fondo de casas - HomeClick" 
+          className="landing-background-hero"
+          loading="eager" // Carga inmediata para hero image
+          decoding="async"
+          fetchpriority="high" // Prioridad alta para el hero
         />
         
-        {/* Contenido superpuesto */}
-        <div className="content2">
+        {/* Contenido superpuesto del hero */}
+        <div className="content2" role="main">
           <h1>
             La Casa de Tus Sueños
             <span className="subtitle">A Un Solo Click</span>
           </h1>
-          <button className="btn" type="button">
-            Leer más
+          
+          <button 
+            className="btn" 
+            type="button"
+            onClick={handleButtonClick}
+            aria-label="Leer más sobre HomeClick"
+          >
+            {buttonText}
           </button>
         </div>
         
-        {/* Texto informativo en la parte inferior */}
-        <p className="footer-text">
-          HomeClick es una tienda en línea que ofrece una solución integral para el mercado inmobiliario, 
-          brindando acceso a una amplia variedad de casas en diferentes ubicaciones.
-        </p>
-      </div>
+        {/* Texto informativo en la parte inferior - Responsivo */}
+        {shouldShowFooterText && (
+          <p className="footer-text" role="contentinfo">
+            HomeClick es una tienda en línea que ofrece una solución integral para el mercado inmobiliario, 
+            brindando acceso a una amplia variedad de casas en diferentes ubicaciones.
+          </p>
+        )}
+      </section>
 
-      {/* Objectives Section */}
-      <section className="container2">
+      {/* Sección de Objetivos con animaciones responsivas */}
+      <section className="container2" aria-labelledby="objetivos-title">
+        <h2 id="objetivos-title" className="sr-only">
+          Nuestros Objetivos Principales
+        </h2>
+        
         <div className="objetivos">
           {objectives.map((objective, index) => (
-            <ObjectiveCard
+            <div
               key={objective.id}
-              title={objective.title}
-              description={objective.description}
-              icon={objective.icon}
-              delay={index * 200} // Stagger animation
-            />
+              className="objetivo"
+              style={{ 
+                animationDelay: prefersReducedMotion ? '0ms' : `${objective.delay}ms`
+              }}
+            >
+              {/* Icono numerado */}
+              <div className="objetivo-icon">
+                {objective.number}
+              </div>
+              
+              {/* Contenido del objetivo */}
+              <h2>{objective.title}</h2>
+              <p>{objective.description}</p>
+            </div>
           ))}
         </div>
       </section>
 
-      {/* Discovery Section con carousel optimizado */}
-      <section className="container2">
-        <h3 className="descubre-title">Descubre</h3>
-        <LandingPageCards cards={cardData} />
+      {/* Sección Descubre con carousel optimizado */}
+      <section className="container2" aria-labelledby="descubre-title">
+        <h2 id="descubre-title" className="descubre-title">
+          Descubre
+        </h2>
+        
+        {/* Carousel mejorado con soporte táctil */}
+        <EnhancedLandingPageCards 
+          cards={cardData}
+          aria-label="Galería de propiedades destacadas"
+        />
       </section>
 
       <Footer />

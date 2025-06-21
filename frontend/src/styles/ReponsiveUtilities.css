@@ -1,0 +1,392 @@
+/* ===== UTILIDADES RESPONSIVE PARA LANDING PAGE ===== */
+/* Este archivo complementa EstiloLandingPage.css con utilidades específicas */
+
+/* Clases de utilidad para mostrar/ocultar elementos según breakpoint */
+.hidden-xs { display: none !important; }
+.hidden-sm { display: none !important; }
+.hidden-md { display: none !important; }
+.hidden-lg { display: none !important; }
+.hidden-xl { display: none !important; }
+
+@media (min-width: 480px) {
+  .hidden-xs { display: initial !important; }
+  .visible-xs { display: none !important; }
+}
+
+@media (min-width: 768px) {
+  .hidden-sm { display: initial !important; }
+  .visible-sm { display: none !important; }
+}
+
+@media (min-width: 1024px) {
+  .hidden-md { display: initial !important; }
+  .visible-md { display: none !important; }
+}
+
+@media (min-width: 1200px) {
+  .hidden-lg { display: initial !important; }
+  .visible-lg { display: none !important; }
+}
+
+@media (min-width: 1440px) {
+  .hidden-xl { display: initial !important; }
+  .visible-xl { display: none !important; }
+}
+
+/* Clases específicas para dispositivos */
+.is-mobile .mobile-only { display: block !important; }
+.is-tablet .tablet-only { display: block !important; }
+.is-desktop .desktop-only { display: block !important; }
+
+.is-mobile .hide-mobile { display: none !important; }
+.is-tablet .hide-tablet { display: none !important; }
+.is-desktop .hide-desktop { display: none !important; }
+
+/* Orientación específica */
+.is-landscape .portrait-only { display: none !important; }
+.is-portrait .landscape-only { display: none !important; }
+
+/* Capacidades del dispositivo */
+.has-touch .no-touch-only { display: none !important; }
+.no-touch .touch-only { display: none !important; }
+
+.has-hover .no-hover-only { display: none !important; }
+.no-hover .hover-only { display: none !important; }
+
+/* Animaciones y transiciones responsivas */
+.reduced-motion * {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* Utilidades de texto responsivo */
+.text-center-mobile { text-align: left; }
+.text-left-mobile { text-align: left; }
+.text-right-mobile { text-align: right; }
+
+@media (max-width: 767px) {
+  .text-center-mobile { text-align: center; }
+  .text-left-mobile { text-align: left; }
+  .text-right-mobile { text-align: right; }
+}
+
+/* Utilidades de spacing responsivo */
+.spacing-responsive-xs { margin: clamp(0.25rem, 1vw, 0.5rem); padding: clamp(0.25rem, 1vw, 0.5rem); }
+.spacing-responsive-sm { margin: clamp(0.5rem, 2vw, 1rem); padding: clamp(0.5rem, 2vw, 1rem); }
+.spacing-responsive-md { margin: clamp(1rem, 3vw, 2rem); padding: clamp(1rem, 3vw, 2rem); }
+.spacing-responsive-lg { margin: clamp(2rem, 4vw, 3rem); padding: clamp(2rem, 4vw, 3rem); }
+
+/* Contenedores responsive específicos para landing */
+.landing-mobile-xs {
+  --hero-min-height: 350px;
+  --hero-max-height: 500px;
+  --content-padding: clamp(0.5rem, 2vw, 1rem);
+  --section-gap: clamp(1rem, 3vw, 2rem);
+}
+
+.landing-mobile-sm {
+  --hero-min-height: 400px;
+  --hero-max-height: 600px;
+  --content-padding: clamp(1rem, 3vw, 1.5rem);
+  --section-gap: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.landing-tablet {
+  --hero-min-height: 500px;
+  --hero-max-height: 800px;
+  --content-padding: clamp(1.5rem, 4vw, 2rem);
+  --section-gap: clamp(2rem, 5vw, 3rem);
+}
+
+.landing-desktop {
+  --hero-min-height: 600px;
+  --hero-max-height: 1000px;
+  --content-padding: clamp(2rem, 5vw, 3rem);
+  --section-gap: clamp(3rem, 6vw, 5rem);
+}
+
+.landing-desktop-large {
+  --hero-min-height: 700px;
+  --hero-max-height: 1200px;
+  --content-padding: clamp(3rem, 6vw, 5rem);
+  --section-gap: clamp(4rem, 8vw, 6rem);
+}
+
+/* Grid responsive utilities */
+.grid-responsive-auto { 
+  display: grid; 
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+  gap: var(--section-gap, 2rem); 
+}
+
+.grid-1-2-3 { 
+  display: grid; 
+  grid-template-columns: 1fr; 
+  gap: var(--section-gap, 2rem); 
+}
+
+@media (min-width: 768px) {
+  .grid-1-2-3 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 1024px) {
+  .grid-1-2-3 { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* Flexbox responsive utilities */
+.flex-responsive {
+  display: flex;
+  flex-direction: column;
+  gap: var(--section-gap, 1rem);
+}
+
+@media (min-width: 768px) {
+  .flex-responsive { flex-direction: row; }
+}
+
+/* Carousel specific responsive utilities */
+.carousel-responsive .carousel-button {
+  width: 32px;
+  height: 32px;
+  font-size: 10px;
+}
+
+@media (min-width: 480px) {
+  .carousel-responsive .carousel-button {
+    width: 36px;
+    height: 36px;
+    font-size: 12px;
+  }
+}
+
+@media (min-width: 768px) {
+  .carousel-responsive .carousel-button {
+    width: 40px;
+    height: 40px;
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .carousel-responsive .carousel-button {
+    width: 48px;
+    height: 48px;
+    font-size: 18px;
+  }
+}
+
+/* Optimizaciones para pantallas de alta densidad */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .high-dpi-optimized {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* Utilidades para contenido crítico above-the-fold */
+.above-fold-content {
+  contain: layout style paint;
+  will-change: transform;
+}
+
+/* Optimizaciones específicas para scroll fluido */
+.horizontal-carousel {
+  /* Aceleración por hardware para scroll ultra-fluido */
+  transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  will-change: scroll-position;
+  
+  /* Scroll momentum en iOS */
+  -webkit-overflow-scrolling: touch;
+  
+  /* Optimizaciones adicionales */
+  scroll-snap-stop: normal;
+  scroll-padding-inline: 0;
+  
+  /* Previene el bounce en iOS */
+  overscroll-behavior-x: contain;
+  overscroll-behavior-y: none;
+}
+
+/* Optimizaciones para cards del carousel */
+.descubre-item-wrapper,
+.descubre-item {
+  /* Aceleración GPU */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  
+  /* Optimización de compositing */
+  will-change: transform;
+  contain: layout style paint;
+}
+
+/* Smooth scroll específico para dispositivos táctiles */
+.has-touch .horizontal-carousel {
+  scroll-behavior: auto; /* Dejamos que el navegador maneje el scroll táctil */
+}
+
+.no-touch .horizontal-carousel {
+  scroll-behavior: smooth; /* Smooth scroll solo para dispositivos con mouse */
+}
+
+/* Mejoras específicas para WebKit (Safari, Chrome en iOS) */
+@supports (-webkit-touch-callout: none) {
+  .horizontal-carousel {
+    -webkit-overflow-scrolling: touch;
+    -webkit-scroll-snap-type: x mandatory;
+    scroll-snap-type: x mandatory;
+  }
+  
+  .descubre-item {
+    -webkit-scroll-snap-align: start;
+    scroll-snap-align: start;
+  }
+}
+
+/* Optimizaciones para Firefox */
+@-moz-document url-prefix() {
+  .horizontal-carousel {
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+  }
+}
+
+/* Soporte para modo oscuro (preparado para futuras implementaciones) */
+@media (prefers-color-scheme: dark) {
+  .dark-mode-ready {
+    --bg-color: #1a1a1a;
+    --text-color: #ffffff;
+    --accent-color: #E9631A;
+  }
+}
+
+/* Utilidades para mejorar la accesibilidad en móviles */
+.touch-friendly {
+  min-height: 44px;
+  min-width: 44px;
+  padding: 12px;
+}
+
+/* Mejoras para el enfoque en dispositivos táctiles */
+.has-touch .focus-visible:focus {
+  outline: 3px solid var(--color-primary, #E9631A);
+  outline-offset: 2px;
+}
+
+/* Utilidades para contenido que se oculta en print */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  .print-only {
+    display: block !important;
+  }
+}
+
+/* Clases de utilidad para performance */
+.will-change-transform { will-change: transform; }
+.will-change-scroll { will-change: scroll-position; }
+.contain-layout { contain: layout; }
+.contain-paint { contain: paint; }
+.contain-size { contain: size; }
+
+/* Utilidades para lazy loading */
+.lazy-loading {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.lazy-loaded {
+  opacity: 1;
+}
+
+/* Estados de error responsivos */
+.error-state-mobile {
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.875rem;
+}
+
+@media (min-width: 768px) {
+  .error-state-mobile {
+    padding: 2rem;
+    font-size: 1rem;
+  }
+}
+
+/* Utilidades para mejorar el CLS (Cumulative Layout Shift) */
+.aspect-ratio-16-9 {
+  aspect-ratio: 16 / 9;
+}
+
+.aspect-ratio-4-3 {
+  aspect-ratio: 4 / 3;
+}
+
+.aspect-ratio-1-1 {
+  aspect-ratio: 1 / 1;
+}
+
+/* Soporte para aspect-ratio fallback */
+@supports not (aspect-ratio: 1 / 1) {
+  .aspect-ratio-16-9 {
+    position: relative;
+    height: 0;
+    padding-bottom: 56.25%; /* 9/16 * 100% */
+  }
+  
+  .aspect-ratio-4-3 {
+    position: relative;
+    height: 0;
+    padding-bottom: 75%; /* 3/4 * 100% */
+  }
+  
+  .aspect-ratio-1-1 {
+    position: relative;
+    height: 0;
+    padding-bottom: 100%; /* 1/1 * 100% */
+  }
+  
+  .aspect-ratio-16-9 > *,
+  .aspect-ratio-4-3 > *,
+  .aspect-ratio-1-1 > * {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+/* Utilidades para reducir el reflow durante animaciones */
+.animate-gpu {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Mejoras para el rendimiento del carousel */
+.carousel-optimized .descubre-item {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+.carousel-optimized .descubre-item:not(:hover) {
+  will-change: auto;
+}
+
+/* Sistema de breakpoints personalizado con CSS custom properties */
+:root {
+  --bp-xs: 375px;
+  --bp-sm: 480px;
+  --bp-md: 768px;
+  --bp-lg: 1024px;
+  --bp-xl: 1200px;
+  --bp-xxl: 1440px;
+}
