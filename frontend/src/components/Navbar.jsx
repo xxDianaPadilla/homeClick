@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
 import "../styles/EstiloNav.css";
 
-// Importación de imágenes y assets
 import homeClickLogo from '../assets/naranja.png';
 import searchIcon from '../assets/image1.png';
 import saveIcon from '../assets/image23.png';
@@ -12,38 +11,51 @@ import selectedCartIcon from '../assets/image42.png';
 import profileIcon from '../assets/image3.png';
 import UserInfoCard from "./UserInfoCard";
 import { useCategories } from "../components/Categories/hooks/useCategories";
+import { useAuth } from "../context/AuthContext";
+import toast from "react-hot-toast";
 
-const Navbar = ({onSearchChange, searchTerm}) => {
-  // Estados locales del componente
+const Navbar = ({ onSearchChange, searchTerm }) => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [localSearchTerm, setLocalSearchTerm] = useState(searchTerm || '');
 
-  // Hooks de enrutamiento
   const location = useLocation();
   const navigate = useNavigate();
+  const { isAuthenticated, user } = useAuth();
 
-  // Hook para obtener categorías
   const { categories, isLoadingCategories, categoriesError } = useCategories();
 
-  // Variables de estado para páginas específicas
   const isShoppingCartPage = location.pathname === '/shoppingCart';
   const isSavedProperties = location.pathname === '/savedProperties';
 
-  // Manejadores de eventos
+  const requiresAuth = (action) => {
+    if (!isAuthenticated) {
+      toast.error('Debes iniciar sesión para acceder a esta funcionalidad');
+      navigate('/inicio-sesion');
+      return false;
+    }
+    return true;
+  };
+
   const handleCartClick = () => {
+    if (!requiresAuth('carrito')) return;
     navigate('/shoppingCart');
   };
 
   const handleSavedPropertiesClick = () => {
+    if (!requiresAuth('propiedades guardadas')) return;
     navigate('/savedProperties');
+  };
+
+  const handleProfileClick = () => {
+    setIsProfileOpen(!isProfileOpen);
   };
 
   const handleSearchChange = (e) => {
     const value = e.target.value;
     setLocalSearchTerm(value);
-    
+
     if (onSearchChange) {
       onSearchChange(value);
     }
@@ -61,7 +73,6 @@ const Navbar = ({onSearchChange, searchTerm}) => {
     }
   };
 
-  // Manejador optimizado para navegación por categoría
   const handleCategoryClick = (e, category) => {
     e.preventDefault();
 
@@ -73,12 +84,17 @@ const Navbar = ({onSearchChange, searchTerm}) => {
     navigate('/propertyCategories', {
       state: {
         selectedCategory: {
-          id: category._id, // ObjectId de la categoría
+          id: category._id, 
           propertyType: category.propertyType,
           name: category.name || category.propertyType
         }
       }
     });
+  };
+
+  const handleLogoClick = (e) => {
+    e.preventDefault();
+    navigate('/landingPage');
   };
 
   useEffect(() => {
@@ -87,7 +103,6 @@ const Navbar = ({onSearchChange, searchTerm}) => {
     }
   }, [searchTerm]);
 
-  // Efecto para manejar el responsive design
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
@@ -104,16 +119,10 @@ const Navbar = ({onSearchChange, searchTerm}) => {
     };
   }, []);
 
-  // Funciones auxiliares
-  const toggleProfile = () => {
-    setIsProfileOpen(!isProfileOpen);
-  };
-
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
 
-  // Determina si un enlace está activo basado en la ruta actual
   const isActive = (categoryId) => {
     if (location.pathname === '/propertyCategories' && location.state?.selectedCategory) {
       return location.state.selectedCategory.id === categoryId ? "active" : "";
@@ -121,19 +130,16 @@ const Navbar = ({onSearchChange, searchTerm}) => {
     return "";
   };
 
-  // Renderizado del componente
   return (
     <>
       <nav className="navbar">
         <div className="navbar-container">
-          {/* Logo de la aplicación */}
           <div className="navbar-logo">
-            <a href="/landingPage">
+            <a href="/landingPage" onClick={handleLogoClick}>
               <img src={homeClickLogo} alt="HomeClick Logo" />
             </a>
           </div>
 
-          {/* Barra de búsqueda */}
           <div className="search-container">
             <input
               type="text"
@@ -148,20 +154,32 @@ const Navbar = ({onSearchChange, searchTerm}) => {
             </button>
           </div>
 
-          {/* Iconos de navegación */}
           <div className="navbar-icons">
-            <button className="icon-button bookmark-button" onClick={handleSavedPropertiesClick}>
+            <button
+              className={`icon-button bookmark-button ${!isAuthenticated ? 'disabled' : ''}`}
+              onClick={handleSavedPropertiesClick}
+              title={!isAuthenticated ? 'Inicia sesión para ver propiedades guardadas' : 'Ver propiedades guardadas'}
+            >
               <img src={isSavedProperties ? savedIcon : saveIcon} alt="" />
             </button>
-            <button className="icon-button cart-button" onClick={handleCartClick}>
+
+            <button
+              className={`icon-button cart-button ${!isAuthenticated ? 'disabled' : ''}`}
+              onClick={handleCartClick}
+              title={!isAuthenticated ? 'Inicia sesión para ver el carrito' : 'Ver carrito de compras'}
+            >
               <img src={isShoppingCartPage ? selectedCartIcon : cartIcon} alt="" />
             </button>
-            <button className="icon-button profile-button" onClick={toggleProfile}>
+
+            <button
+              className="icon-button profile-button"
+              onClick={handleProfileClick}
+              title={!isAuthenticated ? 'Ver opciones de perfil' : 'Ver perfil'}
+            >
               <img src={profileIcon} alt="" />
             </button>
           </div>
 
-          {/* Botón de menú hamburguesa para móvil */}
           <button className={`hamburger-menu ${menuOpen ? 'active' : ''}`} onClick={toggleMenu}>
             <span></span>
             <span></span>
@@ -171,7 +189,6 @@ const Navbar = ({onSearchChange, searchTerm}) => {
 
         <hr className="espacio" />
 
-        {/* Menú de navegación con categorías dinámicas */}
         <div className={`navbar-menu ${menuOpen ? 'active' : ''}`}>
           <ul className="navbar-options">
             {isLoadingCategories ? (
@@ -198,10 +215,8 @@ const Navbar = ({onSearchChange, searchTerm}) => {
         </div>
       </nav>
 
-      {/* Componente de información del usuario */}
       <UserInfoCard isOpen={isProfileOpen} onClose={() => setIsProfileOpen(false)} />
 
-      {/* Overlay oscuro para el menú móvil */}
       {menuOpen && isMobile && (
         <div className="overlay" onClick={toggleMenu}></div>
       )}

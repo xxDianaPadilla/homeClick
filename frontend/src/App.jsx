@@ -1,11 +1,11 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext'; 
+import { AuthProvider } from './context/AuthContext';
 import { SavedPropertiesProvider } from './context/SavedPropertiesContext';
-import { CartProvider } from './context/CartContext'; // Importar el CartProvider
-import ProtectedRoute from './components/ProtectedRoute'; 
-import { Toaster } from 'react-hot-toast'; // Importar Toaster para las notificaciones
+import { CartProvider } from './context/CartContext'; 
+import ProtectedRoute from './components/ProtectedRoute';
+import { Toaster } from 'react-hot-toast'; 
 
 import InicioSesion from './pages/InicioSesion';
 import RecuperarContraseña from './pages/RecuperarContrasena';
@@ -29,158 +29,114 @@ import Categorias from './pages/Categorias';
 
 function App() {
   return (
-    // Envolver toda la aplicación con AuthProvider y CartProvider
     <AuthProvider>
       <SavedPropertiesProvider>
-      <CartProvider>
-        <Router>
-          {/* Agregar Toaster para mostrar notificaciones en toda la app */}
-          <Toaster 
-            position="top-right"
-            toastOptions={{
-              duration: 3000,
-              style: {
-                background: '#363636',
-                color: '#fff',
-              },
-              success: {
+        <CartProvider>
+          <Router>
+            <Toaster
+              position="top-right"
+              toastOptions={{
                 duration: 3000,
                 style: {
-                  background: '#4ade80',
+                  background: '#363636',
                   color: '#fff',
                 },
-              },
-              error: {
-                duration: 4000,
-                style: {
-                  background: '#ef4444',
-                  color: '#fff',
+                success: {
+                  duration: 3000,
+                  style: {
+                    background: '#4ade80',
+                    color: '#fff',
+                  },
                 },
-              },
-            }}
-          />
-          
-          <Routes>
-            <Route path='/' element={<Navigate to="/inicio-sesion" replace />} />
-            
-            <Route path='/inicio-sesion' element={<InicioSesion />} />
-            <Route path='/registro' element={<Registro />} />
-            <Route path='/recuperarContrasena' element={<RecuperarContraseña />} />
-            <Route path='/passwordCode' element={<CodigoVerificacion />} />
-            <Route path='/changePassword' element={<CambiarContrasena />} />
-            <Route path='/changedPassword' element={<ContrasenaCambiada />} />
-            
-            <Route 
-              path='/dashboard' 
-              element={
-                <ProtectedRoute requiredUserType="admin">
-                  <Dashboard />
-                </ProtectedRoute>
-              } 
+                error: {
+                  duration: 4000,
+                  style: {
+                    background: '#ef4444',
+                    color: '#fff',
+                  },
+                },
+              }}
             />
-            <Route 
-              path='/propertyAdmin' 
-              element={
-                <ProtectedRoute requiredUserType="admin">
-                  <PropertyAdmin />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path='/propertyViewAdmin' 
-              element={
-                <ProtectedRoute requiredUserType="admin">
-                  <PropertyViewAdmin />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path='/listadoVentas' 
-              element={
-                <ProtectedRoute requiredUserType="admin">
-                  <ListadoVentas />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path='/categorias' 
-              element={
-                <ProtectedRoute requiredUserType="admin">
-                  <Categorias />
-                </ProtectedRoute>
-              } 
-            />
-            
-            <Route 
-              path='/landingPage' 
-              element={
-                <ProtectedRoute requiredUserType="Customer">
-                  <LandingPage />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path='/propertyCategories' 
-              element={
-                <ProtectedRoute requiredUserType="Customer">
-                  <PropertyCategories />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path='/propertyView' 
-              element={
-                <ProtectedRoute requiredUserType="Customer">
-                  <PropertyView />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path='/shoppingCart' 
-              element={
-                <ProtectedRoute requiredUserType="Customer">
-                  <ShoppingCart />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path='/savedProperties' 
-              element={
-                <ProtectedRoute requiredUserType="Customer">
-                  <SavedProperties />
-                </ProtectedRoute>
-              } 
-            />
-            
-            <Route 
-              path='/aboutUs' 
-              element={
-                <ProtectedRoute>
-                  <AboutUs />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path='/privacyPolicies' 
-              element={
-                <ProtectedRoute>
-                  <PrivacyPolicies />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path='/termsConditions' 
-              element={
-                <ProtectedRoute>
-                  <TermsConditions />
-                </ProtectedRoute>
-              } 
-            />
-            
-            <Route path='*' element={<Navigate to="/inicio-sesion" replace />} />
-          </Routes>
-        </Router>
-      </CartProvider>
+
+            <Routes>
+              <Route path='/' element={<Navigate to="/landingPage" replace />} />
+
+              <Route path='/inicio-sesion' element={<InicioSesion />} />
+              <Route path='/registro' element={<Registro />} />
+              <Route path='/recuperarContrasena' element={<RecuperarContraseña />} />
+              <Route path='/passwordCode' element={<CodigoVerificacion />} />
+              <Route path='/changePassword' element={<CambiarContrasena />} />
+              <Route path='/changedPassword' element={<ContrasenaCambiada />} />
+
+              <Route
+                path='/dashboard'
+                element={
+                  <ProtectedRoute requiredUserType="admin">
+                    <Dashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path='/propertyAdmin'
+                element={
+                  <ProtectedRoute requiredUserType="admin">
+                    <PropertyAdmin />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path='/propertyViewAdmin'
+                element={
+                  <ProtectedRoute requiredUserType="admin">
+                    <PropertyViewAdmin />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path='/listadoVentas'
+                element={
+                  <ProtectedRoute requiredUserType="admin">
+                    <ListadoVentas />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path='/categorias'
+                element={
+                  <ProtectedRoute requiredUserType="admin">
+                    <Categorias />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route path='/landingPage' element={<LandingPage />} />
+              <Route path='/propertyCategories' element={<PropertyCategories />} />
+              <Route path='/propertyView' element={<PropertyView />} />
+              <Route path='/aboutUs' element={<AboutUs />} />
+              <Route path='/privacyPolicies' element={<PrivacyPolicies />} />
+              <Route path='/termsConditions' element={<TermsConditions />} />
+
+              <Route
+                path='/shoppingCart'
+                element={
+                  <ProtectedRoute requiredUserType="Customer">
+                    <ShoppingCart />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path='/savedProperties'
+                element={
+                  <ProtectedRoute requiredUserType="Customer">
+                    <SavedProperties />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route path='*' element={<Navigate to="/inicio-sesion" replace />} />
+            </Routes>
+          </Router>
+        </CartProvider>
       </SavedPropertiesProvider>
     </AuthProvider>
   );

@@ -1,17 +1,14 @@
-import React, { useContext, useState, useRef, useEffect } from "react"; // Importa la biblioteca React para la creación de componentes.
-import '../styles/UserInfoCard.css'; // Importa los estilos CSS específicos para este componente.
-import closeIcon from '../assets/image10.png'; // Importa la imagen del icono de cerrar.
-import profileIcon from '../assets/image9.png'; // Importa la imagen del icono de perfil de usuario por defecto.
-import cameraIcon from '../assets/image11.png'; // Importa la imagen del icono de la cámara para cambiar la foto de perfil.
-import { useLocation, useNavigate } from 'react-router-dom'; // Importa hooks para acceder a la ubicación actual y para la navegación.
+import React, { useContext, useState, useRef, useEffect } from "react"; 
+import '../styles/UserInfoCard.css'; 
+import closeIcon from '../assets/image10.png'; 
+import profileIcon from '../assets/image9.png'; 
+import cameraIcon from '../assets/image11.png'; 
+import { useLocation, useNavigate } from 'react-router-dom'; 
 import { useAuth } from '../context/AuthContext';
 import useCustomerInfo from '../components/Customers/Hooks/useCustomerInfo';
 
-// Define el componente funcional UserInfoCard, que recibe dos props: 'isOpen' (booleano para controlar la visibilidad) y 'onClose' (función para cerrar la tarjeta).
 const UserInfoCard = ({ isOpen, onClose }) => {
-  // Hook para acceder al objeto de ubicación actual (no se utiliza directamente en este componente, pero podría usarse en el futuro).
   const location = useLocation();
-  // Hook para obtener la función 'navigate' que permite la navegación programática entre rutas.
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
 
@@ -68,12 +65,17 @@ const UserInfoCard = ({ isOpen, onClose }) => {
   const handleLogout = async () => {
     const result = await logout();
     if (result.success) {
-      // Logout exitoso
       console.log('Sesión cerrada correctamente');
+      onClose(); 
+      navigate('/inicio-sesion'); 
     } else {
-      // Manejar error si es necesario
       console.error('Error al cerrar sesión:', result.error);
     }
+  };
+
+  const handleLoginClick = () => {
+    onClose(); 
+    navigate('/inicio-sesion'); 
   };
 
   const handleInputChange = (e) => {
@@ -191,8 +193,43 @@ const UserInfoCard = ({ isOpen, onClose }) => {
     }
   };
 
-  // Si la prop 'isOpen' es falsa, el componente devuelve 'null', lo que significa que no se renderiza nada.
   if (!isOpen) return null;
+
+  if (!isAuthenticated) {
+    return (
+      <div className="user-info-overlay8">
+        <div className="user-info-card8">
+          <div className="card-header8">
+            <button className="close-button8" onClick={onClose}>
+              <img src={closeIcon} alt="Cerrar" />
+            </button>
+          </div>
+
+          <div className="profile-section8">
+            <div className="profile-image-container8">
+              <div className="profile-image8">
+                <img
+                  src={profileIcon}
+                  alt="Perfil"
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                />
+              </div>
+            </div>
+            <h3 className="profile-name8">¡Hola!</h3>
+            <p style={{ textAlign: 'center', color: '#666', marginBottom: '20px' }}>
+              Inicia sesión para acceder a tu perfil
+            </p>
+          </div>
+
+          <div className="button-section8">
+            <button className="update-profile-btn8" onClick={handleLoginClick}>
+              Iniciar sesión
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   const isLoading = authLoading || (isCustomer && customerLoading);
   const isAdmin = user?.userType === 'admin';
