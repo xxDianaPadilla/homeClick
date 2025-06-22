@@ -9,7 +9,7 @@ import registerCustomersRoutes from "./src/routes/registerCustomers.js";
 import loginRoutes from "./src/routes/login.js";
 import logOutRoutes from './src/routes/logout.js';
 import authRoutes from './src/routes/auth.js';
-import recoveryPasswordRoutes from './src/routes/recoveryPassword.js'; // Ruta de recuperación añadida
+import recoveryPasswordRoutes from './src/routes/recoveryPassword.js'; 
 import contactRoutes from './src/routes/contact.js';
 import uploadRoutes from './src/routes/upload.js';
 import cookieParser from 'cookie-parser';
@@ -42,7 +42,7 @@ app.use("/api/registerCustomers", registerCustomersRoutes);
 app.use("/api/login", loginRoutes);
 app.use("/api/logout", logOutRoutes);
 app.use("/api/auth", authRoutes);
-app.use("/api/recovery-password", recoveryPasswordRoutes); // Ruta de recuperación añadida
+app.use("/api/recovery-password", recoveryPasswordRoutes); 
 app.use("/api/contact", contactRoutes);
 app.use("/api", uploadRoutes);
 

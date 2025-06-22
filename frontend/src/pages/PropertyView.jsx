@@ -19,6 +19,7 @@ import { toast } from 'react-hot-toast';
 import ConfirmationModal from '../components/ConfirmationModal';
 import useCustomerInfo from "../components/Customers/Hooks/useCustomerInfo";
 import { useAuth } from "../context/AuthContext";
+import ReviewsSection from '../components/ReviewSection';
 
 const PropertyView = () => {
   const location = useLocation();
@@ -395,6 +396,18 @@ const PropertyView = () => {
             </div>
           )}
         </div>
+
+        <div className="property-reviews-section3">
+          <ReviewsSection
+            propertyId={propertyId}
+            propertyName={propertyData.name}
+            isAuthenticated={isAuthenticated}
+            customerInfo={customerInfo}
+            isCustomer={isCustomer}
+          />
+        </div>
+
+        <br />
 
         <div className="property-location-section3">
           <div className="location-header">

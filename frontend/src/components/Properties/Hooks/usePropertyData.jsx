@@ -7,7 +7,7 @@ export const usePropertyData = (propertyId) => {
     const [propertyData, setPropertyData] = useState({
         name: '',
         price: '',
-        originalPrice: '', // Agregar precio original para el carrito
+        originalPrice: '', 
         location: '',
         description: '',
         details: [],
@@ -61,10 +61,8 @@ export const usePropertyData = (propertyId) => {
                     }
                 }
                 
-                // Extraer el precio numérico para el carrito
                 let originalPrice = 0;
                 if (property.price) {
-                    // Si el precio es un string, extraer el número
                     if (typeof property.price === 'string') {
                         originalPrice = parseFloat(property.price.replace(/[^0-9.-]+/g, "")) || 0;
                     } else if (typeof property.price === 'number') {
@@ -77,11 +75,10 @@ export const usePropertyData = (propertyId) => {
                     
                     name: property.name || 'Propiedad sin nombre',
                     price: property.price ? `$${originalPrice.toLocaleString()}` : 'Precio no disponible',
-                    originalPrice: originalPrice, // Guardar el precio numérico original
+                    originalPrice: originalPrice, 
                     location: property.location || 'Ubicación no especificada',
                     description: property.description || 'Sin descripción disponible',
                     
-                    // Extraer información numérica para el carrito
                     rooms: property.rooms || 0,
                     bathrooms: property.bathrooms || 0,
                     lotSize: property.lotSize || 'No especificado',
@@ -101,7 +98,6 @@ export const usePropertyData = (propertyId) => {
 
                     coordinates: coordinates,
                     
-                    // Mantener las propiedades originales para referencia
                     originalName: property.name,
                     originalLocation: property.location,
                     originalDescription: property.description
