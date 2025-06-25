@@ -23,6 +23,14 @@ const shoppingCartSchema = new Schema({
                 required: true,
                 min: [0, "El total no puede ser negativo"],
             },
+            purchased: {
+                type: Boolean,
+                default: false,
+            },
+            purchaseDate: {
+                type: Date,
+                default: null,
+            }
         },
     ],
     total: {

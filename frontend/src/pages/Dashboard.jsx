@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import '../styles/Dashboard.css'; // Importa el archivo CSS para estilos específicos del Dashboard
-import sol from '../assets/sol.png';
+import '../styles/Dashboard.css'; 
 import imgConfig from '../assets/imgConfig.png';
 import imgShop from '../assets/imgShop.png';
 import payment from '../assets/payment.png';
-import NavBarAdmin from '../components/NavBarAdmin'; // Importa el componente NavBarAdmin
+import NavBarAdmin from '../components/NavBarAdmin'; 
 import AddPropertyCard from '../components/AddPropertyCard';
 import useEditProperty from "../components/Properties/Hooks/useEditProperty";
 import HomeClickModal from '../components/HomeClickModal';
@@ -118,7 +117,6 @@ const Dashboard = () => {
           <div className="greeting-text">
             <p className="greeting-hello">
               ¡Bienvenido Administrador!
-              <img src={sol} alt="Icono del sol" className="sun-icon" />
             </p>
             <p className="greeting-date">
               {obtenerFechaActual()}
@@ -173,9 +171,7 @@ const Dashboard = () => {
         </section>
       </main>
 
-      {/* Bottom content */}
       <section className="dashboard-bottom">
-        {/* Left description box */}
         <article className="dashboard-box description-box">
           <p className="box-title">
             Descripción

@@ -30,5 +30,10 @@ export const config = {
         cloud_name: process.env.CLOUD_NAME,
         cloudinary_api_key: process.env.CLOUDINARY_API_KEY,
         cloudinary_api_secret: process.env.CLOUDINARY_API_SECRET
+    },
+    wompi: {
+        app_id_wompi: process.env.APP_ID_WOMPI,
+        api_secret_wompi: process.env.API_SECRET_WOMPI,
+        access_token_wompi: process.env.ACCESS_TOKEN_WOMPI
     }
 };

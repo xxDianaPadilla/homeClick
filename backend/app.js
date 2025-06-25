@@ -12,6 +12,7 @@ import authRoutes from './src/routes/auth.js';
 import recoveryPasswordRoutes from './src/routes/recoveryPassword.js'; 
 import contactRoutes from './src/routes/contact.js';
 import uploadRoutes from './src/routes/upload.js';
+import paymentRoutes from './src/routes/payment.js';
 import cookieParser from 'cookie-parser';
 import cors from "cors";
 
@@ -45,5 +46,6 @@ app.use("/api/auth", authRoutes);
 app.use("/api/recovery-password", recoveryPasswordRoutes); 
 app.use("/api/contact", contactRoutes);
 app.use("/api", uploadRoutes);
+app.use("/api/payment", paymentRoutes);
 
 export default app;
