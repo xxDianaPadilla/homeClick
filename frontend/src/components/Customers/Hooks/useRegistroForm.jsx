@@ -1,11 +1,21 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import useEmailValidation from "./useEmailValidation"; // Importar el nuevo hook
 
 const useRegistroForm = () => {
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = React.useState(false);
     const [message, setMessage] = React.useState("");
+
+    // Hook para validación de email duplicado
+    const { 
+        checkEmailExists, 
+        clearEmailValidation, 
+        isEmailDuplicate, 
+        emailError,
+        isCheckingEmail 
+    } = useEmailValidation();
 
     const {
         register,
@@ -14,7 +24,9 @@ const useRegistroForm = () => {
         watch,
         reset,
         setValue,
-        trigger
+        trigger,
+        setError,
+        clearErrors
     } = useForm({
         mode: "onChange", 
         defaultValues: {
@@ -33,6 +45,7 @@ const useRegistroForm = () => {
     });
 
     const watchedPassword = watch("password", "");
+    const watchedEmail = watch("email", "");
 
     const validatePassword = (password) => {
         const minLength = password.length >= 8;
@@ -49,6 +62,7 @@ const useRegistroForm = () => {
         };
     };
 
+    // Validaciones actualizadas con verificación de email duplicado
     const validationRules = {
         firstName: {
             required: "El nombre es requerido",
@@ -105,6 +119,18 @@ const useRegistroForm = () => {
             pattern: {
                 value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
                 message: "El formato del correo electrónico es inválido"
+            },
+            // Validación personalizada para verificar emails duplicados
+            validate: async (value) => {
+                if (!value || !value.trim()) return true;
+                
+                // Verificar formato antes de hacer la consulta
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(value)) return true;
+                
+                // Verificar si el email ya existe
+                const emailExists = await checkEmailExists(value);
+                return !emailExists || "Este correo electrónico ya está registrado";
             }
         },
         birthDay: {
@@ -148,6 +174,7 @@ const useRegistroForm = () => {
     const resetForm = () => {
         reset();
         setMessage('');
+        clearEmailValidation(); // Limpiar validación de email al resetear
     };
 
     const submitForm = async (data) => {
@@ -155,6 +182,17 @@ const useRegistroForm = () => {
         setMessage("");
 
         try {
+            // Verificación final de email antes del envío
+            const emailExists = await checkEmailExists(data.email);
+            if (emailExists) {
+                setError("email", {
+                    type: "validate",
+                    message: "Este correo electrónico ya está registrado"
+                });
+                setIsLoading(false);
+                return;
+            }
+
             // Construir la fecha de nacimiento
             const birthDateString = `${data.birthYear}-${data.birthMonth.toString().padStart(2, '0')}-${data.birthDay.toString().padStart(2, '0')}`;
 
@@ -186,7 +224,15 @@ const useRegistroForm = () => {
                 resetForm();
                 // navigate("/inicio-sesion"); // Descomenta si quieres redirigir automáticamente
             } else {
-                setMessage(responseData.message || "Error en el registro");
+                // Manejar errores específicos del backend
+                if (responseData.message && responseData.message.includes("already exists")) {
+                    setError("email", {
+                        type: "validate",
+                        message: "Este correo electrónico ya está registrado"
+                    });
+                } else {
+                    setMessage(responseData.message || "Error en el registro");
+                }
             }
         } catch (error) {
             console.error("Error: ", error);
@@ -196,18 +242,30 @@ const useRegistroForm = () => {
         }
     };
 
+    // Función para manejar cambios en el email y limpiar validaciones previas
+    const handleEmailChange = () => {
+        clearErrors("email");
+        clearEmailValidation();
+    };
+
     return {
         register,
         handleSubmit: handleSubmit(submitForm),
         errors,
-        isLoading,
+        isLoading: isLoading || isCheckingEmail, // Incluir estado de verificación de email
         message,
         resetForm,
         validatePassword,
         watchedPassword,
+        watchedEmail,
         setValue,
         trigger,
-        validationRules
+        validationRules,
+        // Nuevas funciones y estados para email
+        handleEmailChange,
+        isEmailDuplicate,
+        emailError,
+        isCheckingEmail
     };
 };
 

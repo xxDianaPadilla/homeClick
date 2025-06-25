@@ -17,9 +17,12 @@ function Registro() {
     message,
     validatePassword,
     watchedPassword,
+    watchedEmail, // Nuevo: email que se está observando
     setValue,
     trigger,
-    validationRules
+    validationRules,
+    handleEmailChange, // Nuevo: función para manejar cambios en email
+    isCheckingEmail  // Nuevo: estado de verificación de email
   } = useRegistroForm();
 
   const passwordValidation = validatePassword(watchedPassword);
@@ -50,6 +53,11 @@ function Registro() {
 
   const handlePasswordBlur = () => {
     setIsPasswordFocused(false);
+  };
+
+  // Nuevo: Función para manejar el enfoque del campo email
+  const handleEmailFocus = () => {
+    handleEmailChange();
   };
 
   return (
@@ -109,7 +117,8 @@ function Registro() {
                 name="email"
                 validationRules={validationRules.email}
                 error={errors.email?.message}
-                disabled={isLoading}
+                disabled={isLoading || isCheckingEmail} // Nuevo: deshabilitar mientras verifica
+                onFocus={handleEmailFocus} // Nuevo: limpiar validaciones al enfocar
               />
 
               <EnhancedInput
@@ -306,13 +315,18 @@ function Registro() {
             <button
               type="submit"
               className="register-button"
-              disabled={isLoading}
+              disabled={isLoading || isCheckingEmail} // Nuevo: deshabilitar mientras verifica email
             >
               <div className="button-content">
                 {isLoading ? (
                   <>
                     <div className="loading-spinner-enhanced"></div>
                     Creando tu cuenta...
+                  </>
+                ) : isCheckingEmail ? ( // Nuevo: mostrar estado de verificación de email
+                  <>
+                    <div className="loading-spinner-enhanced"></div>
+                    Verificando email...
                   </>
                 ) : (
                   <>
