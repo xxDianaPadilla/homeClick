@@ -55,11 +55,11 @@ const PropertyView = () => {
   const { isSaved, toggleSaved } = useSavedProperties(propertyId);
   const { addToCart, isInCart } = useCart();
 
-  const defaultCenter = [13.6929, -89.2182]; 
+  const defaultCenter = [13.6929, -89.2182];
   const mapCenter = useMemo(() => {
     return propertyData?.coordinates || defaultCenter;
   }, [propertyData?.coordinates]);
-  
+
   const zoom = useMemo(() => {
     return propertyData?.coordinates ? 15 : 12;
   }, [propertyData?.coordinates]);
@@ -92,10 +92,10 @@ const PropertyView = () => {
     if (!isAuthenticated) {
       toast.error(`Debes iniciar sesión para ${action}`);
       sessionStorage.setItem('redirectAfterLogin', location.pathname);
-      navigate('/inicio-sesion', { 
-        state: { 
+      navigate('/inicio-sesion', {
+        state: {
           from: location.pathname,
-          propertyId: propertyId 
+          propertyId: propertyId
         }
       });
       return false;
@@ -114,12 +114,12 @@ const PropertyView = () => {
     try {
       const wasAdded = toggleSaved(propertyData);
       setShowSaveMessage(true);
-      
+
       setTimeout(() => setShowSaveMessage(false), 2000);
 
       const message = wasAdded ? 'Propiedad guardada exitosamente' : 'Propiedad removida de guardados';
       toast.success(message);
-      
+
       console.log(`${wasAdded ? 'Guardada' : 'Removida'}: ${propertyData.name}`);
     } catch (error) {
       console.error('Error saving property:', error);
@@ -134,7 +134,7 @@ const PropertyView = () => {
 
   const handleConfirmationResponse = useCallback((continueShopping) => {
     setShowConfirmationModal(false);
-    
+
     if (continueShopping) {
       toast.success('Propiedad agregada al carrito exitosamente');
     } else {
@@ -142,7 +142,89 @@ const PropertyView = () => {
     }
   }, [navigate]);
 
-  const handleShoppingCartClick = useCallback(() => {
+  const addToCartDB = useCallback(async (propertyData) => {
+    try {
+      const customerId = user?.id;
+
+      if (!customerId) {
+        toast.error('Error: No se pudo indentificar el usuario');
+        return false;
+      }
+
+      let propertyPrice = propertyData.price;
+      if (typeof propertyPrice === 'string') {
+        propertyPrice = parseFloat(propertyPrice.replace(/[$,]/g, ''));
+      }
+
+      const cartItem = {
+        customerId: customerId,
+        propertyId: propertyId,
+        quantity: 1,
+        subtotal: propertyPrice
+      };
+
+      console.log('Enviando al carrito: ', cartItem);
+
+      const response = await fetch('http://localhost:4000/api/shoppingCart/add-item', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify(cartItem)
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        console.log('Item agregado a la BD exitosamente: ', result);
+        return true;
+      } else {
+        console.error('Error del servidor: ', result);
+        toast.error(result.message || 'Error al agregar al carrito');
+        return false;
+      }
+    } catch (error) {
+      console.error('Error agregando al carrito: ', error);
+      toast.error('Error de conexión al agregar al carrito');
+      return false;
+    }
+  }, [user?.id, propertyId]);
+
+  const checkIfInCartDB = useCallback(async () => {
+    try {
+      const customerId = user?.id;
+
+      if (!customerId) {
+        return false;
+      }
+
+      const response = await fetch(`http://localhost:4000/api/shoppingCart/customer/${customerId}`, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+
+      if (response.ok) {
+        const cartData = await response.json();
+
+        const isInCart = cartData.items?.some(item =>
+          item.propertyId._id === propertyId || item.propertyId === propertyId
+        );
+
+        return isInCart;
+      }
+
+      return false;
+    } catch (error) {
+      console.error('Error verificando carrito: ', error);
+      return false;
+    }
+  }, [user?.id, propertyId]);
+
+  const handleShoppingCartClick = useCallback(async () => {
     if (!requiresAuth('agregar al carrito')) return;
 
     if (!propertyData) {
@@ -150,33 +232,43 @@ const PropertyView = () => {
       return;
     }
 
-    if (isInCart(propertyId)) {
+    const alreadyInCart = await checkIfInCartDB();
+
+    if (alreadyInCart) {
       toast.success('Esta propiedad ya está en tu carrito');
-      goToCartDirectly();
+      navigate('/shoppingCart');
       return;
     }
 
     try {
-      const propertyToAdd = {
-        id: propertyId,
-        name: propertyData.name,
-        originalPrice: propertyData.originalPrice,
-        price: propertyData.price,
-        description: propertyData.description,
-        thumbnails: thumbnails,
-        lotSize: propertyData.lotSize,
-        rooms: propertyData.rooms,
-        bathrooms: propertyData.bathrooms,
-        location: propertyData.location
-      };
+      const loadingToast = toast.loading('Agregando al carrito...');
 
-      addToCart(propertyToAdd);
-      setShowConfirmationModal(true);
+      const success = await addToCartDB(propertyData);
+
+      toast.dismiss(loadingToast);
+
+      if (success) {
+        const propertyToAdd = {
+          id: propertyId,
+          name: propertyData.name,
+          originalPrice: propertyData.originalPrice,
+          price: propertyData.price,
+          description: propertyData.description,
+          thumbnails: thumbnails,
+          lotSize: propertyData.lotSize,
+          rooms: propertyData.rooms,
+          bathrooms: propertyData.bathrooms,
+          location: propertyData.location
+        };
+
+        addToCart(propertyToAdd);
+        setShowConfirmationModal(true);
+      }
     } catch (error) {
-      console.error('Error adding to cart:', error);
+      console.error('Error adding to cart: ', error);
       toast.error('Error al agregar al carrito');
     }
-  }, [requiresAuth, propertyData, propertyId, isInCart, goToCartDirectly, addToCart, thumbnails]);
+  }, [requiresAuth, propertyData, propertyId, checkIfInCartDB, addToCartDB, addToCart, thumbnails, navigate]);
 
   const closeContactForm = useCallback(() => {
     setShowContactForm(false);
@@ -189,21 +281,21 @@ const PropertyView = () => {
     }
 
     const isActuallyCustomer = user?.userType === 'Customer' || user?.userType === 'customer';
-    
+
     if (isAuthenticated && !isActuallyCustomer) {
       toast.error(`Solo los clientes pueden contactar propietarios. Tu tipo: ${user?.userType}`);
       return;
     }
 
     setShowContactForm(true);
-    
+
     if (isAuthenticated && isActuallyCustomer && userInfo) {
       toast.success('Formulario pre-llenado con tu información', { duration: 2000 });
     } else if (isAuthenticated) {
       toast('Formulario de contacto abierto', { duration: 1500 });
     } else {
-      toast('Puedes contactar sin iniciar sesión, pero tendrás que llenar todos los datos manualmente', { 
-        duration: 3000 
+      toast('Puedes contactar sin iniciar sesión, pero tendrás que llenar todos los datos manualmente', {
+        duration: 3000
       });
     }
   }, [isAuthenticated, customerLoading, user?.userType, userInfo]);
@@ -233,8 +325,20 @@ const PropertyView = () => {
     if (!isAuthenticated) {
       return 'Iniciar sesión para agregar';
     }
-    return isInCart(propertyId) ? 'Ver en carrito' : 'Agregar al carrito';
-  }, [isAuthenticated, isInCart, propertyId]);
+    return 'Agregar al carrito';
+  }, [isAuthenticated]);
+
+  useEffect(() => {
+    const syncCartWithDB = async () => {
+      if(isAuthenticated && user?.id && propertyId){
+        const inCart = await checkIfInCartDB();
+
+        console.log(`Propiedad ${propertyId} está en carrito:`, inCart);
+      }
+    };
+
+    syncCartWithDB();
+  }, [isAuthenticated, user?.id, propertyId, checkIfInCartDB]);
 
   if (error) {
     return (
@@ -244,7 +348,7 @@ const PropertyView = () => {
           <div className="error-message">
             <h2>Error al cargar la propiedad</h2>
             <p>{error.message || 'Ha ocurrido un error inesperado'}</p>
-            <button 
+            <button
               onClick={() => navigate('/propertyCategories')}
               className="btn-primary"
             >
@@ -298,9 +402,9 @@ const PropertyView = () => {
 
           <div className="main-content">
             <div className="main-image-container">
-              <img 
-                src={mainImage} 
-                alt={propertyData.name} 
+              <img
+                src={mainImage}
+                alt={propertyData.name}
                 className="main-image"
                 loading="eager"
               />
@@ -333,22 +437,22 @@ const PropertyView = () => {
               {isAuthenticated && user?.userType === 'Customer' && userInfo && (
                 <div className="customer-info-display">
                   <small className="customer-greeting">
-                    👋 Hola {userInfo.firstName || userInfo.name || 'Usuario'}, 
+                    👋 Hola {userInfo.firstName || userInfo.name || 'Usuario'},
                     tu información se llenará automáticamente en el formulario
                   </small>
                 </div>
               )}
 
               <div className="action-buttons3">
-                <button 
-                  className="btn-contact3" 
+                <button
+                  className="btn-contact3"
                   onClick={handleContactOwner}
                   disabled={isAuthenticated && customerLoading}
                 >
                   {getContactButtonText()}
                 </button>
-                <button 
-                  className="btn-save3" 
+                <button
+                  className="btn-save3"
                   onClick={handleShoppingCartClick}
                   disabled={loading}
                 >

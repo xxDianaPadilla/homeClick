@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import Navbar from '../components/Navbar';
 import Footer from "../components/Footer";
 import "../styles/ShoppingCart.css";
-import house1 from "../assets/image5.png";
-import house2 from "../assets/image7.png";
 import visaIcon from "../assets/image49.png";
 import masterCardIcon from "../assets/image50.png";
 import payPalIcon from "../assets/image51.png";
@@ -13,32 +11,136 @@ import ilustrativePurposesIcon from "../assets/image55.png";
 import creditCardImage from "../assets/image56.png";
 import creditCardIcon from "../assets/image57.png";
 import ShoppingCartCards from "../components/ShoppingCartCards";
-import { useCart } from '../context/CartContext'; // Importar el hook del carrito
-import { useAuth } from '../context/AuthContext'; // Importar el hook de autenticación
-import { toast } from 'react-hot-toast'; // Para mostrar notificaciones
+import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
+import { toast } from 'react-hot-toast';
 
 const ShoppingCart = () => {
-    // Usar el contexto del carrito para obtener los items y funciones
-    const { cartItems, total, removeFromCart, getCartItemsCount, currentUserId } = useCart();
-    
-    // Usar el contexto de autenticación para obtener datos del usuario
+    const {removeFromCart} = useCart();
     const { user, userInfo } = useAuth();
-    
-    // Estado para almacenar los datos del usuario customer
     const [customerData, setCustomerData] = useState(null);
     const [loadingCustomer, setLoadingCustomer] = useState(false);
 
-    // Efecto para obtener los datos del customer si el usuario no es admin
+    const [cartItems, setCartItems] = useState([]);
+    const [total, setTotal] = useState(0);
+    const [loadingCart, setLoadingCart] = useState(true);
+
+    const fetchCartFromDB = async () => {
+        if(!user?.id){
+            setCartItems([]);
+            setTotal(0);
+            setLoadingCart(false);
+            return;
+        }
+
+        try {
+            setLoadingCart(true);
+            const response = await fetch(`http://localhost:4000/api/shoppingCart/customer/${user.id}`, {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if(response.ok){
+                const cartData = await response.json();
+                console.log('Carrito obtenido de BD: ', cartData);
+
+                const transformedItems = cartData.items?.map(item => ({
+                    id: item.propertyId._id || item.propertyId,
+                    name: item.propertyId.name || 'Propiedad sin nombre',
+                    price: item.subtotal / item.quantity,
+                    description: item.propertyId.description || 'Sin descripción',
+                    area: item.propertyId.lotSize || 'No especificado',
+                    bedrooms: item.propertyId.rooms || 'No especificado',
+                    bathrooms: item.propertyId.bathrooms || 'No especificado',
+                    location: item.propertyId.location || 'Ubicación no especificada',
+                    quantity: item.quantity,
+                    subtotal: item.subtotal,
+                    thumbnails: (() => {
+                        const images = item.propertyId.images;
+                        if(!images || !Array(images) || images.length === 0){
+                            console.log('No images found for property: ', item.propertyId.name);
+                            return null;
+                        }
+                        
+                        const firstImage = images[0];
+                        if(firstImage && firstImage.image){
+                            console.log('Image found: ', firstImage.image);
+                            return firstImage.image;
+                        }
+                        console.log('Sigle image found: ', item.propertyId.name);;
+                        return images;
+                    })(),
+                    showContactAgent: true
+                })) || [];
+
+                setCartItems(transformedItems);
+                setTotal(cartData.total || 0);
+            }else{
+                console.error('Error obteniendo carrito: ', response.status);
+                setCartItems([]);
+                setTotal(0);
+            }
+        } catch (error) {
+            console.error('Error fetching cart: ', error);
+            toast.error('Error al cargar el carrito');
+            setCartItems([]);
+            setTotal(0);
+        }finally{
+            setLoadingCart(false);
+        }
+    };
+
+    const removeFromCartDB = async (propertyId) => {
+        try {
+            const response = await fetch('http://localhost:4000/api/shoppingCart/remove-item', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include',
+                body: JSON.stringify({
+                    customerId: user.id,
+                    propertyId: propertyId
+                })
+            });
+
+            if(response.ok){
+                const result = await response.json();
+                console.log('Item removudo de BD: ', result);
+
+                await fetchCartFromDB();
+
+                return true;
+            }else{
+                const error = await response.json();
+                console.error('Error removiendo item: ', error);
+                toast.error(error.message || 'Error al remover del carrito');
+                return false;
+            }
+        } catch (error) {
+            console.error('Error removing from cart: ', error);
+            toast.error('Error de conexión al remover del carrito');
+            return false;
+        }
+    };
+
+    useEffect(() => {
+        fetchCartFromDB();
+    }, [user?.id]);
+
     useEffect(() => {
         const fetchCustomerData = async () => {
-            // Solo buscar datos del customer si es un usuario Customer (no admin)
+
             if (user && user.userType === 'Customer' && user.id && user.id !== 'admin') {
                 setLoadingCustomer(true);
                 try {
                     console.log('Fetching customer data for ID:', user.id);
                     const response = await fetch(`http://localhost:4000/api/customers/${user.id}`, {
                         method: 'GET',
-                        credentials: 'include', // Incluir cookies de autenticación
+                        credentials: 'include',
                         headers: {
                             'Content-Type': 'application/json',
                         },
@@ -50,7 +152,6 @@ const ShoppingCart = () => {
                         setCustomerData(data);
                     } else {
                         console.error('Error fetching customer data:', response.status);
-                        // Si hay error, usar datos por defecto o del userInfo
                         setCustomerData(null);
                     }
                 } catch (error) {
@@ -65,13 +166,19 @@ const ShoppingCart = () => {
         fetchCustomerData();
     }, [user]);
 
-    // Función para manejar la eliminación de items del carrito
-    const handleRemoveItem = (id) => {
-        removeFromCart(id);
-        toast.success('Propiedad eliminada del carrito');
+    const handleRemoveItem = async (id) => {
+        const loadingToast = toast.loading('Removiendo del carrito...');
+
+        const success = await removeFromCartDB(id);
+
+        toast.dismiss(loadingToast);
+
+        if(success){
+            removeFromCart(id);
+            toast.success('Propiedad eliminada del carrito');
+        }
     };
 
-    // Calcular el total formateado
     const formatPrice = (price) => {
         return new Intl.NumberFormat('en-US', {
             style: 'currency',
@@ -79,9 +186,7 @@ const ShoppingCart = () => {
         }).format(price);
     };
 
-    // Función para obtener los datos del cliente a mostrar
     const getClientDisplayData = () => {
-        // Si es admin, mostrar datos del admin
         if (user && user.userType === 'admin') {
             return {
                 name: userInfo?.name || 'Administrador',
@@ -89,8 +194,7 @@ const ShoppingCart = () => {
                 phone: userInfo?.phone || '555-0000-0000'
             };
         }
-        
-        // Si es customer y tenemos datos del customer
+
         if (customerData) {
             return {
                 name: `${customerData.firstName} ${customerData.lastName}`,
@@ -98,8 +202,7 @@ const ShoppingCart = () => {
                 phone: customerData.phone
             };
         }
-        
-        // Si es customer pero aún no cargamos los datos o hay error
+
         if (loadingCustomer) {
             return {
                 name: 'Cargando...',
@@ -107,8 +210,7 @@ const ShoppingCart = () => {
                 phone: 'Cargando...'
             };
         }
-        
-        // Fallback usando userInfo si está disponible
+
         if (userInfo) {
             return {
                 name: userInfo.name || 'Usuario',
@@ -116,8 +218,7 @@ const ShoppingCart = () => {
                 phone: userInfo.phone || '555-0000-0000'
             };
         }
-        
-        // Datos por defecto si no hay información disponible
+
         return {
             name: 'Usuario no identificado',
             email: 'usuario@homeclick.com',
@@ -126,6 +227,7 @@ const ShoppingCart = () => {
     };
 
     const clientData = getClientDisplayData();
+    const getCartItemsCount = () => cartItems.reduce((total, item) => total + item.quantity, 0);
 
     return (
         <>
@@ -137,24 +239,20 @@ const ShoppingCart = () => {
                     <div className="cart-summary">
                         <h2 className="section-title">Resumen de su orden</h2>
 
-                        {/* Mostrar items del carrito dinámicamente */}
                         {cartItems.length > 0 ? (
                             cartItems.map((property) => (
-                                <ShoppingCartCards 
-                                    key={property.id} 
-                                    image={property.image} 
-                                    title={property.title} 
-                                    price={property.price.toLocaleString()} 
-                                    description={property.description} 
-                                    area={property.area} 
-                                    bedrooms={property.bedrooms} 
-                                    bathrooms={property.bathrooms} 
-                                    showContactAgent={property.showContactAgent} 
+                                <ShoppingCartCards
+                                    key={property.id}
+                                    thumbnails={property.thumbnails}
+                                    name={property.name}
+                                    description={property.description}
+                                    area={property.area}
+                                    bedrooms={property.bedrooms}
+                                    bathrooms={property.bathrooms}
                                     onRemove={() => handleRemoveItem(property.id)}
                                 />
                             ))
                         ) : (
-                            // Mostrar mensaje cuando el carrito está vacío
                             <div className="empty-cart-message" style={{
                                 textAlign: 'center',
                                 padding: '40px 20px',
@@ -178,12 +276,11 @@ const ShoppingCart = () => {
                                 <span>Productos:</span>
                                 <span>Precios:</span>
                             </div>
-                            
-                            {/* Mostrar productos dinámicamente en la factura */}
+
                             {cartItems.length > 0 ? (
                                 cartItems.map((item, index) => (
                                     <div key={item.id} className="product-item">
-                                        <span>{index + 1}. {item.title}</span>
+                                        <span>{index + 1}. {item.name}</span>
                                         <span>{formatPrice(item.price * item.quantity)}</span>
                                     </div>
                                 ))
@@ -195,20 +292,20 @@ const ShoppingCart = () => {
                             )}
                         </div>
 
-                        {/* Sección de datos del cliente - ARREGLADA */}
                         <div className="client-data">
-                            <h3>Datos Cliente:</h3>
+                            <div className="titulos">
+                                <h3>Datos Cliente:</h3>
+                                <h3>Datos vendedor</h3>
+                            </div>
                             <div className="client-details">
-                                {/* Primera columna: Datos del cliente autenticado */}
                                 <div className="client-info">
                                     <p>{clientData.name}</p>
                                     <p>{clientData.email}</p>
                                     <p>{clientData.phone}</p>
                                 </div>
-                                {/* Segunda columna: Datos del vendedor (datos quemados) */}
                                 <div className="client-info">
-                                    <p>Diana Parrilla</p>
-                                    <p>diananoesseria@gmail.com</p>
+                                    <p>Diana Padilla</p>
+                                    <p>dianagabypadilla006@gmail.com</p>
                                     <p>8521-4564</p>
                                 </div>
                             </div>
@@ -228,14 +325,14 @@ const ShoppingCart = () => {
                         <div className="payment-methods">
                             <h3>Métodos de pago</h3>
                             <div className="payment-buttons">
-                                <button 
+                                <button
                                     className="btn-pay tarjeta"
                                     disabled={cartItems.length === 0}
                                     style={cartItems.length === 0 ? { opacity: 0.5, cursor: 'not-allowed' } : {}}
                                 >
                                     Pagar con tarjeta
                                 </button>
-                                <button 
+                                <button
                                     className="btn-pay paypal"
                                     disabled={cartItems.length === 0}
                                     style={cartItems.length === 0 ? { opacity: 0.5, cursor: 'not-allowed' } : {}}
@@ -269,37 +366,37 @@ const ShoppingCart = () => {
 
                             <div className="credit-card-form">
                                 <div className="form-group">
-                                    <input 
-                                        placeholder="Titular de la tarjeta" 
+                                    <input
+                                        placeholder="Titular de la tarjeta"
                                         className="form-control"
                                         disabled={cartItems.length === 0}
                                         defaultValue={cartItems.length > 0 ? clientData.name : ''}
                                     />
                                 </div>
                                 <div className="form-group">
-                                    <input 
-                                        placeholder="Número de tarjeta" 
+                                    <input
+                                        placeholder="Número de tarjeta"
                                         className="form-control"
                                         disabled={cartItems.length === 0}
                                     />
                                 </div>
                                 <div className="form-row">
                                     <div className="form-group half">
-                                        <input 
-                                            placeholder="Fecha de vencimiento (mm/yy)" 
+                                        <input
+                                            placeholder="Fecha de vencimiento (mm/yy)"
                                             className="form-control"
                                             disabled={cartItems.length === 0}
                                         />
                                     </div>
                                     <div className="form-group half">
-                                        <input 
-                                            placeholder="Código de seguridad CVV" 
+                                        <input
+                                            placeholder="Código de seguridad CVV"
                                             className="form-control"
                                             disabled={cartItems.length === 0}
                                         />
                                     </div>
                                 </div>
-                                <button 
+                                <button
                                     className="btn-confirm"
                                     disabled={cartItems.length === 0}
                                     style={cartItems.length === 0 ? { opacity: 0.5, cursor: 'not-allowed' } : {}}
@@ -317,7 +414,6 @@ const ShoppingCart = () => {
                     </div>
                 </div>
 
-                {/* Mostrar resumen del carrito */}
                 {cartItems.length > 0 && (
                     <div style={{
                         textAlign: 'center',

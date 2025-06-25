@@ -49,7 +49,7 @@
     width: 150px;
     height: 150px;
     overflow: hidden;
-    position: relative; /* Added in the new CSS */
+    position: relative;
 }
 
 .item-image img{
@@ -235,7 +235,7 @@
     align-items: center;
     gap: 10px;
     margin-bottom: 15px;
-    background-color: #f6f6f6; /* Cambiado a match con el fondo del formulario */
+    background-color: #f6f6f6; 
     padding: 10px;
     border-radius: 5px;
     max-width: 100%;
@@ -326,8 +326,8 @@
 
 .image-counter2{
     position: absolute;
-    bottom: 10px; /* Corrected positioning */
-    left: 10px; /* Corrected positioning */
+    bottom: 10px; 
+    left: 10px; 
     background-color: #ffffff;
     padding: 4px 8px;
     border-radius: 4px;
@@ -339,8 +339,8 @@
 
 .image-counter3{
     position: absolute;
-    bottom: 10px; /* Corrected positioning */
-    left: 10px; /* Corrected positioning */
+    bottom: 10px; 
+    left: 10px; 
     background-color: #ffffff;
     padding: 4px 8px;
     border-radius: 4px;
@@ -355,7 +355,11 @@
     justify-content: space-between;
 }
 
-/* Media Queries */
+.titulos{
+    display: flex;
+    justify-content: space-between;
+}
+
 @media (max-width: 992px){
     .shopping-cart-content{
         flex-direction: column;
