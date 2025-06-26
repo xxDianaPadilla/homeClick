@@ -43,10 +43,10 @@ const Timer = ({ timeLeft, isExpired = false, className = "" }) => {
           <span style={{ color: '#fca5a5' }}>El código ha expirado</span>
         ) : (
           <>
-            <span>Tiempo restante: </span>
+            <span style={{ color: '#fdc64f' }}>Tiempo restante: </span>
             <span style={{ 
               fontWeight: 'bold', 
-              color: timeLeft <= 300 ? '#fbbf24' : '#60d394',
+              color: timeLeft <= 300 ? '#fdc64f' : '#a3320b',
               fontFamily: 'Courier New, monospace'
             }}>
               {formatTime(timeLeft)}

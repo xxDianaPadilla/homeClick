@@ -18,7 +18,7 @@ const CodeInput = ({
         display: 'flex',
         gap: '0.75rem',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
       }}
     >
       {code.map((digit, index) => (
@@ -42,10 +42,9 @@ const CodeInput = ({
             textAlign: 'center',
             fontSize: '1.5rem',
             fontWeight: 'bold',
-            border: `2px solid ${error ? '#ef4444' : digit ? '#10b981' : 'rgba(255, 255, 255, 0.4)'}`,
             borderRadius: '8px',
-            backgroundColor: error ? 'rgba(239, 68, 68, 0.1)' : digit ? 'rgba(16, 185, 129, 0.1)' : 'rgba(255, 255, 255, 0.1)',
-            color: 'white',
+            backgroundColor: '#fdce65',
+            color: 'black',
             outline: 'none',
             transition: 'all 0.3s ease',
             fontFamily: 'Courier New, monospace',

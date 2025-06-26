@@ -162,6 +162,7 @@ const EmailVerificationModal = ({
                                 </div>
                             )}
 
+                            <br />
                             {/* Code Input */}
                             <div className="mb-6">
                                 <CodeInput
