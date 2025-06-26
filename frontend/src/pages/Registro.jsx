@@ -3,6 +3,7 @@ import { UserPlus, Calendar, Shield, User, Phone, Mail, MapPin, CreditCard } fro
 import AuthLayout from '../components/AuthLayout';
 import EnhancedInput from '../components/EnhancedInput';
 import useRegistroForm from '../components/Customers/Hooks/useRegistroForm';
+import EmailVerificationModal from '../components/EmailVerificationModal.jsx';
 import '../styles/RegistroEnhanced.css';
 
 function Registro() {
@@ -22,7 +23,12 @@ function Registro() {
     trigger,
     validationRules,
     handleEmailChange, // Nuevo: función para manejar cambios en email
-    isCheckingEmail  // Nuevo: estado de verificación de email
+    isCheckingEmail,  // Nuevo: estado de verificación de email
+    // Estados para modal de verificación
+    showVerificationModal,
+    setShowVerificationModal,
+    handleVerificationSuccess,
+    pendingRegistrationData
   } = useRegistroForm();
 
   const passwordValidation = validatePassword(watchedPassword);
@@ -348,6 +354,15 @@ function Registro() {
         </div>
       </AuthLayout>
 
+      {/* Modal de verificación de email */}
+      <EmailVerificationModal
+        isOpen={showVerificationModal}
+        onClose={() => setShowVerificationModal(false)}
+        email={watchedEmail}
+        firstName={pendingRegistrationData?.firstName || ''}
+        onVerificationSuccess={handleVerificationSuccess}
+      />
+
       {/* Modal de términos y condiciones - Mejorado */}
       {showTermsModal && (
         <div style={{
@@ -376,236 +391,236 @@ function Registro() {
             flexDirection: 'column',
             boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
             border: '1px solid rgba(255, 255, 255, 0.2)'
-          }}>
-            <div style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              marginBottom: '2rem',
-              paddingBottom: '1rem',
-              borderBottom: '2px solid #f1f5f9'
             }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <div style={{
-                  width: '40px',
-                  height: '40px',
-                  background: 'linear-gradient(135deg, #60a5fa, #3b82f6)',
-                  borderRadius: '12px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '18px'
-                }}>
-                  📋
-                </div>
-                <h2 style={{ 
-                  margin: 0, 
-                  fontSize: '1.6rem', 
-                  color: '#1e293b',
-                  fontFamily: 'Poppins, sans-serif',
-                  fontWeight: '600'
-                }}>
-                  Términos y Condiciones
-                </h2>
-              </div>
-              <button
-                onClick={handleModalClose}
-                style={{
-                  background: 'linear-gradient(135deg, #f1f5f9, #e2e8f0)',
-                  border: 'none',
-                  borderRadius: '10px',
-                  width: '40px',
-                  height: '40px',
-                  cursor: 'pointer',
-                  color: '#64748b',
-                  fontSize: '18px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  transition: 'all 0.2s ease'
-                }}
-                onMouseEnter={(e) => {
-                  e.target.style.background = 'linear-gradient(135deg, #e2e8f0, #cbd5e1)';
-                  e.target.style.color = '#475569';
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.background = 'linear-gradient(135deg, #f1f5f9, #e2e8f0)';
-                  e.target.style.color = '#64748b';
-                }}
-              >
-                ×
-              </button>
-            </div>
+           <div style={{
+             display: 'flex',
+             justifyContent: 'space-between',
+             alignItems: 'center',
+             marginBottom: '2rem',
+             paddingBottom: '1rem',
+             borderBottom: '2px solid #f1f5f9'
+           }}>
+             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+               <div style={{
+                 width: '40px',
+                 height: '40px',
+                 background: 'linear-gradient(135deg, #60a5fa, #3b82f6)',
+                 borderRadius: '12px',
+                 display: 'flex',
+                 alignItems: 'center',
+                 justifyContent: 'center',
+                 fontSize: '18px'
+               }}>
+                 📋
+               </div>
+               <h2 style={{ 
+                 margin: 0, 
+                 fontSize: '1.6rem', 
+                 color: '#1e293b',
+                 fontFamily: 'Poppins, sans-serif',
+                 fontWeight: '600'
+               }}>
+                 Términos y Condiciones
+               </h2>
+             </div>
+             <button
+               onClick={handleModalClose}
+               style={{
+                 background: 'linear-gradient(135deg, #f1f5f9, #e2e8f0)',
+                 border: 'none',
+                 borderRadius: '10px',
+                 width: '40px',
+                 height: '40px',
+                 cursor: 'pointer',
+                 color: '#64748b',
+                 fontSize: '18px',
+                 display: 'flex',
+                 alignItems: 'center',
+                 justifyContent: 'center',
+                 transition: 'all 0.2s ease'
+               }}
+               onMouseEnter={(e) => {
+                 e.target.style.background = 'linear-gradient(135deg, #e2e8f0, #cbd5e1)';
+                 e.target.style.color = '#475569';
+               }}
+               onMouseLeave={(e) => {
+                 e.target.style.background = 'linear-gradient(135deg, #f1f5f9, #e2e8f0)';
+                 e.target.style.color = '#64748b';
+               }}
+             >
+               ×
+             </button>
+           </div>
 
-            <div style={{
-              flex: 1,
-              overflow: 'auto',
-              color: '#334155',
-              lineHeight: '1.7',
-              fontSize: '0.95rem',
-              fontFamily: 'Poppins, sans-serif'
-            }}>
-              <div style={{ 
-                background: 'linear-gradient(135deg, #dbeafe, #bfdbfe)',
-                padding: '1rem',
-                borderRadius: '12px',
-                marginBottom: '1.5rem',
-                border: '1px solid #93c5fd'
-              }}>
-                <p style={{ 
-                  fontWeight: '600', 
-                  marginBottom: '0.5rem',
-                  color: '#1e40af'
-                }}>
-                  📅 Fecha de entrada en vigor: Febrero 25, 2025
-                </p>
-                <p style={{ margin: 0, fontSize: '0.9rem' }}>
-                  Bienvenido a HomeClick. Al registrarte y utilizar nuestra plataforma, aceptas estos Términos y Condiciones.
-                </p>
-              </div>
+           <div style={{
+             flex: 1,
+             overflow: 'auto',
+             color: '#334155',
+             lineHeight: '1.7',
+             fontSize: '0.95rem',
+             fontFamily: 'Poppins, sans-serif'
+           }}>
+             <div style={{ 
+               background: 'linear-gradient(135deg, #dbeafe, #bfdbfe)',
+               padding: '1rem',
+               borderRadius: '12px',
+               marginBottom: '1.5rem',
+               border: '1px solid #93c5fd'
+             }}>
+               <p style={{ 
+                 fontWeight: '600', 
+                 marginBottom: '0.5rem',
+                 color: '#1e40af'
+               }}>
+                 📅 Fecha de entrada en vigor: Febrero 25, 2025
+               </p>
+               <p style={{ margin: 0, fontSize: '0.9rem' }}>
+                 Bienvenido a HomeClick. Al registrarte y utilizar nuestra plataforma, aceptas estos Términos y Condiciones.
+               </p>
+             </div>
 
-              <div style={{ marginBottom: '1.5rem' }}>
-                <h3 style={{ 
-                  fontSize: '1.2rem', 
-                  marginBottom: '0.75rem',
-                  color: '#0f172a',
-                  fontWeight: '600',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px'
-                }}>
-                  🏠 Uso de la Plataforma
-                </h3>
-                <ul style={{ 
-                  paddingLeft: '1.5rem', 
-                  marginBottom: 0,
-                  listStyle: 'none'
-                }}>
-                  <li style={{ marginBottom: '0.5rem', position: 'relative' }}>
-                    <span style={{ position: 'absolute', left: '-1.2rem', color: '#10b981' }}>✓</span>
-                    La plataforma está diseñada exclusivamente para la compra de inmuebles
-                  </li>
-                  <li style={{ marginBottom: '0.5rem', position: 'relative' }}>
-                    <span style={{ position: 'absolute', left: '-1.2rem', color: '#ef4444' }}>✗</span>
-                    Queda prohibido el uso fraudulento de HomeClick
-                  </li>
-                  <li style={{ marginBottom: '0.5rem', position: 'relative' }}>
-                    <span style={{ position: 'absolute', left: '-1.2rem', color: '#f59e0b' }}>⚠️</span>
-                    Nos reservamos el derecho de suspender cuentas que incumplan estas normas
-                  </li>
-                </ul>
-              </div>
+             <div style={{ marginBottom: '1.5rem' }}>
+               <h3 style={{ 
+                 fontSize: '1.2rem', 
+                 marginBottom: '0.75rem',
+                 color: '#0f172a',
+                 fontWeight: '600',
+                 display: 'flex',
+                 alignItems: 'center',
+                 gap: '8px'
+               }}>
+                 🏠 Uso de la Plataforma
+               </h3>
+               <ul style={{ 
+                 paddingLeft: '1.5rem', 
+                 marginBottom: 0,
+                 listStyle: 'none'
+               }}>
+                 <li style={{ marginBottom: '0.5rem', position: 'relative' }}>
+                   <span style={{ position: 'absolute', left: '-1.2rem', color: '#10b981' }}>✓</span>
+                   La plataforma está diseñada exclusivamente para la compra de inmuebles
+                 </li>
+                 <li style={{ marginBottom: '0.5rem', position: 'relative' }}>
+                   <span style={{ position: 'absolute', left: '-1.2rem', color: '#ef4444' }}>✗</span>
+                   Queda prohibido el uso fraudulento de HomeClick
+                 </li>
+                 <li style={{ marginBottom: '0.5rem', position: 'relative' }}>
+                   <span style={{ position: 'absolute', left: '-1.2rem', color: '#f59e0b' }}>⚠️</span>
+                   Nos reservamos el derecho de suspender cuentas que incumplan estas normas
+                 </li>
+               </ul>
+             </div>
 
-              <div style={{ marginBottom: '1.5rem' }}>
-                <h3 style={{ 
-                  fontSize: '1.2rem', 
-                  marginBottom: '0.75rem',
-                  color: '#0f172a',
-                  fontWeight: '600',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px'
-                }}>
-                  🔐 Registro y Seguridad
-                </h3>
-                <ul style={{ 
-                  paddingLeft: '1.5rem', 
-                  marginBottom: 0,
-                  listStyle: 'none'
-                }}>
-                  <li style={{ marginBottom: '0.5rem', position: 'relative' }}>
-                    <span style={{ position: 'absolute', left: '-1.2rem', color: '#10b981' }}>✓</span>
-                    Los usuarios son responsables de mantener la confidencialidad de sus credenciales
-                  </li>
-                  <li style={{ marginBottom: '0.5rem', position: 'relative' }}>
-                    <span style={{ position: 'absolute', left: '-1.2rem', color: '#f59e0b' }}>⚠️</span>
-                    HomeClick no será responsable de accesos no autorizados por negligencia del usuario
-                  </li>
-                </ul>
-              </div>
+             <div style={{ marginBottom: '1.5rem' }}>
+               <h3 style={{ 
+                 fontSize: '1.2rem', 
+                 marginBottom: '0.75rem',
+                 color: '#0f172a',
+                 fontWeight: '600',
+                 display: 'flex',
+                 alignItems: 'center',
+                 gap: '8px'
+               }}>
+                 🔐 Registro y Seguridad
+               </h3>
+               <ul style={{ 
+                 paddingLeft: '1.5rem', 
+                 marginBottom: 0,
+                 listStyle: 'none'
+               }}>
+                 <li style={{ marginBottom: '0.5rem', position: 'relative' }}>
+                   <span style={{ position: 'absolute', left: '-1.2rem', color: '#10b981' }}>✓</span>
+                   Los usuarios son responsables de mantener la confidencialidad de sus credenciales
+                 </li>
+                 <li style={{ marginBottom: '0.5rem', position: 'relative' }}>
+                   <span style={{ position: 'absolute', left: '-1.2rem', color: '#f59e0b' }}>⚠️</span>
+                   HomeClick no será responsable de accesos no autorizados por negligencia del usuario
+                 </li>
+               </ul>
+             </div>
 
-              <div style={{
-                background: 'linear-gradient(135deg, #f0fdf4, #dcfce7)',
-                padding: '1rem',
-                borderRadius: '12px',
-                border: '1px solid #86efac'
-              }}>
-                <h3 style={{ 
-                  fontSize: '1.1rem', 
-                  marginBottom: '0.5rem',
-                  color: '#15803d',
-                  fontWeight: '600',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px'
-                }}>
-                  📧 Contacto
-                </h3>
-                <p style={{ margin: 0, fontSize: '0.9rem' }}>
-                  Para dudas sobre estos términos, contáctanos en: 
-                  <strong style={{ color: '#15803d' }}> homeclick@gmail.com</strong>
-                </p>
-              </div>
-            </div>
+             <div style={{
+               background: 'linear-gradient(135deg, #f0fdf4, #dcfce7)',
+               padding: '1rem',
+               borderRadius: '12px',
+               border: '1px solid #86efac'
+             }}>
+               <h3 style={{ 
+                 fontSize: '1.1rem', 
+                 marginBottom: '0.5rem',
+                 color: '#15803d',
+                 fontWeight: '600',
+                 display: 'flex',
+                 alignItems: 'center',
+                 gap: '8px'
+               }}>
+                 📧 Contacto
+               </h3>
+               <p style={{ margin: 0, fontSize: '0.9rem' }}>
+                 Para dudas sobre estos términos, contáctanos en: 
+                 <strong style={{ color: '#15803d' }}> homeclick@gmail.com</strong>
+               </p>
+             </div>
+           </div>
 
-            <div style={{
-              paddingTop: '1.5rem',
-              borderTop: '2px solid #f1f5f9',
-              display: 'flex',
-              gap: '1rem',
-              justifyContent: 'flex-end'
-            }}>
-              <button
-                onClick={handleModalClose}
-                style={{
-                  padding: '0.875rem 1.75rem',
-                  background: 'linear-gradient(135deg, #6b7280, #4b5563)',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '12px',
-                  cursor: 'pointer',
-                  fontFamily: 'Poppins, sans-serif',
-                  fontWeight: '500',
-                  fontSize: '0.9rem',
-                  transition: 'all 0.2s ease'
-                }}
-                onMouseEnter={(e) => e.target.style.transform = 'translateY(-1px)'}
-                onMouseLeave={(e) => e.target.style.transform = 'translateY(0)'}
-              >
-                Cancelar
-              </button>
-              <button
-                onClick={handleModalAccept}
-                style={{
-                  padding: '0.875rem 1.75rem',
-                  background: 'linear-gradient(135deg, #10b981, #059669)',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '12px',
-                  cursor: 'pointer',
-                  fontFamily: 'Poppins, sans-serif',
-                  fontWeight: '500',
-                  fontSize: '0.9rem',
-                  transition: 'all 0.2s ease',
-                  boxShadow: '0 4px 15px rgba(16, 185, 129, 0.3)'
-                }}
-                onMouseEnter={(e) => {
-                  e.target.style.transform = 'translateY(-1px)';
-                  e.target.style.boxShadow = '0 6px 20px rgba(16, 185, 129, 0.4)';
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.transform = 'translateY(0)';
-                  e.target.style.boxShadow = '0 4px 15px rgba(16, 185, 129, 0.3)';
-                }}
-              >
-                ✓ Aceptar términos
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-    </>
-  );
+           <div style={{
+             paddingTop: '1.5rem',
+             borderTop: '2px solid #f1f5f9',
+             display: 'flex',
+             gap: '1rem',
+             justifyContent: 'flex-end'
+           }}>
+             <button
+               onClick={handleModalClose}
+               style={{
+                 padding: '0.875rem 1.75rem',
+                 background: 'linear-gradient(135deg, #6b7280, #4b5563)',
+                 color: 'white',
+                 border: 'none',
+                 borderRadius: '12px',
+                 cursor: 'pointer',
+                 fontFamily: 'Poppins, sans-serif',
+                 fontWeight: '500',
+                 fontSize: '0.9rem',
+                 transition: 'all 0.2s ease'
+               }}
+               onMouseEnter={(e) => e.target.style.transform = 'translateY(-1px)'}
+               onMouseLeave={(e) => e.target.style.transform = 'translateY(0)'}
+             >
+               Cancelar
+             </button>
+             <button
+               onClick={handleModalAccept}
+               style={{
+                 padding: '0.875rem 1.75rem',
+                 background: 'linear-gradient(135deg, #10b981, #059669)',
+                 color: 'white',
+                 border: 'none',
+                 borderRadius: '12px',
+                 cursor: 'pointer',
+                 fontFamily: 'Poppins, sans-serif',
+                 fontWeight: '500',
+                 fontSize: '0.9rem',
+                 transition: 'all 0.2s ease',
+                 boxShadow: '0 4px 15px rgba(16, 185, 129, 0.3)'
+               }}
+               onMouseEnter={(e) => {
+                 e.target.style.transform = 'translateY(-1px)';
+                 e.target.style.boxShadow = '0 6px 20px rgba(16, 185, 129, 0.4)';
+               }}
+               onMouseLeave={(e) => {
+                 e.target.style.transform = 'translateY(0)';
+                 e.target.style.boxShadow = '0 4px 15px rgba(16, 185, 129, 0.3)';
+               }}
+             >
+               ✓ Aceptar términos
+             </button>
+           </div>
+         </div>
+       </div>
+     )}
+   </>
+ );
 }
 
 export default Registro;

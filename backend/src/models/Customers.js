@@ -47,7 +47,7 @@ const customerSchema = new Schema(
         profilePicture:
         {
             type: String,
-            required: true,
+            required: false,
             default: ''
         },
 
@@ -73,6 +73,12 @@ const customerSchema = new Schema(
             type: Number,
             required: false,
             default: 0
+        },
+
+        isVerified: {
+            type: Boolean,
+            required: false,
+            default: false
         }
     },
     {

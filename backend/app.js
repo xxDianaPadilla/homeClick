@@ -11,6 +11,7 @@ import logOutRoutes from './src/routes/logout.js';
 import authRoutes from './src/routes/auth.js';
 import recoveryPasswordRoutes from './src/routes/recoveryPassword.js'; 
 import contactRoutes from './src/routes/contact.js';
+import emailVerificationRoutes from './src/routes/emailVerification.js';
 import uploadRoutes from './src/routes/upload.js';
 import paymentRoutes from './src/routes/payment.js';
 import cookieParser from 'cookie-parser';
@@ -45,6 +46,7 @@ app.use("/api/logout", logOutRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/recovery-password", recoveryPasswordRoutes); 
 app.use("/api/contact", contactRoutes);
+app.use("/api/email-verification", emailVerificationRoutes);
 app.use("/api", uploadRoutes);
 app.use("/api/payment", paymentRoutes);
 

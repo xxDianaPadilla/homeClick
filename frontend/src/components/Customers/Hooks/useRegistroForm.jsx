@@ -1,12 +1,17 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import useEmailValidation from "./useEmailValidation"; // Importar el nuevo hook
+import useEmailValidation from "./useEmailValidation";
+import useEmailVerification from "./useEmailVerification.jsx";
 
 const useRegistroForm = () => {
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = React.useState(false);
     const [message, setMessage] = React.useState("");
+    
+    // Estados para el modal de verificación
+    const [showVerificationModal, setShowVerificationModal] = React.useState(false);
+    const [pendingRegistrationData, setPendingRegistrationData] = React.useState(null);
 
     // Hook para validación de email duplicado
     const { 
@@ -16,6 +21,9 @@ const useRegistroForm = () => {
         emailError,
         isCheckingEmail 
     } = useEmailValidation();
+
+    // Hook para verificación de email
+    const { checkEmailVerification } = useEmailVerification();
 
     const {
         register,
@@ -46,6 +54,53 @@ const useRegistroForm = () => {
 
     const watchedPassword = watch("password", "");
     const watchedEmail = watch("email", "");
+
+    // Función para manejar verificación exitosa
+    const handleVerificationSuccess = async () => {
+        setShowVerificationModal(false);
+        
+        if (pendingRegistrationData) {
+            // Verificar que el email esté realmente verificado
+            const isVerified = await checkEmailVerification();
+            if (isVerified) {
+                await completeFinalRegistration(pendingRegistrationData);
+            } else {
+                setMessage("Error en la verificación. Intenta nuevamente.");
+            }
+        }
+    };
+
+    // Función para completar el registro final
+    const completeFinalRegistration = async (formData) => {
+        setIsLoading(true);
+        
+        try {
+            const response = await fetch("http://localhost:4000/api/registerCustomers", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include",
+                body: JSON.stringify(formData),
+            });
+
+            const responseData = await response.json();
+
+            if (response.ok) {
+                alert('¡Registro exitoso! Ahora puedes iniciar sesión.');
+                resetForm();
+                navigate("/inicio-sesion");
+            } else {
+                setMessage(responseData.message || "Error en el registro");
+            }
+        } catch (error) {
+            console.error("Error: ", error);
+            setMessage("Error de conexión. Intenta nuevamente.");
+        } finally {
+            setIsLoading(false);
+            setPendingRegistrationData(null);
+        }
+    };
 
     const validatePassword = (password) => {
         const minLength = password.length >= 8;
@@ -175,6 +230,8 @@ const useRegistroForm = () => {
         reset();
         setMessage('');
         clearEmailValidation(); // Limpiar validación de email al resetear
+        setShowVerificationModal(false);
+        setPendingRegistrationData(null);
     };
 
     const submitForm = async (data) => {
@@ -208,32 +265,12 @@ const useRegistroForm = () => {
                 birthDate: birthDateString
             };
 
-            const response = await fetch("http://localhost:4000/api/registerCustomers", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                credentials: "include",
-                body: JSON.stringify(formDataToSend),
-            });
+            // Guardar datos para después de la verificación
+            setPendingRegistrationData(formDataToSend);
+            
+            // Mostrar modal de verificación de email
+            setShowVerificationModal(true);
 
-            const responseData = await response.json();
-
-            if (response.ok) {
-                alert('¡Registro exitoso! Ahora puedes iniciar sesión.');
-                resetForm();
-                // navigate("/inicio-sesion"); // Descomenta si quieres redirigir automáticamente
-            } else {
-                // Manejar errores específicos del backend
-                if (responseData.message && responseData.message.includes("already exists")) {
-                    setError("email", {
-                        type: "validate",
-                        message: "Este correo electrónico ya está registrado"
-                    });
-                } else {
-                    setMessage(responseData.message || "Error en el registro");
-                }
-            }
         } catch (error) {
             console.error("Error: ", error);
             setMessage("Error de conexión. Intenta nuevamente.");
@@ -265,7 +302,12 @@ const useRegistroForm = () => {
         handleEmailChange,
         isEmailDuplicate,
         emailError,
-        isCheckingEmail
+        isCheckingEmail,
+        // Estados y funciones para verificación de email
+        showVerificationModal,
+        setShowVerificationModal,
+        handleVerificationSuccess,
+        pendingRegistrationData
     };
 };
 

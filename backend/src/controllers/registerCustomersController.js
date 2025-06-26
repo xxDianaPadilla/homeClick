@@ -11,53 +11,75 @@ registerCustomersController.register = async (req, res) =>{
     const {firstName, lastName, birthDate, dui, password, email, phone, address, budget} = req.body;
 
     try {
-        const existsCustomer = await customersModel.findOne({email});
-        if(existsCustomer){
-            return res.json({message: "Customer already exists"});
+        // Verificar que el email esté verificado antes de proceder
+        const token = req.cookies.emailVerificationToken;
+        if (!token) {
+            return res.status(400).json({
+                success: false,
+                message: "Email no verificado. Completa la verificación primero."
+            });
         }
 
+        let decoded;
+        try {
+            decoded = jsonwebtoken.verify(token, config.JWT.secret);
+        } catch (error) {
+            return res.status(400).json({
+                success: false,
+                message: "Verificación de email expirada o inválida."
+            });
+        }
+
+        // Verificar que el email coincida y esté verificado
+        if (decoded.email !== email || !decoded.verified) {
+            return res.status(400).json({
+                success: false,
+                message: "Email no verificado correctamente."
+            });
+        }
+
+        // Verificar si el cliente ya existe
+        const existsCustomer = await customersModel.findOne({email});
+        if(existsCustomer){
+            return res.status(400).json({
+                success: false,
+                message: "El usuario ya existe"
+            });
+        }
+
+        // Hashear la contraseña
         const passwordHash = await bcryptjs.hash(password, 10);
 
+        // Crear nuevo cliente con email ya verificado
         const newCustomer = new customersModel({
-            firstName, lastName, birthDate, dui, password: passwordHash, email, phone, address, budget, isVerified: false
+            firstName, 
+            lastName, 
+            birthDate, 
+            dui, 
+            password: passwordHash, 
+            email, 
+            phone, 
+            address, 
+            budget, 
+            isVerified: true // Email ya verificado
         });
 
         await newCustomer.save();
 
-        const verificationCode = crypto.randomBytes(3).toString("hex");
+        // Limpiar cookie de verificación
+        res.clearCookie("emailVerificationToken");
 
-        const tokenCode = jsonwebtoken.sign(
-            {email, verificationCode},
-            config.JWT.secret,
-            {expiresIn: "2h"}
-        )
-
-        res.cookie("verificationToken", tokenCode, {maxAge: 2 * 60 * 60 * 1000, httpOnly: true, secure: false});
-
-        const transporter = nodemailer.createTransport({
-            service: "gmail",
-            auth: {
-                user: config.emailUser.user_email,
-                pass: config.emailUser.user_pass
-            }
+        res.json({
+            success: true,
+            message: "Registro completado exitosamente"
         });
 
-        const mailOptions = {
-            from: config.emailUser.user_email,
-            to: email,
-            subject: "Verificación de cuenta",
-            text: "Para verificar tu cuenta utiliza este código: " + verificationCode + " expira en dos horas"
-        }
-
-        transporter.sendMail(mailOptions, (error, info) =>{
-            if(error) console.log("error" + error);
-            res.json({message: "Email sent" + info});
-        });
-
-        res.json({message: "Customer registered, please verify your email"});
     } catch (error) {
-        console.log("error" + error);
-        res.json({message: "Error" + error});
+        console.log("Error en registro: ", error);
+        res.status(500).json({
+            success: false,
+            message: "Error interno del servidor"
+        });
     }
 };
 
