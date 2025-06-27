@@ -19,12 +19,15 @@ const TailwindPropertiesCarousel = ({ limit = 6, title = "Descubre propiedades" 
         return `$${numericPrice.toLocaleString()}`;
     };
 
-    // Manejar click en propiedad
+    // Manejar click en propiedad - MISMO PATRÓN QUE PROPERTYCATEGORIES
     const handlePropertyClick = (property) => {
-        navigate('/property-view', {
+        console.log('Navegando a PropertyView con ID:', property.id);
+        
+        navigate('/propertyView', {
             state: {
-                propertyId: property.id,
-                fromCategory: '/landingPage'
+                fromCategory: window.location.pathname, // Usar la ruta actual
+                propertyId: property.id, // ID de la propiedad
+                selectedCategory: null // No hay categoría específica en carouseles generales
             }
         });
     };

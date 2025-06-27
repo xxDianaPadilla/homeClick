@@ -168,15 +168,18 @@ const EnhancedLandingPageCards = ({ limit = 10 }) => {
   }, [visibleCards]);
 
   /**
-   * Maneja el click en una propiedad
+   * Maneja el click en una propiedad - MISMO PATRÓN QUE PROPERTYCATEGORIES
    */
   const handlePropertyClick = useCallback((property) => {
     if (isDragging) return; // No navegar si se está arrastrando
     
-    navigate('/property-view', {
+    console.log('Navegando a PropertyView con ID:', property.id);
+    
+    navigate('/propertyView', {
       state: {
-        propertyId: property.id,
-        fromCategory: '/landingPage'
+        fromCategory: window.location.pathname, // Usar la ruta actual como origen
+        propertyId: property.id, // ID de la propiedad
+        selectedCategory: null // No hay categoría específica en carouseles generales
       }
     });
   }, [navigate, isDragging]);

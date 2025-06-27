@@ -90,14 +90,19 @@ const LandingPageCards = ({ cards, limit = 10 }) => {
     
     // Si es una propiedad real (tiene id), navegar a la vista de propiedad
     if (property.id) {
-      navigate('/property-view', {
+      console.log('Navegando a PropertyView con ID:', property.id);
+      
+      navigate('/propertyView', {
         state: {
-          propertyId: property.id,
-          fromCategory: '/landingPage'
+          fromCategory: window.location.pathname, // Usar la ruta actual como origen
+          propertyId: property.id, // ID de la propiedad
+          selectedCategory: null // No hay categoría específica en carouseles generales
         }
       });
+    } else {
+      console.warn('Property without ID clicked:', property);
     }
-    // Si es una card estática, no hacer nada por ahora
+    // Si es una card estática sin ID, no hacer nada
   }, [navigate, isDragging]);
 
   // Estados de carga y error (solo si no se pasaron cards como prop)
