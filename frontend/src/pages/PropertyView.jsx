@@ -1,15 +1,12 @@
 import Navbar from '../components/Navbar';
 import Footer from "../components/Footer";
 import "../styles/PropertyView.css";
-import house1 from "../assets/image5.png";
-import house2 from "../assets/image6.png";
-import house3 from "../assets/image7.png";
 import saveIcon from '../assets/image23.png';
 import savedIcon from '../assets/image41.png';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import ContactForm from "../components/ContactForm";
 import { useLocation, useNavigate } from 'react-router-dom';
-import LandingPageCards from "../components/LandingPageCards";
+import TailwindPropertiesCarousel from "../components/TailwindPropertiesCarousel";
 import { usePropertyData } from '../components/Properties/Hooks/usePropertyData';
 import { useExpandableSections } from '../components/Properties/Hooks/useExpandableSections';
 import { useSavedProperties } from '../components/Properties/Hooks/useSavedProperties';
@@ -75,19 +72,6 @@ const PropertyView = () => {
     }
   }, [propertyData?.coordinates, mapLoaded]);
 
-  const cardData = useMemo(() => [
-    { image: house1, caption: "Casa en Colonia Escalón" },
-    { image: house2, caption: "Casa en zona rosa" },
-    { image: house3, caption: "Casa en santa tecla" },
-    { image: house1, caption: "Casa en Colonia Escalón" },
-    { image: house2, caption: "Casa en zona rosa" },
-    { image: house3, caption: "Casa en santa tecla" },
-    { image: house1, caption: "Casa en Merliot" },
-    { image: house2, caption: "Casa en San Salvador" },
-    { image: house3, caption: "Casa en Antiguo Cuscatlán" },
-    { image: house1, caption: "Casa en Santa Elena" }
-  ], []);
-
   const requiresAuth = useCallback((action) => {
     if (!isAuthenticated) {
       toast.error(`Debes iniciar sesión para ${action}`);
@@ -147,7 +131,7 @@ const PropertyView = () => {
       const customerId = user?.id;
 
       if (!customerId) {
-        toast.error('Error: No se pudo indentificar el usuario');
+        toast.error('Error: No se pudo identificar el usuario');
         return false;
       }
 
@@ -332,7 +316,6 @@ const PropertyView = () => {
     const syncCartWithDB = async () => {
       if(isAuthenticated && user?.id && propertyId){
         const inCart = await checkIfInCartDB();
-
         console.log(`Propiedad ${propertyId} está en carrito:`, inCart);
       }
     };
@@ -563,9 +546,12 @@ const PropertyView = () => {
         </div>
       </div>
 
+      {/* Sección de propiedades similares con carousel mejorado */}
       <section className="container2">
-        <h3 className="descubre-title2">Propiedades similares</h3>
-        <LandingPageCards cards={cardData} />
+        <TailwindPropertiesCarousel 
+          limit={6}
+          title="Propiedades similares"
+        />
       </section>
 
       <ConfirmationModal

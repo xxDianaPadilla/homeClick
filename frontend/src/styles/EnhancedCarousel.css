@@ -1,0 +1,564 @@
+/* Estilos específicos para el carousel mejorado */
+
+/* Contenedor principal del carousel optimizado */
+.carousel-container {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  padding: 0 60px;
+  margin: var(--spacing-md, 1.5rem) 0;
+  overflow: hidden;
+}
+
+/* Scroll horizontal ultra-optimizado */
+.horizontal-carousel {
+  display: flex;
+  gap: var(--spacing-md, 20px);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: var(--spacing-md, 20px) 0;
+  
+  /* Optimizaciones críticas para fluidez máxima */
+  -webkit-overflow-scrolling: touch;
+  will-change: scroll-position;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  perspective: 1000px;
+  
+  /* Scroll snap para mejor UX */
+  scroll-snap-type: x mandatory;
+  -webkit-scroll-snap-type: x mandatory;
+  
+  /* Eliminamos resistencia en iOS */
+  overscroll-behavior-x: contain;
+  overscroll-behavior-y: none;
+  
+  /* Scroll más responsivo */
+  scroll-padding: 0;
+  scroll-padding-inline: 0;
+  
+  /* Aceleración GPU */
+  contain: layout style paint;
+}
+
+.horizontal-carousel::-webkit-scrollbar {
+  display: none;
+}
+
+/* Elementos del carousel optimizados para máximo rendimiento */
+.descubre-item-wrapper {
+  flex: 0 0 auto;
+  width: 300px;
+  min-width: 300px;
+  scroll-snap-align: start;
+  -webkit-scroll-snap-align: start;
+  
+  /* Optimizaciones GPU críticas */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  contain: layout style paint;
+}
+
+.descubre-item {
+  width: 100%;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  border-radius: var(--border-radius-lg, 12px);
+  overflow: hidden;
+  background: var(--color-white, #ffffff);
+  box-shadow: var(--shadow, 0 4px 6px rgba(0, 0, 0, 0.1));
+  position: relative;
+  
+  /* Optimizaciones de renderizado */
+  transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+  contain: layout style paint;
+}
+
+.descubre-item:hover {
+  transform: translateY(-8px) translateZ(0);
+  box-shadow: var(--shadow-lg, 0 8px 16px rgba(0, 0, 0, 0.15));
+}
+
+/* Contenedor de imagen optimizado */
+.descubre-item .image-container {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  background-color: #f5f5f5;
+}
+
+.descubre-item .image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Optimización de imágenes */
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+.descubre-item:hover .image-container img {
+  transform: scale(1.05);
+}
+
+/* Placeholder mejorado para imágenes que no cargan */
+.image-placeholder {
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-gray-light, #7D7470);
+  border-radius: var(--border-radius, 8px);
+}
+
+.image-placeholder span {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.image-placeholder p {
+  margin: 0;
+  font-size: var(--text-sm, 0.875rem);
+  text-align: center;
+  font-weight: 500;
+}
+
+/* Caption mejorado con información de la propiedad */
+.descubre-caption {
+  background-color: #A9C2E0;
+  font-family: var(--font-secondary, 'Raleway', sans-serif);
+  font-size: var(--text-xs, 0.75rem);
+  font-style: italic;
+  text-align: center;
+  padding: var(--spacing-sm, 12px);
+  margin: 0;
+  font-weight: bold;
+  color: var(--color-black, #000000);
+  position: relative;
+  line-height: 1.3;
+}
+
+/* Botones de navegación mejorados */
+.carousel-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.95);
+  border: 2px solid #e0e0e0;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow, 0 4px 6px rgba(0, 0, 0, 0.1));
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  
+  /* Evitar interferencias con el scroll */
+  touch-action: manipulation;
+}
+
+.carousel-button:hover {
+  background-color: var(--color-white, #ffffff);
+  border-color: var(--color-primary, #E9631A);
+  color: var(--color-primary, #E9631A);
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: var(--shadow-lg, 0 8px 16px rgba(0, 0, 0, 0.15));
+}
+
+.carousel-button:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.carousel-button.prev {
+  left: 10px;
+}
+
+.carousel-button.next {
+  right: 10px;
+}
+
+.carousel-button:disabled,
+.carousel-button.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  background-color: rgba(255, 255, 255, 0.7);
+  transform: translateY(-50%) scale(0.9);
+  pointer-events: none;
+}
+
+/* Indicadores de posición */
+.carousel-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: var(--spacing-md, 1.5rem);
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.carousel-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background-color: rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 0;
+}
+
+.carousel-indicator:hover {
+  background-color: var(--color-primary, #E9631A);
+  transform: scale(1.2);
+}
+
+/* Estados de carga */
+.carousel-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  color: #666;
+}
+
+.carousel-loading .loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid var(--color-primary, #E9631A);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Estados de error */
+.carousel-error {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+  .carousel-container {
+    padding: 0 50px;
+  }
+  
+  .descubre-item-wrapper {
+    width: 280px;
+    min-width: 280px;
+  }
+  
+  .carousel-button {
+    width: 44px;
+    height: 44px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .carousel-container {
+    padding: 0 45px;
+  }
+  
+  .descubre-item-wrapper {
+    width: 250px;
+    min-width: 250px;
+  }
+  
+  .carousel-button {
+    width: 40px;
+    height: 40px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 640px) {
+  .carousel-container {
+    padding: 0 40px;
+  }
+  
+  .descubre-item-wrapper {
+    width: 220px;
+    min-width: 220px;
+  }
+  
+  .carousel-button {
+    width: 36px;
+    height: 36px;
+    font-size: 12px;
+  }
+  
+  .carousel-button.prev {
+    left: 5px;
+  }
+  
+  .carousel-button.next {
+    right: 5px;
+  }
+}
+
+@media (max-width: 480px) {
+  .carousel-container {
+    padding: 0 35px;
+  }
+  
+  .descubre-item-wrapper {
+    width: 200px;
+    min-width: 200px;
+  }
+
+  .carousel-button {
+    width: 32px;
+    height: 32px;
+    font-size: 10px;
+  }
+  
+  .descubre-caption {
+    font-size: 0.7rem;
+    padding: 8px;
+  }
+}
+
+@media (max-width: 375px) {
+  .carousel-container {
+    padding: 0 30px;
+  }
+  
+  .horizontal-carousel {
+    gap: var(--spacing-sm, 15px);
+  }
+  
+  .descubre-item-wrapper {
+    width: 180px;
+    min-width: 180px;
+  }
+
+  .carousel-button {
+    width: 28px;
+    height: 28px;
+    font-size: 9px;
+  }
+  
+  .descubre-item .image-container {
+    height: 160px;
+  }
+}
+
+/* Pantallas extra grandes */
+@media (min-width: 1440px) {
+  .carousel-container {
+    padding: 0 80px;
+  }
+  
+  .descubre-item-wrapper {
+    width: 350px;
+    min-width: 350px;
+  }
+  
+  .carousel-button {
+    width: 52px;
+    height: 52px;
+    font-size: 20px;
+  }
+}
+
+/* Optimizaciones específicas para WebKit (Safari, Chrome en iOS) */
+@supports (-webkit-touch-callout: none) {
+  .horizontal-carousel {
+    -webkit-overflow-scrolling: touch;
+    -webkit-scroll-snap-type: x mandatory;
+    scroll-snap-type: x mandatory;
+  }
+  
+  .descubre-item-wrapper {
+    -webkit-scroll-snap-align: start;
+    scroll-snap-align: start;
+  }
+}
+
+/* Optimizaciones para Firefox */
+@-moz-document url-prefix() {
+  .horizontal-carousel {
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+  }
+}
+
+/* Mejoras para dispositivos con touch */
+@media (hover: none) and (pointer: coarse) {
+  .carousel-button {
+    /* Hacer los botones más grandes en dispositivos táctiles */
+    width: 52px;
+    height: 52px;
+    font-size: 16px;
+  }
+  
+  .descubre-item:hover {
+    /* Desactivar hover en dispositivos táctiles */
+    transform: none;
+    box-shadow: var(--shadow, 0 4px 6px rgba(0, 0, 0, 0.1));
+  }
+  
+  .descubre-item:hover .image-container img {
+    transform: none;
+  }
+}
+
+/* Animaciones con respeto por prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .descubre-item,
+  .carousel-button,
+  .descubre-item .image-container img {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .horizontal-carousel {
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Mejoras para modo oscuro (futuro) */
+@media (prefers-color-scheme: dark) {
+  .descubre-item {
+    background: #2a2a2a;
+    color: #ffffff;
+  }
+  
+  .descubre-caption {
+    background-color: #1a1a1a;
+    color: #ffffff;
+  }
+  
+  .carousel-button {
+    background-color: rgba(42, 42, 42, 0.95);
+    border-color: #404040;
+    color: #ffffff;
+  }
+  
+  .carousel-button:hover {
+    background-color: #2a2a2a;
+    border-color: var(--color-primary, #E9631A);
+    color: var(--color-primary, #E9631A);
+  }
+}
+
+/* Utilidades para mejor accesibilidad */
+.carousel-button:focus-visible {
+  outline: 3px solid var(--color-primary, #E9631A);
+  outline-offset: 2px;
+}
+
+.descubre-item:focus-visible {
+  outline: 2px solid var(--color-primary, #E9631A);
+  outline-offset: 2px;
+}
+
+/* Mejoras para impresión */
+@media print {
+  .carousel-button,
+  .carousel-indicators {
+    display: none !important;
+  }
+  
+  .horizontal-carousel {
+    overflow: visible !important;
+    flex-wrap: wrap !important;
+    gap: 20px !important;
+  }
+  
+  .descubre-item-wrapper {
+    width: 300px !important;
+    min-width: 300px !important;
+    break-inside: avoid;
+  }
+}
+
+/* Clases de utilidad para performance */
+.carousel-optimized .descubre-item-wrapper {
+  contain: strict;
+}
+
+.carousel-optimized .descubre-item {
+  will-change: transform;
+}
+
+.carousel-optimized .descubre-item:not(:hover) {
+  will-change: auto;
+}
+
+/* Estados específicos para diferentes tipos de carga */
+.carousel-skeleton .descubre-item {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+}
+
+@keyframes skeleton-loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Mejoras para el contenido de las cards */
+.property-price {
+  color: var(--color-primary, #E9631A);
+  font-weight: bold;
+  font-size: 0.9em;
+  margin-top: 4px;
+}
+
+.property-location {
+  font-size: 0.8em;
+  opacity: 0.9;
+  margin: 2px 0;
+}
+
+/* Transiciones suaves para estados de loading */
+.carousel-fade-in {
+  animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -2,20 +2,11 @@ import React, { useMemo } from "react";
 import Navbar from '../components/Navbar';
 import Footer from "../components/Footer";
 import ObjectiveCard from "../components/ObjectiveCard";
-import EnhancedLandingPageCards from "../components/EnhancedLandingPageCards";
+import TailwindPropertiesCarousel from "../components/TailwindPropertiesCarousel";
 import useResponsive from "../components/Customers/Hooks/useResponsive";
 import '../styles/EstiloLandingPage.css';
-
-// Importación de imágenes optimizada
 import bgImage from "../assets/xd1.png";
-import house1 from "../assets/image5.png";
-import house2 from "../assets/image6.png";
-import house3 from "../assets/image7.png";
 
-/**
- * Componente principal de la Landing Page con responsive optimizado
- * Utiliza el hook useResponsive para adaptar el contenido según el dispositivo
- */
 const LandingPage = () => {
   // Hook responsive para obtener información del viewport
   const {
@@ -29,63 +20,6 @@ const LandingPage = () => {
     hasTouch,
     prefersReducedMotion
   } = useResponsive();
-
-  /**
-   * Datos para las cards del carousel optimizados
-   * Se memorizan para evitar re-renders innecesarios
-   */
-  const cardData = useMemo(() => [
-    { 
-      image: house1, 
-      caption: "Casa en Colonia Escalón",
-      id: "escalon-1" 
-    },
-    { 
-      image: house2, 
-      caption: "Casa en zona rosa",
-      id: "zona-rosa-1" 
-    },
-    { 
-      image: house3, 
-      caption: "Casa en santa tecla",
-      id: "santa-tecla-1" 
-    },
-    { 
-      image: house1, 
-      caption: "Casa en Colonia Escalón",
-      id: "escalon-2" 
-    },
-    { 
-      image: house2, 
-      caption: "Casa en zona rosa",
-      id: "zona-rosa-2" 
-    },
-    { 
-      image: house3, 
-      caption: "Casa en santa tecla",
-      id: "santa-tecla-2" 
-    },
-    { 
-      image: house1, 
-      caption: "Casa en Merliot",
-      id: "merliot-1" 
-    },
-    { 
-      image: house2, 
-      caption: "Casa en San Salvador",
-      id: "san-salvador-1" 
-    },
-    { 
-      image: house3, 
-      caption: "Casa en Antiguo Cuscatlán",
-      id: "antiguo-cuscatlan-1" 
-    },
-    { 
-      image: house1, 
-      caption: "Casa en Santa Elena",
-      id: "santa-elena-1" 
-    }
-  ], []);
 
   /**
    * Datos para los objetivos con números en lugar de iconos
@@ -262,16 +196,11 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* Sección Descubre con carousel optimizado */}
-      <section className="container2" aria-labelledby="descubre-title">
-        <h2 id="descubre-title" className="descubre-title">
-          Descubre
-        </h2>
-        
-        {/* Carousel mejorado con soporte táctil */}
-        <EnhancedLandingPageCards 
-          cards={cardData}
-          aria-label="Galería de propiedades destacadas"
+      {/* Sección Descubre con carousel optimizado y datos reales */}
+      <section aria-labelledby="descubre-title">
+        <TailwindPropertiesCarousel 
+          limit={6}
+          title="Descubre"
         />
       </section>
 
@@ -280,4 +209,4 @@ const LandingPage = () => {
   );
 };
 
-export default LandingPage;
+export default LandingPage; 
