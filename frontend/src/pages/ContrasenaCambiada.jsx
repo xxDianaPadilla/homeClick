@@ -41,8 +41,6 @@ function ContrasenaCambiada() {
           </>
         )
       }
-      showLogo={true}
-      logoIcon={<CheckCircle size={60} style={{ color: '#10b981' }} />}
       containerClass="success-container"
     >
       {/* Mensaje personalizado si existe */}
